@@ -7,12 +7,22 @@ import CampanhaHeader     from '../components/campanha/CampanhaHeader.jsx'
 import ParticipantesGrid  from '../components/campanha/ParticipantesGrid.jsx'
 import BenchmarkTable     from '../components/campanha/BenchmarkTable.jsx'
 import RadarComparison    from '../components/campanha/RadarComparison.jsx'
-import { findCampanha } from '../mocks/campanhas.js'
+import { useApi } from '../hooks/useApi.js'
+import { getCampaign, getCampaignBenchmarking } from '../services/campaigns.js'
 
 export default function Campanha() {
   const { t } = useTranslation()
   const { id } = useParams()
-  const campanha = findCampanha(id)
+  const { data: campanha, loading } = useApi(() => getCampaign(id), [id])
+  const { data: bench } = useApi(() => getCampaignBenchmarking(id), [id])
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+      </div>
+    )
+  }
 
   if (!campanha) {
     return (
@@ -40,7 +50,7 @@ export default function Campanha() {
 
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <BenchmarkTable campanha={campanha} />
+          <BenchmarkTable campanha={campanha} rows={bench?.rows} />
         </div>
         <div>
           <RadarComparison campanha={campanha} />

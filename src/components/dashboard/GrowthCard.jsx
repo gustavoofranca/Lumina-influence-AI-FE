@@ -13,9 +13,9 @@ function LegendItem({ color, label }) {
   )
 }
 
-export default function GrowthCard({ period }) {
+export default function GrowthCard({ period, data: dataProp }) {
   const { t } = useTranslation()
-  const data = GROWTH_SERIES[period] || GROWTH_SERIES['7d']
+  const data = dataProp && dataProp.length ? dataProp : (GROWTH_SERIES[period] || GROWTH_SERIES['7d'])
 
   const series = [
     { key: 'organic', label: t('dashboard.growth.organic'), color: '#7C3AED' },

@@ -66,9 +66,9 @@ function NodeMapPreview() {
   )
 }
 
-export default function NetworkDensityCard() {
+export default function NetworkDensityCard({ data }) {
   const { t } = useTranslation()
-  const { value, total, connected } = NETWORK_DENSITY
+  const { value, total, connected } = data || NETWORK_DENSITY
 
   return (
     <Card glass className="flex flex-col gap-5">

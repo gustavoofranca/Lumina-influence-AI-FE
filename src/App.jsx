@@ -8,6 +8,7 @@ import LandingPage    from './pages/LandingPage.jsx'
 import Welcome        from './pages/Welcome.jsx'
 import DesignSystem   from './pages/DesignSystem.jsx'
 import Login          from './pages/Login.jsx'
+import AuthCallback    from './pages/AuthCallback.jsx'
 import Cadastro       from './pages/Cadastro.jsx'
 import RecuperarSenha from './pages/RecuperarSenha.jsx'
 import Dashboard      from './pages/Dashboard.jsx'
@@ -48,6 +49,7 @@ function AnimatedRoutes() {
         {/* Público */}
         <Route path="/"                element={<LandingPage />} />
         <Route path="/login"           element={<Login />} />
+        <Route path="/auth/callback"   element={<AuthCallback />} />
         <Route path="/cadastro"        element={<Cadastro />} />
         <Route path="/recuperar-senha" element={<RecuperarSenha />} />
 

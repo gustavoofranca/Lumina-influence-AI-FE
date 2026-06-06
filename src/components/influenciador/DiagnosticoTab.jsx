@@ -9,6 +9,7 @@ import NeuralConfidenceCard    from './diagnostic/NeuralConfidenceCard.jsx'
 import TranscriptHighlight     from './diagnostic/TranscriptHighlight.jsx'
 import RecommendationsCard     from './diagnostic/RecommendationsCard.jsx'
 import { DIAGNOSTIC_KPIS } from '../../mocks/analise.js'
+import { adaptDiagnosticKpis } from '../../services/influencers.js'
 
 const KPI_ICONS = {
   brandCoherence: Sparkles,
@@ -17,14 +18,15 @@ const KPI_ICONS = {
   botProbability: Bot,
 }
 
-export default function DiagnosticoTab() {
+export default function DiagnosticoTab({ analysis }) {
   const { t } = useTranslation()
+  const kpis = adaptDiagnosticKpis(analysis?.diagnostic_kpis) || DIAGNOSTIC_KPIS
 
   return (
     <div className="flex flex-col gap-6">
       {/* 4 KPIs */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {DIAGNOSTIC_KPIS.map((kpi) => (
+        {kpis.map((kpi) => (
           <KpiCard
             key={kpi.key}
             label={t(`influenciador.kpis.${kpi.key}`)}

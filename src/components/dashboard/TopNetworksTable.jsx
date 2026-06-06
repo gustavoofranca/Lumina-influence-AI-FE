@@ -42,9 +42,10 @@ function ScoreCell({ value }) {
   )
 }
 
-export default function TopNetworksTable() {
+export default function TopNetworksTable({ data }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const rows = data || TOP_NETWORKS
 
   const columns = [
     {
@@ -106,7 +107,7 @@ export default function TopNetworksTable() {
 
       <Table
         columns={columns}
-        data={TOP_NETWORKS}
+        data={rows}
         onRowClick={(row) => navigate(`/app/influenciadores/${row.id}`)}
         getRowKey={(row) => row.id}
         className="!border-0"

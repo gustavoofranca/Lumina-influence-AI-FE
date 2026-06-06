@@ -6,7 +6,9 @@ import Button from '../components/ui/Button.jsx'
 import InfluenciadoresFilters from '../components/influenciadores/InfluenciadoresFilters.jsx'
 import InfluenciadoresTable   from '../components/influenciadores/InfluenciadoresTable.jsx'
 import AdicionarInfluenciadorModal from '../components/influenciadores/AdicionarInfluenciadorModal.jsx'
-import { INFLUENCIADORES } from '../mocks/influenciadores.js'
+import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import { useApi } from '../hooks/useApi.js'
+import { listInfluencers } from '../services/influencers.js'
 
 const PAGE_SIZE = 8
 
@@ -71,9 +73,11 @@ export default function Influenciadores() {
 
   const hasFilters = !!search || platforms.size > 0 || statuses.size > 0 || range !== 'all'
 
+  const { data: influencers, loading, error } = useApi(() => listInfluencers(), [])
+
   const filtered = useMemo(
-    () => applyFilters(INFLUENCIADORES, { search, platforms, statuses, range }),
-    [search, platforms, statuses, range]
+    () => applyFilters(influencers || [], { search, platforms, statuses, range }),
+    [influencers, search, platforms, statuses, range]
   )
 
   return (
@@ -96,6 +100,8 @@ export default function Influenciadores() {
           </Button>
         </div>
       </header>
+
+      <ApiErrorBanner error={error} />
 
       {/* Filtros */}
       <InfluenciadoresFilters

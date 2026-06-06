@@ -8,8 +8,10 @@ import Button from '../components/ui/Button.jsx'
 import Search from '../components/ui/Search.jsx'
 import Card, { CardLabel, CardTitle } from '../components/ui/Card.jsx'
 import Toast from '../components/ui/Toast.jsx'
-import { RELATORIOS } from '../mocks/relatorios.js'
-import { findCampanha, formatDateRange } from '../mocks/campanhas.js'
+import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import { formatDateRange } from '../mocks/campanhas.js'
+import { useApi } from '../hooks/useApi.js'
+import { listReports, downloadReport } from '../services/reports.js'
 
 function formatDate(iso, locale) {
   try {
@@ -22,7 +24,6 @@ function formatDate(iso, locale) {
 }
 
 function RelatorioRow({ relatorio, onPreview, onDownload, t, locale }) {
-  const campanha = findCampanha(relatorio.campaignId)
   return (
     <div className={cn(
       'flex flex-col gap-4 rounded-2xl border border-neutral-700/60 bg-neutral-900/40 p-5',
@@ -38,8 +39,6 @@ function RelatorioRow({ relatorio, onPreview, onDownload, t, locale }) {
           {relatorio.name}
         </h3>
         <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">
-          <span>{campanha?.brand} · {campanha?.name}</span>
-          <span>·</span>
           <span>{formatDateRange(relatorio.period.start, relatorio.period.end, locale)}</span>
           <span>·</span>
           <span>{relatorio.pages} {t('relatorios.list.columns.pages').toLowerCase()}</span>
@@ -68,16 +67,25 @@ function RelatorioRow({ relatorio, onPreview, onDownload, t, locale }) {
 export default function Relatorios() {
   const { t, i18n } = useTranslation()
   const [search, setSearch] = useState('')
-  const [toastOpen, setToastOpen] = useState(false)
+  const [toast, setToast] = useState(null)
+
+  const { data: reports, error } = useApi(listReports, [])
+  const all = reports || []
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
-    if (!q) return RELATORIOS
-    return RELATORIOS.filter((r) => {
-      const c = findCampanha(r.campaignId)
-      return `${r.name} ${c?.name || ''} ${c?.brand || ''}`.toLowerCase().includes(q)
-    })
-  }, [search])
+    if (!q) return all
+    return all.filter((r) => r.name.toLowerCase().includes(q))
+  }, [all, search])
+
+  const handleDownload = async (r) => {
+    try {
+      await downloadReport(r.id, r.name)
+      setToast({ type: 'success', message: 'Download iniciado', desc: `${r.name}.pdf` })
+    } catch (e) {
+      setToast({ type: 'error', message: 'Falha no download', desc: e.message })
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -96,6 +104,8 @@ export default function Relatorios() {
           </Button>
         </Link>
       </header>
+
+      <ApiErrorBanner error={error} />
 
       <div className="max-w-lg">
         <Search
@@ -126,8 +136,8 @@ export default function Relatorios() {
               <RelatorioRow
                 key={r.id}
                 relatorio={r}
-                onPreview={() => setToastOpen(true)}
-                onDownload={() => setToastOpen(true)}
+                onPreview={() => handleDownload(r)}
+                onDownload={() => handleDownload(r)}
                 t={t}
                 locale={i18n.language}
               />
@@ -137,11 +147,11 @@ export default function Relatorios() {
       </Card>
 
       <Toast
-        open={toastOpen}
-        onClose={() => setToastOpen(false)}
-        message={t('relatorios.wizard.exportSoon')}
-        description={t('relatorios.wizard.exportSoonDesc')}
-        type="info"
+        open={!!toast}
+        onClose={() => setToast(null)}
+        message={toast?.message || ''}
+        description={toast?.desc || ''}
+        type={toast?.type || 'info'}
       />
     </div>
   )

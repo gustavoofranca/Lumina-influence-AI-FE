@@ -1,0 +1,54 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { useAuth } from '../context/AuthContext.jsx'
+import AuthLayout from '../layouts/AuthLayout.jsx'
+
+/**
+ * Recebe o redirect do back-end após o OAuth Google:
+ *   /auth/callback#access_token=...&refresh_token=...
+ * Extrai o token do fragmento, carrega o usuário e entra no app.
+ */
+export default function AuthCallback() {
+  const navigate = useNavigate()
+  const { loginWithTokens } = useAuth()
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const frag = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+    const accessToken = frag.get('access_token')
+    if (!accessToken) {
+      setError('Token ausente no retorno do login.')
+      return
+    }
+    // Limpa o fragmento da URL (não deixa o token no histórico).
+    window.history.replaceState(null, '', '/auth/callback')
+    loginWithTokens(accessToken)
+      .then(() => navigate('/app/dashboard', { replace: true }))
+      .catch((e) => setError(e.message || 'Falha ao autenticar.'))
+  }, [loginWithTokens, navigate])
+
+  return (
+    <AuthLayout>
+      <div className="text-center">
+        {error ? (
+          <>
+            <h1 className="font-display text-2xl font-bold text-tertiary-400">Falha no login</h1>
+            <p className="mt-2 text-sm text-text-secondary">{error}</p>
+            <button
+              onClick={() => navigate('/login')}
+              className="mt-6 text-sm font-semibold text-primary-300 hover:text-primary-200"
+            >
+              Voltar ao login
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+            <p className="mt-4 text-sm text-text-secondary">Autenticando…</p>
+          </>
+        )}
+      </div>
+    </AuthLayout>
+  )
+}

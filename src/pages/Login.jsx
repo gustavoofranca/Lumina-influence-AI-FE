@@ -7,36 +7,36 @@ import AuthLayout from '../layouts/AuthLayout.jsx'
 import Input from '../components/ui/Input.jsx'
 import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
+import { googleLoginUrl } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
-
-function validate(email, password) {
-  const erros = {}
-  if (!email) erros.email = 'E-mail obrigatório.'
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) erros.email = 'Formato inválido.'
-  if (!password) erros.password = 'Senha obrigatória.'
-  return erros
-}
 
 export default function Login() {
   const { t } = useTranslation()
-  const { login } = useAuth()
+  const { devLogin } = useAuth()
   const navigate = useNavigate()
 
   const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors]     = useState({})
   const [loading, setLoading]   = useState(false)
+  const [apiError, setApiError] = useState(null)
 
-  const handleSubmit = (e) => {
+  // Login local via dev-login (usa o e-mail digitado, ou o admin seedado se vazio).
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const erros = validate(email, password)
-    if (Object.keys(erros).length) { setErrors(erros); return }
-
+    setApiError(null)
     setLoading(true)
-    setTimeout(() => {
-      login({ email })
+    try {
+      await devLogin(email || undefined)
       navigate('/app/dashboard')
-    }, 600)
+    } catch (err) {
+      setApiError(err.message || 'Falha no login.')
+      setLoading(false)
+    }
+  }
+
+  const handleGoogle = () => {
+    window.location.href = googleLoginUrl()
   }
 
   return (
@@ -79,6 +79,12 @@ export default function Login() {
           </Link>
         </div>
 
+        {apiError && (
+          <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tertiary-300">
+            {apiError}
+          </p>
+        )}
+
         <Button
           type="submit"
           variant="primary"
@@ -88,6 +94,20 @@ export default function Login() {
         >
           {t('auth.login.submit')}
         </Button>
+
+        <Button
+          type="button"
+          variant="outlined"
+          fullWidth
+          size="lg"
+          onClick={handleGoogle}
+        >
+          Entrar com Google
+        </Button>
+        <p className="text-center text-[11px] text-text-muted">
+          Dica: deixe os campos vazios e clique em <b>{t('auth.login.submit')}</b> para
+          entrar com a conta de demonstração (dados seedados).
+        </p>
       </form>
 
       <p className={cn('mt-6 text-center text-sm text-text-secondary')}>

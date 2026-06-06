@@ -17,8 +17,9 @@ function formatDate(iso, locale) {
   } catch { return iso }
 }
 
-export default function PostsAnalisadosTab() {
+export default function PostsAnalisadosTab({ data }) {
   const { t, i18n } = useTranslation()
+  const rows = data && data.length ? data : POSTS_ANALISADOS
 
   const columns = [
     {
@@ -85,7 +86,7 @@ export default function PostsAnalisadosTab() {
         <CardTitle className="mt-1.5">{t('influenciador.posts.title')}</CardTitle>
         <p className="mt-1 text-sm text-text-secondary">{t('influenciador.posts.subtitle')}</p>
       </div>
-      <Table columns={columns} data={POSTS_ANALISADOS} getRowKey={(r) => r.id} className="!border-0" />
+      <Table columns={columns} data={rows} getRowKey={(r) => r.id} className="!border-0" />
     </Card>
   )
 }

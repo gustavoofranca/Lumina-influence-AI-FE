@@ -8,7 +8,9 @@ import Button from '../components/ui/Button.jsx'
 import Search from '../components/ui/Search.jsx'
 import Tabs from '../components/ui/Tabs.jsx'
 import CampanhaCard from '../components/campanhas/CampanhaCard.jsx'
-import { CAMPANHAS } from '../mocks/campanhas.js'
+import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import { useApi } from '../hooks/useApi.js'
+import { listCampaigns } from '../services/campaigns.js'
 
 const STATUS_FILTER = ['all', 'active', 'planning', 'paused', 'completed']
 
@@ -17,9 +19,12 @@ export default function Campanhas() {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
+  const { data: campaigns, error } = useApi(listCampaigns, [])
+  const all = campaigns || []
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return CAMPANHAS.filter((c) => {
+    return all.filter((c) => {
       if (status !== 'all' && c.status !== status) return false
       if (q) {
         const haystack = `${c.name} ${c.brand} ${c.industry}`.toLowerCase()
@@ -27,14 +32,12 @@ export default function Campanhas() {
       }
       return true
     })
-  }, [search, status])
+  }, [all, search, status])
 
   const statusTabs = STATUS_FILTER.map((s) => ({
     value: s,
     label: s === 'all' ? t('campanhas.list.filterAll') : t(`campanhas.status.${s}`),
-    count: s === 'all'
-      ? CAMPANHAS.length
-      : CAMPANHAS.filter((c) => c.status === s).length,
+    count: s === 'all' ? all.length : all.filter((c) => c.status === s).length,
   }))
 
   return (
@@ -54,6 +57,8 @@ export default function Campanhas() {
           </Button>
         </Link>
       </header>
+
+      <ApiErrorBanner error={error} />
 
       {/* Filtros */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">

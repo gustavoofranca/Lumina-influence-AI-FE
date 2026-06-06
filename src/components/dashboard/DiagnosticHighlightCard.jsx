@@ -43,10 +43,11 @@ function ReelThumbnail() {
   )
 }
 
-export default function DiagnosticHighlightCard() {
+export default function DiagnosticHighlightCard({ data: dataProp }) {
   const { t } = useTranslation()
-  const inf  = findInfluenciador(HIGHLIGHTED_DIAGNOSIS.influencerId)
-  const data = HIGHLIGHTED_DIAGNOSIS
+  const data = dataProp || HIGHLIGHTED_DIAGNOSIS
+  const mockInf = findInfluenciador(data.influencerId)
+  const name = data.influencerName || mockInf?.name
 
   return (
     <Card glass className="flex flex-col gap-5">
@@ -54,9 +55,9 @@ export default function DiagnosticHighlightCard() {
       <div>
         <CardLabel>{t('dashboard.diagnostic.label')}</CardLabel>
         <div className="mt-3 flex items-center gap-3">
-          <Avatar name={inf?.name} size="md" />
+          <Avatar name={name} size="md" />
           <div className="min-w-0">
-            <p className="truncate font-semibold text-neutral-100">{inf?.name}</p>
+            <p className="truncate font-semibold text-neutral-100">{name}</p>
             <p className="truncate text-xs text-text-muted">
               {t('dashboard.diagnostic.analysisId')}: #{data.analysisId}
             </p>
@@ -97,7 +98,7 @@ export default function DiagnosticHighlightCard() {
 
       {/* Link de detalhe */}
       <Link
-        to={`/app/influenciadores/${inf?.id}`}
+        to={`/app/influenciadores/${data.influencerId}`}
         className={cn(
           'group inline-flex items-center justify-center gap-1.5 rounded-xl py-2 px-3',
           'text-sm font-semibold text-primary-300 transition-colors',

@@ -19,12 +19,13 @@ function PercentBar({ value, color }) {
   )
 }
 
-export default function BenchmarkTable({ campanha }) {
+export default function BenchmarkTable({ campanha, rows: rowsProp }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // Constroi a tabela combinando dados do influenciador + custo da participacao
-  const rows = campanha.participations.map((p) => {
+  // Usa as linhas reais (vindas do benchmarking da API) se fornecidas;
+  // senão constrói do mock (participations + findInfluenciador).
+  const rows = rowsProp || (campanha?.participations || []).map((p) => {
     const inf = findInfluenciador(p.influenciadorId)
     if (!inf) return null
     const totalReach = Math.round(inf.followers * (inf.engagement / 100) * 0.85)

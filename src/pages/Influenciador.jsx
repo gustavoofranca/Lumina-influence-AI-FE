@@ -10,14 +10,25 @@ import VisaoGeralTab        from '../components/influenciador/VisaoGeralTab.jsx'
 import PostsAnalisadosTab   from '../components/influenciador/PostsAnalisadosTab.jsx'
 import DiagnosticoTab       from '../components/influenciador/DiagnosticoTab.jsx'
 import HistoricoTab         from '../components/influenciador/HistoricoTab.jsx'
-import { findInfluenciador } from '../mocks/influenciadores.js'
+import { useApi } from '../hooks/useApi.js'
+import { getInfluencer, getInfluencerAnalysis, getInfluencerPosts } from '../services/influencers.js'
 
 export default function Influenciador() {
   const { t } = useTranslation()
   const { id } = useParams()
   const [tab, setTab] = useState('diagnosis')
 
-  const influenciador = findInfluenciador(id)
+  const { data: influenciador, loading } = useApi(() => getInfluencer(id), [id])
+  const { data: analysis } = useApi(() => getInfluencerAnalysis(id), [id])
+  const { data: posts } = useApi(() => getInfluencerPosts(id), [id])
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+      </div>
+    )
+  }
 
   // Influenciador nao encontrado
   if (!influenciador) {
@@ -56,8 +67,8 @@ export default function Influenciador() {
       {/* Conteudo */}
       <div>
         {tab === 'overview'  && <VisaoGeralTab        influenciador={influenciador} />}
-        {tab === 'posts'     && <PostsAnalisadosTab />}
-        {tab === 'diagnosis' && <DiagnosticoTab />}
+        {tab === 'posts'     && <PostsAnalisadosTab data={posts} />}
+        {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} />}
         {tab === 'history'   && <HistoricoTab />}
       </div>
     </div>

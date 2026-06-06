@@ -11,12 +11,13 @@ const ICON_BY_KEY = {
   active:     Users,
 }
 
-export default function KpiGrid() {
+export default function KpiGrid({ data }) {
   const { t } = useTranslation()
+  const kpis = data || KPIS
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {KPIS.map((kpi) => (
+      {kpis.map((kpi) => (
         <KpiCard
           key={kpi.key}
           label={t(`dashboard.kpis.${kpi.key}`)}
