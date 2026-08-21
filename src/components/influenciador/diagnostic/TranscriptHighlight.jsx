@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import { Download } from 'lucide-react'
+import { Download, FileText } from 'lucide-react'
 
 import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import Button from '../../ui/Button.jsx'
-import { TRANSCRIPT_SEGMENTS } from '../../../mocks/analise.js'
+import EmptyState from '../../ui/EmptyState.jsx'
+import Skeleton from '../../ui/Skeleton.jsx'
 
 const TONE_STYLES = {
   primary:    { tag: 'bg-primary-600/20 text-primary-200 ring-primary-500/30',   bar: 'bg-primary-500',   highlight: 'bg-primary-600/25 text-primary-100' },
@@ -60,7 +61,7 @@ function Segment({ segment, t }) {
   )
 }
 
-export default function TranscriptHighlight() {
+export default function TranscriptHighlight({ segments, loading = false }) {
   const { t } = useTranslation()
 
   return (
@@ -76,11 +77,17 @@ export default function TranscriptHighlight() {
         </Button>
       </div>
 
-      <ul className="space-y-5">
-        {TRANSCRIPT_SEGMENTS.map((seg, i) => (
-          <Segment key={i} segment={seg} t={t} />
-        ))}
-      </ul>
+      {loading ? (
+        <Skeleton className="h-40" rounded="rounded-xl" />
+      ) : segments?.length ? (
+        <ul className="space-y-5">
+          {segments.map((seg, i) => (
+            <Segment key={i} segment={seg} t={t} />
+          ))}
+        </ul>
+      ) : (
+        <EmptyState icon={FileText} title={t('influenciador.transcript.empty')} />
+      )}
     </Card>
   )
 }

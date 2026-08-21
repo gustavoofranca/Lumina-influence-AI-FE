@@ -547,12 +547,14 @@
       "history":   "History"
     },
     "kpis": {
+      "empty": "Diagnostic indicators unavailable — run an analysis.",
       "brandCoherence": "Brand Coherence",
       "sentimentIndex": "Sentiment Index",
       "safetyRating":   "Safety Rating",
       "botProbability": "Bot Probability"
     },
     "sentiment": {
+      "timelineEmpty": "Sentiment timeline not available from the API yet.",
       "title":         "Sentiment Heatmap",
       "subtitle":      "Emotional distribution across comments",
       "tab24h":        "24H",
@@ -567,6 +569,7 @@
       }
     },
     "audience": {
+      "empty": "Audience integrity unavailable — run an analysis.",
       "title":          "Audience Integrity",
       "subtitle":       "Audience composition by authenticity",
       "organic":        "Organic audience",
@@ -581,6 +584,7 @@
       "view":     "Open audit"
     },
     "neuralConfidence": {
+      "empty": "Neural confidence unavailable — run an analysis.",
       "title":           "Neural Confidence",
       "subtitle":        "Model confidence per dimension",
       "scriptAccuracy":  "Script Accuracy",
@@ -588,6 +592,7 @@
       "demographicSync": "Demographic Sync"
     },
     "transcript": {
+      "empty": "No transcript available for this creator.",
       "title":    "AI Transcript Highlight",
       "subtitle": "Key segments detected by the model",
       "export":   "Export Text",
@@ -599,6 +604,7 @@
       }
     },
     "recommendations": {
+      "empty": "No recommendations generated yet.",
       "title":    "AI Recommendations",
       "subtitle": "Suggested actions for upcoming cycles",
       "accept":   "Accept",
@@ -612,6 +618,7 @@
       }
     },
     "overview": {
+      "growthEmpty": "Per-creator growth series not available from the API yet.",
       "title": "Overview",
       "subtitle": "Key metrics and creator trends.",
       "metrics": {
@@ -622,6 +629,7 @@
       }
     },
     "posts": {
+      "empty": "No analyzed posts for this creator.",
       "title":    "Analyzed Posts",
       "subtitle": "Audited content from the last 30 days.",
       "columns": {
@@ -634,6 +642,7 @@
       }
     },
     "history": {
+      "empty": "No analyses in the history for this creator.",
       "title":    "Analysis History",
       "subtitle": "Timeline of audits for this creator.",
       "scope":    "Scope",

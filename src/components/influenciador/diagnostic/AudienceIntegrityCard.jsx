@@ -4,7 +4,8 @@ import { ShieldCheck, AlertTriangle, Bot } from 'lucide-react'
 import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import DonutChart from '../../charts/DonutChart.jsx'
-import { AUDIENCE_INTEGRITY } from '../../../mocks/analise.js'
+import EmptyState from '../../ui/EmptyState.jsx'
+import Skeleton from '../../ui/Skeleton.jsx'
 import { formatFollowers } from '../../../lib/format.js'
 
 const ROWS = [
@@ -13,9 +14,26 @@ const ROWS = [
   { key: 'bots',           icon: Bot,            color: 'text-tertiary-300', bg: 'bg-tertiary-500/15', ring: 'ring-tertiary-500/30' },
 ]
 
-export default function AudienceIntegrityCard() {
+export default function AudienceIntegrityCard({ data, loading = false }) {
   const { t } = useTranslation()
-  const data = AUDIENCE_INTEGRITY
+
+  if (loading) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('influenciador.audience.title')}</CardLabel>
+        <Skeleton className="h-52" rounded="rounded-2xl" />
+      </Card>
+    )
+  }
+
+  if (!data) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('influenciador.audience.title')}</CardLabel>
+        <EmptyState icon={ShieldCheck} title={t('influenciador.audience.empty')} />
+      </Card>
+    )
+  }
 
   const donutData = [
     { key: 'organic',    value: data.organic,    color: '#7C3AED' },

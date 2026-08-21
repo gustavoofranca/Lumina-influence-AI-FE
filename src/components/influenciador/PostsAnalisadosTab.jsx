@@ -6,7 +6,6 @@ import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Table from '../ui/Table.jsx'
 import Badge from '../ui/Badge.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { POSTS_ANALISADOS } from '../../mocks/analise.js'
 import { formatFollowers } from '../../lib/format.js'
 
 function formatDate(iso, locale) {
@@ -17,9 +16,9 @@ function formatDate(iso, locale) {
   } catch { return iso }
 }
 
-export default function PostsAnalisadosTab({ data }) {
+export default function PostsAnalisadosTab({ data, loading = false }) {
   const { t, i18n } = useTranslation()
-  const rows = data && data.length ? data : POSTS_ANALISADOS
+  const rows = loading ? [] : data || []
 
   const columns = [
     {
@@ -86,7 +85,13 @@ export default function PostsAnalisadosTab({ data }) {
         <CardTitle className="mt-1.5">{t('influenciador.posts.title')}</CardTitle>
         <p className="mt-1 text-sm text-text-secondary">{t('influenciador.posts.subtitle')}</p>
       </div>
-      <Table columns={columns} data={rows} getRowKey={(r) => r.id} className="!border-0" />
+      <Table
+        columns={columns}
+        data={rows}
+        getRowKey={(r) => r.id}
+        className="!border-0"
+        emptyState={loading ? t('common.loading') : t('influenciador.posts.empty')}
+      />
     </Card>
   )
 }

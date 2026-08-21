@@ -547,12 +547,14 @@
       "history":   "Histórico"
     },
     "kpis": {
+      "empty": "Indicadores de diagnóstico indisponíveis — rode uma análise.",
       "brandCoherence": "Brand Coherence",
       "sentimentIndex": "Sentiment Index",
       "safetyRating":   "Safety Rating",
       "botProbability": "Bot Probability"
     },
     "sentiment": {
+      "timelineEmpty": "Série temporal de sentimento ainda não disponível na API.",
       "title":         "Sentiment Heatmap",
       "subtitle":      "Distribuição emocional dos comentários",
       "tab24h":        "24H",
@@ -567,6 +569,7 @@
       }
     },
     "audience": {
+      "empty": "Integridade de audiência indisponível — rode uma análise.",
       "title":          "Audience Integrity",
       "subtitle":       "Composição da audiência por autenticidade",
       "organic":        "Audiência orgânica",
@@ -581,6 +584,7 @@
       "view":     "Abrir auditoria"
     },
     "neuralConfidence": {
+      "empty": "Confiança neural indisponível — rode uma análise.",
       "title":           "Neural Confidence",
       "subtitle":        "Confiança do modelo por dimensão",
       "scriptAccuracy":  "Script Accuracy",
@@ -588,6 +592,7 @@
       "demographicSync": "Demographic Sync"
     },
     "transcript": {
+      "empty": "Nenhuma transcrição disponível para este criador.",
       "title":    "AI Transcript Highlight",
       "subtitle": "Trechos-chave detectados pelo modelo",
       "export":   "Export Text",
@@ -599,6 +604,7 @@
       }
     },
     "recommendations": {
+      "empty": "Nenhuma recomendação gerada ainda.",
       "title":    "Recomendações da IA",
       "subtitle": "Ações sugeridas para os próximos ciclos",
       "accept":   "Aceitar",
@@ -612,6 +618,7 @@
       }
     },
     "overview": {
+      "growthEmpty": "Série de crescimento por criador ainda não disponível na API.",
       "title": "Visão Geral",
       "subtitle": "Métricas principais e tendências do criador.",
       "metrics": {
@@ -622,6 +629,7 @@
       }
     },
     "posts": {
+      "empty": "Nenhum post analisado para este criador.",
       "title":    "Posts Analisados",
       "subtitle": "Conteúdos auditados nos últimos 30 dias.",
       "columns": {
@@ -634,6 +642,7 @@
       }
     },
     "history": {
+      "empty": "Nenhuma análise no histórico deste criador.",
       "title":    "Histórico de Análises",
       "subtitle": "Linha do tempo de auditorias deste criador.",
       "scope":    "Escopo",

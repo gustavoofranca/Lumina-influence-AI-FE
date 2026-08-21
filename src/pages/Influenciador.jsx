@@ -19,8 +19,8 @@ export default function Influenciador() {
   const [tab, setTab] = useState('diagnosis')
 
   const { data: influenciador, loading } = useApi(() => getInfluencer(id), [id])
-  const { data: analysis } = useApi(() => getInfluencerAnalysis(id), [id])
-  const { data: posts } = useApi(() => getInfluencerPosts(id), [id])
+  const { data: analysis, loading: loadingAnalysis } = useApi(() => getInfluencerAnalysis(id), [id])
+  const { data: posts, loading: loadingPosts } = useApi(() => getInfluencerPosts(id), [id])
 
   if (loading) {
     return (
@@ -59,7 +59,15 @@ export default function Influenciador() {
 
   return (
     <div className="flex flex-col gap-6">
-      <InfluenciadorHeader influenciador={influenciador} />
+      <InfluenciadorHeader
+        influenciador={
+          influenciador && {
+            ...influenciador,
+            // latest_analysis_id vem de /analysis; /influencers/:id nao devolve.
+            lastAnalysisId: analysis?.latest_analysis_id?.slice(0, 8) || null,
+          }
+        }
+      />
 
       {/* Tabs */}
       <Tabs items={tabItems} value={tab} onChange={setTab} />
@@ -67,8 +75,8 @@ export default function Influenciador() {
       {/* Conteudo */}
       <div>
         {tab === 'overview'  && <VisaoGeralTab        influenciador={influenciador} />}
-        {tab === 'posts'     && <PostsAnalisadosTab data={posts} />}
-        {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} />}
+        {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
+        {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} loading={loadingAnalysis} />}
         {tab === 'history'   && <HistoricoTab />}
       </div>
     </div>
