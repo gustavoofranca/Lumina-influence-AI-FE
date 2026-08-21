@@ -6,7 +6,7 @@ import { cn } from '../../lib/cn.js'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
-import { formatBudget, formatDateRange } from '../../mocks/campanhas.js'
+import { formatBudget, formatDateRange } from '../../lib/format.js'
 import { findInfluenciador } from '../../mocks/influenciadores.js'
 
 const STATUS_VARIANT = {

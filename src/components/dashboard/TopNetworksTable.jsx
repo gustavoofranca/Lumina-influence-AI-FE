@@ -8,7 +8,7 @@ import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
 import { TOP_NETWORKS } from '../../mocks/dashboard.js'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
 const VIRAL_CONFIG = {
   high:   { icon: Flame,     color: 'text-tertiary-300' },

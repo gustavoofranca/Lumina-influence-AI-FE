@@ -7,7 +7,7 @@ import Table from '../ui/Table.jsx'
 import Badge from '../ui/Badge.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { POSTS_ANALISADOS } from '../../mocks/analise.js'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
 function formatDate(iso, locale) {
   try {

@@ -8,7 +8,7 @@ import Button from '../ui/Button.jsx'
 import Badge from '../ui/Badge.jsx'
 import StatusIndicator from '../ui/StatusIndicator.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',

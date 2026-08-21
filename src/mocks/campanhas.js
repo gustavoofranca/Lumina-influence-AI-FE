@@ -101,19 +101,3 @@ export const CAMPANHAS = [
 export const findCampanha = (id) => CAMPANHAS.find((c) => c.id === id)
 
 /* === Helpers === */
-
-export function formatBudget(value, locale = 'pt') {
-  if (value >= 1_000_000) return `R$ ${(value / 1_000_000).toFixed(1)}M`
-  if (value >= 1_000)     return `R$ ${(value / 1_000).toFixed(0)}k`
-  return `R$ ${value}`
-}
-
-export function formatDateRange(startISO, endISO, locale) {
-  try {
-    const opts = { day: '2-digit', month: 'short', year: '2-digit' }
-    const fmt = (iso) => new Date(iso).toLocaleDateString(locale === 'pt' ? 'pt-BR' : 'en-US', opts)
-    return `${fmt(startISO)} → ${fmt(endISO)}`
-  } catch {
-    return `${startISO} → ${endISO}`
-  }
-}

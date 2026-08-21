@@ -7,8 +7,8 @@ import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { findInfluenciador, formatFollowers } from '../../mocks/influenciadores.js'
-import { formatBudget } from '../../mocks/campanhas.js'
+import { findInfluenciador } from '../../mocks/influenciadores.js'
+import { formatFollowers, formatBudget } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',

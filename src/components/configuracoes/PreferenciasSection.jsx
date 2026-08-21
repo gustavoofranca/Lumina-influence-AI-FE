@@ -6,7 +6,7 @@ import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Switch from '../ui/Switch.jsx'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
-import { TIMEZONES } from '../../mocks/agencia.js'
+import { TIMEZONES } from '../../lib/constants.js'
 
 function PrefRow({ icon: Icon, title, subtitle, children }) {
   return (

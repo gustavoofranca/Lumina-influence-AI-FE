@@ -15,9 +15,10 @@ import Card, { CardLabel } from '../components/ui/Card.jsx'
 import Toast from '../components/ui/Toast.jsx'
 import WizardStepper from '../components/campanha/WizardStepper.jsx'
 import ReportPreview from '../components/relatorio/ReportPreview.jsx'
-import { CAMPANHAS, findCampanha, formatBudget, formatDateRange } from '../mocks/campanhas.js'
-import { findInfluenciador, formatFollowers } from '../mocks/influenciadores.js'
-import { SECTION_KEYS } from '../mocks/relatorios.js'
+import { CAMPANHAS, findCampanha } from '../mocks/campanhas.js'
+import { formatBudget, formatDateRange, formatFollowers } from '../lib/format.js'
+import { findInfluenciador } from '../mocks/influenciadores.js'
+import { SECTION_KEYS } from '../lib/constants.js'
 
 const SECTION_ICONS = {
   kpis:            BarChart3,

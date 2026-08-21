@@ -61,17 +61,3 @@ export const NETWORK_DENSITY = {
 }
 
 // Filtros disponíveis
-export const PERIOD_OPTIONS = [
-  { value: '7d',  labelKey: 'period7d' },
-  { value: '30d', labelKey: 'period30d' },
-  { value: '90d', labelKey: 'period90d' },
-]
-
-export const CAMPAIGN_OPTIONS = [
-  { value: 'all',     name: 'Todas as campanhas' },
-  { value: 'cmp-001', name: 'Verão 2026 — Tech Lifestyle' },
-  { value: 'cmp-002', name: 'Black Friday Beauty' },
-  { value: 'cmp-003', name: 'Fitness Challenge Q2' },
-  { value: 'cmp-004', name: 'Lançamento Pro Series' },
-  { value: 'cmp-005', name: 'Influencer Spotlight' },
-]

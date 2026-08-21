@@ -10,8 +10,9 @@ import {
 } from 'recharts'
 
 import { cn } from '../../lib/cn.js'
-import { findCampanha, formatBudget, formatDateRange } from '../../mocks/campanhas.js'
-import { findInfluenciador, formatFollowers } from '../../mocks/influenciadores.js'
+import { findCampanha } from '../../mocks/campanhas.js'
+import { formatBudget, formatDateRange, formatFollowers } from '../../lib/format.js'
+import { findInfluenciador } from '../../mocks/influenciadores.js'
 import { GROWTH_SERIES, KPIS } from '../../mocks/dashboard.js'
 import { RECOMMENDATIONS } from '../../mocks/analise.js'
 

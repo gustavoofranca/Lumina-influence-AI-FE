@@ -9,7 +9,8 @@ import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
-import { EQUIPE, ROLE_KEYS } from '../../mocks/equipe.js'
+import { EQUIPE } from '../../mocks/equipe.js'
+import { ROLE_KEYS } from '../../lib/constants.js'
 
 const ROLE_VARIANT = {
   admin:   'organic',  // violeta

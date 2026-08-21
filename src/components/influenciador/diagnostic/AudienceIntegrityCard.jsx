@@ -5,7 +5,7 @@ import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import DonutChart from '../../charts/DonutChart.jsx'
 import { AUDIENCE_INTEGRITY } from '../../../mocks/analise.js'
-import { formatFollowers } from '../../../mocks/influenciadores.js'
+import { formatFollowers } from '../../../lib/format.js'
 
 const ROWS = [
   { key: 'verifiedHumans', icon: ShieldCheck,    color: 'text-emerald-300', bg: 'bg-emerald-500/15', ring: 'ring-emerald-500/30' },

@@ -176,9 +176,3 @@ export const INFLUENCIADORES = [
 
 // Helpers
 export const findInfluenciador = (id) => INFLUENCIADORES.find((i) => i.id === id)
-
-export const formatFollowers = (n) => {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
-  if (n >= 1_000)     return `${(n / 1_000).toFixed(0)}k`
-  return String(n)
-}

@@ -6,8 +6,7 @@ import { cn } from '../../lib/cn.js'
 import Badge from '../ui/Badge.jsx'
 import Button from '../ui/Button.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
-import { formatBudget, formatDateRange } from '../../mocks/campanhas.js'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatBudget, formatDateRange, formatFollowers } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:    'success',

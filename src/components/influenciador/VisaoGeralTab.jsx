@@ -6,7 +6,7 @@ import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import AreaStackedChart from '../charts/AreaStackedChart.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
 import { GROWTH_SERIES } from '../../mocks/dashboard.js'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
 export default function VisaoGeralTab({ influenciador: inf }) {
   const { t } = useTranslation()

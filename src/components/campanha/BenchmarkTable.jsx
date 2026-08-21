@@ -5,8 +5,8 @@ import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Table from '../ui/Table.jsx'
-import { findInfluenciador, formatFollowers } from '../../mocks/influenciadores.js'
-import { formatBudget } from '../../mocks/campanhas.js'
+import { findInfluenciador } from '../../mocks/influenciadores.js'
+import { formatFollowers, formatBudget } from '../../lib/format.js'
 
 function PercentBar({ value, color }) {
   return (

@@ -12,8 +12,8 @@ import Card, { CardLabel } from '../components/ui/Card.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import WizardStepper from '../components/campanha/WizardStepper.jsx'
 import { PlatformBadgeList } from '../components/icons/PlatformIcons.jsx'
-import { INFLUENCIADORES, formatFollowers } from '../mocks/influenciadores.js'
-import { formatBudget, formatDateRange } from '../mocks/campanhas.js'
+import { INFLUENCIADORES } from '../mocks/influenciadores.js'
+import { formatFollowers, formatBudget, formatDateRange } from '../lib/format.js'
 
 // =============================================================================
 // Step 1: Detalhes

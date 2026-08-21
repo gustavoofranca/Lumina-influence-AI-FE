@@ -32,5 +32,3 @@ export const EQUIPE = [
     role: 'viewer',  status: 'pending', joinedAt: '2026-05-06',
   },
 ]
-
-export const ROLE_KEYS = ['admin', 'manager', 'analyst', 'viewer']

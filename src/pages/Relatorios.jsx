@@ -9,7 +9,7 @@ import Search from '../components/ui/Search.jsx'
 import Card, { CardLabel, CardTitle } from '../components/ui/Card.jsx'
 import Toast from '../components/ui/Toast.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
-import { formatDateRange } from '../mocks/campanhas.js'
+import { formatDateRange } from '../lib/format.js'
 import { useApi } from '../hooks/useApi.js'
 import { listReports, downloadReport } from '../services/reports.js'
 
