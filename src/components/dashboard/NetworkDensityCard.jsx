@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import { Maximize2 } from 'lucide-react'
+import { Maximize2, Network } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel } from '../ui/Card.jsx'
 import Button from '../ui/Button.jsx'
-import { NETWORK_DENSITY } from '../../mocks/dashboard.js'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 
 /**
  * NodeMapPreview — visualização decorativa de nós conectados.
@@ -66,9 +67,29 @@ function NodeMapPreview() {
   )
 }
 
-export default function NetworkDensityCard({ data }) {
+export default function NetworkDensityCard({ data, loading = false }) {
   const { t } = useTranslation()
-  const { value, total, connected } = data || NETWORK_DENSITY
+
+  if (loading) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
+        <Skeleton className="h-16 w-40" rounded="rounded-xl" />
+        <Skeleton className="h-48" rounded="rounded-2xl" />
+      </Card>
+    )
+  }
+
+  if (!data) {
+    return (
+      <Card glass>
+        <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
+        <EmptyState icon={Network} title={t('dashboard.networkDensity.empty')} />
+      </Card>
+    )
+  }
+
+  const { value, total, connected } = data
 
   return (
     <Card glass className="flex flex-col gap-5">

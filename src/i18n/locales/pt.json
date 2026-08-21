@@ -704,6 +704,7 @@
     "label": "OVERVIEW",
     "title": "Network Resonance",
     "liveSync": "LIVE SYNC",
+    "empty":     "KPIs indisponíveis no momento.",
     "filters": {
       "period":      "Período",
       "period7d":    "7 dias",
@@ -723,7 +724,8 @@
       "title":     "Growth Trajectory",
       "subtitle":  "Alcance orgânico vs tráfego pago",
       "organic":   "Alcance Orgânico",
-      "paid":      "Tráfego Pago"
+      "paid":      "Tráfego Pago",
+      "empty":     "Sem dados de alcance no período selecionado."
     },
     "diagnostic": {
       "label":           "DIAGNÓSTICO EM DESTAQUE",
@@ -735,7 +737,8 @@
         "botAlert":  "AI Alert: Bot detection"
       },
       "coherenceLabel": "BRAND COHERENCE SCORE",
-      "viewAnalysis":   "Ver análise completa"
+      "viewAnalysis":   "Ver análise completa",
+      "empty":          "Nenhuma análise de IA disponível ainda."
     },
     "topNetworks": {
       "title":    "Top Performing Networks",
@@ -751,12 +754,14 @@
       "viralLow":    "Baixo",
       "statusActive":     "Ativo",
       "statusMonitoring": "Monitorar",
-      "statusRisk":       "Em risco"
+      "statusRisk":       "Em risco",
+      "empty":            "Nenhum influenciador com atividade no período."
     },
     "networkDensity": {
       "label":    "NETWORK DENSITY",
       "subtitle": "{{connected}} de {{total}} criadores conectados",
-      "expand":   "Expand Node Map"
+      "expand":   "Expand Node Map",
+      "empty":    "Densidade indisponível — conecte uma conta social."
     }
   },
   "app": {

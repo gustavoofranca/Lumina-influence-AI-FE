@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   const { data: overview, loading, error } = useApi(
     () => getOverview({ period, campaignId: campaign }), [period, campaign])
-  const { data: density } = useApi(getNetworkDensity, [])
+  const { data: density, loading: loadingDensity } = useApi(getNetworkDensity, [])
   const { data: campaignOpts } = useApi(getCampaignOptions, [])
 
   const campaignOptions = (campaignOpts || [{ value: 'all', name: t('dashboard.filters.allCampaigns') }])
@@ -42,20 +42,20 @@ export default function Dashboard() {
       {/* Linha 1: Growth (2 cols) + Diagnostico em destaque (1 col) */}
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <GrowthCard period={period} data={overview?.growth} />
+          <GrowthCard data={overview?.growth} loading={loading} />
         </div>
         <div>
-          <DiagnosticHighlightCard data={overview?.featured} />
+          <DiagnosticHighlightCard data={overview?.featured} loading={loading} />
         </div>
       </section>
 
       {/* Linha 2: Top Networks (2 cols) + Network Density (1 col) */}
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <TopNetworksTable data={overview?.topNetworks} />
+          <TopNetworksTable data={overview?.topNetworks} loading={loading} />
         </div>
         <div>
-          <NetworkDensityCard data={density} />
+          <NetworkDensityCard data={density} loading={loadingDensity} />
         </div>
       </section>
     </div>

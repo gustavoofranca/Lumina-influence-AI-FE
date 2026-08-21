@@ -1,8 +1,10 @@
 /**
- * Mocks especificos do Dashboard (Etapa 5).
- * Reaproveita influenciadores do mock central.
+ * Mocks remanescentes de séries do dashboard.
+ *
+ * O Dashboard já consome a API — o que sobra aqui alimenta apenas o preview de
+ * relatório e a aba de visão geral do influenciador, telas ainda não integradas.
+ * Sai junto com elas.
  */
-import { INFLUENCIADORES } from './influenciadores.js'
 
 export const KPIS = [
   { key: 'roi',        value: '428%',     change:  12.4, changeType: 'positive' },
@@ -34,30 +36,3 @@ export const GROWTH_SERIES = {
     { x: 'Mai', organic: 2150000, paid:  720000 },
   ],
 }
-
-// Diagnostico em destaque — referencia o influenciador #001
-export const HIGHLIGHTED_DIAGNOSIS = {
-  influencerId: 'inf-001',
-  analysisId: 'PX-9921',
-  thumbnail: null, // sem imagem real — usaremos overlay com gradiente
-  transcript: 'E olha só esse novo gadget — três meses testando e ele realmente entregou. Para quem trabalha o dia inteiro com tarefas pesadas, vale cada centavo do investimento. Vou deixar o link na bio com 15% off.',
-  pills: [
-    { key: 'retention', variant: 'success' },
-    { key: 'sentiment', variant: 'success' },
-    { key: 'botAlert',  variant: 'danger' },
-  ],
-  brandCoherence: 92,
-}
-
-// Top performing networks — top 6 por resonanceScore
-export const TOP_NETWORKS = [...INFLUENCIADORES]
-  .sort((a, b) => b.resonanceScore - a.resonanceScore)
-  .slice(0, 6)
-
-export const NETWORK_DENSITY = {
-  value: 84,
-  total: 23,
-  connected: 19,
-}
-
-// Filtros disponíveis

@@ -7,7 +7,6 @@ import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
-import { TOP_NETWORKS } from '../../mocks/dashboard.js'
 import { formatFollowers } from '../../lib/format.js'
 
 const VIRAL_CONFIG = {
@@ -42,10 +41,10 @@ function ScoreCell({ value }) {
   )
 }
 
-export default function TopNetworksTable({ data }) {
+export default function TopNetworksTable({ data, loading = false }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const rows = data || TOP_NETWORKS
+  const rows = loading ? [] : data || []
 
   const columns = [
     {
@@ -110,6 +109,7 @@ export default function TopNetworksTable({ data }) {
         data={rows}
         onRowClick={(row) => navigate(`/app/influenciadores/${row.id}`)}
         getRowKey={(row) => row.id}
+        emptyState={loading ? t('common.loading') : t('dashboard.topNetworks.empty')}
         className="!border-0"
       />
     </Card>
