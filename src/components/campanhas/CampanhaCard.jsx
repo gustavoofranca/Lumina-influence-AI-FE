@@ -7,7 +7,6 @@ import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
 import { formatBudget, formatDateRange } from '../../lib/format.js'
-import { findInfluenciador } from '../../mocks/influenciadores.js'
 
 const STATUS_VARIANT = {
   active:    'success',
@@ -16,23 +15,20 @@ const STATUS_VARIANT = {
   completed: 'neutral',
 }
 
-function StackedAvatars({ ids, max = 4 }) {
-  const visible = ids.slice(0, max)
-  const extra   = Math.max(0, ids.length - max)
+function StackedAvatars({ participants, max = 4 }) {
+  const visible = participants.slice(0, max)
+  const extra   = Math.max(0, participants.length - max)
   return (
     <div className="flex items-center">
-      {visible.map((id, i) => {
-        const inf = findInfluenciador(id)
-        return (
-          <span
-            key={id}
-            className={cn('inline-block', i > 0 && '-ml-2', 'ring-2 ring-bg-surface rounded-full')}
-            style={{ zIndex: visible.length - i }}
-          >
-            <Avatar name={inf?.name || '?'} size="sm" />
-          </span>
-        )
-      })}
+      {visible.map((p, i) => (
+        <span
+          key={p.influenciadorId}
+          className={cn('inline-block', i > 0 && '-ml-2', 'ring-2 ring-bg-surface rounded-full')}
+          style={{ zIndex: visible.length - i }}
+        >
+          <Avatar name={p.name} size="sm" />
+        </span>
+      ))}
       {extra > 0 && (
         <span className="-ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-800 text-[10px] font-bold text-neutral-300 ring-2 ring-bg-surface">
           +{extra}
@@ -57,7 +53,7 @@ function MetaRow({ icon: Icon, label, value }) {
 export default function CampanhaCard({ campanha }) {
   const { t, i18n } = useTranslation()
   const c = campanha
-  const ids = c.participations.map((p) => p.influenciadorId)
+  const participants = c.participations || []
 
   return (
     <Link
@@ -105,10 +101,10 @@ export default function CampanhaCard({ campanha }) {
       {/* Footer: avatars + progresso */}
       <div className="mt-5 flex items-center justify-between gap-3 border-t border-neutral-700/60 pt-4">
         <div className="flex items-center gap-3">
-          <StackedAvatars ids={ids} />
+          <StackedAvatars participants={participants} />
           <span className="text-xs text-text-muted">
             <Users size={11} className="mr-1 inline" />
-            {t('campanhas.list.card.influencers', { count: ids.length })}
+            {t('campanhas.list.card.influencers', { count: participants.length })}
           </span>
         </div>
         <ArrowUpRight

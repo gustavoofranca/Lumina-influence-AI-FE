@@ -426,7 +426,7 @@
         "influencers_other": "{{count}} criadores",
         "budget":            "Orçamento",
         "period":            "Período",
-        "progress":          "Progresso"
+        "progress":          "Período decorrido"
       }
     },
     "status": {
@@ -438,7 +438,6 @@
     "detail": {
       "back": "Campanhas",
       "header": {
-        "industry": "Setor",
         "period":   "Período",
         "budget":   "Orçamento",
         "posts":    "Posts",
@@ -453,7 +452,8 @@
         "title":    "Influenciadores da campanha",
         "subtitle": "KPIs resumidos por criador",
         "posts":    "posts",
-        "cost":     "investido"
+        "cost":     "investido",
+        "empty":    "Nenhum influenciador vinculado a esta campanha"
       },
       "benchmark": {
         "title":    "Benchmarking",
@@ -467,19 +467,20 @@
           "sentiment":    "Sentimento",
           "score":        "Score IA",
           "cost":         "Custo"
-        }
+        },
+        "empty":    "Sem dados de benchmarking para esta campanha"
       },
       "radar": {
         "title":    "Radar de Performance",
         "subtitle": "Comparação multidimensional dos criadores",
         "axes": {
-          "brandCoherence":  "Brand Coherence",
-          "sentimentIndex":  "Sentiment",
-          "resonanceScore":  "Resonance",
-          "engagement":      "Engagement",
-          "organicReach":    "Organic Reach",
-          "botSafety":       "Bot Safety"
-        }
+          "reach":       "Alcance",
+          "engagement":  "Engajamento",
+          "sentiment":   "Sentimento",
+          "coherence":   "Coerência de Marca",
+          "organic":     "Alcance Orgânico"
+        },
+        "empty":    "Sem métricas suficientes para comparar os criadores"
       }
     },
     "wizard": {

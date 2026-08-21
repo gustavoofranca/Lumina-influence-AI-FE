@@ -4,6 +4,11 @@ import { api } from '../lib/api.js'
 // status do back (active|paused|archived) -> status visual do front (active|monitoring|risk)
 const STATUS_MAP = { active: 'active', paused: 'monitoring', archived: 'risk' }
 
+/** Único lugar que traduz status de influenciador — usado também por campanhas. */
+export function adaptInfluencerStatus(status) {
+  return STATUS_MAP[status] || 'active'
+}
+
 export function adaptInfluencer(i) {
   const m = i.metrics || {}
   const handle = i.social_accounts?.[0]?.handle

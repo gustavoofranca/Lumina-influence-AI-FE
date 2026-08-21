@@ -1,30 +1,50 @@
-/** Serviço de campanhas — adapta a API pro formato dos mocks. */
+/** Serviço de campanhas — adapta a API pro formato que os componentes esperam. */
 import { api } from '../lib/api.js'
+import { adaptInfluencerStatus } from './influencers.js'
 
 // status do back (draft|active|ended|cancelled) -> status do front (planning|active|completed|paused)
 const STATUS_MAP = { draft: 'planning', active: 'active', ended: 'completed', cancelled: 'paused' }
-const STATUS_PROGRESS = { active: 64, completed: 100, paused: 35, planning: 0 }
 
-export function adaptCampaign(c, participations = []) {
+/**
+ * Progresso da campanha pela fração do período já decorrida.
+ * A API não guarda progresso de entregáveis — derivar do calendário é o único
+ * número honesto disponível. Campanha em planejamento não começou: 0.
+ */
+function periodProgress(startDate, endDate, status) {
+  if (status === 'planning' || !startDate || !endDate) return 0
+
+  const start = new Date(startDate).getTime()
+  const end   = new Date(endDate).getTime()
+  if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return 0
+
+  const elapsed = Date.now() - start
+  return Math.max(0, Math.min(100, Math.round((elapsed / (end - start)) * 100)))
+}
+
+/** Participante como a API devolve na listagem/detalhe: só identidade. */
+function adaptParticipant(p) {
+  return { influenciadorId: p.influencer_id, name: p.display_name }
+}
+
+export function adaptCampaign(c) {
   const status = STATUS_MAP[c.status] || 'active'
   return {
     id: c.id,
     name: c.title || c.brand_name,
     brand: c.brand_name,
-    industry: '',
     startDate: c.period_start,
     endDate: c.period_end,
     budget: Math.round((c.budget_brl_cents || 0) / 100),
     status,
     description: c.title || c.brand_name,
-    progress: STATUS_PROGRESS[status] ?? 0,
-    participations,
+    progress: periodProgress(c.period_start, c.period_end, status),
+    participations: (c.participants || []).map(adaptParticipant),
   }
 }
 
 export async function listCampaigns() {
   const res = await api.get('/campaigns', { params: { per_page: 100 } })
-  return res.data.map((c) => adaptCampaign(c))
+  return res.data.map(adaptCampaign)
 }
 
 export async function getCampaign(id) {
@@ -32,23 +52,74 @@ export async function getCampaign(id) {
   return adaptCampaign(res.data)
 }
 
-/** Benchmarking adaptado pra tabela (rows no formato que o BenchmarkTable espera). */
+/** Uma linha de benchmarking: métrica + identidade do participante. */
+function adaptBenchmarkRow(r) {
+  return {
+    id:             r.influencer_id,
+    name:           r.display_name,
+    handle:         r.handle || '',
+    niche:          r.niche || '',
+    status:         adaptInfluencerStatus(r.status),
+    platforms:      r.platforms || [],
+    followers:      r.followers ?? 0,
+    totalReach:     r.total_reach ?? 0,
+    organicReach:   r.organic_pct ?? 0,
+    paidReach:      r.paid_pct ?? 0,
+    engagement:     r.engagement_rate ?? 0,
+    sentimentScore: Math.round(r.sentiment_index_pct ?? 0),
+    brandCoherence: Math.round(r.brand_coherence ?? 0),
+    botProbability: Math.round(r.bot_probability ?? 0),
+    resonanceScore: Math.round(r.ai_score ?? 0),
+    posts:          r.posts_count ?? 0,
+    deliverables:   r.deliverables || '',
+    cost:           Math.round((r.cost_brl_cents || 0) / 100),
+  }
+}
+
+/**
+ * Pivota o radar da API (uma série por influenciador) pro formato do gráfico
+ * (uma linha por eixo). As dimensões vêm da própria resposta — não invente
+ * eixo que o back-end não mede.
+ */
+export function adaptRadar(radar) {
+  const dimensions = radar?.dimensions || []
+  const series     = radar?.series || []
+  if (!dimensions.length || !series.length) return { data: [], entities: [] }
+
+  const data = dimensions.map((dimension, i) => {
+    const row = { axis: dimension }
+    series.forEach((s) => { row[s.influencer_id] = s.values?.[i] ?? 0 })
+    return row
+  })
+
+  return {
+    data,
+    entities: series.map((s) => ({ key: s.influencer_id, label: s.name })),
+  }
+}
+
+/**
+ * Totais da campanha somados das linhas de benchmarking.
+ * A API não tem endpoint de agregado por campanha — a soma dos participantes
+ * é o mesmo número, calculado sobre o dado que ela já devolve.
+ */
+export function sumTotals(rows) {
+  if (!rows.length) return { posts: 0, totalReach: 0, avgSentiment: 0 }
+
+  const sentiment = rows.reduce((acc, r) => acc + r.sentimentScore, 0) / rows.length
+  return {
+    posts:        rows.reduce((acc, r) => acc + r.posts, 0),
+    totalReach:   rows.reduce((acc, r) => acc + r.totalReach, 0),
+    avgSentiment: Math.round(sentiment),
+  }
+}
+
 export async function getCampaignBenchmarking(id) {
   const res = await api.get(`/campaigns/${id}/benchmarking`)
-  const d = res.data
+  const rows = res.data.influencers.map(adaptBenchmarkRow)
   return {
-    campaign: adaptCampaign(d.campaign),
-    rows: d.influencers.map((r) => ({
-      id: r.influencer_id,
-      name: r.display_name,
-      handle: '',
-      totalReach: r.total_reach,
-      organicReach: r.organic_pct,
-      paidReach: r.paid_pct,
-      engagement: r.engagement_rate,
-      sentimentScore: Math.round(r.sentiment_index_pct ?? 0),
-      resonanceScore: Math.round(r.ai_score ?? 0),
-      cost: Math.round((r.cost_brl_cents || 0) / 100),
-    })),
+    rows,
+    radar:  adaptRadar(res.data.radar),
+    totals: sumTotals(rows),
   }
 }

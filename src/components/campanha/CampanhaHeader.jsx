@@ -8,6 +8,9 @@ import Button from '../ui/Button.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
 import { formatBudget, formatDateRange, formatFollowers } from '../../lib/format.js'
 
+// Marcador de ausência de dado — melhor que zero, que seria uma afirmação.
+const EMPTY = '—'
+
 const STATUS_VARIANT = {
   active:    'success',
   planning:  'info',
@@ -29,9 +32,11 @@ function MetaCell({ label, value, accent = false }) {
   )
 }
 
-export default function CampanhaHeader({ campanha }) {
+export default function CampanhaHeader({ campanha, metrics }) {
   const { t, i18n } = useTranslation()
   const c = campanha
+  // Os totais vêm do benchmarking, que carrega depois da campanha.
+  const m = metrics
 
   return (
     <header className={cn(
@@ -78,11 +83,7 @@ export default function CampanhaHeader({ campanha }) {
       </div>
 
       {/* Grid de metas */}
-      <div className="relative mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
-        <MetaCell
-          label={t('campanhas.detail.header.industry')}
-          value={c.industry}
-        />
+      <div className="relative mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
         <MetaCell
           label={t('campanhas.detail.header.period')}
           value={formatDateRange(c.startDate, c.endDate, i18n.language)}
@@ -94,15 +95,15 @@ export default function CampanhaHeader({ campanha }) {
         />
         <MetaCell
           label={t('campanhas.detail.header.posts')}
-          value={c.metrics.posts}
+          value={m?.posts ?? EMPTY}
         />
         <MetaCell
           label={t('campanhas.detail.header.reach')}
-          value={c.metrics.totalReach > 0 ? formatFollowers(c.metrics.totalReach) : '—'}
+          value={m?.totalReach ? formatFollowers(m.totalReach) : EMPTY}
         />
         <MetaCell
           label={t('campanhas.detail.header.sentiment')}
-          value={c.metrics.avgSentiment > 0 ? `${c.metrics.avgSentiment}%` : '—'}
+          value={m?.avgSentiment ? `${m.avgSentiment}%` : EMPTY}
         />
       </div>
 

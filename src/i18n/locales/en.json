@@ -426,7 +426,7 @@
         "influencers_other": "{{count}} creators",
         "budget":            "Budget",
         "period":            "Period",
-        "progress":          "Progress"
+        "progress":          "Period elapsed"
       }
     },
     "status": {
@@ -438,7 +438,6 @@
     "detail": {
       "back": "Campaigns",
       "header": {
-        "industry": "Industry",
         "period":   "Period",
         "budget":   "Budget",
         "posts":    "Posts",
@@ -453,7 +452,8 @@
         "title":    "Campaign Influencers",
         "subtitle": "Per-creator summary KPIs",
         "posts":    "posts",
-        "cost":     "invested"
+        "cost":     "invested",
+        "empty":    "No influencer linked to this campaign"
       },
       "benchmark": {
         "title":    "Benchmarking",
@@ -467,19 +467,20 @@
           "sentiment":    "Sentiment",
           "score":        "AI Score",
           "cost":         "Cost"
-        }
+        },
+        "empty":    "No benchmarking data for this campaign"
       },
       "radar": {
         "title":    "Performance Radar",
         "subtitle": "Multi-dimensional creator comparison",
         "axes": {
-          "brandCoherence":  "Brand Coherence",
-          "sentimentIndex":  "Sentiment",
-          "resonanceScore":  "Resonance",
-          "engagement":      "Engagement",
-          "organicReach":    "Organic Reach",
-          "botSafety":       "Bot Safety"
-        }
+          "reach":       "Reach",
+          "engagement":  "Engagement",
+          "sentiment":   "Sentiment",
+          "coherence":   "Brand Coherence",
+          "organic":     "Organic Reach"
+        },
+        "empty":    "Not enough metrics to compare creators"
       }
     },
     "wizard": {

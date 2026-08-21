@@ -239,7 +239,7 @@ function Step3Review({ data, selected, t, locale }) {
           </div>
           <div>
             <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
-              {t('campanhas.detail.header.industry')}
+              {t('campanhas.wizard.step1.industry')}
             </span>
             <div className="mt-0.5 font-semibold text-neutral-100">{data.industry || '—'}</div>
           </div>
