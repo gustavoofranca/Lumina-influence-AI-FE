@@ -1,0 +1,20 @@
+# Nome fixo do projeto: mantém esta stack única, seja qual for o diretório
+# de onde o `docker compose` é chamado.
+name: lumina
+
+# Ambiente de desenvolvimento do front-end (Vite dev server).
+# Uso: docker compose up -d  →  http://localhost:5173
+# O back-end não entra aqui: o navegador roda no host e fala com ele por
+# VITE_API_BASE_URL (http://localhost:5000/api/v1), a porta publicada pelo BE.
+services:
+  frontend:
+    build: .
+    container_name: lumina-frontend
+    env_file: .env
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      # Volume anônimo: preserva o node_modules instalado na imagem, que o
+      # bind mount acima esconderia.
+      - /app/node_modules
