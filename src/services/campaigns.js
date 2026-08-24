@@ -1,6 +1,7 @@
 /** Serviço de campanhas — adapta a API pro formato que os componentes esperam. */
 import { api } from '../lib/api.js'
 import { adaptInfluencerStatus } from './influencers.js'
+import { parseApiDate } from '../lib/format.js'
 
 // status do back (draft|active|ended|cancelled) -> status do front (planning|active|completed|paused)
 const STATUS_MAP = { draft: 'planning', active: 'active', ended: 'completed', cancelled: 'paused' }
@@ -13,8 +14,8 @@ const STATUS_MAP = { draft: 'planning', active: 'active', ended: 'completed', ca
 function periodProgress(startDate, endDate, status) {
   if (status === 'planning' || !startDate || !endDate) return 0
 
-  const start = new Date(startDate).getTime()
-  const end   = new Date(endDate).getTime()
+  const start = parseApiDate(startDate).getTime()
+  const end   = parseApiDate(endDate).getTime()
   if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return 0
 
   const elapsed = Date.now() - start
