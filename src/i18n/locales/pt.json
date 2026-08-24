@@ -491,6 +491,7 @@
       "next":         "Continuar",
       "previous":     "Voltar",
       "create":       "Criar campanha",
+      "creating":     "Criando...",
       "step1": {
         "label":      "Detalhes",
         "title":      "Detalhes da campanha",
@@ -499,14 +500,10 @@
         "namePh":     "Verão 2026 — Tech Lifestyle",
         "brand":      "Marca cliente",
         "brandPh":    "NovaTech Pro",
-        "industry":   "Setor",
-        "industryPh": "Tecnologia",
         "startDate":  "Início",
         "endDate":    "Fim",
         "budget":     "Orçamento (R$)",
-        "budgetPh":   "240000",
-        "description": "Descrição (opcional)",
-        "descriptionPh": "Resumo da estratégia e objetivos da campanha..."
+        "budgetPh":   "240000"
       },
       "step2": {
         "label":    "Influenciadores",
@@ -515,7 +512,8 @@
         "search":   "Buscar criador por nome ou @...",
         "selected_one":   "{{count}} selecionado",
         "selected_other": "{{count}} selecionados",
-        "selectAtLeastOne": "Selecione ao menos um influenciador."
+        "selectAtLeastOne": "Selecione ao menos um influenciador.",
+        "empty":            "Nenhum influenciador cadastrado nesta agência"
       },
       "step3": {
         "label":    "Confirmação",

@@ -47,6 +47,26 @@ export async function listCampaigns() {
   return res.data.map(adaptCampaign)
 }
 
+/**
+ * Cria a campanha e os vínculos com os criadores numa chamada só.
+ * `participants` carrega o cachê em centavos — o back-end grava em
+ * campaign_influencers.fee_brl_cents.
+ */
+export async function createCampaign({ name, brand, startDate, endDate, budget, participants }) {
+  const res = await api.post('/campaigns', {
+    brand_name: brand,
+    title: name,
+    period_start: startDate,
+    period_end: endDate,
+    budget_brl_cents: Math.round(Number(budget) * 100),
+    participants: participants.map((p) => ({
+      influencer_id: p.id,
+      fee_brl_cents: p.feeCents,
+    })),
+  })
+  return adaptCampaign(res.data)
+}
+
 export async function getCampaign(id) {
   const res = await api.get(`/campaigns/${id}`)
   return adaptCampaign(res.data)

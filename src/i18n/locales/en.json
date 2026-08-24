@@ -491,6 +491,7 @@
       "next":         "Continue",
       "previous":     "Back",
       "create":       "Create campaign",
+      "creating":     "Creating...",
       "step1": {
         "label":      "Details",
         "title":      "Campaign details",
@@ -499,14 +500,10 @@
         "namePh":     "Summer 2026 — Tech Lifestyle",
         "brand":      "Client brand",
         "brandPh":    "NovaTech Pro",
-        "industry":   "Industry",
-        "industryPh": "Technology",
         "startDate":  "Start",
         "endDate":    "End",
         "budget":     "Budget (R$)",
-        "budgetPh":   "240000",
-        "description": "Description (optional)",
-        "descriptionPh": "Summary of strategy and campaign objectives..."
+        "budgetPh":   "240000"
       },
       "step2": {
         "label":    "Influencers",
@@ -515,7 +512,8 @@
         "search":   "Search creator by name or @...",
         "selected_one":   "{{count}} selected",
         "selected_other": "{{count}} selected",
-        "selectAtLeastOne": "Select at least one influencer."
+        "selectAtLeastOne": "Select at least one influencer.",
+        "empty":            "No influencer registered for this agency"
       },
       "step3": {
         "label":    "Confirmation",
