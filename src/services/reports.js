@@ -32,6 +32,21 @@ export async function createReport({ campaignId, title, periodStart, periodEnd, 
   return adaptReport(res.data)
 }
 
+/**
+ * Conteúdo do relatório para a prévia — mesma fonte que gera o PDF.
+ * Não grava nada: só monta o documento com os dados atuais da campanha.
+ */
+export async function previewReport({ campaignId, title, periodStart, periodEnd, sections }) {
+  const res = await api.post('/reports/preview', {
+    campaign_id: campaignId,
+    title,
+    period_start: periodStart,
+    period_end: periodEnd,
+    sections,
+  })
+  return res.data
+}
+
 /** Baixa o PDF (com Authorization) e dispara o download no browser. */
 export async function downloadReport(id, filename = 'relatorio.pdf') {
   const resp = await api.raw(`/reports/${id}/download`)

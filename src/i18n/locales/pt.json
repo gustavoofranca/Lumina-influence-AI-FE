@@ -347,8 +347,10 @@
       "previous":   "Voltar",
       "generate":   "Gerar relatório",
       "exportPdf":  "Exportar PDF",
-      "exportSoon": "Funcionalidade disponível em breve",
-      "exportSoonDesc": "A exportação para PDF será habilitada na próxima versão.",
+      "exporting":  "Gerando PDF...",
+      "exported":   "Relatório gerado",
+      "exportedDesc": "O download do PDF começou.",
+      "defaultTitle": "Relatório de Performance",
       "step1": {
         "label":    "Campanha",
         "title":    "Escolha a campanha",
@@ -407,6 +409,10 @@
       "benchmarkTitle":  "Benchmarking de criadores",
       "diagnosticTitle": "Diagnóstico qualitativo",
       "recommendationsTitle": "Recomendações da IA",
+      "summaryText": "Esta auditoria cobre {{creators}} criadores da campanha {{brand}}. Em média, {{organic}}% do alcance foi orgânico e o índice de sentimento ficou em {{sentiment}}%. Alcance total auditado: {{reach}} em {{posts}} posts.",
+      "growthPeriod": "Período",
+      "noPosts": "Nenhum post da campanha no período selecionado.",
+      "noAnalysis": "Nenhuma análise de IA registrada para os criadores desta campanha.",
       "footerNote":      "Documento gerado por Lumina Influence AI · Confidencial"
     }
   },
