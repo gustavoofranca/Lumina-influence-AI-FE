@@ -37,7 +37,6 @@ export function adaptCampaign(c) {
     endDate: c.period_end,
     budget: Math.round((c.budget_brl_cents || 0) / 100),
     status,
-    description: c.title || c.brand_name,
     progress: periodProgress(c.period_start, c.period_end, status),
     participations: (c.participants || []).map(adaptParticipant),
   }

@@ -79,11 +79,6 @@ export default function CampanhaCard({ campanha }) {
         </Badge>
       </div>
 
-      {/* Descricao */}
-      <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-text-secondary">
-        {c.description}
-      </p>
-
       {/* Meta grid: período + orçamento */}
       <div className="mt-5 grid grid-cols-2 gap-4">
         <MetaRow

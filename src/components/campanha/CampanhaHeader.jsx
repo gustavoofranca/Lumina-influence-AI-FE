@@ -67,9 +67,6 @@ export default function CampanhaHeader({ campanha, metrics }) {
           <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
             {c.name}
           </h1>
-          <p className="max-w-2xl text-sm leading-relaxed text-text-secondary">
-            {c.description}
-          </p>
         </div>
 
         <div className="flex items-center gap-2 lg:shrink-0">
