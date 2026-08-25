@@ -1,32 +1,54 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
 import { AuthProvider }  from './context/AuthContext.jsx'
 import ProtectedRoute    from './components/auth/ProtectedRoute.jsx'
 import AppLayout         from './layouts/AppLayout.jsx'
 
-import LandingPage    from './pages/LandingPage.jsx'
-import Welcome        from './pages/Welcome.jsx'
-import DesignSystem   from './pages/DesignSystem.jsx'
-import Login          from './pages/Login.jsx'
-import AuthCallback    from './pages/AuthCallback.jsx'
-import Cadastro       from './pages/Cadastro.jsx'
-import RecuperarSenha from './pages/RecuperarSenha.jsx'
-import Dashboard      from './pages/Dashboard.jsx'
-import Influenciadores from './pages/Influenciadores.jsx'
-import Influenciador  from './pages/Influenciador.jsx'
-import Campanhas      from './pages/Campanhas.jsx'
-import Campanha       from './pages/Campanha.jsx'
-import NovaCampanha   from './pages/NovaCampanha.jsx'
-import Relatorios     from './pages/Relatorios.jsx'
-import NovoRelatorio  from './pages/NovoRelatorio.jsx'
-import Configuracoes  from './pages/Configuracoes.jsx'
-import NotFound       from './pages/NotFound.jsx'
+// Entradas públicas ficam no bundle inicial: são o primeiro paint e carregar
+// sob demanda causaria um flash de spinner na abertura.
+import LandingPage from './pages/LandingPage.jsx'
+import Login       from './pages/Login.jsx'
+
+/**
+ * O resto das telas entra por code splitting. O peso está no app interno
+ * (gráficos, tabelas, wizards) — quem chega na landing não precisa baixar
+ * nada disso.
+ */
+const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
+const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
+const RecuperarSenha   = lazy(() => import('./pages/RecuperarSenha.jsx'))
+const Dashboard        = lazy(() => import('./pages/Dashboard.jsx'))
+const Influenciadores  = lazy(() => import('./pages/Influenciadores.jsx'))
+const Influenciador    = lazy(() => import('./pages/Influenciador.jsx'))
+const Campanhas        = lazy(() => import('./pages/Campanhas.jsx'))
+const Campanha         = lazy(() => import('./pages/Campanha.jsx'))
+const NovaCampanha     = lazy(() => import('./pages/NovaCampanha.jsx'))
+const Relatorios       = lazy(() => import('./pages/Relatorios.jsx'))
+const NovoRelatorio    = lazy(() => import('./pages/NovoRelatorio.jsx'))
+const Configuracoes    = lazy(() => import('./pages/Configuracoes.jsx'))
+const Welcome          = lazy(() => import('./pages/Welcome.jsx'))
+const DesignSystem     = lazy(() => import('./pages/DesignSystem.jsx'))
+const NotFound         = lazy(() => import('./pages/NotFound.jsx'))
 
 // Placeholders das rotas que ainda nao tem tela dedicada
 function Placeholder({ label }) {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
       <p className="text-text-muted">{label} — em breve</p>
+    </div>
+  )
+}
+
+/** Exibido enquanto o chunk da rota carrega. */
+function RouteFallback() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <div
+        role="status"
+        aria-label="Carregando"
+        className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent"
+      />
     </div>
   )
 }
@@ -45,45 +67,47 @@ function AnimatedRoutes() {
 
   return (
     <div key={sectionKey} className="animate-fade-in">
-      <Routes>
-        {/* Público */}
-        <Route path="/"                element={<LandingPage />} />
-        <Route path="/login"           element={<Login />} />
-        <Route path="/auth/callback"   element={<AuthCallback />} />
-        <Route path="/cadastro"        element={<Cadastro />} />
-        <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          {/* Público */}
+          <Route path="/"                element={<LandingPage />} />
+          <Route path="/login"           element={<Login />} />
+          <Route path="/auth/callback"   element={<AuthCallback />} />
+          <Route path="/cadastro"        element={<Cadastro />} />
+          <Route path="/recuperar-senha" element={<RecuperarSenha />} />
 
-        {/* App interno — protegido + AppLayout */}
-        <Route
-          path="/app"
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index                element={<Navigate to="/app/dashboard" replace />} />
-          <Route path="dashboard"     element={<Dashboard />} />
-          <Route path="influenciadores"  element={<Influenciadores />} />
-          <Route path="influenciadores/:id" element={<Influenciador />} />
-          <Route path="campanhas"     element={<Campanhas />} />
-          <Route path="campanhas/nova" element={<NovaCampanha />} />
-          <Route path="campanhas/:id" element={<Campanha />} />
-          <Route path="diagnostico"   element={<Placeholder label="Diagnóstico IA" />} />
-          <Route path="relatorios"    element={<Relatorios />} />
-          <Route path="relatorios/novo" element={<NovoRelatorio />} />
-          <Route path="configuracoes" element={<Configuracoes />} />
-          <Route path="configuracoes/:tab" element={<Configuracoes />} />
-          <Route path="suporte"       element={<Placeholder label="Suporte" />} />
-        </Route>
+          {/* App interno — protegido + AppLayout */}
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index                element={<Navigate to="/app/dashboard" replace />} />
+            <Route path="dashboard"     element={<Dashboard />} />
+            <Route path="influenciadores"  element={<Influenciadores />} />
+            <Route path="influenciadores/:id" element={<Influenciador />} />
+            <Route path="campanhas"     element={<Campanhas />} />
+            <Route path="campanhas/nova" element={<NovaCampanha />} />
+            <Route path="campanhas/:id" element={<Campanha />} />
+            <Route path="diagnostico"   element={<Placeholder label="Diagnóstico IA" />} />
+            <Route path="relatorios"    element={<Relatorios />} />
+            <Route path="relatorios/novo" element={<NovoRelatorio />} />
+            <Route path="configuracoes" element={<Configuracoes />} />
+            <Route path="configuracoes/:tab" element={<Configuracoes />} />
+            <Route path="suporte"       element={<Placeholder label="Suporte" />} />
+          </Route>
 
-        {/* Utilitários */}
-        <Route path="/welcome"       element={<Welcome />} />
-        <Route path="/design-system" element={<DesignSystem />} />
+          {/* Utilitários */}
+          <Route path="/welcome"       element={<Welcome />} />
+          <Route path="/design-system" element={<DesignSystem />} />
 
-        {/* 404 catch-all */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* 404 catch-all */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </div>
   )
 }
