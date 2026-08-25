@@ -6,11 +6,6 @@
     "backHome":  "Voltar ao início",
     "goDashboard": "Abrir dashboard"
   },
-  "app": {
-    "name": "Lumina Influence AI",
-    "tagline": "Pare de queimar verba com métricas de vaidade.",
-    "description": "Auditoria de performance de influenciadores digitais com IA multimodal."
-  },
   "common": {
     "login": "Entrar",
     "logout": "Sair",
@@ -193,39 +188,33 @@
       "preferencias":  "Preferências"
     },
     "save":   "Salvar alterações",
+    "saving": "Salvando...",
     "cancel": "Cancelar",
     "perfil": {
       "title":        "Dados pessoais",
       "subtitle":     "Atualize suas informações de perfil.",
       "name":         "Nome completo",
       "email":        "E-mail",
-      "role":         "Cargo",
-      "phone":        "Telefone",
-      "avatarLabel":  "Foto de perfil",
-      "changeAvatar": "Trocar foto",
-      "removeAvatar": "Remover"
+      "emailFromOauth": "Vem do provedor de login e não pode ser alterado aqui."
     },
     "agencia": {
       "title":       "Dados da agência",
       "subtitle":    "Informações fiscais e de contato.",
       "name":        "Razão social",
-      "tradeName":   "Nome fantasia",
-      "cnpj":        "CNPJ",
-      "website":     "Site",
-      "industry":    "Setor principal",
-      "address":     "Endereço",
-      "description": "Descrição"
+      "cnpj":        "CNPJ"
     },
     "integracoes": {
       "title":     "Integrações",
-      "subtitle":  "Conecte plataformas via OAuth oficial para auditar criadores em tempo real.",
+      "subtitle":  "Contas dos criadores conectadas por OAuth oficial, agrupadas por plataforma.",
       "connected":     "Conectado",
       "disconnected":  "Não conectado",
       "lastSync":      "Última sincronização",
-      "scopes":        "Permissões",
-      "connect":       "Conectar conta",
-      "disconnect":    "Desconectar",
-      "addNew":        "Conectar nova conta"
+      "neverSynced":   "Nunca sincronizada",
+      "followers":     "Seguidores somados",
+      "accounts_one":  "{{count}} conta conectada",
+      "accounts_other": "{{count}} contas conectadas",
+      "empty":         "Nenhuma conta conectada",
+      "emptyHint":     "As contas são conectadas na tela de cada influenciador, onde o criador é identificado."
     },
     "equipe": {
       "title":     "Equipe",
@@ -233,21 +222,16 @@
       "invite":    "Convidar membro",
       "active_one":   "{{count}} ativo",
       "active_other": "{{count}} ativos",
-      "pending_one":   "{{count}} pendente",
-      "pending_other": "{{count}} pendentes",
       "columns": {
         "member":   "Membro",
         "role":     "Cargo",
-        "status":   "Status",
         "joinedAt": "Entrou em"
       },
-      "statusActive":  "Ativo",
-      "statusPending": "Pendente",
       "remove":        "Remover",
+      "empty":         "Nenhum membro nesta agência",
       "roles": {
         "admin":   "Administrador",
-        "manager": "Gestor",
-        "analyst": "Analista",
+        "member": "Membro",
         "viewer":  "Apenas leitura"
       },
       "inviteModal": {
@@ -256,31 +240,39 @@
         "email":     "E-mail",
         "emailPh":   "novo.membro@agencia.com",
         "roleLabel": "Cargo na agência",
-        "send":      "Enviar convite"
+        "name":      "Nome",
+        "send":      "Enviar convite",
+        "sending":   "Enviando..."
       }
     },
     "plano": {
       "title":       "Plano e cobrança",
       "subtitle":    "Gerencie sua assinatura e limites de uso.",
       "current":     "Plano atual",
-      "renewsOn":    "Renova em",
+      "perMonth":    "/mês",
+      "none":        "Nenhum plano associado a esta agência",
+      "billingSoon": "Troca de plano e cobrança ainda não estão disponíveis.",
+      "features": {
+        "influencers":  "Até {{count}} influenciadores monitorados",
+        "analyses":     "{{count}} análises de IA por mês",
+        "benchmarking": "Benchmarking entre criadores"
+      },
       "usage": {
         "title":        "Uso no mês corrente",
         "subtitle":     "Renovado mensalmente conforme o ciclo de cobrança.",
         "influencers":  "Influenciadores monitorados",
         "analyses":     "Análises IA realizadas",
-        "reports":      "Relatórios gerados",
-        "of":           "de"
+        "reports":      "Relatórios gerados"
       },
       "actions": {
-        "upgrade":       "Upgrade para Enterprise",
-        "manageBilling": "Gerenciar cobrança",
-        "cancel":        "Cancelar assinatura"
+        "upgrade":       "Upgrade para Enterprise"
       }
     },
     "preferencias": {
       "title":    "Preferências",
       "subtitle": "Idioma, notificações e fuso horário.",
+      "sessionOnly": "O fuso vale para esta sessão. Guardá-lo entre acessos depende de um campo novo no banco.",
+      "notificationsNotSent": "Estas preferências ainda não são gravadas nem disparam envio — o produto não tem serviço de notificação nesta fase.",
       "language": {
         "title":    "Idioma da interface",
         "subtitle": "Aplica-se imediatamente em todas as telas."
@@ -779,6 +771,9 @@
     }
   },
   "app": {
+    "name": "Lumina Influence AI",
+    "tagline": "Pare de queimar verba com métricas de vaidade.",
+    "description": "Auditoria de performance de influenciadores digitais com IA multimodal.",
     "nav": {
       "dashboard":       "Visão Geral",
       "influenciadores": "Influenciadores",

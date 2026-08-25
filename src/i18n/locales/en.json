@@ -6,11 +6,6 @@
     "backHome":  "Back to home",
     "goDashboard": "Open dashboard"
   },
-  "app": {
-    "name": "Lumina Influence AI",
-    "tagline": "Stop burning budget on vanity metrics.",
-    "description": "Influencer performance auditing powered by multimodal AI."
-  },
   "common": {
     "login": "Sign in",
     "logout": "Sign out",
@@ -193,39 +188,33 @@
       "preferencias":  "Preferences"
     },
     "save":   "Save changes",
+    "saving": "Saving...",
     "cancel": "Cancel",
     "perfil": {
       "title":        "Personal data",
       "subtitle":     "Update your profile information.",
       "name":         "Full name",
       "email":        "Email",
-      "role":         "Role",
-      "phone":        "Phone",
-      "avatarLabel":  "Profile picture",
-      "changeAvatar": "Change photo",
-      "removeAvatar": "Remove"
+      "emailFromOauth": "Comes from the login provider and cannot be changed here."
     },
     "agencia": {
       "title":       "Agency data",
       "subtitle":    "Tax and contact information.",
       "name":        "Legal name",
-      "tradeName":   "Trade name",
-      "cnpj":        "Tax ID",
-      "website":     "Website",
-      "industry":    "Main industry",
-      "address":     "Address",
-      "description": "Description"
+      "cnpj":        "Tax ID"
     },
     "integracoes": {
       "title":     "Integrations",
-      "subtitle":  "Connect platforms via official OAuth to audit creators in real time.",
+      "subtitle":  "Creator accounts connected via official OAuth, grouped by platform.",
       "connected":     "Connected",
       "disconnected":  "Not connected",
       "lastSync":      "Last sync",
-      "scopes":        "Permissions",
-      "connect":       "Connect account",
-      "disconnect":    "Disconnect",
-      "addNew":        "Connect new account"
+      "neverSynced":   "Never synced",
+      "followers":     "Combined followers",
+      "accounts_one":  "{{count}} connected account",
+      "accounts_other": "{{count}} connected accounts",
+      "empty":         "No connected account",
+      "emptyHint":     "Accounts are connected from each influencer screen, where the creator is identified."
     },
     "equipe": {
       "title":     "Team",
@@ -233,21 +222,16 @@
       "invite":    "Invite member",
       "active_one":   "{{count}} active",
       "active_other": "{{count}} active",
-      "pending_one":   "{{count}} pending",
-      "pending_other": "{{count}} pending",
       "columns": {
         "member":   "Member",
         "role":     "Role",
-        "status":   "Status",
         "joinedAt": "Joined on"
       },
-      "statusActive":  "Active",
-      "statusPending": "Pending",
       "remove":        "Remove",
+      "empty":         "No member in this agency",
       "roles": {
         "admin":   "Administrator",
-        "manager": "Manager",
-        "analyst": "Analyst",
+        "member": "Member",
         "viewer":  "Read only"
       },
       "inviteModal": {
@@ -256,31 +240,39 @@
         "email":     "Email",
         "emailPh":   "new.member@agency.com",
         "roleLabel": "Agency role",
-        "send":      "Send invitation"
+        "name":      "Name",
+        "send":      "Send invitation",
+        "sending":   "Sending..."
       }
     },
     "plano": {
       "title":       "Plan and billing",
       "subtitle":    "Manage your subscription and usage limits.",
       "current":     "Current plan",
-      "renewsOn":    "Renews on",
+      "perMonth":    "/month",
+      "none":        "No plan associated with this agency",
+      "billingSoon": "Plan changes and billing are not available yet.",
+      "features": {
+        "influencers":  "Up to {{count}} monitored influencers",
+        "analyses":     "{{count}} AI analyses per month",
+        "benchmarking": "Creator benchmarking"
+      },
       "usage": {
         "title":        "Current month usage",
         "subtitle":     "Renewed monthly per billing cycle.",
         "influencers":  "Monitored influencers",
         "analyses":     "AI analyses run",
-        "reports":      "Reports generated",
-        "of":           "of"
+        "reports":      "Reports generated"
       },
       "actions": {
-        "upgrade":       "Upgrade to Enterprise",
-        "manageBilling": "Manage billing",
-        "cancel":        "Cancel subscription"
+        "upgrade":       "Upgrade to Enterprise"
       }
     },
     "preferencias": {
       "title":    "Preferences",
       "subtitle": "Language, notifications and timezone.",
+      "sessionOnly": "The time zone applies to this session. Keeping it across visits needs a new database field.",
+      "notificationsNotSent": "These preferences are not stored yet and do not trigger any sending — the product has no notification service at this stage.",
       "language": {
         "title":    "Interface language",
         "subtitle": "Applies immediately across all screens."
@@ -779,6 +771,9 @@
     }
   },
   "app": {
+    "name": "Lumina Influence AI",
+    "tagline": "Stop burning budget on vanity metrics.",
+    "description": "Influencer performance auditing powered by multimodal AI.",
     "nav": {
       "dashboard":       "Overview",
       "influenciadores": "Influencers",
