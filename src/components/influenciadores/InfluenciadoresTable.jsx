@@ -6,6 +6,7 @@ import { cn } from '../../lib/cn.js'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
 
@@ -119,7 +120,7 @@ function Pagination({ page, totalPages, onPageChange }) {
 }
 
 export default function InfluenciadoresTable({
-  data, page, pageSize, onPageChange,
+  data, page, pageSize, onPageChange, loading = false,
 }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -193,6 +194,20 @@ export default function InfluenciadoresTable({
       ),
     },
   ]
+
+  // Carregando não é vazio: afirmar "nenhum influenciador" antes da resposta
+  // chegar é dizer algo falso — visível com banco remoto, onde a espera é longa.
+  if (loading) {
+    return (
+      <div className="overflow-hidden rounded-2xl border border-neutral-700/60 bg-neutral-800/40 p-4">
+        <div className="flex flex-col gap-2">
+          {Array.from({ length: pageSize }, (_, i) => (
+            <Skeleton key={i} className="h-14" rounded="rounded-xl" />
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   if (data.length === 0) {
     return (

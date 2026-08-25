@@ -92,9 +92,11 @@ export default function Influenciadores() {
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs text-text-muted">
-            {t('influenciadores.filters.results', { count: filtered.length })}
-          </span>
+          {!loading && (
+            <span className="text-xs text-text-muted">
+              {t('influenciadores.filters.results', { count: filtered.length })}
+            </span>
+          )}
           <Button variant="primary" leftIcon={Plus} onClick={() => setModalOpen(true)}>
             {t('influenciadores.addNew')}
           </Button>
@@ -123,6 +125,7 @@ export default function Influenciadores() {
         page={page}
         pageSize={PAGE_SIZE}
         onPageChange={setPage}
+        loading={loading}
       />
 
       {/* Modal */}
