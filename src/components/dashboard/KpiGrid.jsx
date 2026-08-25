@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { TrendingUp, Zap, Wallet, Users } from 'lucide-react'
 
+import Card from '../ui/Card.jsx'
+import EmptyState from '../ui/EmptyState.jsx'
 import KpiCard from '../ui/KpiCard.jsx'
-import { KPIS } from '../../mocks/dashboard.js'
+import Skeleton from '../ui/Skeleton.jsx'
 
 const ICON_BY_KEY = {
   roi:        TrendingUp,
@@ -11,13 +13,36 @@ const ICON_BY_KEY = {
   active:     Users,
 }
 
-export default function KpiGrid({ data }) {
+const GRID = 'grid gap-4 sm:grid-cols-2 xl:grid-cols-4'
+
+// Quantos placeholders exibir durante o carregamento — o back-end sempre
+// devolve estes quatro indicadores.
+const KPI_SLOTS = 4
+
+export default function KpiGrid({ data, loading = false }) {
   const { t } = useTranslation()
-  const kpis = data || KPIS
+
+  if (loading) {
+    return (
+      <div className={GRID}>
+        {Array.from({ length: KPI_SLOTS }, (_, i) => (
+          <Skeleton key={i} className="h-28" rounded="rounded-2xl" />
+        ))}
+      </div>
+    )
+  }
+
+  if (!data?.length) {
+    return (
+      <Card glass>
+        <EmptyState compact icon={TrendingUp} title={t('dashboard.empty')} />
+      </Card>
+    )
+  }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {kpis.map((kpi) => (
+    <div className={GRID}>
+      {data.map((kpi) => (
         <KpiCard
           key={kpi.key}
           label={t(`dashboard.kpis.${kpi.key}`)}

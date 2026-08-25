@@ -8,7 +8,7 @@ import Button from '../ui/Button.jsx'
 import Badge from '../ui/Badge.jsx'
 import StatusIndicator from '../ui/StatusIndicator.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -22,6 +22,8 @@ const STATUS_INDICATOR_COLOR = {
 }
 
 function formatDate(iso, locale) {
+  // Sem data, `new Date(null)` cairia na epoch e exibiria 31/12/1969.
+  if (!iso) return null
   try {
     return new Date(iso).toLocaleDateString(locale === 'pt' ? 'pt-BR' : 'en-US', {
       day: '2-digit', month: 'short', year: 'numeric',
@@ -66,9 +68,11 @@ export default function InfluenciadorHeader({ influenciador }) {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <span className="text-label">{t('influenciador.header.deepAnalysis')}</span>
-              <span className="text-[10px] font-mono text-text-muted">
-                · {t('influenciador.header.sessionId')} #{inf.lastAnalysisId}
-              </span>
+              {inf.lastAnalysisId && (
+                <span className="text-[10px] font-mono text-text-muted">
+                  · {t('influenciador.header.sessionId')} #{inf.lastAnalysisId}
+                </span>
+              )}
             </div>
 
             <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
@@ -90,9 +94,12 @@ export default function InfluenciadorHeader({ influenciador }) {
                 label={t(`influenciadores.status.${inf.status}`)}
                 color={STATUS_INDICATOR_COLOR[inf.status]}
               />
-              <span className="text-text-muted">
-                {t('influenciador.header.lastAnalysis')} {formatDate(inf.lastAnalysis, i18n.language)}
-              </span>
+              {formatDate(inf.lastAnalysis, i18n.language) && (
+                <span className="text-text-muted">
+                  {t('influenciador.header.lastAnalysis')}{' '}
+                  {formatDate(inf.lastAnalysis, i18n.language)}
+                </span>
+              )}
             </div>
           </div>
         </div>

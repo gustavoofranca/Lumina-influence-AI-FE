@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Activity } from 'lucide-react'
 
 import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
+import EmptyState from '../../ui/EmptyState.jsx'
+import Skeleton from '../../ui/Skeleton.jsx'
 import Tabs from '../../ui/Tabs.jsx'
-import { SENTIMENT_24H, SENTIMENT_7D, SENTIMENT_CLUSTERS, KEYWORDS } from '../../../mocks/analise.js'
 
 /**
  * Mapeia uma intensidade [0..1] para uma cor no gradiente brand
@@ -93,11 +95,13 @@ function KeywordPill({ word, weight, sentiment }) {
   )
 }
 
-export default function SentimentHeatmap() {
+export default function SentimentHeatmap({ clusters, keywords, timeline, loading = false }) {
   const { t } = useTranslation()
   const [scope, setScope] = useState('24h')
 
-  const data = scope === '24h' ? SENTIMENT_24H : SENTIMENT_7D
+  // A API ainda nao expoe serie temporal de sentimento. Sem ela, as abas de
+  // 24h/7d nao tem o que alternar, entao nem sao renderizadas.
+  const data = timeline?.[scope]
 
   const scopeTabs = [
     { value: '24h', label: t('influenciador.sentiment.tab24h') },
@@ -112,18 +116,24 @@ export default function SentimentHeatmap() {
           <CardTitle className="mt-1.5">{t('influenciador.sentiment.title')}</CardTitle>
           <p className="mt-1 text-sm text-text-secondary">{t('influenciador.sentiment.subtitle')}</p>
         </div>
-        <Tabs variant="pills" items={scopeTabs} value={scope} onChange={setScope} size="sm" />
+        {data && <Tabs variant="pills" items={scopeTabs} value={scope} onChange={setScope} size="sm" />}
       </div>
 
       {/* Heatmap principal */}
-      <HeatmapBars data={data} />
+      {loading ? (
+        <Skeleton className="h-40" rounded="rounded-xl" />
+      ) : data ? (
+        <HeatmapBars data={data} />
+      ) : (
+        <EmptyState compact icon={Activity} title={t('influenciador.sentiment.timelineEmpty')} />
+      )}
 
       {/* Clusters + keywords lado a lado */}
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <CardLabel>{t('influenciador.sentiment.clustersTitle')}</CardLabel>
           <ul className="mt-3 space-y-2.5">
-            {SENTIMENT_CLUSTERS.map((c) => (
+            {(clusters || []).map((c) => (
               <ClusterRow key={c.key} cluster={c} t={t} />
             ))}
           </ul>
@@ -132,7 +142,7 @@ export default function SentimentHeatmap() {
         <div>
           <CardLabel>{t('influenciador.sentiment.keywordsTitle')}</CardLabel>
           <div className="mt-3 flex flex-wrap items-center gap-1.5">
-            {KEYWORDS.map((k) => (
+            {(keywords || []).map((k) => (
               <KeywordPill key={k.word} {...k} />
             ))}
           </div>

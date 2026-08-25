@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next'
+import { TrendingUp } from 'lucide-react'
 
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 import AreaStackedChart from '../charts/AreaStackedChart.jsx'
-import { GROWTH_SERIES } from '../../mocks/dashboard.js'
 
 function LegendItem({ color, label }) {
   return (
@@ -13,9 +15,8 @@ function LegendItem({ color, label }) {
   )
 }
 
-export default function GrowthCard({ period, data: dataProp }) {
+export default function GrowthCard({ data, loading = false }) {
   const { t } = useTranslation()
-  const data = dataProp && dataProp.length ? dataProp : (GROWTH_SERIES[period] || GROWTH_SERIES['7d'])
 
   const series = [
     { key: 'organic', label: t('dashboard.growth.organic'), color: '#7C3AED' },
@@ -37,7 +38,13 @@ export default function GrowthCard({ period, data: dataProp }) {
       </div>
 
       <div className="-mx-2">
-        <AreaStackedChart data={data} series={series} height={280} />
+        {loading ? (
+          <Skeleton className="h-[280px]" rounded="rounded-xl" />
+        ) : data?.length ? (
+          <AreaStackedChart data={data} series={series} height={280} />
+        ) : (
+          <EmptyState icon={TrendingUp} title={t('dashboard.growth.empty')} />
+        )}
       </div>
     </Card>
   )

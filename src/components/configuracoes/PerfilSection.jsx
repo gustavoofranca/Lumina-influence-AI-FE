@@ -1,32 +1,60 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { User, Mail, Briefcase, Phone, Trash2, Upload } from 'lucide-react'
+import { User, Mail } from 'lucide-react'
 
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Input from '../ui/Input.jsx'
 import Button from '../ui/Button.jsx'
 import Avatar from '../ui/Avatar.jsx'
+import Badge from '../ui/Badge.jsx'
+import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
+import { updateOwnProfile } from '../../services/team.js'
 
+const ROLE_VARIANT = {
+  admin:  'organic',
+  member: 'paid',
+  viewer: 'neutral',
+}
+
+/**
+ * Dados pessoais.
+ *
+ * `users` guarda nome, e-mail, avatar e papel. O e-mail vem do provedor OAuth
+ * e não é editável aqui; o papel só muda pela tela de Equipe, por um admin.
+ * Cargo e telefone não têm coluna — eram texto fixo no código, exibido como se
+ * fosse do usuário.
+ */
 export default function PerfilSection({ onSave }) {
   const { t } = useTranslation()
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
 
-  const [fields, setFields] = useState({
-    name:  user?.name  || 'Usuário Lumina',
-    email: user?.email || 'voce@lumina-agency.com.br',
-    role:  'Founder & Head of Strategy',
-    phone: '+55 (11) 99876-5432',
-  })
+  const [name, setName] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState(null)
 
-  const set = (key) => (e) =>
-    setFields((p) => ({ ...p, [key]: e.target.value }))
+  useEffect(() => {
+    if (user) setName(user.name)
+  }, [user])
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    if (!user) return
+    setSaving(true)
+    setError(null)
+    try {
+      await updateOwnProfile(user.id, { name })
+      await refreshUser()
+      onSave?.()
+    } catch (err) {
+      setError(err)
+    } finally {
+      setSaving(false)
+    }
+  }
 
   return (
-    <form
-      onSubmit={(e) => { e.preventDefault(); onSave?.() }}
-      className="flex flex-col gap-6"
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-6">
       <Card glass className="flex flex-col gap-5">
         <div>
           <CardLabel>{t('configuracoes.perfil.title')}</CardLabel>
@@ -36,55 +64,45 @@ export default function PerfilSection({ onSave }) {
           </p>
         </div>
 
-        {/* Avatar */}
-        <div>
-          <span className="text-label">{t('configuracoes.perfil.avatarLabel')}</span>
-          <div className="mt-3 flex items-center gap-4">
-            <Avatar name={fields.name} size="xl" />
-            <div className="flex flex-col gap-2">
-              <Button type="button" variant="secondary" size="sm" leftIcon={Upload}>
-                {t('configuracoes.perfil.changeAvatar')}
-              </Button>
-              <Button type="button" variant="outlined" size="sm" leftIcon={Trash2}>
-                {t('configuracoes.perfil.removeAvatar')}
-              </Button>
-            </div>
+        <ApiErrorBanner error={error} />
+
+        <div className="flex items-center gap-4">
+          <Avatar name={name || user?.name || '?'} size="xl" />
+          <div>
+            <p className="font-display text-lg font-bold text-neutral-100">
+              {user?.name}
+            </p>
+            {user?.role && (
+              <Badge variant={ROLE_VARIANT[user.role]} uppercase={false} className="mt-1">
+                {t(`configuracoes.equipe.roles.${user.role}`, user.role)}
+              </Badge>
+            )}
           </div>
         </div>
 
-        {/* Form */}
         <div className="grid gap-4 lg:grid-cols-2">
           <Input
             label={t('configuracoes.perfil.name')}
             leftIcon={User}
-            value={fields.name}
-            onChange={set('name')}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
           />
           <Input
             label={t('configuracoes.perfil.email')}
             leftIcon={Mail}
             type="email"
-            value={fields.email}
-            onChange={set('email')}
-          />
-          <Input
-            label={t('configuracoes.perfil.role')}
-            leftIcon={Briefcase}
-            value={fields.role}
-            onChange={set('role')}
-          />
-          <Input
-            label={t('configuracoes.perfil.phone')}
-            leftIcon={Phone}
-            value={fields.phone}
-            onChange={set('phone')}
+            value={user?.email || ''}
+            readOnly
+            disabled
+            helperText={t('configuracoes.perfil.emailFromOauth')}
           />
         </div>
       </Card>
 
       <div className="flex justify-end">
-        <Button type="submit" variant="primary">
-          {t('configuracoes.save')}
+        <Button type="submit" variant="primary" disabled={saving || !user}>
+          {saving ? t('configuracoes.saving') : t('configuracoes.save')}
         </Button>
       </div>
     </form>

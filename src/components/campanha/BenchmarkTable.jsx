@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { BarChart3 } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Table from '../ui/Table.jsx'
-import { findInfluenciador, formatFollowers } from '../../mocks/influenciadores.js'
-import { formatBudget } from '../../mocks/campanhas.js'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
+import { formatFollowers, formatBudget } from '../../lib/format.js'
 
 function PercentBar({ value, color }) {
   return (
@@ -19,29 +21,9 @@ function PercentBar({ value, color }) {
   )
 }
 
-export default function BenchmarkTable({ campanha, rows: rowsProp }) {
+export default function BenchmarkTable({ rows, loading = false }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-
-  // Usa as linhas reais (vindas do benchmarking da API) se fornecidas;
-  // senão constrói do mock (participations + findInfluenciador).
-  const rows = rowsProp || (campanha?.participations || []).map((p) => {
-    const inf = findInfluenciador(p.influenciadorId)
-    if (!inf) return null
-    const totalReach = Math.round(inf.followers * (inf.engagement / 100) * 0.85)
-    return {
-      id: inf.id,
-      name: inf.name,
-      handle: inf.handle,
-      totalReach,
-      organicReach: inf.organicReach,
-      paidReach:    inf.paidReach,
-      engagement:   inf.engagement,
-      sentimentScore: inf.sentimentScore,
-      resonanceScore: inf.resonanceScore,
-      cost: p.cost,
-    }
-  }).filter(Boolean)
 
   const columns = [
     {
@@ -131,13 +113,19 @@ export default function BenchmarkTable({ campanha, rows: rowsProp }) {
         <p className="mt-1 text-sm text-text-secondary">{t('campanhas.detail.benchmark.subtitle')}</p>
       </div>
 
-      <Table
-        columns={columns}
-        data={rows}
-        getRowKey={(row) => row.id}
-        onRowClick={(row) => navigate(`/app/influenciadores/${row.id}`)}
-        className="!border-0"
-      />
+      {loading ? (
+        <Skeleton className="h-72" rounded="rounded-2xl" />
+      ) : !rows?.length ? (
+        <EmptyState compact icon={BarChart3} title={t('campanhas.detail.benchmark.empty')} />
+      ) : (
+        <Table
+          columns={columns}
+          data={rows}
+          getRowKey={(row) => row.id}
+          onRowClick={(row) => navigate(`/app/influenciadores/${row.id}`)}
+          className="!border-0"
+        />
+      )}
     </Card>
   )
 }

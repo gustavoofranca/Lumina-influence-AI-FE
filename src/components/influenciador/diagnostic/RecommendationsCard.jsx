@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Sparkles, Check, X } from 'lucide-react'
+import { Sparkles, Check, X, Lightbulb } from 'lucide-react'
 
 import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import Button from '../../ui/Button.jsx'
-import { RECOMMENDATIONS } from '../../../mocks/analise.js'
+import EmptyState from '../../ui/EmptyState.jsx'
+import Skeleton from '../../ui/Skeleton.jsx'
 
 const PRIORITY_STYLES = {
   high:   'bg-tertiary-500/15 text-tertiary-300 ring-tertiary-500/30',
@@ -70,9 +71,27 @@ function RecommendationItem({ rec, status, onAccept, onIgnore, t }) {
   )
 }
 
-export default function RecommendationsCard() {
+export default function RecommendationsCard({ data, loading = false }) {
   const { t } = useTranslation()
   const [decisions, setDecisions] = useState({}) // { [recId]: 'accepted' | 'ignored' }
+
+  if (loading) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('influenciador.recommendations.title')}</CardLabel>
+        <Skeleton className="h-40" rounded="rounded-xl" />
+      </Card>
+    )
+  }
+
+  if (!data?.length) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('influenciador.recommendations.title')}</CardLabel>
+        <EmptyState icon={Lightbulb} title={t('influenciador.recommendations.empty')} />
+      </Card>
+    )
+  }
 
   return (
     <Card glass className="flex flex-col gap-5">
@@ -83,7 +102,7 @@ export default function RecommendationsCard() {
       </div>
 
       <ul className="space-y-3">
-        {RECOMMENDATIONS.map((rec) => (
+        {data.map((rec) => (
           <RecommendationItem
             key={rec.id}
             rec={rec}

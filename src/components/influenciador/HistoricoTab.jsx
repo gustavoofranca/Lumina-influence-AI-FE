@@ -3,7 +3,8 @@ import { FileSearch, ChevronRight } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
-import { HISTORICO_ANALISES } from '../../mocks/analise.js'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 
 function formatDate(iso, locale) {
   try {
@@ -27,8 +28,26 @@ function ScoreBar({ value, label }) {
   )
 }
 
-export default function HistoricoTab() {
+export default function HistoricoTab({ data, loading = false }) {
   const { t, i18n } = useTranslation()
+
+  if (loading) {
+    return (
+      <Card glass>
+        <CardLabel>{t('influenciador.history.title')}</CardLabel>
+        <Skeleton className="mt-4 h-48" rounded="rounded-xl" />
+      </Card>
+    )
+  }
+
+  if (!data?.length) {
+    return (
+      <Card glass>
+        <CardLabel>{t('influenciador.history.title')}</CardLabel>
+        <EmptyState icon={FileSearch} title={t('influenciador.history.empty')} />
+      </Card>
+    )
+  }
 
   return (
     <Card glass>
@@ -43,7 +62,7 @@ export default function HistoricoTab() {
         {/* Linha vertical da timeline */}
         <span aria-hidden className="absolute left-2 top-2 bottom-2 w-px bg-gradient-to-b from-primary-500/40 via-primary-500/20 to-transparent" />
 
-        {HISTORICO_ANALISES.map((item, i) => (
+        {(data || []).map((item, i) => (
           <li key={item.id} className="relative">
             {/* Bolinha da timeline */}
             <span

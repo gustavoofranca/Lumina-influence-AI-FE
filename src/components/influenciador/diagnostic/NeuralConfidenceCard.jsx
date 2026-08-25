@@ -1,11 +1,31 @@
 import { useTranslation } from 'react-i18next'
+import { BrainCircuit } from 'lucide-react'
 
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import ProgressBar from '../../ui/ProgressBar.jsx'
-import { NEURAL_CONFIDENCE } from '../../../mocks/analise.js'
+import EmptyState from '../../ui/EmptyState.jsx'
+import Skeleton from '../../ui/Skeleton.jsx'
 
-export default function NeuralConfidenceCard() {
+export default function NeuralConfidenceCard({ data, loading = false }) {
   const { t } = useTranslation()
+
+  if (loading) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('influenciador.neuralConfidence.title')}</CardLabel>
+        <Skeleton className="h-32" rounded="rounded-xl" />
+      </Card>
+    )
+  }
+
+  if (!data?.length) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('influenciador.neuralConfidence.title')}</CardLabel>
+        <EmptyState icon={BrainCircuit} title={t('influenciador.neuralConfidence.empty')} />
+      </Card>
+    )
+  }
 
   return (
     <Card glass className="flex flex-col gap-5">
@@ -16,7 +36,7 @@ export default function NeuralConfidenceCard() {
       </div>
 
       <ul className="space-y-5">
-        {NEURAL_CONFIDENCE.map((row) => (
+        {data.map((row) => (
           <li key={row.key}>
             <ProgressBar
               label={t(`influenciador.neuralConfidence.${row.key}`)}

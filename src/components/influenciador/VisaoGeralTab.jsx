@@ -1,14 +1,15 @@
 import { useTranslation } from 'react-i18next'
+import { TrendingUp } from 'lucide-react'
 import { Users, Zap, Sparkles, Wallet } from 'lucide-react'
 
 import KpiCard from '../ui/KpiCard.jsx'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import AreaStackedChart from '../charts/AreaStackedChart.jsx'
+import EmptyState from '../ui/EmptyState.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
-import { GROWTH_SERIES } from '../../mocks/dashboard.js'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
-export default function VisaoGeralTab({ influenciador: inf }) {
+export default function VisaoGeralTab({ influenciador: inf, growth }) {
   const { t } = useTranslation()
 
   const series = [
@@ -53,7 +54,11 @@ export default function VisaoGeralTab({ influenciador: inf }) {
           <CardTitle className="mt-1.5">{t('dashboard.growth.title')}</CardTitle>
           <p className="mt-1 text-sm text-text-secondary">{t('dashboard.growth.subtitle')}</p>
           <div className="-mx-2 mt-5">
-            <AreaStackedChart data={GROWTH_SERIES['30d']} series={series} height={260} />
+            {growth?.length ? (
+              <AreaStackedChart data={growth} series={series} height={260} />
+            ) : (
+              <EmptyState icon={TrendingUp} title={t('influenciador.overview.growthEmpty')} />
+            )}
           </div>
         </Card>
 

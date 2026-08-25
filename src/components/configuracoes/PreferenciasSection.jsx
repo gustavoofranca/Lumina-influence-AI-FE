@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Globe, Clock, Moon } from 'lucide-react'
+import { Globe, Clock, Moon, Info } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Switch from '../ui/Switch.jsx'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
-import { TIMEZONES } from '../../mocks/agencia.js'
+import { TIMEZONES } from '../../lib/constants.js'
 
 function PrefRow({ icon: Icon, title, subtitle, children }) {
   return (
@@ -24,6 +24,23 @@ function PrefRow({ icon: Icon, title, subtitle, children }) {
         {children}
       </div>
     </div>
+  )
+}
+
+/**
+ * Aviso de que a preferência não é gravada.
+ *
+ * Nem `users` nem `agencies` têm coluna para fuso ou notificação, e o front não
+ * usa localStorage (proibido nesta fase). O controle funciona na sessão e
+ * volta ao padrão ao recarregar — dizer isso é melhor que deixar o usuário
+ * descobrir que a escolha dele foi esquecida.
+ */
+function SessionOnlyNote({ children }) {
+  return (
+    <p className="flex items-start gap-2 rounded-xl bg-neutral-900/40 px-3 py-2 text-xs leading-relaxed text-text-muted ring-1 ring-inset ring-neutral-800">
+      <Info size={13} className="mt-0.5 shrink-0" />
+      {children}
+    </p>
   )
 }
 
@@ -95,6 +112,8 @@ export default function PreferenciasSection() {
             </select>
           </PrefRow>
 
+          <SessionOnlyNote>{t('configuracoes.preferencias.sessionOnly')}</SessionOnlyNote>
+
           <PrefRow
             icon={Moon}
             title={t('configuracoes.preferencias.theme.title')}
@@ -144,6 +163,8 @@ export default function PreferenciasSection() {
             desc={t('configuracoes.preferencias.notifications.alerts.desc')}
           />
         </div>
+
+        <SessionOnlyNote>{t('configuracoes.preferencias.notificationsNotSent')}</SessionOnlyNote>
       </Card>
     </div>
   )

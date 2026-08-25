@@ -4,6 +4,11 @@ import { api } from '../lib/api.js'
 // status do back (active|paused|archived) -> status visual do front (active|monitoring|risk)
 const STATUS_MAP = { active: 'active', paused: 'monitoring', archived: 'risk' }
 
+/** Único lugar que traduz status de influenciador — usado também por campanhas. */
+export function adaptInfluencerStatus(status) {
+  return STATUS_MAP[status] || 'active'
+}
+
 export function adaptInfluencer(i) {
   const m = i.metrics || {}
   const handle = i.social_accounts?.[0]?.handle
@@ -75,4 +80,72 @@ export function adaptDiagnosticKpis(dk) {
     { key: 'safetyRating', value: dk.safety_rating || '—', hint: dk.safety_rating === 'A' ? 'Top tier' : undefined },
     { key: 'botProbability', value: String(round(dk.bot_probability)), suffix: '%' },
   ]
+}
+
+// A API nomeia as dimensões em snake_case; as chaves de tradução são camelCase.
+const NEURAL_KEY_MAP = {
+  script_accuracy:  'scriptAccuracy',
+  tone_matching:    'toneMatching',
+  demographic_sync: 'demographicSync',
+}
+
+const CLUSTER_KEY_MAP = {
+  technical_enthusiasm: 'technical',
+  purchase_intent:      'purchase',
+  neutral:              'neutral',
+  value_skepticism:     'skepticism',
+}
+
+export function adaptAudienceIntegrity(a) {
+  if (!a) return null
+  const totals = a.totals || {}
+  return {
+    organic:    a.organic ?? 0,
+    suspicious: a.suspicious ?? 0,
+    bots:       a.bots ?? 0,
+    totals: {
+      verifiedHumans: totals.verified_humans ?? 0,
+      suspicious:     totals.suspicious ?? 0,
+      bots:           totals.bots ?? 0,
+    },
+  }
+}
+
+export function adaptNeuralConfidence(rows) {
+  return (rows || []).map((r) => ({
+    key: NEURAL_KEY_MAP[r.key] || r.key,
+    value: Math.round(r.value ?? 0),
+  }))
+}
+
+export function adaptSentimentClusters(rows) {
+  return (rows || []).map((r) => ({
+    key: CLUSTER_KEY_MAP[r.key] || r.key,
+    value: Math.round(r.value ?? 0),
+  }))
+}
+
+export function adaptRecommendations(rows) {
+  return (rows || []).map((r, i) => ({
+    id: `rec-${i + 1}`,
+    priority: r.priority,
+    title: r.title,
+    description: r.description,
+  }))
+}
+
+/**
+ * Nuvem de palavras. A API devolve peso absoluto (contagem), e o componente
+ * dimensiona a pílula numa escala 0-1 — daí a normalização pelo maior peso.
+ * O sentimento por palavra não é classificado pelo back-end, então todas saem
+ * como neutras em vez de receberem uma cor que afirmaria algo não medido.
+ */
+export function adaptKeywords(rows) {
+  const list = rows || []
+  const max = Math.max(1, ...list.map((k) => k.weight ?? 0))
+  return list.map((k) => ({
+    word: k.word,
+    weight: (k.weight ?? 0) / max,
+    sentiment: 'neutral',
+  }))
 }

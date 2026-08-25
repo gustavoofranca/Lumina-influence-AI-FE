@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Play, ArrowRight } from 'lucide-react'
+import { Play, ArrowRight, Sparkles } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
-import { findInfluenciador } from '../../mocks/influenciadores.js'
-import { HIGHLIGHTED_DIAGNOSIS } from '../../mocks/dashboard.js'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 
 function ReelThumbnail() {
   return (
@@ -43,11 +43,30 @@ function ReelThumbnail() {
   )
 }
 
-export default function DiagnosticHighlightCard({ data: dataProp }) {
+export default function DiagnosticHighlightCard({ data, loading = false }) {
   const { t } = useTranslation()
-  const data = dataProp || HIGHLIGHTED_DIAGNOSIS
-  const mockInf = findInfluenciador(data.influencerId)
-  const name = data.influencerName || mockInf?.name
+
+  if (loading) {
+    return (
+      <Card glass className="flex flex-col gap-5">
+        <CardLabel>{t('dashboard.diagnostic.label')}</CardLabel>
+        <Skeleton className="h-12" rounded="rounded-xl" />
+        <Skeleton className="h-40" rounded="rounded-2xl" />
+        <Skeleton className="h-16" rounded="rounded-xl" />
+      </Card>
+    )
+  }
+
+  if (!data) {
+    return (
+      <Card glass>
+        <CardLabel>{t('dashboard.diagnostic.label')}</CardLabel>
+        <EmptyState icon={Sparkles} title={t('dashboard.diagnostic.empty')} />
+      </Card>
+    )
+  }
+
+  const name = data.influencerName
 
   return (
     <Card glass className="flex flex-col gap-5">

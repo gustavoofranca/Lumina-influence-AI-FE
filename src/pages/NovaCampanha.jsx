@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, ArrowRight, Building2, Calendar, Wallet, Tag, Check, Search as SearchIcon, Sparkles, Megaphone } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Building2, Calendar, Wallet, Check, Sparkles, Megaphone, Users } from 'lucide-react'
 
 import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
@@ -11,9 +11,14 @@ import Avatar from '../components/ui/Avatar.jsx'
 import Card, { CardLabel } from '../components/ui/Card.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import WizardStepper from '../components/campanha/WizardStepper.jsx'
+import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
+import Skeleton from '../components/ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../components/icons/PlatformIcons.jsx'
-import { INFLUENCIADORES, formatFollowers } from '../mocks/influenciadores.js'
-import { formatBudget, formatDateRange } from '../mocks/campanhas.js'
+import { useApi } from '../hooks/useApi.js'
+import { listInfluencers } from '../services/influencers.js'
+import { createCampaign } from '../services/campaigns.js'
+import { formatFollowers, formatBudget, formatDateRange } from '../lib/format.js'
 
 // =============================================================================
 // Step 1: Detalhes
@@ -47,14 +52,6 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           error={errors.brand}
         />
         <Input
-          label={t('campanhas.wizard.step1.industry')}
-          placeholder={t('campanhas.wizard.step1.industryPh')}
-          leftIcon={Tag}
-          value={data.industry}
-          onChange={(e) => onChange('industry', e.target.value)}
-          error={errors.industry}
-        />
-        <Input
           label={t('campanhas.wizard.step1.startDate')}
           type="date"
           leftIcon={Calendar}
@@ -79,23 +76,6 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           onChange={(e) => onChange('budget', e.target.value)}
           error={errors.budget}
           containerClassName="lg:col-span-2"
-        />
-      </div>
-
-      <div>
-        <label className="mb-1.5 block text-label">
-          {t('campanhas.wizard.step1.description')}
-        </label>
-        <textarea
-          rows={3}
-          placeholder={t('campanhas.wizard.step1.descriptionPh')}
-          value={data.description}
-          onChange={(e) => onChange('description', e.target.value)}
-          className={cn(
-            'w-full rounded-xl bg-bg-input px-3.5 py-3 text-sm text-neutral-100',
-            'ring-1 ring-inset ring-neutral-700 transition-all duration-200',
-            'placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary-500 focus:shadow-glow-soft'
-          )}
         />
       </div>
     </Card>
@@ -145,16 +125,17 @@ function InfluenciadorRow({ inf, checked, onToggle }) {
   )
 }
 
-function Step2Influenciadores({ selected, onToggle, error, t }) {
+const LOADING_ROWS = 6
+
+function Step2Influenciadores({ influenciadores, loading, apiError, selected, onToggle, error, t }) {
   const [search, setSearch] = useState('')
 
   const filtered = useMemo(() => {
+    const all = influenciadores || []
     const q = search.trim().toLowerCase()
-    if (!q) return INFLUENCIADORES
-    return INFLUENCIADORES.filter((i) =>
-      `${i.name} ${i.handle}`.toLowerCase().includes(q)
-    )
-  }, [search])
+    if (!q) return all
+    return all.filter((i) => `${i.name} ${i.handle}`.toLowerCase().includes(q))
+  }, [influenciadores, search])
 
   return (
     <Card glass className="flex flex-col gap-5">
@@ -178,16 +159,28 @@ function Step2Influenciadores({ selected, onToggle, error, t }) {
 
       {error && <p className="text-xs font-medium text-tertiary-300">{error}</p>}
 
-      <div className="grid max-h-[480px] gap-2 overflow-y-auto pr-2 lg:grid-cols-2">
-        {filtered.map((inf) => (
-          <InfluenciadorRow
-            key={inf.id}
-            inf={inf}
-            checked={selected.has(inf.id)}
-            onToggle={onToggle}
-          />
-        ))}
-      </div>
+      <ApiErrorBanner error={apiError} />
+
+      {loading ? (
+        <div className="grid gap-2 lg:grid-cols-2">
+          {Array.from({ length: LOADING_ROWS }, (_, i) => (
+            <Skeleton key={i} className="h-[68px]" rounded="rounded-xl" />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
+        <EmptyState compact icon={Users} title={t('campanhas.wizard.step2.empty')} />
+      ) : (
+        <div className="grid max-h-[480px] gap-2 overflow-y-auto pr-2 lg:grid-cols-2">
+          {filtered.map((inf) => (
+            <InfluenciadorRow
+              key={inf.id}
+              inf={inf}
+              checked={selected.has(inf.id)}
+              onToggle={onToggle}
+            />
+          ))}
+        </div>
+      )}
     </Card>
   )
 }
@@ -195,8 +188,7 @@ function Step2Influenciadores({ selected, onToggle, error, t }) {
 // =============================================================================
 // Step 3: Confirmação
 // =============================================================================
-function Step3Review({ data, selected, t, locale }) {
-  const selectedInfs = INFLUENCIADORES.filter((i) => selected.has(i.id))
+function Step3Review({ data, selectedInfs, t, locale }) {
   const totalReach   = selectedInfs.reduce((sum, i) => sum + i.followers, 0)
   const budget       = Number(data.budget) || 0
   const perCreator   = selectedInfs.length > 0 ? Math.round(budget / selectedInfs.length) : 0
@@ -223,25 +215,14 @@ function Step3Review({ data, selected, t, locale }) {
             </h3>
           </div>
         </div>
-        {data.description && (
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">{data.description}</p>
-        )}
-        <div className="mt-4 grid grid-cols-2 gap-4 border-t border-neutral-700/60 pt-4 text-sm">
-          <div>
-            <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
-              {t('campanhas.detail.header.period')}
-            </span>
-            <div className="mt-0.5 font-semibold text-neutral-100">
-              {data.startDate && data.endDate
-                ? formatDateRange(data.startDate, data.endDate, locale)
-                : '—'}
-            </div>
-          </div>
-          <div>
-            <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
-              {t('campanhas.detail.header.industry')}
-            </span>
-            <div className="mt-0.5 font-semibold text-neutral-100">{data.industry || '—'}</div>
+        <div className="mt-4 border-t border-neutral-700/60 pt-4 text-sm">
+          <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
+            {t('campanhas.detail.header.period')}
+          </span>
+          <div className="mt-0.5 font-semibold text-neutral-100">
+            {data.startDate && data.endDate
+              ? formatDateRange(data.startDate, data.endDate, locale)
+              : '—'}
           </div>
         </div>
       </div>
@@ -300,13 +281,24 @@ export default function NovaCampanha() {
 
   const [step, setStep] = useState(1)
   const [data, setData] = useState({
-    name: '', brand: '', industry: '',
+    name: '', brand: '',
     startDate: '', endDate: '',
-    budget: '', description: '',
+    budget: '',
   })
-  const [selected, setSelected] = useState(new Set())
-  const [errors, setErrors]     = useState({})
-  const [success, setSuccess]   = useState(false)
+  const [selected, setSelected]     = useState(new Set())
+  const [errors, setErrors]         = useState({})
+  const [created, setCreated]       = useState(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
+
+  const { data: influenciadores, loading, error: listError } = useApi(
+    () => listInfluencers({ enriched: true }), []
+  )
+
+  const selectedInfs = useMemo(
+    () => (influenciadores || []).filter((i) => selected.has(i.id)),
+    [influenciadores, selected]
+  )
 
   const setField = (key, value) => {
     setData((p) => ({ ...p, [key]: value }))
@@ -324,7 +316,6 @@ export default function NovaCampanha() {
     const errs = {}
     if (!data.name.trim())     errs.name = t('campanhas.wizard.errors.required')
     if (!data.brand.trim())    errs.brand = t('campanhas.wizard.errors.required')
-    if (!data.industry.trim()) errs.industry = t('campanhas.wizard.errors.required')
     if (!data.startDate)       errs.startDate = t('campanhas.wizard.errors.required')
     if (!data.endDate)         errs.endDate = t('campanhas.wizard.errors.required')
     if (data.startDate && data.endDate && data.startDate >= data.endDate) {
@@ -353,9 +344,27 @@ export default function NovaCampanha() {
 
   const onBack = () => setStep((s) => Math.max(1, s - 1))
 
-  const onCreate = () => {
-    setSuccess(true)
-    setTimeout(() => navigate('/app/campanhas'), 1500)
+  const onCreate = async () => {
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      // O cachê por criador é o orçamento dividido em partes iguais — é o mesmo
+      // número que o passo 3 mostra e o usuário confirma. A API não tem campo
+      // para negociar valor individual ainda.
+      const budgetCents = Math.round(Number(data.budget) * 100)
+      const feeCents    = Math.floor(budgetCents / selectedInfs.length)
+
+      const campanha = await createCampaign({
+        ...data,
+        participants: selectedInfs.map((i) => ({ id: i.id, feeCents })),
+      })
+      setCreated(campanha)
+      setTimeout(() => navigate(`/app/campanhas/${campanha.id}`), 1200)
+    } catch (err) {
+      setSubmitError(err)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const steps = [
@@ -364,7 +373,7 @@ export default function NovaCampanha() {
     { key: 'step3', label: t('campanhas.wizard.step3.label') },
   ]
 
-  if (success) {
+  if (created) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
         <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-300 ring-1 ring-inset ring-emerald-500/30">
@@ -373,7 +382,7 @@ export default function NovaCampanha() {
         <h2 className="font-display text-2xl font-bold text-neutral-100">
           {t('campanhas.wizard.step3.createdSuccess')}
         </h2>
-        <p className="text-sm text-text-secondary">{data.name}</p>
+        <p className="text-sm text-text-secondary">{created.name}</p>
       </div>
     )
   }
@@ -403,11 +412,23 @@ export default function NovaCampanha() {
         </div>
       </header>
 
+      <ApiErrorBanner error={submitError} />
+
       {/* Conteudo do passo */}
       <div>
         {step === 1 && <Step1Detalhes data={data} errors={errors} onChange={setField} t={t} />}
-        {step === 2 && <Step2Influenciadores selected={selected} onToggle={toggleInf} error={errors.selection} t={t} />}
-        {step === 3 && <Step3Review data={data} selected={selected} t={t} locale={i18n.language} />}
+        {step === 2 && (
+          <Step2Influenciadores
+            influenciadores={influenciadores}
+            loading={loading}
+            apiError={listError}
+            selected={selected}
+            onToggle={toggleInf}
+            error={errors.selection}
+            t={t}
+          />
+        )}
+        {step === 3 && <Step3Review data={data} selectedInfs={selectedInfs} t={t} locale={i18n.language} />}
       </div>
 
       {/* Navegacao */}
@@ -425,8 +446,8 @@ export default function NovaCampanha() {
             {t('campanhas.wizard.next')}
           </Button>
         ) : (
-          <Button variant="primary" onClick={onCreate} leftIcon={Check}>
-            {t('campanhas.wizard.create')}
+          <Button variant="primary" onClick={onCreate} leftIcon={Check} disabled={submitting}>
+            {submitting ? t('campanhas.wizard.creating') : t('campanhas.wizard.create')}
           </Button>
         )}
       </div>

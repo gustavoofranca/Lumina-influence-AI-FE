@@ -6,11 +6,6 @@
     "backHome":  "Back to home",
     "goDashboard": "Open dashboard"
   },
-  "app": {
-    "name": "Lumina Influence AI",
-    "tagline": "Stop burning budget on vanity metrics.",
-    "description": "Influencer performance auditing powered by multimodal AI."
-  },
   "common": {
     "login": "Sign in",
     "logout": "Sign out",
@@ -193,39 +188,33 @@
       "preferencias":  "Preferences"
     },
     "save":   "Save changes",
+    "saving": "Saving...",
     "cancel": "Cancel",
     "perfil": {
       "title":        "Personal data",
       "subtitle":     "Update your profile information.",
       "name":         "Full name",
       "email":        "Email",
-      "role":         "Role",
-      "phone":        "Phone",
-      "avatarLabel":  "Profile picture",
-      "changeAvatar": "Change photo",
-      "removeAvatar": "Remove"
+      "emailFromOauth": "Comes from the login provider and cannot be changed here."
     },
     "agencia": {
       "title":       "Agency data",
       "subtitle":    "Tax and contact information.",
       "name":        "Legal name",
-      "tradeName":   "Trade name",
-      "cnpj":        "Tax ID",
-      "website":     "Website",
-      "industry":    "Main industry",
-      "address":     "Address",
-      "description": "Description"
+      "cnpj":        "Tax ID"
     },
     "integracoes": {
       "title":     "Integrations",
-      "subtitle":  "Connect platforms via official OAuth to audit creators in real time.",
+      "subtitle":  "Creator accounts connected via official OAuth, grouped by platform.",
       "connected":     "Connected",
       "disconnected":  "Not connected",
       "lastSync":      "Last sync",
-      "scopes":        "Permissions",
-      "connect":       "Connect account",
-      "disconnect":    "Disconnect",
-      "addNew":        "Connect new account"
+      "neverSynced":   "Never synced",
+      "followers":     "Combined followers",
+      "accounts_one":  "{{count}} connected account",
+      "accounts_other": "{{count}} connected accounts",
+      "empty":         "No connected account",
+      "emptyHint":     "Accounts are connected from each influencer screen, where the creator is identified."
     },
     "equipe": {
       "title":     "Team",
@@ -233,21 +222,16 @@
       "invite":    "Invite member",
       "active_one":   "{{count}} active",
       "active_other": "{{count}} active",
-      "pending_one":   "{{count}} pending",
-      "pending_other": "{{count}} pending",
       "columns": {
         "member":   "Member",
         "role":     "Role",
-        "status":   "Status",
         "joinedAt": "Joined on"
       },
-      "statusActive":  "Active",
-      "statusPending": "Pending",
       "remove":        "Remove",
+      "empty":         "No member in this agency",
       "roles": {
         "admin":   "Administrator",
-        "manager": "Manager",
-        "analyst": "Analyst",
+        "member": "Member",
         "viewer":  "Read only"
       },
       "inviteModal": {
@@ -256,31 +240,39 @@
         "email":     "Email",
         "emailPh":   "new.member@agency.com",
         "roleLabel": "Agency role",
-        "send":      "Send invitation"
+        "name":      "Name",
+        "send":      "Send invitation",
+        "sending":   "Sending..."
       }
     },
     "plano": {
       "title":       "Plan and billing",
       "subtitle":    "Manage your subscription and usage limits.",
       "current":     "Current plan",
-      "renewsOn":    "Renews on",
+      "perMonth":    "/month",
+      "none":        "No plan associated with this agency",
+      "billingSoon": "Plan changes and billing are not available yet.",
+      "features": {
+        "influencers":  "Up to {{count}} monitored influencers",
+        "analyses":     "{{count}} AI analyses per month",
+        "benchmarking": "Creator benchmarking"
+      },
       "usage": {
         "title":        "Current month usage",
         "subtitle":     "Renewed monthly per billing cycle.",
         "influencers":  "Monitored influencers",
         "analyses":     "AI analyses run",
-        "reports":      "Reports generated",
-        "of":           "of"
+        "reports":      "Reports generated"
       },
       "actions": {
-        "upgrade":       "Upgrade to Enterprise",
-        "manageBilling": "Manage billing",
-        "cancel":        "Cancel subscription"
+        "upgrade":       "Upgrade to Enterprise"
       }
     },
     "preferencias": {
       "title":    "Preferences",
       "subtitle": "Language, notifications and timezone.",
+      "sessionOnly": "The time zone applies to this session. Keeping it across visits needs a new database field.",
+      "notificationsNotSent": "These preferences are not stored yet and do not trigger any sending — the product has no notification service at this stage.",
       "language": {
         "title":    "Interface language",
         "subtitle": "Applies immediately across all screens."
@@ -347,8 +339,10 @@
       "previous":   "Back",
       "generate":   "Generate report",
       "exportPdf":  "Export PDF",
-      "exportSoon": "Feature coming soon",
-      "exportSoonDesc": "PDF export will be enabled in the next release.",
+      "exporting":  "Generating PDF...",
+      "exported":   "Report generated",
+      "exportedDesc": "The PDF download has started.",
+      "defaultTitle": "Performance Report",
       "step1": {
         "label":    "Campaign",
         "title":    "Choose the campaign",
@@ -407,6 +401,10 @@
       "benchmarkTitle":  "Creator benchmarking",
       "diagnosticTitle": "Qualitative diagnosis",
       "recommendationsTitle": "AI Recommendations",
+      "summaryText": "This audit covers {{creators}} creators from the {{brand}} campaign. On average, {{organic}}% of reach was organic and the sentiment index was {{sentiment}}%. Total audited reach: {{reach}} across {{posts}} posts.",
+      "growthPeriod": "Period",
+      "noPosts": "No campaign posts in the selected period.",
+      "noAnalysis": "No AI analysis recorded for this campaign's creators.",
       "footerNote":      "Document generated by Lumina Influence AI · Confidential"
     }
   },
@@ -426,7 +424,7 @@
         "influencers_other": "{{count}} creators",
         "budget":            "Budget",
         "period":            "Period",
-        "progress":          "Progress"
+        "progress":          "Period elapsed"
       }
     },
     "status": {
@@ -438,7 +436,6 @@
     "detail": {
       "back": "Campaigns",
       "header": {
-        "industry": "Industry",
         "period":   "Period",
         "budget":   "Budget",
         "posts":    "Posts",
@@ -453,7 +450,8 @@
         "title":    "Campaign Influencers",
         "subtitle": "Per-creator summary KPIs",
         "posts":    "posts",
-        "cost":     "invested"
+        "cost":     "invested",
+        "empty":    "No influencer linked to this campaign"
       },
       "benchmark": {
         "title":    "Benchmarking",
@@ -467,19 +465,20 @@
           "sentiment":    "Sentiment",
           "score":        "AI Score",
           "cost":         "Cost"
-        }
+        },
+        "empty":    "No benchmarking data for this campaign"
       },
       "radar": {
         "title":    "Performance Radar",
         "subtitle": "Multi-dimensional creator comparison",
         "axes": {
-          "brandCoherence":  "Brand Coherence",
-          "sentimentIndex":  "Sentiment",
-          "resonanceScore":  "Resonance",
-          "engagement":      "Engagement",
-          "organicReach":    "Organic Reach",
-          "botSafety":       "Bot Safety"
-        }
+          "reach":       "Reach",
+          "engagement":  "Engagement",
+          "sentiment":   "Sentiment",
+          "coherence":   "Brand Coherence",
+          "organic":     "Organic Reach"
+        },
+        "empty":    "Not enough metrics to compare creators"
       }
     },
     "wizard": {
@@ -490,6 +489,7 @@
       "next":         "Continue",
       "previous":     "Back",
       "create":       "Create campaign",
+      "creating":     "Creating...",
       "step1": {
         "label":      "Details",
         "title":      "Campaign details",
@@ -498,14 +498,10 @@
         "namePh":     "Summer 2026 — Tech Lifestyle",
         "brand":      "Client brand",
         "brandPh":    "NovaTech Pro",
-        "industry":   "Industry",
-        "industryPh": "Technology",
         "startDate":  "Start",
         "endDate":    "End",
         "budget":     "Budget (R$)",
-        "budgetPh":   "240000",
-        "description": "Description (optional)",
-        "descriptionPh": "Summary of strategy and campaign objectives..."
+        "budgetPh":   "240000"
       },
       "step2": {
         "label":    "Influencers",
@@ -514,7 +510,8 @@
         "search":   "Search creator by name or @...",
         "selected_one":   "{{count}} selected",
         "selected_other": "{{count}} selected",
-        "selectAtLeastOne": "Select at least one influencer."
+        "selectAtLeastOne": "Select at least one influencer.",
+        "empty":            "No influencer registered for this agency"
       },
       "step3": {
         "label":    "Confirmation",
@@ -547,12 +544,14 @@
       "history":   "History"
     },
     "kpis": {
+      "empty": "Diagnostic indicators unavailable — run an analysis.",
       "brandCoherence": "Brand Coherence",
       "sentimentIndex": "Sentiment Index",
       "safetyRating":   "Safety Rating",
       "botProbability": "Bot Probability"
     },
     "sentiment": {
+      "timelineEmpty": "Sentiment timeline not available from the API yet.",
       "title":         "Sentiment Heatmap",
       "subtitle":      "Emotional distribution across comments",
       "tab24h":        "24H",
@@ -567,6 +566,7 @@
       }
     },
     "audience": {
+      "empty": "Audience integrity unavailable — run an analysis.",
       "title":          "Audience Integrity",
       "subtitle":       "Audience composition by authenticity",
       "organic":        "Organic audience",
@@ -581,6 +581,7 @@
       "view":     "Open audit"
     },
     "neuralConfidence": {
+      "empty": "Neural confidence unavailable — run an analysis.",
       "title":           "Neural Confidence",
       "subtitle":        "Model confidence per dimension",
       "scriptAccuracy":  "Script Accuracy",
@@ -588,6 +589,7 @@
       "demographicSync": "Demographic Sync"
     },
     "transcript": {
+      "empty": "No transcript available for this creator.",
       "title":    "AI Transcript Highlight",
       "subtitle": "Key segments detected by the model",
       "export":   "Export Text",
@@ -599,6 +601,7 @@
       }
     },
     "recommendations": {
+      "empty": "No recommendations generated yet.",
       "title":    "AI Recommendations",
       "subtitle": "Suggested actions for upcoming cycles",
       "accept":   "Accept",
@@ -612,6 +615,7 @@
       }
     },
     "overview": {
+      "growthEmpty": "Per-creator growth series not available from the API yet.",
       "title": "Overview",
       "subtitle": "Key metrics and creator trends.",
       "metrics": {
@@ -622,6 +626,7 @@
       }
     },
     "posts": {
+      "empty": "No analyzed posts for this creator.",
       "title":    "Analyzed Posts",
       "subtitle": "Audited content from the last 30 days.",
       "columns": {
@@ -634,6 +639,7 @@
       }
     },
     "history": {
+      "empty": "No analyses in the history for this creator.",
       "title":    "Analysis History",
       "subtitle": "Timeline of audits for this creator.",
       "scope":    "Scope",
@@ -704,6 +710,7 @@
     "label": "OVERVIEW",
     "title": "Network Resonance",
     "liveSync": "LIVE SYNC",
+    "empty":     "KPIs unavailable right now.",
     "filters": {
       "period":      "Period",
       "period7d":    "7 days",
@@ -723,7 +730,8 @@
       "title":     "Growth Trajectory",
       "subtitle":  "Organic reach vs paid traffic",
       "organic":   "Organic Reach",
-      "paid":      "Paid Traffic"
+      "paid":      "Paid Traffic",
+      "empty":     "No reach data for the selected period."
     },
     "diagnostic": {
       "label":           "FEATURED DIAGNOSIS",
@@ -735,7 +743,8 @@
         "botAlert":  "AI Alert: Bot detection"
       },
       "coherenceLabel": "BRAND COHERENCE SCORE",
-      "viewAnalysis":   "View full analysis"
+      "viewAnalysis":   "View full analysis",
+      "empty":          "No AI analysis available yet."
     },
     "topNetworks": {
       "title":    "Top Performing Networks",
@@ -751,15 +760,20 @@
       "viralLow":    "Low",
       "statusActive":     "Active",
       "statusMonitoring": "Monitor",
-      "statusRisk":       "At risk"
+      "statusRisk":       "At risk",
+      "empty":            "No influencer activity in the period."
     },
     "networkDensity": {
       "label":    "NETWORK DENSITY",
       "subtitle": "{{connected}} of {{total}} creators connected",
-      "expand":   "Expand Node Map"
+      "expand":   "Expand Node Map",
+      "empty":    "Density unavailable — connect a social account."
     }
   },
   "app": {
+    "name": "Lumina Influence AI",
+    "tagline": "Stop burning budget on vanity metrics.",
+    "description": "Influencer performance auditing powered by multimodal AI.",
     "nav": {
       "dashboard":       "Overview",
       "influenciadores": "Influencers",

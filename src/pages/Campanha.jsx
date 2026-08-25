@@ -14,7 +14,7 @@ export default function Campanha() {
   const { t } = useTranslation()
   const { id } = useParams()
   const { data: campanha, loading } = useApi(() => getCampaign(id), [id])
-  const { data: bench } = useApi(() => getCampaignBenchmarking(id), [id])
+  const { data: bench, loading: benchLoading } = useApi(() => getCampaignBenchmarking(id), [id])
 
   if (loading) {
     return (
@@ -44,16 +44,16 @@ export default function Campanha() {
 
   return (
     <div className="flex flex-col gap-6">
-      <CampanhaHeader campanha={campanha} />
+      <CampanhaHeader campanha={campanha} metrics={bench?.totals} />
 
-      <ParticipantesGrid campanha={campanha} />
+      <ParticipantesGrid participants={bench?.rows} loading={benchLoading} />
 
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <BenchmarkTable campanha={campanha} rows={bench?.rows} />
+          <BenchmarkTable rows={bench?.rows} loading={benchLoading} />
         </div>
         <div>
-          <RadarComparison campanha={campanha} />
+          <RadarComparison radar={bench?.radar} loading={benchLoading} />
         </div>
       </section>
     </div>

@@ -27,7 +27,7 @@ export default function Campanhas() {
     return all.filter((c) => {
       if (status !== 'all' && c.status !== status) return false
       if (q) {
-        const haystack = `${c.name} ${c.brand} ${c.industry}`.toLowerCase()
+        const haystack = `${c.name} ${c.brand}`.toLowerCase()
         if (!haystack.includes(q)) return false
       }
       return true

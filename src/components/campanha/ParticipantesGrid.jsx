@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Users } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { findInfluenciador, formatFollowers } from '../../mocks/influenciadores.js'
-import { formatBudget } from '../../mocks/campanhas.js'
+import { formatFollowers, formatBudget } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -16,26 +17,40 @@ const STATUS_VARIANT = {
   risk:       'danger',
 }
 
-function ParticipantCard({ participation, t }) {
-  const inf = findInfluenciador(participation.influenciadorId)
-  if (!inf) return null
+const GRID = 'grid gap-4 md:grid-cols-2 xl:grid-cols-4'
+
+// Placeholders durante o carregamento — não sabemos quantos são ainda.
+const LOADING_SLOTS = 4
+
+function MiniKpi({ label, children }) {
+  return (
+    <div>
+      <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
+        {label}
+      </span>
+      <span className="mt-1 block font-display text-lg font-bold tabular-nums">{children}</span>
+    </div>
+  )
+}
+
+function ParticipantCard({ participant, t }) {
+  const p = participant
 
   return (
     <Link
-      to={`/app/influenciadores/${inf.id}`}
+      to={`/app/influenciadores/${p.id}`}
       className={cn(
         'group flex flex-col gap-4 rounded-2xl border border-neutral-700/60 bg-neutral-900/40 p-5',
         'transition-all duration-200',
         'hover:-translate-y-0.5 hover:border-primary/30 hover:bg-neutral-800/60 hover:shadow-glow-soft'
       )}
     >
-      {/* Header: avatar + arrow */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <Avatar name={inf.name} size="md" />
+          <Avatar name={p.name} size="md" />
           <div className="min-w-0">
-            <p className="truncate font-semibold text-neutral-100">{inf.name}</p>
-            <p className="truncate text-xs text-text-muted">{inf.handle}</p>
+            <p className="truncate font-semibold text-neutral-100">{p.name}</p>
+            <p className="truncate text-xs text-text-muted">{p.handle}</p>
           </div>
         </div>
         <ArrowUpRight
@@ -44,56 +59,38 @@ function ParticipantCard({ participation, t }) {
         />
       </div>
 
-      {/* Plataformas */}
       <div className="flex items-center justify-between">
-        <PlatformBadgeList platforms={inf.platforms} size={14} />
-        <Badge variant={STATUS_VARIANT[inf.status]}>
-          {t(`influenciadores.status.${inf.status}`)}
+        <PlatformBadgeList platforms={p.platforms} size={14} />
+        <Badge variant={STATUS_VARIANT[p.status]}>
+          {t(`influenciadores.status.${p.status}`)}
         </Badge>
       </div>
 
-      {/* Mini KPIs */}
       <div className="grid grid-cols-3 gap-2 border-t border-neutral-800 pt-4">
-        <div>
-          <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
-            Score
-          </span>
-          <span className="mt-1 block font-display text-lg font-bold text-gradient-brand tabular-nums">
-            {inf.resonanceScore}
-          </span>
-        </div>
-        <div>
-          <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
-            Eng.
-          </span>
-          <span className="mt-1 block font-display text-lg font-bold text-neutral-100 tabular-nums">
-            {inf.engagement.toFixed(1)}%
-          </span>
-        </div>
-        <div>
-          <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
-            Followers
-          </span>
-          <span className="mt-1 block font-display text-lg font-bold text-neutral-100 tabular-nums">
-            {formatFollowers(inf.followers)}
-          </span>
-        </div>
+        <MiniKpi label="Score">
+          <span className="text-gradient-brand">{p.resonanceScore}</span>
+        </MiniKpi>
+        <MiniKpi label="Eng.">
+          <span className="text-neutral-100">{p.engagement.toFixed(1)}%</span>
+        </MiniKpi>
+        <MiniKpi label="Followers">
+          <span className="text-neutral-100">{formatFollowers(p.followers)}</span>
+        </MiniKpi>
       </div>
 
-      {/* Investimento */}
       <div className="flex items-center justify-between rounded-lg bg-primary-600/10 px-3 py-2 ring-1 ring-inset ring-primary-500/20">
         <span className="text-[10px] font-semibold uppercase tracking-label text-primary-300">
-          {participation.posts} {t('campanhas.detail.participants.posts')}
+          {p.posts} {t('campanhas.detail.participants.posts')}
         </span>
         <span className="text-sm font-bold text-primary-200 tabular-nums">
-          {formatBudget(participation.cost)}
+          {formatBudget(p.cost)}
         </span>
       </div>
     </Link>
   )
 }
 
-export default function ParticipantesGrid({ campanha }) {
+export default function ParticipantesGrid({ participants, loading = false }) {
   const { t } = useTranslation()
 
   return (
@@ -104,11 +101,21 @@ export default function ParticipantesGrid({ campanha }) {
         <p className="mt-1 text-sm text-text-secondary">{t('campanhas.detail.participants.subtitle')}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {campanha.participations.map((p) => (
-          <ParticipantCard key={p.influenciadorId} participation={p} t={t} />
-        ))}
-      </div>
+      {loading ? (
+        <div className={GRID}>
+          {Array.from({ length: LOADING_SLOTS }, (_, i) => (
+            <Skeleton key={i} className="h-64" rounded="rounded-2xl" />
+          ))}
+        </div>
+      ) : !participants?.length ? (
+        <EmptyState compact icon={Users} title={t('campanhas.detail.participants.empty')} />
+      ) : (
+        <div className={GRID}>
+          {participants.map((p) => (
+            <ParticipantCard key={p.id} participant={p} t={t} />
+          ))}
+        </div>
+      )}
     </Card>
   )
 }

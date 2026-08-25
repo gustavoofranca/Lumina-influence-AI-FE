@@ -7,7 +7,7 @@ import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { formatFollowers } from '../../mocks/influenciadores.js'
+import { formatFollowers } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',

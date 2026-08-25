@@ -5,7 +5,7 @@ import { ChevronDown, Check } from 'lucide-react'
 import { cn } from '../../lib/cn.js'
 import StatusIndicator from '../ui/StatusIndicator.jsx'
 import Tabs from '../ui/Tabs.jsx'
-import { PERIOD_OPTIONS } from '../../mocks/dashboard.js'
+import { PERIOD_OPTIONS } from '../../lib/constants.js'
 
 function CampaignDropdown({ options, value, onChange, label }) {
   const [open, setOpen] = useState(false)

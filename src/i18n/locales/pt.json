@@ -6,11 +6,6 @@
     "backHome":  "Voltar ao início",
     "goDashboard": "Abrir dashboard"
   },
-  "app": {
-    "name": "Lumina Influence AI",
-    "tagline": "Pare de queimar verba com métricas de vaidade.",
-    "description": "Auditoria de performance de influenciadores digitais com IA multimodal."
-  },
   "common": {
     "login": "Entrar",
     "logout": "Sair",
@@ -193,39 +188,33 @@
       "preferencias":  "Preferências"
     },
     "save":   "Salvar alterações",
+    "saving": "Salvando...",
     "cancel": "Cancelar",
     "perfil": {
       "title":        "Dados pessoais",
       "subtitle":     "Atualize suas informações de perfil.",
       "name":         "Nome completo",
       "email":        "E-mail",
-      "role":         "Cargo",
-      "phone":        "Telefone",
-      "avatarLabel":  "Foto de perfil",
-      "changeAvatar": "Trocar foto",
-      "removeAvatar": "Remover"
+      "emailFromOauth": "Vem do provedor de login e não pode ser alterado aqui."
     },
     "agencia": {
       "title":       "Dados da agência",
       "subtitle":    "Informações fiscais e de contato.",
       "name":        "Razão social",
-      "tradeName":   "Nome fantasia",
-      "cnpj":        "CNPJ",
-      "website":     "Site",
-      "industry":    "Setor principal",
-      "address":     "Endereço",
-      "description": "Descrição"
+      "cnpj":        "CNPJ"
     },
     "integracoes": {
       "title":     "Integrações",
-      "subtitle":  "Conecte plataformas via OAuth oficial para auditar criadores em tempo real.",
+      "subtitle":  "Contas dos criadores conectadas por OAuth oficial, agrupadas por plataforma.",
       "connected":     "Conectado",
       "disconnected":  "Não conectado",
       "lastSync":      "Última sincronização",
-      "scopes":        "Permissões",
-      "connect":       "Conectar conta",
-      "disconnect":    "Desconectar",
-      "addNew":        "Conectar nova conta"
+      "neverSynced":   "Nunca sincronizada",
+      "followers":     "Seguidores somados",
+      "accounts_one":  "{{count}} conta conectada",
+      "accounts_other": "{{count}} contas conectadas",
+      "empty":         "Nenhuma conta conectada",
+      "emptyHint":     "As contas são conectadas na tela de cada influenciador, onde o criador é identificado."
     },
     "equipe": {
       "title":     "Equipe",
@@ -233,21 +222,16 @@
       "invite":    "Convidar membro",
       "active_one":   "{{count}} ativo",
       "active_other": "{{count}} ativos",
-      "pending_one":   "{{count}} pendente",
-      "pending_other": "{{count}} pendentes",
       "columns": {
         "member":   "Membro",
         "role":     "Cargo",
-        "status":   "Status",
         "joinedAt": "Entrou em"
       },
-      "statusActive":  "Ativo",
-      "statusPending": "Pendente",
       "remove":        "Remover",
+      "empty":         "Nenhum membro nesta agência",
       "roles": {
         "admin":   "Administrador",
-        "manager": "Gestor",
-        "analyst": "Analista",
+        "member": "Membro",
         "viewer":  "Apenas leitura"
       },
       "inviteModal": {
@@ -256,31 +240,39 @@
         "email":     "E-mail",
         "emailPh":   "novo.membro@agencia.com",
         "roleLabel": "Cargo na agência",
-        "send":      "Enviar convite"
+        "name":      "Nome",
+        "send":      "Enviar convite",
+        "sending":   "Enviando..."
       }
     },
     "plano": {
       "title":       "Plano e cobrança",
       "subtitle":    "Gerencie sua assinatura e limites de uso.",
       "current":     "Plano atual",
-      "renewsOn":    "Renova em",
+      "perMonth":    "/mês",
+      "none":        "Nenhum plano associado a esta agência",
+      "billingSoon": "Troca de plano e cobrança ainda não estão disponíveis.",
+      "features": {
+        "influencers":  "Até {{count}} influenciadores monitorados",
+        "analyses":     "{{count}} análises de IA por mês",
+        "benchmarking": "Benchmarking entre criadores"
+      },
       "usage": {
         "title":        "Uso no mês corrente",
         "subtitle":     "Renovado mensalmente conforme o ciclo de cobrança.",
         "influencers":  "Influenciadores monitorados",
         "analyses":     "Análises IA realizadas",
-        "reports":      "Relatórios gerados",
-        "of":           "de"
+        "reports":      "Relatórios gerados"
       },
       "actions": {
-        "upgrade":       "Upgrade para Enterprise",
-        "manageBilling": "Gerenciar cobrança",
-        "cancel":        "Cancelar assinatura"
+        "upgrade":       "Upgrade para Enterprise"
       }
     },
     "preferencias": {
       "title":    "Preferências",
       "subtitle": "Idioma, notificações e fuso horário.",
+      "sessionOnly": "O fuso vale para esta sessão. Guardá-lo entre acessos depende de um campo novo no banco.",
+      "notificationsNotSent": "Estas preferências ainda não são gravadas nem disparam envio — o produto não tem serviço de notificação nesta fase.",
       "language": {
         "title":    "Idioma da interface",
         "subtitle": "Aplica-se imediatamente em todas as telas."
@@ -347,8 +339,10 @@
       "previous":   "Voltar",
       "generate":   "Gerar relatório",
       "exportPdf":  "Exportar PDF",
-      "exportSoon": "Funcionalidade disponível em breve",
-      "exportSoonDesc": "A exportação para PDF será habilitada na próxima versão.",
+      "exporting":  "Gerando PDF...",
+      "exported":   "Relatório gerado",
+      "exportedDesc": "O download do PDF começou.",
+      "defaultTitle": "Relatório de Performance",
       "step1": {
         "label":    "Campanha",
         "title":    "Escolha a campanha",
@@ -407,6 +401,10 @@
       "benchmarkTitle":  "Benchmarking de criadores",
       "diagnosticTitle": "Diagnóstico qualitativo",
       "recommendationsTitle": "Recomendações da IA",
+      "summaryText": "Esta auditoria cobre {{creators}} criadores da campanha {{brand}}. Em média, {{organic}}% do alcance foi orgânico e o índice de sentimento ficou em {{sentiment}}%. Alcance total auditado: {{reach}} em {{posts}} posts.",
+      "growthPeriod": "Período",
+      "noPosts": "Nenhum post da campanha no período selecionado.",
+      "noAnalysis": "Nenhuma análise de IA registrada para os criadores desta campanha.",
       "footerNote":      "Documento gerado por Lumina Influence AI · Confidencial"
     }
   },
@@ -426,7 +424,7 @@
         "influencers_other": "{{count}} criadores",
         "budget":            "Orçamento",
         "period":            "Período",
-        "progress":          "Progresso"
+        "progress":          "Período decorrido"
       }
     },
     "status": {
@@ -438,7 +436,6 @@
     "detail": {
       "back": "Campanhas",
       "header": {
-        "industry": "Setor",
         "period":   "Período",
         "budget":   "Orçamento",
         "posts":    "Posts",
@@ -453,7 +450,8 @@
         "title":    "Influenciadores da campanha",
         "subtitle": "KPIs resumidos por criador",
         "posts":    "posts",
-        "cost":     "investido"
+        "cost":     "investido",
+        "empty":    "Nenhum influenciador vinculado a esta campanha"
       },
       "benchmark": {
         "title":    "Benchmarking",
@@ -467,19 +465,20 @@
           "sentiment":    "Sentimento",
           "score":        "Score IA",
           "cost":         "Custo"
-        }
+        },
+        "empty":    "Sem dados de benchmarking para esta campanha"
       },
       "radar": {
         "title":    "Radar de Performance",
         "subtitle": "Comparação multidimensional dos criadores",
         "axes": {
-          "brandCoherence":  "Brand Coherence",
-          "sentimentIndex":  "Sentiment",
-          "resonanceScore":  "Resonance",
-          "engagement":      "Engagement",
-          "organicReach":    "Organic Reach",
-          "botSafety":       "Bot Safety"
-        }
+          "reach":       "Alcance",
+          "engagement":  "Engajamento",
+          "sentiment":   "Sentimento",
+          "coherence":   "Coerência de Marca",
+          "organic":     "Alcance Orgânico"
+        },
+        "empty":    "Sem métricas suficientes para comparar os criadores"
       }
     },
     "wizard": {
@@ -490,6 +489,7 @@
       "next":         "Continuar",
       "previous":     "Voltar",
       "create":       "Criar campanha",
+      "creating":     "Criando...",
       "step1": {
         "label":      "Detalhes",
         "title":      "Detalhes da campanha",
@@ -498,14 +498,10 @@
         "namePh":     "Verão 2026 — Tech Lifestyle",
         "brand":      "Marca cliente",
         "brandPh":    "NovaTech Pro",
-        "industry":   "Setor",
-        "industryPh": "Tecnologia",
         "startDate":  "Início",
         "endDate":    "Fim",
         "budget":     "Orçamento (R$)",
-        "budgetPh":   "240000",
-        "description": "Descrição (opcional)",
-        "descriptionPh": "Resumo da estratégia e objetivos da campanha..."
+        "budgetPh":   "240000"
       },
       "step2": {
         "label":    "Influenciadores",
@@ -514,7 +510,8 @@
         "search":   "Buscar criador por nome ou @...",
         "selected_one":   "{{count}} selecionado",
         "selected_other": "{{count}} selecionados",
-        "selectAtLeastOne": "Selecione ao menos um influenciador."
+        "selectAtLeastOne": "Selecione ao menos um influenciador.",
+        "empty":            "Nenhum influenciador cadastrado nesta agência"
       },
       "step3": {
         "label":    "Confirmação",
@@ -547,12 +544,14 @@
       "history":   "Histórico"
     },
     "kpis": {
+      "empty": "Indicadores de diagnóstico indisponíveis — rode uma análise.",
       "brandCoherence": "Brand Coherence",
       "sentimentIndex": "Sentiment Index",
       "safetyRating":   "Safety Rating",
       "botProbability": "Bot Probability"
     },
     "sentiment": {
+      "timelineEmpty": "Série temporal de sentimento ainda não disponível na API.",
       "title":         "Sentiment Heatmap",
       "subtitle":      "Distribuição emocional dos comentários",
       "tab24h":        "24H",
@@ -567,6 +566,7 @@
       }
     },
     "audience": {
+      "empty": "Integridade de audiência indisponível — rode uma análise.",
       "title":          "Audience Integrity",
       "subtitle":       "Composição da audiência por autenticidade",
       "organic":        "Audiência orgânica",
@@ -581,6 +581,7 @@
       "view":     "Abrir auditoria"
     },
     "neuralConfidence": {
+      "empty": "Confiança neural indisponível — rode uma análise.",
       "title":           "Neural Confidence",
       "subtitle":        "Confiança do modelo por dimensão",
       "scriptAccuracy":  "Script Accuracy",
@@ -588,6 +589,7 @@
       "demographicSync": "Demographic Sync"
     },
     "transcript": {
+      "empty": "Nenhuma transcrição disponível para este criador.",
       "title":    "AI Transcript Highlight",
       "subtitle": "Trechos-chave detectados pelo modelo",
       "export":   "Export Text",
@@ -599,6 +601,7 @@
       }
     },
     "recommendations": {
+      "empty": "Nenhuma recomendação gerada ainda.",
       "title":    "Recomendações da IA",
       "subtitle": "Ações sugeridas para os próximos ciclos",
       "accept":   "Aceitar",
@@ -612,6 +615,7 @@
       }
     },
     "overview": {
+      "growthEmpty": "Série de crescimento por criador ainda não disponível na API.",
       "title": "Visão Geral",
       "subtitle": "Métricas principais e tendências do criador.",
       "metrics": {
@@ -622,6 +626,7 @@
       }
     },
     "posts": {
+      "empty": "Nenhum post analisado para este criador.",
       "title":    "Posts Analisados",
       "subtitle": "Conteúdos auditados nos últimos 30 dias.",
       "columns": {
@@ -634,6 +639,7 @@
       }
     },
     "history": {
+      "empty": "Nenhuma análise no histórico deste criador.",
       "title":    "Histórico de Análises",
       "subtitle": "Linha do tempo de auditorias deste criador.",
       "scope":    "Escopo",
@@ -704,6 +710,7 @@
     "label": "OVERVIEW",
     "title": "Network Resonance",
     "liveSync": "LIVE SYNC",
+    "empty":     "KPIs indisponíveis no momento.",
     "filters": {
       "period":      "Período",
       "period7d":    "7 dias",
@@ -723,7 +730,8 @@
       "title":     "Growth Trajectory",
       "subtitle":  "Alcance orgânico vs tráfego pago",
       "organic":   "Alcance Orgânico",
-      "paid":      "Tráfego Pago"
+      "paid":      "Tráfego Pago",
+      "empty":     "Sem dados de alcance no período selecionado."
     },
     "diagnostic": {
       "label":           "DIAGNÓSTICO EM DESTAQUE",
@@ -735,7 +743,8 @@
         "botAlert":  "AI Alert: Bot detection"
       },
       "coherenceLabel": "BRAND COHERENCE SCORE",
-      "viewAnalysis":   "Ver análise completa"
+      "viewAnalysis":   "Ver análise completa",
+      "empty":          "Nenhuma análise de IA disponível ainda."
     },
     "topNetworks": {
       "title":    "Top Performing Networks",
@@ -751,15 +760,20 @@
       "viralLow":    "Baixo",
       "statusActive":     "Ativo",
       "statusMonitoring": "Monitorar",
-      "statusRisk":       "Em risco"
+      "statusRisk":       "Em risco",
+      "empty":            "Nenhum influenciador com atividade no período."
     },
     "networkDensity": {
       "label":    "NETWORK DENSITY",
       "subtitle": "{{connected}} de {{total}} criadores conectados",
-      "expand":   "Expand Node Map"
+      "expand":   "Expand Node Map",
+      "empty":    "Densidade indisponível — conecte uma conta social."
     }
   },
   "app": {
+    "name": "Lumina Influence AI",
+    "tagline": "Pare de queimar verba com métricas de vaidade.",
+    "description": "Auditoria de performance de influenciadores digitais com IA multimodal.",
     "nav": {
       "dashboard":       "Visão Geral",
       "influenciadores": "Influenciadores",
