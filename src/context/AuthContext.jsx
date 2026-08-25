@@ -44,6 +44,14 @@ export function AuthProvider({ children }) {
     await applyTokens({ access_token: accessToken })
   }, [applyTokens])
 
+  /** Recarrega /me — usado após editar o próprio perfil. */
+  const refreshUser = useCallback(async () => {
+    const me = await getMe()
+    setUser(me.user)
+    setAgency(me.agency)
+    return me
+  }, [])
+
   const logout = useCallback(() => {
     // Logout stateless (ADR-001): cliente descarta os tokens.
     api.post('/auth/logout').catch(() => {})
@@ -56,7 +64,7 @@ export function AuthProvider({ children }) {
   const value = {
     user, agency, loading,
     isAuthenticated: !!user,
-    devLogin, loginWithTokens, logout,
+    devLogin, loginWithTokens, logout, refreshUser,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

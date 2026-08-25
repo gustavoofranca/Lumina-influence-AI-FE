@@ -19,7 +19,7 @@ export const TIMEZONES = [
 ]
 
 /** Papéis de usuário, na ordem de exibição. Espelha UserRole no back-end. */
-export const ROLE_KEYS = ['admin', 'manager', 'analyst', 'viewer']
+export const ROLE_KEYS = ['admin', 'member', 'viewer']
 
 /** Seções que um relatório pode incluir. Espelha as seções aceitas pelo back-end. */
 export const SECTION_KEYS = ['kpis', 'growth', 'benchmark', 'diagnostic', 'recommendations']

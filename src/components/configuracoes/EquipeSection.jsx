@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UserPlus, Trash2, Mail } from 'lucide-react'
+import { UserPlus, Trash2, Mail, User as UserIcon, Users } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
@@ -9,20 +9,20 @@ import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
-import { EQUIPE } from '../../mocks/equipe.js'
+import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 import { ROLE_KEYS } from '../../lib/constants.js'
+import { useApi } from '../../hooks/useApi.js'
+import { listMembers, inviteMember, removeMember } from '../../services/team.js'
 
 const ROLE_VARIANT = {
-  admin:   'organic',  // violeta
-  manager: 'paid',     // cyan
-  analyst: 'success',
-  viewer:  'neutral',
+  admin:  'organic',
+  member: 'paid',
+  viewer: 'neutral',
 }
 
-const STATUS_VARIANT = {
-  active:  'success',
-  pending: 'warning',
-}
+const DEFAULT_ROLE = 'member'
 
 function formatDate(iso, locale) {
   try {
@@ -32,27 +32,50 @@ function formatDate(iso, locale) {
   } catch { return iso }
 }
 
-function ConvidarMembroModal({ open, onClose, t }) {
+function ConvidarMembroModal({ open, onClose, onInvited, t }) {
+  const [name, setName]   = useState('')
   const [email, setEmail] = useState('')
-  const [role,  setRole]  = useState('analyst')
+  const [role, setRole]   = useState(DEFAULT_ROLE)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState(null)
 
-  const onSubmit = (e) => {
+  const reset = () => {
+    setName(''); setEmail(''); setRole(DEFAULT_ROLE); setError(null)
+  }
+
+  const close = () => { reset(); onClose?.() }
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    setEmail(''); setRole('analyst')
-    onClose?.()
+    setSaving(true)
+    setError(null)
+    try {
+      await inviteMember({ name, email, role })
+      await onInvited?.()
+      close()
+    } catch (err) {
+      setError(err)
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title={t('configuracoes.equipe.inviteModal.title')}
-      size="md"
-    >
+    <Modal open={open} onClose={close} title={t('configuracoes.equipe.inviteModal.title')} size="md">
       <form onSubmit={onSubmit} className="flex flex-col gap-5">
         <p className="text-sm leading-relaxed text-text-secondary">
           {t('configuracoes.equipe.inviteModal.subtitle')}
         </p>
+
+        <ApiErrorBanner error={error} />
+
+        <Input
+          label={t('configuracoes.equipe.inviteModal.name')}
+          leftIcon={UserIcon}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
         <Input
           label={t('configuracoes.equipe.inviteModal.email')}
@@ -65,10 +88,8 @@ function ConvidarMembroModal({ open, onClose, t }) {
         />
 
         <div>
-          <span className="text-label">
-            {t('configuracoes.equipe.inviteModal.roleLabel')}
-          </span>
-          <div className="mt-2.5 grid grid-cols-2 gap-2">
+          <span className="text-label">{t('configuracoes.equipe.inviteModal.roleLabel')}</span>
+          <div className="mt-2.5 grid grid-cols-3 gap-2">
             {ROLE_KEYS.map((key) => {
               const checked = role === key
               return (
@@ -94,11 +115,11 @@ function ConvidarMembroModal({ open, onClose, t }) {
         </div>
 
         <div className="flex justify-end gap-2 pt-1">
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button type="button" variant="secondary" onClick={close}>
             {t('configuracoes.cancel')}
           </Button>
-          <Button type="submit" variant="primary" leftIcon={UserPlus}>
-            {t('configuracoes.equipe.inviteModal.send')}
+          <Button type="submit" variant="primary" leftIcon={UserPlus} disabled={saving}>
+            {saving ? t('configuracoes.equipe.inviteModal.sending') : t('configuracoes.equipe.inviteModal.send')}
           </Button>
         </div>
       </form>
@@ -106,12 +127,28 @@ function ConvidarMembroModal({ open, onClose, t }) {
   )
 }
 
+const TH = 'px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-label text-text-label'
+
 export default function EquipeSection() {
   const { t, i18n } = useTranslation()
   const [modalOpen, setModalOpen] = useState(false)
+  const [removingId, setRemovingId] = useState(null)
+  const [actionError, setActionError] = useState(null)
 
-  const active  = EQUIPE.filter((m) => m.status === 'active').length
-  const pending = EQUIPE.filter((m) => m.status === 'pending').length
+  const { data: membros, loading, error, refetch } = useApi(listMembers, [])
+
+  const onRemove = async (id) => {
+    setRemovingId(id)
+    setActionError(null)
+    try {
+      await removeMember(id)
+      await refetch()
+    } catch (err) {
+      setActionError(err)
+    } finally {
+      setRemovingId(null)
+    }
+  }
 
   return (
     <>
@@ -123,85 +160,81 @@ export default function EquipeSection() {
             <p className="mt-1 text-sm text-text-secondary">
               {t('configuracoes.equipe.subtitle')}
             </p>
-            <div className="mt-3 flex items-center gap-2 text-xs">
-              <Badge variant="success" uppercase={false}>
-                {t('configuracoes.equipe.active', { count: active })}
-              </Badge>
-              {pending > 0 && (
-                <Badge variant="warning" uppercase={false}>
-                  {t('configuracoes.equipe.pending', { count: pending })}
+            {!loading && membros && (
+              <div className="mt-3 flex items-center gap-2 text-xs">
+                <Badge variant="success" uppercase={false}>
+                  {t('configuracoes.equipe.active', { count: membros.length })}
                 </Badge>
-              )}
-            </div>
+              </div>
+            )}
           </div>
           <Button variant="primary" leftIcon={UserPlus} onClick={() => setModalOpen(true)}>
             {t('configuracoes.equipe.invite')}
           </Button>
         </div>
 
-        {/* Lista de membros */}
-        <div className="overflow-hidden rounded-2xl border border-neutral-700/60">
-          <table className="w-full">
-            <thead className="bg-neutral-800/60">
-              <tr>
-                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-label text-text-label">
-                  {t('configuracoes.equipe.columns.member')}
-                </th>
-                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-label text-text-label">
-                  {t('configuracoes.equipe.columns.role')}
-                </th>
-                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-label text-text-label">
-                  {t('configuracoes.equipe.columns.status')}
-                </th>
-                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-label text-text-label">
-                  {t('configuracoes.equipe.columns.joinedAt')}
-                </th>
-                <th className="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-label text-text-label">
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {EQUIPE.map((m) => (
-                <tr key={m.id} className="border-t border-neutral-800/80 transition-colors hover:bg-neutral-700/30">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <Avatar name={m.name} size="sm" />
-                      <div className="min-w-0">
-                        <div className="truncate font-semibold text-neutral-100">{m.name}</div>
-                        <div className="truncate text-xs text-text-muted">{m.email}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <Badge variant={ROLE_VARIANT[m.role]} uppercase={false}>
-                      {t(`configuracoes.equipe.roles.${m.role}`)}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-3">
-                    <Badge variant={STATUS_VARIANT[m.status]}>
-                      {t(`configuracoes.equipe.status${m.status === 'active' ? 'Active' : 'Pending'}`)}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-text-secondary tabular-nums">
-                    {formatDate(m.joinedAt, i18n.language)}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <button
-                      type="button"
-                      aria-label={t('configuracoes.equipe.remove')}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-tertiary-500/15 hover:text-tertiary-300"
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </td>
+        <ApiErrorBanner error={error || actionError} />
+
+        {loading ? (
+          <Skeleton className="h-64" rounded="rounded-2xl" />
+        ) : !membros?.length ? (
+          <EmptyState compact icon={Users} title={t('configuracoes.equipe.empty')} />
+        ) : (
+          <div className="overflow-hidden rounded-2xl border border-neutral-700/60">
+            <table className="w-full">
+              <thead className="bg-neutral-800/60">
+                <tr>
+                  <th className={TH}>{t('configuracoes.equipe.columns.member')}</th>
+                  <th className={TH}>{t('configuracoes.equipe.columns.role')}</th>
+                  <th className={TH}>{t('configuracoes.equipe.columns.joinedAt')}</th>
+                  <th className={cn(TH, 'text-right')} />
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {membros.map((m) => (
+                  <tr key={m.id} className="border-t border-neutral-800/80 transition-colors hover:bg-neutral-700/30">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar name={m.name} size="sm" />
+                        <div className="min-w-0">
+                          <div className="truncate font-semibold text-neutral-100">{m.name}</div>
+                          <div className="truncate text-xs text-text-muted">{m.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <Badge variant={ROLE_VARIANT[m.role]} uppercase={false}>
+                        {t(`configuracoes.equipe.roles.${m.role}`, m.role)}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-3 text-sm tabular-nums text-text-secondary">
+                      {formatDate(m.joinedAt, i18n.language)}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <button
+                        type="button"
+                        aria-label={t('configuracoes.equipe.remove')}
+                        onClick={() => onRemove(m.id)}
+                        disabled={removingId === m.id}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-tertiary-500/15 hover:text-tertiary-300 disabled:opacity-40"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </Card>
 
-      <ConvidarMembroModal open={modalOpen} onClose={() => setModalOpen(false)} t={t} />
+      <ConvidarMembroModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onInvited={refetch}
+        t={t}
+      />
     </>
   )
 }

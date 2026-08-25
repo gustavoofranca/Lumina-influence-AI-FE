@@ -1,41 +1,66 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link2, Unlink, Plus } from 'lucide-react'
+import { Plug } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
-import Button from '../ui/Button.jsx'
 import Badge from '../ui/Badge.jsx'
 import StatusIndicator from '../ui/StatusIndicator.jsx'
+import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
+import EmptyState from '../ui/EmptyState.jsx'
+import Skeleton from '../ui/Skeleton.jsx'
 import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
-import { INTEGRACOES } from '../../mocks/agencia.js'
+import { formatFollowers } from '../../lib/format.js'
+import { useApi } from '../../hooks/useApi.js'
+import { listPlatformConnections } from '../../services/agency.js'
 
-function formatRelative(iso, locale) {
-  if (!iso) return '—'
+/**
+ * Plataformas conectadas.
+ *
+ * A conexão OAuth pertence ao influenciador, não à agência: cada SocialAccount
+ * é de um criador. Esta tela resume o que já está conectado por plataforma;
+ * conectar acontece na tela do influenciador, onde existe esse contexto.
+ */
+
+const PLATFORMS = Object.keys(PLATFORM_META)
+
+function formatSync(iso, locale) {
+  if (!iso) return null
   try {
-    const d = new Date(iso)
-    return d.toLocaleString(locale === 'pt' ? 'pt-BR' : 'en-US', {
+    return new Date(iso).toLocaleString(locale === 'pt' ? 'pt-BR' : 'en-US', {
       day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
     })
   } catch { return iso }
 }
 
-function IntegracaoCard({ integ, t, locale }) {
-  const meta = PLATFORM_META[integ.platform]
+function Stat({ label, children }) {
+  return (
+    <div>
+      <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
+        {label}
+      </span>
+      <span className="mt-1 block font-medium text-neutral-200">{children}</span>
+    </div>
+  )
+}
+
+function PlataformaCard({ platform, dados, t, locale }) {
+  const meta = PLATFORM_META[platform]
   const Icon = meta.Icon
+  const conectada = Boolean(dados)
+  const sync = formatSync(dados?.lastSync, locale)
 
   return (
     <div className={cn(
       'flex flex-col gap-4 rounded-2xl border p-5 transition-all duration-200',
-      integ.connected
+      conectada
         ? 'border-primary/15 bg-primary-600/5 hover:border-primary/30'
-        : 'border-neutral-700/60 bg-neutral-900/40 hover:border-neutral-600'
+        : 'border-neutral-700/60 bg-neutral-900/40'
     )}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span className={cn(
             'inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-inset',
-            integ.connected
+            conectada
               ? 'bg-neutral-800 text-neutral-100 ring-primary/30'
               : 'bg-neutral-800/60 text-text-muted ring-neutral-700'
           )}>
@@ -43,77 +68,78 @@ function IntegracaoCard({ integ, t, locale }) {
           </span>
           <div>
             <h3 className="font-display text-base font-bold text-neutral-100">{meta.name}</h3>
-            {integ.accountHandle && (
-              <p className="text-xs text-text-muted">{integ.accountHandle}</p>
+            {conectada && (
+              <p className="text-xs text-text-muted">
+                {t('configuracoes.integracoes.accounts', { count: dados.accounts })}
+              </p>
             )}
           </div>
         </div>
-        {integ.connected
+        {conectada
           ? <StatusIndicator label={t('configuracoes.integracoes.connected')} color="success" />
           : <Badge variant="neutral" uppercase={false}>{t('configuracoes.integracoes.disconnected')}</Badge>
         }
       </div>
 
-      {integ.connected && (
+      {conectada && (
         <div className="grid grid-cols-2 gap-3 border-t border-neutral-800 pt-4 text-xs">
-          <div>
-            <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
-              {t('configuracoes.integracoes.lastSync')}
-            </span>
-            <span className="mt-1 block font-medium text-neutral-200">
-              {formatRelative(integ.lastSync, locale)}
-            </span>
-          </div>
-          <div>
-            <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
-              {t('configuracoes.integracoes.scopes')}
-            </span>
-            <span className="mt-1 block font-medium text-neutral-200">
-              {integ.scopes.length} OAuth
-            </span>
-          </div>
+          <Stat label={t('configuracoes.integracoes.followers')}>
+            {formatFollowers(dados.followers)}
+          </Stat>
+          <Stat label={t('configuracoes.integracoes.lastSync')}>
+            {/* Sem sincronização registrada, dizer isso — não inventar data. */}
+            {sync || t('configuracoes.integracoes.neverSynced')}
+          </Stat>
         </div>
       )}
-
-      <div className="flex justify-end">
-        {integ.connected ? (
-          <Button variant="outlined" size="sm" leftIcon={Unlink}>
-            {t('configuracoes.integracoes.disconnect')}
-          </Button>
-        ) : (
-          <Button variant="primary" size="sm" leftIcon={Link2}>
-            {t('configuracoes.integracoes.connect')}
-          </Button>
-        )}
-      </div>
     </div>
   )
 }
 
 export default function IntegracoesSection() {
   const { t, i18n } = useTranslation()
-  const [items] = useState(INTEGRACOES)
+  const { data: conexoes, loading, error } = useApi(listPlatformConnections, [])
+
+  const porPlataforma = new Map((conexoes || []).map((c) => [c.platform, c]))
 
   return (
     <Card glass className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <CardLabel>{t('configuracoes.integracoes.title')}</CardLabel>
-          <CardTitle className="mt-1.5">{t('configuracoes.integracoes.title')}</CardTitle>
-          <p className="mt-1 max-w-2xl text-sm text-text-secondary">
-            {t('configuracoes.integracoes.subtitle')}
-          </p>
-        </div>
-        <Button variant="primary" leftIcon={Plus} size="sm">
-          {t('configuracoes.integracoes.addNew')}
-        </Button>
+      <div>
+        <CardLabel>{t('configuracoes.integracoes.title')}</CardLabel>
+        <CardTitle className="mt-1.5">{t('configuracoes.integracoes.title')}</CardTitle>
+        <p className="mt-1 max-w-2xl text-sm text-text-secondary">
+          {t('configuracoes.integracoes.subtitle')}
+        </p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        {items.map((i) => (
-          <IntegracaoCard key={i.platform} integ={i} t={t} locale={i18n.language} />
-        ))}
-      </div>
+      <ApiErrorBanner error={error} />
+
+      {loading ? (
+        <div className="grid gap-4 lg:grid-cols-3">
+          {PLATFORMS.map((p) => (
+            <Skeleton key={p} className="h-44" rounded="rounded-2xl" />
+          ))}
+        </div>
+      ) : !conexoes?.length ? (
+        <EmptyState
+          compact
+          icon={Plug}
+          title={t('configuracoes.integracoes.empty')}
+          description={t('configuracoes.integracoes.emptyHint')}
+        />
+      ) : (
+        <div className="grid gap-4 lg:grid-cols-3">
+          {PLATFORMS.map((p) => (
+            <PlataformaCard
+              key={p}
+              platform={p}
+              dados={porPlataforma.get(p)}
+              t={t}
+              locale={i18n.language}
+            />
+          ))}
+        </div>
+      )}
     </Card>
   )
 }
