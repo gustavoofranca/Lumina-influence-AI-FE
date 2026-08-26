@@ -8,7 +8,7 @@ import en from './locales/en.json'
  * Configuração do i18next.
  *
  * Idioma padrão: pt-BR (com fallback en).
- * Sem persistência (CLAUDE.md proíbe localStorage nesta fase).
+ * Sem persistência — localStorage está vedado nesta fase.
  * Estado do idioma vive em memória durante a sessão.
  */
 i18n
