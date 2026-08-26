@@ -829,5 +829,15 @@
       "backToLogin": "Voltar ao login",
       "successMessage": "Link enviado! Verifique sua caixa de entrada."
     }
+  },
+  "primeiroAcesso": {
+    "title": "Bem-vindo ao Lumina",
+    "subtitle": "Sua conta foi criada. Dê um nome à sua agência — ele aparece nos relatórios que você entrega às marcas.",
+    "agencyName": "NOME DA AGÊNCIA",
+    "agencyNamePlaceholder": "Ex.: Lumina Influence Agency",
+    "nameRequired": "Informe o nome da agência.",
+    "confirm": "Continuar",
+    "saving": "Salvando…",
+    "skip": "Definir depois"
   }
 }

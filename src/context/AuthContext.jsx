@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
-import { api, setAccessToken, setOnUnauthorized } from '../lib/api.js'
+import { api, getAccessToken, setAccessToken, setOnUnauthorized } from '../lib/api.js'
 import { devLogin as devLoginApi, getMe } from '../services/auth.js'
 
 const AuthContext = createContext(null)
@@ -58,8 +58,25 @@ export function AuthProvider({ children }) {
     clearSession()
   }, [clearSession])
 
-  // Sem persistência (sem localStorage nesta fase) → começa deslogado.
-  useEffect(() => { setLoading(false) }, [])
+  // Restaura a sessão da aba: o token sobrevive ao F5 em sessionStorage
+  // (ADR-001 revisada). Token inválido ou expirado cai fora silenciosamente —
+  // é o mesmo efeito de nunca ter havido sessão.
+  useEffect(() => {
+    let cancelado = false
+    const guardado = getAccessToken()
+    if (!guardado) { setLoading(false); return }
+
+    getMe()
+      .then((me) => {
+        if (cancelado) return
+        setUser(me.user)
+        setAgency(me.agency)
+      })
+      .catch(() => { if (!cancelado) clearSession() })
+      .finally(() => { if (!cancelado) setLoading(false) })
+
+    return () => { cancelado = true }
+  }, [clearSession])
 
   const value = {
     user, agency, loading,

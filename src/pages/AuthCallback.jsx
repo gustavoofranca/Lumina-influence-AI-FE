@@ -21,10 +21,14 @@ export default function AuthCallback() {
       setError('Token ausente no retorno do login.')
       return
     }
+    // O back-end marca quando este login acabou de criar a agência — é a única
+    // hora em que dá para saber, e é o que dispara a escolha do nome dela.
+    const agenciaNova = frag.get('new_agency') === '1'
     // Limpa o fragmento da URL (não deixa o token no histórico).
     window.history.replaceState(null, '', '/auth/callback')
     loginWithTokens(accessToken)
-      .then(() => navigate('/app/dashboard', { replace: true }))
+      .then(() => navigate(agenciaNova ? '/primeiro-acesso' : '/app/dashboard',
+                           { replace: true }))
       .catch((e) => setError(e.message || 'Falha ao autenticar.'))
   }, [loginWithTokens, navigate])
 

@@ -8,11 +8,31 @@
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1'
 
-let _accessToken = null
+// ADR-001 (revisada em 26/08/2026): o access token vive em sessionStorage, nunca
+// em localStorage. sessionStorage morre junto com a aba, que e a propriedade que
+// a decisao precisa — so em memoria, qualquer F5 derrubava a sessao.
+const CHAVE_TOKEN = 'lumina.access_token'
+
+function lerTokenGuardado() {
+  try {
+    return sessionStorage.getItem(CHAVE_TOKEN)
+  } catch {
+    // Navegador com armazenamento bloqueado: a sessao passa a valer so em memoria.
+    return null
+  }
+}
+
+let _accessToken = lerTokenGuardado()
 let _onUnauthorized = null
 
 export function setAccessToken(token) {
   _accessToken = token || null
+  try {
+    if (_accessToken) sessionStorage.setItem(CHAVE_TOKEN, _accessToken)
+    else sessionStorage.removeItem(CHAVE_TOKEN)
+  } catch {
+    // Sem armazenamento, segue valendo o valor em memoria.
+  }
 }
 
 export function getAccessToken() {

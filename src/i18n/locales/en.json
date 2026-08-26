@@ -829,5 +829,15 @@
       "backToLogin": "Back to login",
       "successMessage": "Link sent! Check your inbox."
     }
+  },
+  "primeiroAcesso": {
+    "title": "Welcome to Lumina",
+    "subtitle": "Your account is ready. Name your agency — it appears on the reports you deliver to brands.",
+    "agencyName": "AGENCY NAME",
+    "agencyNamePlaceholder": "e.g. Lumina Influence Agency",
+    "nameRequired": "Enter the agency name.",
+    "confirm": "Continue",
+    "saving": "Saving…",
+    "skip": "Set later"
   }
 }
