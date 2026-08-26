@@ -10,7 +10,7 @@
 ## Status
 
 **Protótipo navegável v1.0 — pronto para banca.**
-Todas as 11 etapas concluídas: landing pública, autenticação, dashboard, listagem e análise individual de criadores, campanhas com benchmarking, relatórios em A4 e configurações.
+Todas as 11 etapas concluídas: landing pública, autenticação, dashboard, listagem e análise individual de criadores, campanhas com benchmarking, relatórios em A4 e configurações. Desde a B11 as telas consomem a API real — não há mais dado mockado no projeto.
 
 ---
 
@@ -81,9 +81,9 @@ src/
 ├── pages/              # telas roteadas
 ├── layouts/            # AppLayout, AuthLayout
 ├── context/            # AuthContext
-├── hooks/              # useScrollReveal
-├── mocks/              # influenciadores, campanhas, dashboard, analise, relatorios, agencia, equipe
-├── lib/                # cn() helper
+├── hooks/              # useApi (loading/erro/dados), useScrollReveal
+├── services/           # um módulo por recurso da API (auth, dashboard, influencers, campaigns, reports, agency, team)
+├── lib/                # api.js (cliente HTTP + Bearer + refresh), cn(), constants, format
 ├── i18n/
 │   ├── index.js        # configuração do react-i18next
 │   └── locales/        # pt.json, en.json
