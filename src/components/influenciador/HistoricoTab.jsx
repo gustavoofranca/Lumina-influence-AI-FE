@@ -20,9 +20,11 @@ function ScoreBar({ value, label }) {
       <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">{label}</span>
       <div className="flex items-center gap-2">
         <div className="h-1 w-20 overflow-hidden rounded-full bg-neutral-700/60">
-          <div className="h-full rounded-full bg-gradient-brand" style={{ width: `${value}%` }} />
+          {value == null ? null : (
+            <div className="h-full rounded-full bg-gradient-brand" style={{ width: `${value}%` }} />
+          )}
         </div>
-        <span className="font-display text-sm font-bold text-neutral-100 tabular-nums">{value}</span>
+        <span className="font-display text-sm font-bold tabular-nums text-neutral-100">{value ?? '—'}</span>
       </div>
     </div>
   )

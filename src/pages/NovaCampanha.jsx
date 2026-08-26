@@ -18,7 +18,7 @@ import { PlatformBadgeList } from '../components/icons/PlatformIcons.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { listInfluencers } from '../services/influencers.js'
 import { createCampaign } from '../services/campaigns.js'
-import { formatFollowers, formatBudget, formatDateRange } from '../lib/format.js'
+import { formatFollowers, formatBudget, formatDateRange, formatPct } from '../lib/format.js'
 
 // =============================================================================
 // Step 1: Detalhes
@@ -108,7 +108,7 @@ function InfluenciadorRow({ inf, checked, onToggle }) {
         <div className="mt-1 flex items-center gap-3 text-xs text-text-muted">
           <PlatformBadgeList platforms={inf.platforms} size={12} />
           <span>{formatFollowers(inf.followers)}</span>
-          <span>· {inf.engagement.toFixed(1)}% eng</span>
+          <span>· {formatPct(inf.engagement)} eng</span>
         </div>
       </div>
       <span

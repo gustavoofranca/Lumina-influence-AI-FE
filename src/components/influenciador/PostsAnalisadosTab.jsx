@@ -60,6 +60,11 @@ export default function PostsAnalisadosTab({ data, loading = false }) {
       header: t('influenciador.posts.columns.sentiment'),
       align: 'right',
       render: (row) => {
+        // Post ainda não analisado não recebe cor: verde ou âmbar já seria um
+        // veredito sobre um conteúdo que o modelo não leu.
+        if (row.sentimentScore == null) {
+          return <span className="tabular-nums text-text-muted">—</span>
+        }
         const tone =
           row.sentimentScore >= 85 ? 'text-emerald-300'
           : row.sentimentScore >= 70 ? 'text-primary-300'
@@ -72,6 +77,9 @@ export default function PostsAnalisadosTab({ data, loading = false }) {
       header: t('influenciador.posts.columns.botRisk'),
       align: 'right',
       render: (row) => {
+        if (row.botProbability == null) {
+          return <span className="tabular-nums text-text-muted">—</span>
+        }
         const variant = row.botProbability <= 5 ? 'success' : row.botProbability <= 10 ? 'warning' : 'danger'
         return <Badge variant={variant}>{row.botProbability}%</Badge>
       },

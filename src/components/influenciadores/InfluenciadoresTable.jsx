@@ -8,7 +8,7 @@ import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { formatFollowers } from '../../lib/format.js'
+import { formatFollowers, formatPct } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -28,12 +28,17 @@ function formatDate(iso, locale) {
 }
 
 function EngagementCell({ value }) {
+  // Sem medição não há faixa de cor a atribuir: verde ou vermelho já seria um
+  // julgamento sobre um desempenho que não foi observado.
+  if (value == null) {
+    return <span className="tabular-nums text-text-muted">{formatPct(null)}</span>
+  }
   const tone =
     value >= 8 ? 'text-emerald-300'
     : value >= 5 ? 'text-primary-300'
     : value >= 3 ? 'text-amber-300'
     : 'text-tertiary-300'
-  return <span className={cn('font-semibold tabular-nums', tone)}>{value.toFixed(1)}%</span>
+  return <span className={cn('font-semibold tabular-nums', tone)}>{formatPct(value)}</span>
 }
 
 function EmptyState() {

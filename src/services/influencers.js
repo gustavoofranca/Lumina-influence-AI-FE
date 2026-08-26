@@ -1,5 +1,6 @@
 /** Serviço de influenciadores — adapta o snake_case da API pro formato dos mocks. */
 import { api } from '../lib/api.js'
+import { medida, medidaArredondada } from '../lib/format.js'
 
 // status do back (active|paused|archived) -> status visual do front (active|monitoring|risk)
 const STATUS_MAP = { active: 'active', paused: 'monitoring', archived: 'risk' }
@@ -22,15 +23,15 @@ export function adaptInfluencer(i) {
     followers: i.total_followers || 0,
     status: STATUS_MAP[i.status] || 'active',
     // métricas (só vêm com enriched=true)
-    engagement: m.engagement_rate ?? 0,
-    organicReach: m.organic_pct ?? 0,
-    paidReach: m.paid_pct ?? 0,
-    sentimentScore: m.sentiment_index_pct ?? 0,
-    brandCoherence: m.brand_coherence ?? 0,
-    botProbability: m.bot_probability ?? 0,
+    engagement: medida(m.engagement_rate),
+    organicReach: medida(m.organic_pct),
+    paidReach: medida(m.paid_pct),
+    sentimentScore: medida(m.sentiment_index_pct),
+    brandCoherence: medida(m.brand_coherence),
+    botProbability: medida(m.bot_probability),
     safetyRating: m.safety_rating ?? '—',
-    resonanceScore: Math.round(m.resonance_score ?? 0),
-    viralPotential: m.viral_potential ?? 'medium',
+    resonanceScore: medidaArredondada(m.resonance_score),
+    viralPotential: medida(m.viral_potential),
     lastAnalysis: m.last_analysis_at ? m.last_analysis_at.slice(0, 10) : null,
     lastAnalysisId: null,
   }
@@ -83,8 +84,8 @@ export function adaptAnalysisHistory(a) {
     id: a.analysis_id.slice(0, 8),
     data: a.analyzed_at,
     escopo: `${plataforma}${formato}`,
-    brandCoherence: Math.round(a.brand_coherence ?? 0),
-    sentimentScore: Math.round(a.sentiment_index_pct ?? 0),
+    brandCoherence: medidaArredondada(a.brand_coherence),
+    sentimentScore: medidaArredondada(a.sentiment_index_pct),
   }
 }
 
@@ -94,8 +95,10 @@ export async function getInfluencerAnalysisHistory(id) {
 }
 
 export function adaptPost(p) {
-  // sentiment_score vem em -1..1; o front mostra 0-100
-  const sent = p.sentiment_score != null ? Math.round((p.sentiment_score + 1) / 2 * 100) : 0
+  // sentiment_score vem em -1..1; o front mostra 0-100. Post ainda não
+  // analisado não tem sentimento nem probabilidade de bot: null, não zero —
+  // zero aqui seria "sentimento péssimo" e "nenhum bot", duas afirmações.
+  const sent = p.sentiment_score == null ? null : Math.round((p.sentiment_score + 1) / 2 * 100)
   return {
     id: p.id,
     titulo: p.caption || p.post_type,
@@ -103,7 +106,7 @@ export function adaptPost(p) {
     plataforma: p.platform,
     alcance: p.reach_total,
     sentimentScore: sent,
-    botProbability: p.bot_probability != null ? Math.round(p.bot_probability) : 0,
+    botProbability: medidaArredondada(p.bot_probability),
   }
 }
 
@@ -139,12 +142,14 @@ const CLUSTER_KEY_MAP = {
 }
 
 export function adaptAudienceIntegrity(a) {
+  // Sem análise o back-end devolve null e o cartão mostra estado vazio: a
+  // composição da audiência não é derivável de nada (ADR-003).
   if (!a) return null
   const totals = a.totals || {}
   return {
-    organic:    a.organic ?? 0,
-    suspicious: a.suspicious ?? 0,
-    bots:       a.bots ?? 0,
+    organic:    a.organic,
+    suspicious: a.suspicious,
+    bots:       a.bots,
     totals: {
       verifiedHumans: totals.verified_humans ?? 0,
       suspicious:     totals.suspicious ?? 0,
@@ -154,9 +159,11 @@ export function adaptAudienceIntegrity(a) {
 }
 
 export function adaptNeuralConfidence(rows) {
+  // O back-end já omite a dimensão não medida; lista vazia aciona o estado
+  // vazio do cartão, em vez de três barras zeradas.
   return (rows || []).map((r) => ({
     key: NEURAL_KEY_MAP[r.key] || r.key,
-    value: Math.round(r.value ?? 0),
+    value: medidaArredondada(r.value),
   }))
 }
 

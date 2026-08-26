@@ -9,7 +9,7 @@ import Badge from '../ui/Badge.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
-import { formatFollowers, formatBudget } from '../../lib/format.js'
+import { formatFollowers, formatBudget, formatPct } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -68,10 +68,10 @@ function ParticipantCard({ participant, t }) {
 
       <div className="grid grid-cols-3 gap-2 border-t border-neutral-800 pt-4">
         <MiniKpi label="Score">
-          <span className="text-gradient-brand">{p.resonanceScore}</span>
+          <span className="text-gradient-brand">{p.resonanceScore ?? '—'}</span>
         </MiniKpi>
         <MiniKpi label="Eng.">
-          <span className="text-neutral-100">{p.engagement.toFixed(1)}%</span>
+          <span className="text-neutral-100">{formatPct(p.engagement)}</span>
         </MiniKpi>
         <MiniKpi label="Followers">
           <span className="text-neutral-100">{formatFollowers(p.followers)}</span>

@@ -8,15 +8,20 @@ import Avatar from '../ui/Avatar.jsx'
 import Table from '../ui/Table.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
-import { formatFollowers, formatBudget } from '../../lib/format.js'
+import { formatFollowers, formatBudget, formatPct } from '../../lib/format.js'
 
 function PercentBar({ value, color }) {
+  const medido = value != null
   return (
     <div className="flex items-center justify-end gap-2">
       <div className="h-1 w-12 overflow-hidden rounded-full bg-neutral-700/60">
-        <div className="h-full rounded-full" style={{ width: `${value}%`, background: color }} />
+        {medido ? (
+          <div className="h-full rounded-full" style={{ width: `${value}%`, background: color }} />
+        ) : null}
       </div>
-      <span className="font-semibold tabular-nums text-neutral-200">{value}%</span>
+      <span className={cn('font-semibold tabular-nums', medido ? 'text-neutral-200' : 'text-text-muted')}>
+        {formatPct(value, 0)}
+      </span>
     </div>
   )
 }
@@ -66,11 +71,14 @@ export default function BenchmarkTable({ rows, loading = false }) {
       header: t('campanhas.detail.benchmark.columns.engagement'),
       align: 'right',
       render: (row) => {
+        if (row.engagement == null) {
+          return <span className="tabular-nums text-text-muted">{formatPct(null)}</span>
+        }
         const tone =
           row.engagement >= 8 ? 'text-emerald-300'
           : row.engagement >= 5 ? 'text-primary-300'
           : 'text-amber-300'
-        return <span className={cn('font-semibold tabular-nums', tone)}>{row.engagement.toFixed(1)}%</span>
+        return <span className={cn('font-semibold tabular-nums', tone)}>{formatPct(row.engagement)}</span>
       },
     },
     {
@@ -78,6 +86,9 @@ export default function BenchmarkTable({ rows, loading = false }) {
       header: t('campanhas.detail.benchmark.columns.sentiment'),
       align: 'right',
       render: (row) => {
+        if (row.sentimentScore == null) {
+          return <span className="tabular-nums text-text-muted">—</span>
+        }
         const tone =
           row.sentimentScore >= 85 ? 'text-emerald-300'
           : row.sentimentScore >= 70 ? 'text-primary-300'
@@ -91,7 +102,7 @@ export default function BenchmarkTable({ rows, loading = false }) {
       align: 'right',
       render: (row) => (
         <span className="font-display text-base font-bold text-gradient-brand tabular-nums">
-          {row.resonanceScore}
+          {row.resonanceScore ?? '—'}
         </span>
       ),
     },

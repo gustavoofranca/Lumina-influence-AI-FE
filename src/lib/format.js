@@ -1,5 +1,20 @@
 /** Formatadores de exibição compartilhados entre telas. */
 
+/**
+ * Métrica ausente vira null, não zero (ADR-003 do back-end).
+ *
+ * O back-end devolve null quando não houve base de cálculo. Trocar isso por 0
+ * apagaria a distinção entre "medimos e deu zero" e "não medimos" — que é
+ * justamente o que este produto se propõe a auditar.
+ */
+export const medida = (v) => v ?? null
+export const medidaArredondada = (v) => (v == null ? null : Math.round(v))
+
+/** Percentual para exibição. Sem medição, travessão — nunca "0%" nem "NaN%". */
+export const formatPct = (v, casas = 1) =>
+  v == null ? '—' : `${v.toFixed(casas)}%`
+
+
 /** Abrevia contagem de seguidores: 1500000 → "1.5M", 12000 → "12k". */
 export const formatFollowers = (n) => {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`

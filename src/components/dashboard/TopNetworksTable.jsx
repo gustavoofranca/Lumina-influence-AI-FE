@@ -22,6 +22,9 @@ const STATUS_VARIANT = {
 }
 
 function ScoreCell({ value }) {
+  if (value == null) {
+    return <div className="text-right tabular-nums text-text-muted">—</div>
+  }
   const tone =
     value >= 85 ? 'text-emerald-300'
     : value >= 70 ? 'text-primary-300'
@@ -72,7 +75,10 @@ export default function TopNetworksTable({ data, loading = false }) {
       key: 'viralPotential',
       header: t('dashboard.topNetworks.columns.viralPotential'),
       render: (row) => {
+        // A faixa deriva da ressonância. Sem ressonância medida o back-end
+        // manda null, e antes o adaptador inventava "medium" aqui.
         const cfg = VIRAL_CONFIG[row.viralPotential]
+        if (!cfg) return <span className="text-text-muted">—</span>
         const Icon = cfg.icon
         return (
           <div className={cn('inline-flex items-center gap-1.5 text-xs font-semibold', cfg.color)}>

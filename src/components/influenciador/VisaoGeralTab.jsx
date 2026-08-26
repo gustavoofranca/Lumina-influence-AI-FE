@@ -7,7 +7,7 @@ import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import AreaStackedChart from '../charts/AreaStackedChart.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
-import { formatFollowers } from '../../lib/format.js'
+import { formatFollowers, formatPct } from '../../lib/format.js'
 
 export default function VisaoGeralTab({ influenciador: inf, growth }) {
   const { t } = useTranslation()
@@ -28,19 +28,19 @@ export default function VisaoGeralTab({ influenciador: inf, growth }) {
         />
         <KpiCard
           label={t('influenciador.overview.metrics.engagement')}
-          value={`${inf.engagement.toFixed(1)}%`}
+          value={formatPct(inf.engagement)}
           icon={Zap}
-          progress={Math.min(100, inf.engagement * 10)}
+          progress={inf.engagement == null ? null : Math.min(100, inf.engagement * 10)}
         />
         <KpiCard
           label={t('influenciador.overview.metrics.organicReach')}
-          value={`${inf.organicReach}%`}
+          value={formatPct(inf.organicReach)}
           icon={Sparkles}
           progress={inf.organicReach}
         />
         <KpiCard
           label={t('influenciador.overview.metrics.paidReach')}
-          value={`${inf.paidReach}%`}
+          value={formatPct(inf.paidReach)}
           icon={Wallet}
           progress={inf.paidReach}
           progressVariant="warning"

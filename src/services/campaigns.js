@@ -1,7 +1,7 @@
 /** Serviço de campanhas — adapta a API pro formato que os componentes esperam. */
 import { api } from '../lib/api.js'
 import { adaptInfluencerStatus } from './influencers.js'
-import { parseApiDate } from '../lib/format.js'
+import { medida, medidaArredondada, parseApiDate } from '../lib/format.js'
 
 // status do back (draft|active|ended|cancelled) -> status do front (planning|active|completed|paused)
 const STATUS_MAP = { draft: 'planning', active: 'active', ended: 'completed', cancelled: 'paused' }
@@ -81,16 +81,19 @@ function adaptBenchmarkRow(r) {
     niche:          r.niche || '',
     status:         adaptInfluencerStatus(r.status),
     platforms:      r.platforms || [],
+    // Soma sem parcela é zero de verdade; razão e score sem base são nulos
+    // (ADR-003 do back-end). A distinção é o que separa "medimos e deu zero"
+    // de "não medimos".
     followers:      r.followers ?? 0,
     totalReach:     r.total_reach ?? 0,
-    organicReach:   r.organic_pct ?? 0,
-    paidReach:      r.paid_pct ?? 0,
-    engagement:     r.engagement_rate ?? 0,
-    sentimentScore: Math.round(r.sentiment_index_pct ?? 0),
-    brandCoherence: Math.round(r.brand_coherence ?? 0),
-    botProbability: Math.round(r.bot_probability ?? 0),
-    resonanceScore: Math.round(r.ai_score ?? 0),
     posts:          r.posts_count ?? 0,
+    organicReach:   medida(r.organic_pct),
+    paidReach:      medida(r.paid_pct),
+    engagement:     medida(r.engagement_rate),
+    sentimentScore: medidaArredondada(r.sentiment_index_pct),
+    brandCoherence: medidaArredondada(r.brand_coherence),
+    botProbability: medidaArredondada(r.bot_probability),
+    resonanceScore: medidaArredondada(r.ai_score),
     deliverables:   r.deliverables || '',
     cost:           Math.round((r.cost_brl_cents || 0) / 100),
   }
@@ -108,7 +111,9 @@ export function adaptRadar(radar) {
 
   const data = dimensions.map((dimension, i) => {
     const row = { axis: dimension }
-    series.forEach((s) => { row[s.influencer_id] = s.values?.[i] ?? 0 })
+    // Dimensão não medida vira null e o radar abre uma lacuna, em vez de
+    // desenhar um vértice na origem como se fosse nota zero.
+    series.forEach((s) => { row[s.influencer_id] = s.values?.[i] ?? null })
     return row
   })
 

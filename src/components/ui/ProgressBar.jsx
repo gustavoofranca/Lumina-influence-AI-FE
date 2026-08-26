@@ -29,21 +29,26 @@ export default function ProgressBar({
   label,
   className = '',
 }) {
-  const pct = Math.max(0, Math.min(100, (value / max) * 100))
+  // Sem medição, a barra fica vazia e o número vira travessão: uma barra em
+  // zero afirmaria desempenho nulo onde não houve medição (ADR-003).
+  const medido = value != null
+  const pct = medido ? Math.max(0, Math.min(100, (value / max) * 100)) : 0
   return (
     <div className={cn('w-full', className)}>
       {(label || showValue) && (
         <div className="mb-1.5 flex items-center justify-between text-xs">
           {label ? <span className="text-label">{label}</span> : <span />}
           {showValue ? (
-            <span className="font-semibold text-neutral-200">{Math.round(pct)}%</span>
+            <span className={cn('font-semibold', medido ? 'text-neutral-200' : 'text-text-muted')}>
+              {medido ? `${Math.round(pct)}%` : '—'}
+            </span>
           ) : null}
         </div>
       )}
       <div
         className={cn(TRACK, HEIGHTS[size])}
         role="progressbar"
-        aria-valuenow={Math.round(pct)}
+        aria-valuenow={medido ? Math.round(pct) : undefined}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label={label}
