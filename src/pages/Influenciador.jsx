@@ -11,7 +11,8 @@ import PostsAnalisadosTab   from '../components/influenciador/PostsAnalisadosTab
 import DiagnosticoTab       from '../components/influenciador/DiagnosticoTab.jsx'
 import HistoricoTab         from '../components/influenciador/HistoricoTab.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { getInfluencer, getInfluencerAnalysis, getInfluencerPosts } from '../services/influencers.js'
+import { getInfluencer, getInfluencerAnalysis, getInfluencerAnalysisHistory, getInfluencerPosts }
+  from '../services/influencers.js'
 
 export default function Influenciador() {
   const { t } = useTranslation()
@@ -21,6 +22,8 @@ export default function Influenciador() {
   const { data: influenciador, loading } = useApi(() => getInfluencer(id), [id])
   const { data: analysis, loading: loadingAnalysis } = useApi(() => getInfluencerAnalysis(id), [id])
   const { data: posts, loading: loadingPosts } = useApi(() => getInfluencerPosts(id), [id])
+  const { data: historico, loading: loadingHistorico } =
+    useApi(() => getInfluencerAnalysisHistory(id), [id])
 
   if (loading) {
     return (
@@ -77,7 +80,7 @@ export default function Influenciador() {
         {tab === 'overview'  && <VisaoGeralTab        influenciador={influenciador} />}
         {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
         {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} loading={loadingAnalysis} />}
-        {tab === 'history'   && <HistoricoTab />}
+        {tab === 'history'   && <HistoricoTab data={historico} loading={loadingHistorico} />}
       </div>
     </div>
   )

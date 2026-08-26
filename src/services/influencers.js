@@ -53,6 +53,25 @@ export async function getInfluencerAnalysis(id) {
   return res.data
 }
 
+const PLATAFORMA_LABEL = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' }
+
+export function adaptAnalysisHistory(a) {
+  const plataforma = PLATAFORMA_LABEL[a.platform] || a.platform || '—'
+  const formato = a.post_type ? ` · ${a.post_type}` : ''
+  return {
+    id: a.analysis_id.slice(0, 8),
+    data: a.analyzed_at,
+    escopo: `${plataforma}${formato}`,
+    brandCoherence: Math.round(a.brand_coherence ?? 0),
+    sentimentScore: Math.round(a.sentiment_index_pct ?? 0),
+  }
+}
+
+export async function getInfluencerAnalysisHistory(id) {
+  const res = await api.get(`/influencers/${id}/analyses`)
+  return res.data.map(adaptAnalysisHistory)
+}
+
 export function adaptPost(p) {
   // sentiment_score vem em -1..1; o front mostra 0-100
   const sent = p.sentiment_score != null ? Math.round((p.sentiment_score + 1) / 2 * 100) : 0
