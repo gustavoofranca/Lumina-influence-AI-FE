@@ -17,14 +17,14 @@ const STATUS_VARIANT = {
 }
 
 function formatDate(iso, locale) {
-  try {
-    const d = new Date(iso)
-    return d.toLocaleDateString(locale === 'pt' ? 'pt-BR' : 'en-US', {
-      day: '2-digit', month: 'short',
-    })
-  } catch {
-    return iso
-  }
+  // new Date(null) nao lanca: devolve o epoch, e o criador nunca analisado
+  // aparecia com "31 de dez.". Ausencia de data precisa aparecer como ausencia.
+  if (!iso) return '—'
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return '—'
+  return d.toLocaleDateString(locale === 'pt' ? 'pt-BR' : 'en-US', {
+    day: '2-digit', month: 'short',
+  })
 }
 
 function EngagementCell({ value }) {

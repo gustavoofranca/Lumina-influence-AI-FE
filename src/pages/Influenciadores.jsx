@@ -8,7 +8,7 @@ import InfluenciadoresTable   from '../components/influenciadores/Influenciadore
 import AdicionarInfluenciadorModal from '../components/influenciadores/AdicionarInfluenciadorModal.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { listInfluencers } from '../services/influencers.js'
+import { createInfluencer, listInfluencers } from '../services/influencers.js'
 
 const PAGE_SIZE = 8
 
@@ -54,6 +54,8 @@ export default function Influenciadores() {
   const [range,     setRange]     = useState('all')
   const [page,      setPage]      = useState(1)
   const [modalOpen, setModalOpen] = useState(false)
+  const [criando, setCriando] = useState(false)
+  const [erroCriacao, setErroCriacao] = useState(null)
 
   const togglePlatform = (p) => {
     const next = new Set(platforms)
@@ -73,7 +75,7 @@ export default function Influenciadores() {
 
   const hasFilters = !!search || platforms.size > 0 || statuses.size > 0 || range !== 'all'
 
-  const { data: influencers, loading, error } = useApi(() => listInfluencers(), [])
+  const { data: influencers, loading, error, refetch } = useApi(() => listInfluencers(), [])
 
   const filtered = useMemo(
     () => applyFilters(influencers || [], { search, platforms, statuses, range }),
@@ -131,7 +133,22 @@ export default function Influenciadores() {
       {/* Modal */}
       <AdicionarInfluenciadorModal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => { setModalOpen(false); setErroCriacao(null) }}
+        submitting={criando}
+        error={erroCriacao}
+        onSubmit={async (dados) => {
+          setCriando(true)
+          setErroCriacao(null)
+          try {
+            await createInfluencer(dados)
+            await refetch()
+            setModalOpen(false)
+          } catch (err) {
+            setErroCriacao(err)
+          } finally {
+            setCriando(false)
+          }
+        }}
       />
     </div>
   )

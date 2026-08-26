@@ -701,6 +701,8 @@
       "handle": "@ do criador",
       "handlePlaceholder": "marinacosta",
       "platforms": "Plataformas para conectar",
+      "nameRequired": "Informe o nome do criador.",
+      "submitting": "Vinculando…",
       "selectAtLeastOne": "Selecione ao menos uma plataforma.",
       "oauth": "Vincular contas via OAuth",
       "cancel": "Cancelar"

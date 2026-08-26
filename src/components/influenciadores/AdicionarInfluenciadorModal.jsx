@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link2, User, AtSign, Check } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
+import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
 import Button from '../ui/Button.jsx'
@@ -49,7 +50,9 @@ function PlatformCheckbox({ value, checked, onChange }) {
   )
 }
 
-export default function AdicionarInfluenciadorModal({ open, onClose, onSubmit }) {
+export default function AdicionarInfluenciadorModal({
+  open, onClose, onSubmit, submitting = false, error: erroApi = null,
+}) {
   const { t } = useTranslation()
   const [name, setName]         = useState('')
   const [handle, setHandle]     = useState('')
@@ -63,16 +66,21 @@ export default function AdicionarInfluenciadorModal({ open, onClose, onSubmit })
     setError('')
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!name.trim()) {
+      setError(t('influenciadores.addModal.nameRequired'))
+      return
+    }
     if (platforms.size === 0) {
       setError(t('influenciadores.addModal.selectAtLeastOne'))
       return
     }
-    onSubmit?.({ name, handle, platforms: [...platforms] })
-    // reset
-    setName(''); setHandle(''); setPlatforms(new Set()); setError('')
-    onClose?.()
+    setError('')
+    // Espera a criação terminar: fechar antes esconderia a falha, que foi
+    // exatamente o que fazia o botão parecer não ter efeito nenhum.
+    await onSubmit?.({ name: name.trim(), handle, platforms: [...platforms] })
+    setName(''); setHandle(''); setPlatforms(new Set())
   }
 
   return (
@@ -119,12 +127,16 @@ export default function AdicionarInfluenciadorModal({ open, onClose, onSubmit })
           {error && <p className="mt-2 text-xs font-medium text-tertiary-300">{error}</p>}
         </div>
 
+        <ApiErrorBanner error={erroApi} />
+
         <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button type="button" variant="secondary" onClick={onClose} disabled={submitting}>
             {t('influenciadores.addModal.cancel')}
           </Button>
-          <Button type="submit" variant="primary" leftIcon={Link2}>
-            {t('influenciadores.addModal.oauth')}
+          <Button type="submit" variant="primary" leftIcon={Link2} disabled={submitting}>
+            {submitting
+              ? t('influenciadores.addModal.submitting')
+              : t('influenciadores.addModal.oauth')}
           </Button>
         </div>
       </form>

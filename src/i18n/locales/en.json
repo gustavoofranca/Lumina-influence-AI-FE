@@ -701,6 +701,8 @@
       "handle": "Creator @",
       "handlePlaceholder": "marinacosta",
       "platforms": "Platforms to connect",
+      "nameRequired": "Enter the creator name.",
+      "submitting": "Linking…",
       "selectAtLeastOne": "Select at least one platform.",
       "oauth": "Link accounts via OAuth",
       "cancel": "Cancel"

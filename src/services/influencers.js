@@ -41,6 +41,27 @@ export async function listInfluencers({ enriched = true } = {}) {
   return res.data.map(adaptInfluencer)
 }
 
+export async function createInfluencer({ name, handle, platforms = [] }) {
+  const res = await api.post('/influencers', { display_name: name })
+  const criado = res.data
+
+  // A API modela conta social como recurso proprio: o influenciador nasce
+  // primeiro e cada rede e vinculada em seguida. Sequencial de proposito, para
+  // que a primeira falha interrompa e seja reportada em vez de deixar metade
+  // das contas criadas sem ninguem saber.
+  const semArroba = (handle || '').trim().replace(/^@/, '')
+  if (semArroba) {
+    for (const plataforma of platforms) {
+      await api.post('/social-accounts', {
+        influencer_id: criado.id,
+        platform: plataforma,
+        handle: semArroba,
+      })
+    }
+  }
+  return adaptInfluencer(criado)
+}
+
 export async function getInfluencer(id) {
   // enriched=true: a tela de analise mostra engajamento, sentimento e bot,
   // que so vem no objeto metrics. Sem isso o adaptador cai no fallback 0.
