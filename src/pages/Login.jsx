@@ -70,15 +70,6 @@ export default function Login() {
           autoComplete="current-password"
         />
 
-        <div className="flex justify-end">
-          <Link
-            to="/recuperar-senha"
-            className="text-xs text-text-secondary transition-colors hover:text-primary-300"
-          >
-            {t('auth.login.forgotPassword')}
-          </Link>
-        </div>
-
         {apiError && (
           <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tertiary-300">
             {apiError}

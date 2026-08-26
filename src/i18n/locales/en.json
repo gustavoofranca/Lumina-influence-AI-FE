@@ -806,7 +806,6 @@
       "email": "Email",
       "password": "Password",
       "submit": "Sign in",
-      "forgotPassword": "Forgot password?",
       "noAccount": "Don't have an account?",
       "createAccount": "Create account"
     },
@@ -817,14 +816,6 @@
       "hint": "We do not use passwords: access is through your Google account. On first sign-in you name your agency, and it is ready to receive influencers right away.",
       "hasAccount": "Already have an account?",
       "login": "Sign in"
-    },
-    "recover": {
-      "title": "Recover access",
-      "subtitle": "We'll send a reset link to your email.",
-      "email": "Registered email",
-      "submit": "Send link",
-      "backToLogin": "Back to login",
-      "successMessage": "Link sent! Check your inbox."
     }
   },
   "primeiroAcesso": {

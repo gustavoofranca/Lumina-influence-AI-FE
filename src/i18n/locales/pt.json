@@ -806,7 +806,6 @@
       "email": "E-mail",
       "password": "Senha",
       "submit": "Autenticar",
-      "forgotPassword": "Esqueceu a senha?",
       "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta"
     },
@@ -817,14 +816,6 @@
       "hint": "Não usamos senha: o acesso é pela sua conta Google. No primeiro acesso você dá o nome da sua agência, e ela já entra pronta para receber influenciadores.",
       "hasAccount": "Já tem uma conta?",
       "login": "Entrar"
-    },
-    "recover": {
-      "title": "Recuperar acesso",
-      "subtitle": "Enviaremos um link de redefinição para seu e-mail.",
-      "email": "E-mail cadastrado",
-      "submit": "Enviar link",
-      "backToLogin": "Voltar ao login",
-      "successMessage": "Link enviado! Verifique sua caixa de entrada."
     }
   },
   "primeiroAcesso": {

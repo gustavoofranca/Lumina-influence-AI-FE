@@ -18,7 +18,6 @@ import Login       from './pages/Login.jsx'
 const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
 const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
 const PrimeiroAcesso   = lazy(() => import('./pages/PrimeiroAcesso.jsx'))
-const RecuperarSenha   = lazy(() => import('./pages/RecuperarSenha.jsx'))
 const Dashboard        = lazy(() => import('./pages/Dashboard.jsx'))
 const Influenciadores  = lazy(() => import('./pages/Influenciadores.jsx'))
 const Influenciador    = lazy(() => import('./pages/Influenciador.jsx'))
@@ -79,7 +78,6 @@ function AnimatedRoutes() {
             element={<ProtectedRoute><PrimeiroAcesso /></ProtectedRoute>}
           />
           <Route path="/cadastro"        element={<Cadastro />} />
-          <Route path="/recuperar-senha" element={<RecuperarSenha />} />
 
           {/* App interno — protegido + AppLayout */}
           <Route
