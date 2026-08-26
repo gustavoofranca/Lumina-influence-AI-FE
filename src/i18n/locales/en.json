@@ -817,14 +817,11 @@
       "configuracoes":   "Settings"
     },
     "sidebar": {
-      "version":     "ENTERPRISE V2.4",
       "newCampaign": "New Campaign"
     },
     "topbar": {
       "searchPlaceholder": "Analyze creator...",
       "upgrade":           "Upgrade",
-      "notifications":     "Notifications",
-      "help":              "Help",
       "profile":           "My profile",
       "settings":          "Settings",
       "logout":            "Sign out"

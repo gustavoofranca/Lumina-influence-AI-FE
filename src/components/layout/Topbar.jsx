@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Bell, CircleHelp, ChevronDown, User, Settings, LogOut, Menu } from 'lucide-react'
+import { ChevronDown, User, Settings, LogOut, Menu } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Search from '../ui/Search.jsx'
@@ -132,10 +132,17 @@ export default function Topbar({ onMenuClick }) {
 
       {/* Search central — escondido em telas muito pequenas */}
       <div className="hidden flex-1 max-w-md sm:block">
+        {/* Enter leva à listagem já filtrada — o campo tinha aparência de
+            atalho e não fazia nada além de guardar texto. */}
         <Search
           placeholder={t('app.topbar.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onSubmit={(termo) => {
+            const q = termo.trim()
+            if (!q) return
+            navigate(`/app/influenciadores?q=${encodeURIComponent(q)}`)
+          }}
         />
       </div>
       <div className="flex-1 sm:hidden" />{/* spacer mobile */}
@@ -149,19 +156,6 @@ export default function Topbar({ onMenuClick }) {
         </Link>
 
         <LanguageSwitcher variant="icon" />
-
-        <IconButton
-          icon={Bell}
-          label={t('app.topbar.notifications')}
-          variant="ghost"
-          badge={3}
-        />
-
-        <IconButton
-          icon={CircleHelp}
-          label={t('app.topbar.help')}
-          variant="ghost"
-        />
 
         <div className="ml-1 h-5 w-px bg-neutral-700" aria-hidden />
 

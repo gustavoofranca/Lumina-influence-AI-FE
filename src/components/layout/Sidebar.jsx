@@ -14,6 +14,7 @@ import {
 
 import { cn } from '../../lib/cn.js'
 import Button from '../ui/Button.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 
 const NAV_ITEMS = [
   { key: 'dashboard',       icon: LayoutDashboard, path: '/app/dashboard' },
@@ -58,6 +59,7 @@ function NavItem({ item, t, onClick }) {
 
 export default function Sidebar({ open, onClose }) {
   const { t } = useTranslation()
+  const { agency } = useAuth()
 
   return (
     <>
@@ -88,8 +90,13 @@ export default function Sidebar({ open, onClose }) {
             <span className="font-display text-base font-bold text-gradient-brand">Lumina</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold tracking-label text-text-muted">
-              {t('app.sidebar.version')}
+            {/* Era "ENTERPRISE V2.4", versão inventada. O nome da agência é
+                real, já vem no contexto e diz em qual conta você está. */}
+            <span
+              className="max-w-[9rem] truncate text-[10px] font-semibold uppercase tracking-label text-text-muted"
+              title={agency?.name || ''}
+            >
+              {agency?.name || ''}
             </span>
             {/* Botão fechar (mobile) */}
             <button

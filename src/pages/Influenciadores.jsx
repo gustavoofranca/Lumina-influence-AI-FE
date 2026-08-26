@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Plus } from 'lucide-react'
 
@@ -48,7 +49,10 @@ function applyFilters(rows, { search, platforms, statuses, range }) {
 export default function Influenciadores() {
   const { t } = useTranslation()
 
-  const [search,    setSearch]    = useState('')
+  // A busca do topo navega para cá com ?q=<termo>; semear o filtro é o que
+  // torna aquele atalho um atalho, e não só uma mudança de tela.
+  const [searchParams] = useSearchParams()
+  const [search,    setSearch]    = useState(searchParams.get('q') || '')
   const [platforms, setPlatforms] = useState(new Set())
   const [statuses,  setStatuses]  = useState(new Set())
   const [range,     setRange]     = useState('all')

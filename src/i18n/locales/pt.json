@@ -817,14 +817,11 @@
       "configuracoes":   "Configurações"
     },
     "sidebar": {
-      "version":     "ENTERPRISE V2.4",
       "newCampaign": "Nova Campanha"
     },
     "topbar": {
       "searchPlaceholder": "Analisar criador...",
       "upgrade":           "Upgrade",
-      "notifications":     "Notificações",
-      "help":              "Ajuda",
       "profile":           "Meu perfil",
       "settings":          "Configurações",
       "logout":            "Sair"
