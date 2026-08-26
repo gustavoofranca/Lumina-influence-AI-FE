@@ -7,9 +7,10 @@ import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import AreaStackedChart from '../charts/AreaStackedChart.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
+import ContasConectadasCard from './ContasConectadasCard.jsx'
 import { formatFollowers, formatPct } from '../../lib/format.js'
 
-export default function VisaoGeralTab({ influenciador: inf, growth }) {
+export default function VisaoGeralTab({ influenciador: inf, growth, onContasChange }) {
   const { t } = useTranslation()
 
   const series = [
@@ -46,6 +47,8 @@ export default function VisaoGeralTab({ influenciador: inf, growth }) {
           progressVariant="warning"
         />
       </div>
+
+      <ContasConectadasCard influenciador={inf} onChange={onContasChange} />
 
       {/* Crescimento + integridade resumida */}
       <section className="grid gap-6 lg:grid-cols-3">

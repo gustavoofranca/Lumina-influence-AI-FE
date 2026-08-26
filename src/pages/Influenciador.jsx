@@ -1,10 +1,12 @@
-import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, UserX } from 'lucide-react'
 
 import Tabs from '../components/ui/Tabs.jsx'
 import Button from '../components/ui/Button.jsx'
+import Toast from '../components/ui/Toast.jsx'
+import { PLATFORM_META } from '../components/icons/PlatformIcons.jsx'
 import InfluenciadorHeader from '../components/influenciador/InfluenciadorHeader.jsx'
 import VisaoGeralTab        from '../components/influenciador/VisaoGeralTab.jsx'
 import PostsAnalisadosTab   from '../components/influenciador/PostsAnalisadosTab.jsx'
@@ -17,9 +19,25 @@ import { getInfluencer, getInfluencerAnalysis, getInfluencerAnalysisHistory, get
 export default function Influenciador() {
   const { t } = useTranslation()
   const { id } = useParams()
-  const [tab, setTab] = useState('diagnosis')
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const { data: influenciador, loading } = useApi(() => getInfluencer(id), [id])
+  // O callback do OAuth devolve o navegador com ?conectado=<plataforma>. Abrir
+  // direto na Visão Geral coloca o cartão de contas à vista de quem acabou de
+  // vincular — cair no Diagnóstico faria a ação parecer não ter surtido efeito.
+  const recemConectada = searchParams.get('conectado')
+  const [tab, setTab] = useState(recemConectada ? 'overview' : 'diagnosis')
+  const [avisoConexao, setAvisoConexao] = useState(recemConectada)
+
+  // Some com o parâmetro para que um F5 não repita o aviso.
+  useEffect(() => {
+    if (!recemConectada) return
+    const limpo = new URLSearchParams(searchParams)
+    limpo.delete('conectado')
+    setSearchParams(limpo, { replace: true })
+  }, [recemConectada, searchParams, setSearchParams])
+
+  const { data: influenciador, loading, refetch: recarregarInfluenciador } =
+    useApi(() => getInfluencer(id), [id])
   const { data: analysis, loading: loadingAnalysis } = useApi(() => getInfluencerAnalysis(id), [id])
   const { data: posts, loading: loadingPosts } = useApi(() => getInfluencerPosts(id), [id])
   const { data: historico, loading: loadingHistorico } =
@@ -77,11 +95,25 @@ export default function Influenciador() {
 
       {/* Conteudo */}
       <div>
-        {tab === 'overview'  && <VisaoGeralTab        influenciador={influenciador} />}
+        {tab === 'overview'  && (
+          <VisaoGeralTab
+            influenciador={influenciador}
+            onContasChange={recarregarInfluenciador}
+          />
+        )}
         {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
         {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} loading={loadingAnalysis} />}
         {tab === 'history'   && <HistoricoTab data={historico} loading={loadingHistorico} />}
       </div>
+
+      <Toast
+        open={Boolean(avisoConexao)}
+        onClose={() => setAvisoConexao(null)}
+        type="success"
+        message={t('influenciador.conexoes.connected', {
+          plataforma: PLATFORM_META[avisoConexao]?.name || avisoConexao,
+        })}
+      />
     </div>
   )
 }

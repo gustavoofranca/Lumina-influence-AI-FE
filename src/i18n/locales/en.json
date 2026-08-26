@@ -581,6 +581,17 @@
       "duration": "00:42",
       "view":     "Open audit"
     },
+    "conexoes": {
+      "label": "CONNECTED ACCOUNTS",
+      "title": "Connected accounts",
+      "subtitle": "Link the creator's accounts to collect metrics straight from the platforms.",
+      "connect": "Connect",
+      "disconnect": "Disconnect",
+      "notLinked": "No account linked",
+      "unavailable": "Integration not configured in this environment",
+      "lastSync": "synced {{data}}",
+      "connected": "{{plataforma}} connected successfully."
+    },
     "neuralConfidence": {
       "empty": "Neural confidence unavailable — run an analysis.",
       "title":           "Neural Confidence",

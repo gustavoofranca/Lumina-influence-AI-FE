@@ -20,6 +20,15 @@ export function adaptInfluencer(i) {
     niche: i.niche,
     bio: i.bio,
     platforms: i.platforms || [],
+    // Uma entrada por conta vinculada — a tela de conexões precisa do id de
+    // cada SocialAccount para desvincular, não só da lista de plataformas.
+    socialAccounts: (i.social_accounts || []).map((sa) => ({
+      id: sa.id,
+      platform: sa.platform,
+      handle: sa.handle,
+      followers: sa.follower_count ?? 0,
+      lastSync: sa.last_synced_at || null,
+    })),
     followers: i.total_followers || 0,
     status: STATUS_MAP[i.status] || 'active',
     // métricas (só vêm com enriched=true)

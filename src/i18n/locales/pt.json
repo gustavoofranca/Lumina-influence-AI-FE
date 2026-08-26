@@ -581,6 +581,17 @@
       "duration": "00:42",
       "view":     "Abrir auditoria"
     },
+    "conexoes": {
+      "label": "CONTAS CONECTADAS",
+      "title": "Contas conectadas",
+      "subtitle": "Vincule as contas do criador para coletar métricas direto das plataformas.",
+      "connect": "Conectar",
+      "disconnect": "Desconectar",
+      "notLinked": "Nenhuma conta vinculada",
+      "unavailable": "Integração não configurada neste ambiente",
+      "lastSync": "sync {{data}}",
+      "connected": "{{plataforma}} conectado com sucesso."
+    },
     "neuralConfidence": {
       "empty": "Confiança neural indisponível — rode uma análise.",
       "title":           "Neural Confidence",
