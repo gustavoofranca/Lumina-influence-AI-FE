@@ -100,14 +100,21 @@ function ExecutiveSummary({ doc, t }) {
     <div>
       <SectionTitle>{t('relatorios.preview.executiveSummary')}</SectionTitle>
       <p className="mt-3 text-sm leading-relaxed text-neutral-700">
-        {t('relatorios.preview.summaryText', {
-          creators: s.influencer_count,
-          brand: doc.campaign.brand_name,
-          organic: s.avg_organic_pct,
-          sentiment: s.avg_sentiment_pct,
-          reach: s.total_reach_fmt,
-          posts: s.posts_count,
-        })}
+        {/* Sem post no período não há médias a resumir — o PDF já mostrava
+            estado vazio aqui, e a prévia mostrava a frase com os números. */}
+        {s.has_data
+          ? t('relatorios.preview.summaryText', {
+              creators: s.influencer_count,
+              brand: doc.campaign.brand_name,
+              organic: s.avg_organic_pct_fmt,
+              sentiment: s.avg_sentiment_pct_fmt,
+              reach: s.total_reach_fmt,
+              posts: s.posts_count,
+            })
+          : t('relatorios.preview.summaryEmpty', {
+              creators: s.influencer_count,
+              brand: doc.campaign.brand_name,
+            })}
       </p>
     </div>
   )
@@ -201,11 +208,11 @@ function BenchmarkSection({ doc, t }) {
               <tr key={inf.display_name} className="border-b border-neutral-100">
                 <td className="py-2.5 pr-3 font-semibold text-neutral-900">{inf.display_name}</td>
                 <td className={cn(TD, 'text-right')}>{inf.total_reach_fmt}</td>
-                <td className={cn(TD, 'text-right')}>{inf.organic_pct}%</td>
-                <td className={cn(TD, 'text-right')}>{inf.engagement_rate}%</td>
-                <td className={cn(TD, 'text-right')}>{inf.sentiment_index_pct}%</td>
+                <td className={cn(TD, 'text-right')}>{inf.organic_pct_fmt}</td>
+                <td className={cn(TD, 'text-right')}>{inf.engagement_rate_fmt}</td>
+                <td className={cn(TD, 'text-right')}>{inf.sentiment_index_pct_fmt}</td>
                 <td className="py-2.5 text-right font-display font-extrabold tabular-nums text-violet-600">
-                  {inf.ai_score}
+                  {inf.ai_score_fmt}
                 </td>
               </tr>
             ))}
