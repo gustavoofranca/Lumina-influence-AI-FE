@@ -812,12 +812,9 @@
     },
     "cadastro": {
       "title": "Comece sua jornada",
-      "subtitle": "Crie sua conta e audite influenciadores com IA.",
-      "name": "Nome completo",
-      "company": "Empresa / Agência",
-      "email": "E-mail corporativo",
-      "password": "Senha",
-      "submit": "Criar Conta",
+      "subtitle": "Sua conta nasce no primeiro acesso com o Google.",
+      "google": "Continuar com Google",
+      "hint": "Não usamos senha: o acesso é pela sua conta Google. No primeiro acesso você dá o nome da sua agência, e ela já entra pronta para receber influenciadores.",
       "hasAccount": "Já tem uma conta?",
       "login": "Entrar"
     },

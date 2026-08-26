@@ -812,12 +812,9 @@
     },
     "cadastro": {
       "title": "Start your journey",
-      "subtitle": "Create your account and audit influencers with AI.",
-      "name": "Full name",
-      "company": "Company / Agency",
-      "email": "Corporate email",
-      "password": "Password",
-      "submit": "Create Account",
+      "subtitle": "Your account is created on first sign-in with Google.",
+      "google": "Continue with Google",
+      "hint": "We do not use passwords: access is through your Google account. On first sign-in you name your agency, and it is ready to receive influencers right away.",
       "hasAccount": "Already have an account?",
       "login": "Sign in"
     },

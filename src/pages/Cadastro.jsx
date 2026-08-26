@@ -1,49 +1,24 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { User, Building2, Mail, Lock } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 
 import AuthLayout from '../layouts/AuthLayout.jsx'
-import Input from '../components/ui/Input.jsx'
 import Button from '../components/ui/Button.jsx'
-import { useAuth } from '../context/AuthContext.jsx'
+import { googleLoginUrl } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
 
-function validate({ name, company, email, password }) {
-  const erros = {}
-  if (!name.trim()) erros.name = 'Nome obrigatório.'
-  if (!company.trim()) erros.company = 'Empresa obrigatória.'
-  if (!email) erros.email = 'E-mail obrigatório.'
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) erros.email = 'Formato inválido.'
-  if (!password) erros.password = 'Senha obrigatória.'
-  else if (password.length < 8) erros.password = 'Mínimo 8 caracteres.'
-  return erros
-}
-
+/**
+ * Cadastro — porta de entrada de quem ainda não tem conta.
+ *
+ * Não existe registro por e-mail e senha: a autenticação do produto é OAuth 2.0.
+ * A conta e a agência nascem no retorno do Google, e o nome da agência é pedido
+ * em /primeiro-acesso — único momento em que essa informação existe.
+ */
 export default function Cadastro() {
   const { t } = useTranslation()
-  const { login } = useAuth()
-  const navigate = useNavigate()
 
-  const [fields, setFields] = useState({ name: '', company: '', email: '', password: '' })
-  const [errors, setErrors] = useState({})
-  const [loading, setLoading] = useState(false)
-
-  const set = (key) => (e) => {
-    setFields((p) => ({ ...p, [key]: e.target.value }))
-    setErrors((p) => ({ ...p, [key]: undefined }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const erros = validate(fields)
-    if (Object.keys(erros).length) { setErrors(erros); return }
-
-    setLoading(true)
-    setTimeout(() => {
-      login({ name: fields.name, email: fields.email })
-      navigate('/app/dashboard')
-    }, 600)
+  const handleGoogle = () => {
+    window.location.href = googleLoginUrl()
   }
 
   return (
@@ -55,58 +30,24 @@ export default function Cadastro() {
         <p className="mt-2 text-sm text-text-secondary">{t('auth.cadastro.subtitle')}</p>
       </div>
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        <Input
-          label={t('auth.cadastro.name')}
-          placeholder="Marina Costa"
-          leftIcon={User}
-          value={fields.name}
-          onChange={set('name')}
-          error={errors.name}
-          autoComplete="name"
-        />
-        <Input
-          label={t('auth.cadastro.company')}
-          placeholder="Agência XYZ"
-          leftIcon={Building2}
-          value={fields.company}
-          onChange={set('company')}
-          error={errors.company}
-          autoComplete="organization"
-        />
-        <Input
-          label={t('auth.cadastro.email')}
-          type="email"
-          placeholder="voce@agencia.com"
-          leftIcon={Mail}
-          value={fields.email}
-          onChange={set('email')}
-          error={errors.email}
-          autoComplete="email"
-        />
-        <Input
-          label={t('auth.cadastro.password')}
-          type="password"
-          placeholder="••••••••"
-          leftIcon={Lock}
-          value={fields.password}
-          onChange={set('password')}
-          error={errors.password}
-          helperText={!errors.password ? 'Mínimo 8 caracteres.' : undefined}
-          autoComplete="new-password"
-        />
+      <Button
+        type="button"
+        variant="primary"
+        fullWidth
+        size="lg"
+        onClick={handleGoogle}
+      >
+        {t('auth.cadastro.google')}
+      </Button>
 
-        <Button
-          type="submit"
-          variant="primary"
-          fullWidth
-          size="lg"
-          loading={loading}
-          className="mt-2"
-        >
-          {t('auth.cadastro.submit')}
-        </Button>
-      </form>
+      <div className="mt-6 flex items-start gap-3 rounded-xl border border-neutral-700/60 bg-neutral-800/40 px-4 py-3">
+        <span className="mt-0.5 text-primary-300">
+          <ShieldCheck size={16} />
+        </span>
+        <p className="text-xs leading-relaxed text-text-secondary">
+          {t('auth.cadastro.hint')}
+        </p>
+      </div>
 
       <p className={cn('mt-6 text-center text-sm text-text-secondary')}>
         {t('auth.cadastro.hasAccount')}{' '}
