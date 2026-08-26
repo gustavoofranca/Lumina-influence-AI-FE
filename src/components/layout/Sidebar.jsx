@@ -7,7 +7,6 @@ import {
   Bot,
   FileText,
   Settings,
-  CircleHelp,
   Plus,
   Sparkles,
   X,
@@ -25,7 +24,6 @@ const NAV_ITEMS = [
 ]
 
 const SECONDARY_ITEMS = [
-  { key: 'suporte',       icon: CircleHelp, path: '/app/suporte' },
   { key: 'configuracoes', icon: Settings,   path: '/app/configuracoes' },
 ]
 

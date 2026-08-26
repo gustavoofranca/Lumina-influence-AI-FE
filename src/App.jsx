@@ -24,21 +24,13 @@ const Influenciador    = lazy(() => import('./pages/Influenciador.jsx'))
 const Campanhas        = lazy(() => import('./pages/Campanhas.jsx'))
 const Campanha         = lazy(() => import('./pages/Campanha.jsx'))
 const NovaCampanha     = lazy(() => import('./pages/NovaCampanha.jsx'))
+const Diagnostico      = lazy(() => import('./pages/Diagnostico.jsx'))
 const Relatorios       = lazy(() => import('./pages/Relatorios.jsx'))
 const NovoRelatorio    = lazy(() => import('./pages/NovoRelatorio.jsx'))
 const Configuracoes    = lazy(() => import('./pages/Configuracoes.jsx'))
 const Welcome          = lazy(() => import('./pages/Welcome.jsx'))
 const DesignSystem     = lazy(() => import('./pages/DesignSystem.jsx'))
 const NotFound         = lazy(() => import('./pages/NotFound.jsx'))
-
-// Placeholders das rotas que ainda nao tem tela dedicada
-function Placeholder({ label }) {
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <p className="text-text-muted">{label} — em breve</p>
-    </div>
-  )
-}
 
 /** Exibido enquanto o chunk da rota carrega. */
 function RouteFallback() {
@@ -95,12 +87,11 @@ function AnimatedRoutes() {
             <Route path="campanhas"     element={<Campanhas />} />
             <Route path="campanhas/nova" element={<NovaCampanha />} />
             <Route path="campanhas/:id" element={<Campanha />} />
-            <Route path="diagnostico"   element={<Placeholder label="Diagnóstico IA" />} />
+            <Route path="diagnostico"   element={<Diagnostico />} />
             <Route path="relatorios"    element={<Relatorios />} />
             <Route path="relatorios/novo" element={<NovoRelatorio />} />
             <Route path="configuracoes" element={<Configuracoes />} />
             <Route path="configuracoes/:tab" element={<Configuracoes />} />
-            <Route path="suporte"       element={<Placeholder label="Suporte" />} />
           </Route>
 
           {/* Utilitários */}

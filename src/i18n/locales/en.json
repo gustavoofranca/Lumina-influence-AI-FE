@@ -308,6 +308,26 @@
       }
     }
   },
+  "diagnostico": {
+    "title": "AI Diagnosis",
+    "subtitle": "Audits by creator, most recent first.",
+    "pendingHint": "{{count}} creator(s) with no analysis yet.",
+    "neverAnalyzed": "never analyzed",
+    "view": "View diagnosis",
+    "analyze": "Analyze",
+    "columns": {
+      "creator": "CREATOR",
+      "platforms": "PLATFORMS",
+      "lastAnalysis": "LAST ANALYSIS",
+      "safety": "SAFETY",
+      "bot": "BOT",
+      "coherence": "COHERENCE"
+    },
+    "empty": {
+      "title": "No creators registered",
+      "description": "Add creators so the AI can audit their content."
+    }
+  },
   "relatorios": {
     "list": {
       "title":     "Reports",
@@ -794,8 +814,7 @@
       "campanhas":       "Campaigns",
       "diagnostico":     "AI Diagnosis",
       "relatorios":      "Reports",
-      "configuracoes":   "Settings",
-      "suporte":         "Support"
+      "configuracoes":   "Settings"
     },
     "sidebar": {
       "version":     "ENTERPRISE V2.4",

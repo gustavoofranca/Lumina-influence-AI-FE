@@ -308,6 +308,26 @@
       }
     }
   },
+  "diagnostico": {
+    "title": "Diagnóstico IA",
+    "subtitle": "Auditorias por criador, da mais recente para a mais antiga.",
+    "pendingHint": "{{count}} criador(es) ainda sem nenhuma análise.",
+    "neverAnalyzed": "nunca analisado",
+    "view": "Ver diagnóstico",
+    "analyze": "Analisar",
+    "columns": {
+      "creator": "CRIADOR",
+      "platforms": "PLATAFORMAS",
+      "lastAnalysis": "ÚLTIMA ANÁLISE",
+      "safety": "SAFETY",
+      "bot": "BOT",
+      "coherence": "COERÊNCIA"
+    },
+    "empty": {
+      "title": "Nenhum criador cadastrado",
+      "description": "Cadastre criadores para que a IA possa auditar o conteúdo deles."
+    }
+  },
   "relatorios": {
     "list": {
       "title":     "Relatórios",
@@ -794,8 +814,7 @@
       "campanhas":       "Campanhas",
       "diagnostico":     "Diagnóstico IA",
       "relatorios":      "Relatórios",
-      "configuracoes":   "Configurações",
-      "suporte":         "Suporte"
+      "configuracoes":   "Configurações"
     },
     "sidebar": {
       "version":     "ENTERPRISE V2.4",
