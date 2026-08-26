@@ -42,7 +42,9 @@ export async function listInfluencers({ enriched = true } = {}) {
 }
 
 export async function getInfluencer(id) {
-  const res = await api.get(`/influencers/${id}`)
+  // enriched=true: a tela de analise mostra engajamento, sentimento e bot,
+  // que so vem no objeto metrics. Sem isso o adaptador cai no fallback 0.
+  const res = await api.get(`/influencers/${id}`, { params: { enriched: 'true' } })
   return adaptInfluencer(res.data)
 }
 
