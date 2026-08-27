@@ -86,8 +86,12 @@ export default function DiagnosticoTab({ analysis, loading = false }) {
         </div>
       </section>
 
-      {/* Transcript — a API ainda nao devolve os segmentos por tempo */}
-      <TranscriptHighlight loading={loading} />
+      {/* Transcrição do áudio, quando a análise foi multimodal */}
+      <TranscriptHighlight
+        transcript={analysis?.transcript}
+        nomeDoCriador={analysis?.influencer?.display_name}
+        loading={loading}
+      />
 
       {/* Recomendacoes */}
       <RecommendationsCard

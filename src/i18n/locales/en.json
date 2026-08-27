@@ -636,16 +636,12 @@
       "demographicSync": "Demographic Sync"
     },
     "transcript": {
+      "analyzedAt": "Transcribed in the analysis from {{data}}.",
+      "emptyHint": "Transcription only exists in multimodal analyses, which read the video audio.",
       "empty": "No transcript available for this creator.",
       "title":    "AI Transcript Highlight",
       "subtitle": "Key segments detected by the model",
-      "export":   "Export Text",
-      "segments": {
-        "hook":        "THE HOOK",
-        "exposition":  "EXPOSITION",
-        "valueProp":   "VALUE PROP",
-        "cta":         "CALL TO ACTION"
-      }
+      "export":   "Export Text"
     },
     "recommendations": {
       "empty": "No recommendations generated yet.",

@@ -1,79 +1,68 @@
 import { useTranslation } from 'react-i18next'
 import { Download, FileText } from 'lucide-react'
 
-import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import Button from '../../ui/Button.jsx'
 import EmptyState from '../../ui/EmptyState.jsx'
 import Skeleton from '../../ui/Skeleton.jsx'
+import { parseApiDate } from '../../../lib/format.js'
 
-const TONE_STYLES = {
-  primary:    { tag: 'bg-primary-600/20 text-primary-200 ring-primary-500/30',   bar: 'bg-primary-500',   highlight: 'bg-primary-600/25 text-primary-100' },
-  secondary:  { tag: 'bg-secondary-500/20 text-secondary-200 ring-secondary-500/30', bar: 'bg-secondary-500', highlight: 'bg-secondary-500/25 text-secondary-100' },
-  success:    { tag: 'bg-emerald-500/20 text-emerald-200 ring-emerald-500/30',   bar: 'bg-emerald-500',   highlight: 'bg-emerald-500/25 text-emerald-100' },
-  tertiary:   { tag: 'bg-tertiary-500/20 text-tertiary-200 ring-tertiary-500/30', bar: 'bg-tertiary-500', highlight: 'bg-tertiary-500/25 text-tertiary-100' },
-}
+const HIGHLIGHT = 'rounded-sm bg-primary-600/25 px-1 font-semibold text-primary-100'
 
 /**
- * Aplica grifos coloridos sobre a string `text` para todas as substrings
- * em `highlights`. Case-insensitive, primeira ocorrência de cada termo.
+ * Grifa as frases-chave dentro da transcrição. Case-insensitive.
+ *
+ * As frases vêm da própria análise (`key_phrases`), não de uma lista fixa: o
+ * grifo mostra o que o modelo destacou, não o que a interface achou bonito.
  */
-function renderTextWithHighlights(text, highlights, highlightClass) {
-  if (!highlights?.length) return text
+function comGrifos(texto, frases) {
+  const termos = (frases || []).filter((f) => typeof f === 'string' && f.trim())
+  if (!termos.length) return texto
 
-  // Constroi regex unica com escape de caracteres especiais
-  const escaped = highlights.map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
-  const regex = new RegExp(`(${escaped})`, 'gi')
-  const parts = text.split(regex)
+  const escapado = termos
+    .map((f) => f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('|')
+  const partes = texto.split(new RegExp(`(${escapado})`, 'gi'))
 
-  return parts.map((part, i) => {
-    const isHighlight = highlights.some((h) => h.toLowerCase() === part.toLowerCase())
-    if (!isHighlight) return part
-    return (
-      <mark key={i} className={cn('rounded-sm px-1 font-semibold', highlightClass)}>
-        {part}
-      </mark>
-    )
-  })
-}
-
-function Segment({ segment, t }) {
-  const style = TONE_STYLES[segment.tone] || TONE_STYLES.primary
-  return (
-    <li className="relative flex gap-4 pl-4">
-      <span className={cn('absolute left-0 top-2 h-[calc(100%-1rem)] w-px', style.bar, 'opacity-60')} />
-      <span className={cn('absolute left-[-3px] top-2 h-1.5 w-1.5 rounded-full', style.bar)} />
-
-      <div className="flex-1">
-        <div className="mb-2 flex items-center gap-2">
-          <span className={cn('inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[10px] font-semibold ring-1 ring-inset', style.tag)}>
-            [{segment.time}]
-          </span>
-          <span className="text-[10px] font-bold uppercase tracking-label text-text-muted">
-            {t(`influenciador.transcript.segments.${segment.segment}`)}
-          </span>
-        </div>
-        <p className="text-sm leading-relaxed text-text-secondary">
-          {renderTextWithHighlights(segment.text, segment.highlights, style.highlight)}
-        </p>
-      </div>
-    </li>
+  return partes.map((parte, i) =>
+    termos.some((f) => f.toLowerCase() === parte.toLowerCase())
+      ? <mark key={i} className={HIGHLIGHT}>{parte}</mark>
+      : parte
   )
 }
 
-export default function TranscriptHighlight({ segments, loading = false, nomeDoCriador }) {
-  const { t } = useTranslation()
+function formatarData(iso, locale) {
+  if (!iso) return null
+  try {
+    return parseApiDate(iso).toLocaleDateString(locale === 'pt' ? 'pt-BR' : 'en-US', {
+      day: '2-digit', month: 'short', year: 'numeric',
+    })
+  } catch {
+    return null
+  }
+}
 
-  /**
-   * Exporta o texto que já está na tela, sem passar pela API.
-   * A transcrição vem do payload da análise; salvar em .txt é formatação, não
-   * uma segunda fonte de verdade.
-   */
+/**
+ * Transcrição do áudio analisado.
+ *
+ * O modelo devolve texto corrido, sem marcação de tempo nem classificação de
+ * tom. A versão anterior deste componente desenhava segmentos cronometrados e
+ * coloridos por tom — uma estrutura que nenhum dado sustenta, e que por isso
+ * nunca chegou a receber dado nenhum: era chamado sem props e mostrava estado
+ * vazio para 111 análises que tinham transcrição no banco.
+ *
+ * Agora mostra o que existe: o texto, quando foi analisado, e as frases-chave
+ * que o próprio modelo destacou.
+ */
+export default function TranscriptHighlight({ transcript, loading = false, nomeDoCriador }) {
+  const { t, i18n } = useTranslation()
+
+  const texto = transcript?.text || ''
+  const analisadaEm = formatarData(transcript?.analyzed_at, i18n.language)
+
+  /** Salva o texto que já está na tela — formatação, não segunda fonte. */
   const exportar = () => {
-    const conteudo = (segments || [])
-      .map((seg) => `[${seg.time}] ${seg.text}`)
-      .join('\n\n')
-    const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' })
+    const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     const base = (nomeDoCriador || 'transcricao').toLowerCase().replace(/[^a-z0-9]+/g, '-')
@@ -89,13 +78,17 @@ export default function TranscriptHighlight({ segments, loading = false, nomeDoC
         <div>
           <CardLabel>{t('influenciador.transcript.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('influenciador.transcript.title')}</CardTitle>
-          <p className="mt-1 text-sm text-text-secondary">{t('influenciador.transcript.subtitle')}</p>
+          <p className="mt-1 text-sm text-text-secondary">
+            {analisadaEm
+              ? t('influenciador.transcript.analyzedAt', { data: analisadaEm })
+              : t('influenciador.transcript.subtitle')}
+          </p>
         </div>
         <Button
           variant="outlined"
           size="sm"
           leftIcon={Download}
-          disabled={!segments?.length}
+          disabled={!texto}
           onClick={exportar}
         >
           {t('influenciador.transcript.export')}
@@ -104,14 +97,16 @@ export default function TranscriptHighlight({ segments, loading = false, nomeDoC
 
       {loading ? (
         <Skeleton className="h-40" rounded="rounded-xl" />
-      ) : segments?.length ? (
-        <ul className="space-y-5">
-          {segments.map((seg, i) => (
-            <Segment key={i} segment={seg} t={t} />
-          ))}
-        </ul>
+      ) : texto ? (
+        <blockquote className="border-l-2 border-primary-500/40 pl-4 text-sm leading-relaxed text-text-secondary">
+          {comGrifos(texto, transcript.key_phrases)}
+        </blockquote>
       ) : (
-        <EmptyState icon={FileText} title={t('influenciador.transcript.empty')} />
+        <EmptyState
+          icon={FileText}
+          title={t('influenciador.transcript.empty')}
+          description={t('influenciador.transcript.emptyHint')}
+        />
       )}
     </Card>
   )
