@@ -12,7 +12,12 @@ export default function AppLayout() {
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Área principal — offset da sidebar em lg */}
-      <div className="flex flex-1 flex-col lg:pl-64">
+      {/* min-w-0: este é item de um flex em linha (sidebar + conteúdo). Sem
+          ele, o invólucro nunca encolhe abaixo da largura mínima do conteúdo,
+          e qualquer texto com `truncate` (que implica nowrap) empurra a
+          página inteira num celular. Era a causa única de todas as telas que
+          estouravam a viewport. */}
+      <div className="flex min-w-0 flex-1 flex-col lg:pl-64">
         <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
         <main className="flex-1 overflow-y-auto p-6">

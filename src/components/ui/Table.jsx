@@ -28,7 +28,9 @@ export default function Table({
   const empty = data.length === 0
 
   return (
-    <div className={cn('overflow-hidden rounded-2xl border border-neutral-700/60', className)}>
+    // min-w-0: filho de grid/flex não encolhe abaixo do conteúdo sem isso, e
+    // o overflow-x-auto de dentro nunca chega a valer.
+    <div className={cn('min-w-0 overflow-hidden rounded-2xl border border-neutral-700/60', className)}>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>

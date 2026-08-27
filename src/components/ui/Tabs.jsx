@@ -23,8 +23,17 @@ export default function Tabs({
   className = '',
 }) {
   if (variant === 'pills') {
+    // A barra é inline-flex para abraçar o conteúdo no desktop. O invólucro de
+    // bloco existe para que ela role num celular em vez de ser cortada.
     return (
-      <div className={cn('inline-flex gap-1 rounded-2xl bg-neutral-800 p-1 ring-1 ring-inset ring-neutral-700', className)} role="tablist">
+      <div className="overflow-x-auto">
+      <div
+        className={cn(
+          'inline-flex gap-1 rounded-2xl bg-neutral-800 p-1 ring-1 ring-inset ring-neutral-700',
+          className
+        )}
+        role="tablist"
+      >
         {items.map((item) => {
           const active = item.value === value
           const Icon = item.icon
@@ -52,6 +61,7 @@ export default function Tabs({
             </button>
           )
         })}
+      </div>
       </div>
     )
   }

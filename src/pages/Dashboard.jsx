@@ -41,7 +41,7 @@ export default function Dashboard() {
 
       {/* Linha 1: Growth (2 cols) + Diagnostico em destaque (1 col) */}
       <section className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+        <div className="min-w-0 lg:col-span-2">
           <GrowthCard data={overview?.growth} loading={loading} />
         </div>
         <div>
@@ -51,7 +51,7 @@ export default function Dashboard() {
 
       {/* Linha 2: Top Networks (2 cols) + Network Density (1 col) */}
       <section className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+        <div className="min-w-0 lg:col-span-2">
           <TopNetworksTable data={overview?.topNetworks} loading={loading} />
         </div>
         <div>

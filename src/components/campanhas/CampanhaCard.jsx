@@ -59,7 +59,10 @@ export default function CampanhaCard({ campanha }) {
     <Link
       to={`/app/campanhas/${c.id}`}
       className={cn(
-        'group block rounded-2xl border border-primary/10 bg-neutral-800/60 p-5 backdrop-blur-md',
+        // min-w-0: o intervalo de datas usa `truncate`, que implica
+        // white-space:nowrap — sem isso a largura mínima do card é a linha
+        // inteira, e num celular ele empurra a página.
+        'group block min-w-0 rounded-2xl border border-primary/10 bg-neutral-800/60 p-5 backdrop-blur-md',
         'transition-all duration-200',
         'hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-glow-soft'
       )}
