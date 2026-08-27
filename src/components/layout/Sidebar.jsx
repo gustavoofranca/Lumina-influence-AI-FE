@@ -83,29 +83,32 @@ export default function Sidebar({ open, onClose }) {
           'lg:translate-x-0' // sempre visível em desktop
         )}
       >
-        {/* Header da sidebar */}
+        {/* Header da sidebar. A marca fica sozinha na linha: dividir os 216px
+            com o nome da agência truncava os dois. */}
         <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-primary/10 px-5">
-          <LuminaWordmark compact showTagline={false} markClassName="w-7" className="shrink-0" />
-          <div className="flex min-w-0 items-center gap-2">
-            {/* Era "ENTERPRISE V2.4", versão inventada. O nome da agência é
-                real, já vem no contexto e diz em qual conta você está. */}
-            <span
-              className="truncate text-[10px] font-semibold uppercase tracking-label text-text-muted"
-              title={agency?.name || ''}
-            >
-              {agency?.name || ''}
-            </span>
-            {/* Botão fechar (mobile) */}
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg p-1 text-text-muted hover:bg-bg-surface hover:text-text-primary lg:hidden"
-              aria-label={t('common.a11y.closeMenu')}
-            >
-              <X size={16} />
-            </button>
-          </div>
+          <LuminaWordmark markClassName="w-8" className="shrink-0" />
+          {/* Botão fechar (mobile) */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg p-1 text-text-muted hover:bg-bg-surface hover:text-text-primary lg:hidden"
+            aria-label={t('common.a11y.closeMenu')}
+          >
+            <X size={16} />
+          </button>
         </div>
+
+        {/* Em qual conta você está. Era "ENTERPRISE V2.4", versão inventada. */}
+        {agency?.name && (
+          <div className="shrink-0 border-b border-primary/10 px-5 py-2.5">
+            <span
+              className="block truncate text-[10px] font-semibold uppercase tracking-label text-text-muted"
+              title={agency.name}
+            >
+              {agency.name}
+            </span>
+          </div>
+        )}
 
         {/* Navegação principal */}
         <nav className="flex-1 overflow-y-auto px-3 py-4">

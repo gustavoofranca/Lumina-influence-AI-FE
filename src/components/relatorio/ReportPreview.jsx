@@ -26,7 +26,7 @@ function Page({ pageNumber, totalPages, children, t, brand }) {
     )}>
       <div className="flex items-center justify-between border-b-2 border-violet-600 px-10 py-4">
         <span className="flex items-center gap-2 text-violet-700">
-          <LuminaMark tone="mono" className="w-7" />
+          <LuminaMark tone="black" className="w-9" />
           <span className="font-display text-sm font-bold">Lumina Influence AI</span>
         </span>
         <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{brand}</span>

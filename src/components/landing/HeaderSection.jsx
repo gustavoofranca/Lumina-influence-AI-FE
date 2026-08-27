@@ -15,7 +15,7 @@ export default function HeaderSection() {
     <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-bg-base/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6">
         <Link to="/" className="shrink-0" aria-label="Lumina Influence AI">
-          <LuminaWordmark compact markClassName="w-9" />
+          <LuminaWordmark markClassName="w-9" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
