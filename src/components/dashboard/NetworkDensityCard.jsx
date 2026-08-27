@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { Maximize2, Network } from 'lucide-react'
+import { Network } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel } from '../ui/Card.jsx'
-import Button from '../ui/Button.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 
@@ -109,10 +108,6 @@ export default function NetworkDensityCard({ data, loading = false }) {
       </div>
 
       <NodeMapPreview />
-
-      <Button variant="outlined" leftIcon={Maximize2} fullWidth>
-        {t('dashboard.networkDensity.expand')}
-      </Button>
     </Card>
   )
 }

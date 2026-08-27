@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, FileText, Edit3 } from 'lucide-react'
 
@@ -32,8 +32,9 @@ function MetaCell({ label, value, accent = false }) {
   )
 }
 
-export default function CampanhaHeader({ campanha, metrics }) {
+export default function CampanhaHeader({ campanha, metrics, onEdit }) {
   const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
   const c = campanha
   // Os totais vêm do benchmarking, que carrega depois da campanha.
   const m = metrics
@@ -70,10 +71,14 @@ export default function CampanhaHeader({ campanha, metrics }) {
         </div>
 
         <div className="flex items-center gap-2 lg:shrink-0">
-          <Button variant="primary" leftIcon={FileText}>
+          <Button
+            variant="primary"
+            leftIcon={FileText}
+            onClick={() => navigate(`/app/relatorios/novo?campanha=${c.id}`)}
+          >
             {t('campanhas.detail.actions.generateReport')}
           </Button>
-          <Button variant="secondary" leftIcon={Edit3}>
+          <Button variant="secondary" leftIcon={Edit3} onClick={onEdit}>
             {t('campanhas.detail.actions.edit')}
           </Button>
         </div>

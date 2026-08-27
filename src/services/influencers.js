@@ -41,7 +41,9 @@ export function adaptInfluencer(i) {
     safetyRating: m.safety_rating ?? '—',
     resonanceScore: medidaArredondada(m.resonance_score),
     viralPotential: medida(m.viral_potential),
-    lastAnalysis: m.last_analysis_at ? m.last_analysis_at.slice(0, 10) : null,
+    // Instante completo, sem .slice(0,10): truncar para "2026-08-27" faz
+    // `new Date` ler meia-noite UTC, que em UTC-3 exibe o dia anterior.
+    lastAnalysis: m.last_analysis_at || null,
     lastAnalysisId: null,
   }
 }
@@ -117,6 +119,19 @@ export function adaptPost(p) {
     sentimentScore: sent,
     botProbability: medidaArredondada(p.bot_probability),
   }
+}
+
+/**
+ * Dispara uma nova análise de IA no post indicado.
+ *
+ * Síncrona e cara: leva ~25s no banco local e ~50s no gerenciado, e consome
+ * uma das 20 requisições diárias do free tier do Gemini. Um 429 com
+ * `code === 'gemini_quota_exceeded'` significa cota do dia esgotada — esperar
+ * não resolve, só o dia seguinte.
+ */
+export async function analyzePost(postId) {
+  const res = await api.post(`/posts/${postId}/analyze`)
+  return res.data
 }
 
 export async function getInfluencerPosts(id, limit = 20) {

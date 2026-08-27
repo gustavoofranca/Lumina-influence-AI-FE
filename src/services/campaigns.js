@@ -42,6 +42,25 @@ export function adaptCampaign(c) {
   }
 }
 
+// front (planning|active|completed|paused) -> back (draft|active|ended|cancelled)
+const STATUS_PARA_API = { planning: 'draft', active: 'active', completed: 'ended', paused: 'cancelled' }
+
+/**
+ * Atualiza a campanha. Envia só o que mudou: o schema do back-end recusa campo
+ * desconhecido (`extra="forbid"`) e trata ausência como "não mexer".
+ */
+export async function updateCampaign(id, campos) {
+  const corpo = {}
+  if (campos.brand !== undefined)     corpo.brand_name = campos.brand
+  if (campos.name !== undefined)      corpo.title = campos.name
+  if (campos.startDate !== undefined) corpo.period_start = campos.startDate
+  if (campos.endDate !== undefined)   corpo.period_end = campos.endDate
+  if (campos.budget !== undefined)    corpo.budget_brl_cents = Math.round(campos.budget * 100)
+  if (campos.status !== undefined)    corpo.status = STATUS_PARA_API[campos.status] || campos.status
+  const res = await api.patch(`/campaigns/${id}`, corpo)
+  return adaptCampaign(res.data)
+}
+
 export async function listCampaigns() {
   const res = await api.get('/campaigns', { params: { per_page: 100 } })
   return res.data.map(adaptCampaign)

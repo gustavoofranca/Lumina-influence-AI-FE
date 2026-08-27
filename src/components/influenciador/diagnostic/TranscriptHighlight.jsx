@@ -61,8 +61,27 @@ function Segment({ segment, t }) {
   )
 }
 
-export default function TranscriptHighlight({ segments, loading = false }) {
+export default function TranscriptHighlight({ segments, loading = false, nomeDoCriador }) {
   const { t } = useTranslation()
+
+  /**
+   * Exporta o texto que já está na tela, sem passar pela API.
+   * A transcrição vem do payload da análise; salvar em .txt é formatação, não
+   * uma segunda fonte de verdade.
+   */
+  const exportar = () => {
+    const conteudo = (segments || [])
+      .map((seg) => `[${seg.time}] ${seg.text}`)
+      .join('\n\n')
+    const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    const base = (nomeDoCriador || 'transcricao').toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    link.href = url
+    link.download = `transcricao-${base}.txt`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
 
   return (
     <Card glass className="flex flex-col gap-5">
@@ -72,7 +91,13 @@ export default function TranscriptHighlight({ segments, loading = false }) {
           <CardTitle className="mt-1.5">{t('influenciador.transcript.title')}</CardTitle>
           <p className="mt-1 text-sm text-text-secondary">{t('influenciador.transcript.subtitle')}</p>
         </div>
-        <Button variant="outlined" size="sm" leftIcon={Download}>
+        <Button
+          variant="outlined"
+          size="sm"
+          leftIcon={Download}
+          disabled={!segments?.length}
+          onClick={exportar}
+        >
           {t('influenciador.transcript.export')}
         </Button>
       </div>

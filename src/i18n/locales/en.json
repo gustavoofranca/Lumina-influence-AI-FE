@@ -448,6 +448,20 @@
         "progress":          "Period elapsed"
       }
     },
+    "editModal": {
+      "title": "Edit campaign",
+      "brand": "Brand",
+      "name": "Campaign name",
+      "start": "Start",
+      "end": "End",
+      "budget": "Budget (BRL)",
+      "budgetHint": "Total contracted amount, in reais.",
+      "status": "STATUS",
+      "brandRequired": "Brand is required.",
+      "periodRequired": "Enter the period start and end.",
+      "periodInverted": "End cannot be before start.",
+      "budgetInvalid": "Invalid budget."
+    },
     "status": {
       "active":    "Active",
       "planning":  "Planning",
@@ -555,6 +569,7 @@
       "deepAnalysis":     "DEEP ANALYSIS",
       "sessionId":        "Session ID",
       "lastAnalysis":     "Last analysis on",
+      "quotaExceeded": "Gemini daily quota exhausted. The free tier allows 20 analyses per day, per project and per model — waiting will not help, only the next day.",
       "rerun":            "Re-run Diagnosis",
       "share":            "Share Report"
     },

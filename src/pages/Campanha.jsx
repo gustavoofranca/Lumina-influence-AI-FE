@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, Megaphone } from 'lucide-react'
@@ -7,14 +8,36 @@ import CampanhaHeader     from '../components/campanha/CampanhaHeader.jsx'
 import ParticipantesGrid  from '../components/campanha/ParticipantesGrid.jsx'
 import BenchmarkTable     from '../components/campanha/BenchmarkTable.jsx'
 import RadarComparison    from '../components/campanha/RadarComparison.jsx'
+import EditarCampanhaModal from '../components/campanha/EditarCampanhaModal.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { getCampaign, getCampaignBenchmarking } from '../services/campaigns.js'
+import { getCampaign, getCampaignBenchmarking, updateCampaign } from '../services/campaigns.js'
 
 export default function Campanha() {
   const { t } = useTranslation()
   const { id } = useParams()
-  const { data: campanha, loading } = useApi(() => getCampaign(id), [id])
-  const { data: bench, loading: benchLoading } = useApi(() => getCampaignBenchmarking(id), [id])
+  const { data: campanha, loading, refetch: recarregarCampanha } =
+    useApi(() => getCampaign(id), [id])
+  const { data: bench, loading: benchLoading, refetch: recarregarBench } =
+    useApi(() => getCampaignBenchmarking(id), [id])
+
+  const [editando, setEditando] = useState(false)
+  const [salvando, setSalvando] = useState(false)
+  const [erroEdicao, setErroEdicao] = useState(null)
+
+  const salvarEdicao = async (alterados) => {
+    setErroEdicao(null)
+    setSalvando(true)
+    try {
+      await updateCampaign(id, alterados)
+      // Período e status alteram o benchmarking, não só o cabeçalho.
+      await Promise.all([recarregarCampanha(), recarregarBench()])
+      setEditando(false)
+    } catch (err) {
+      setErroEdicao(err.message)
+    } finally {
+      setSalvando(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -44,7 +67,20 @@ export default function Campanha() {
 
   return (
     <div className="flex flex-col gap-6">
-      <CampanhaHeader campanha={campanha} metrics={bench?.totals} />
+      <CampanhaHeader
+        campanha={campanha}
+        metrics={bench?.totals}
+        onEdit={() => setEditando(true)}
+      />
+
+      <EditarCampanhaModal
+        open={editando}
+        onClose={() => setEditando(false)}
+        campanha={campanha}
+        onSave={salvarEdicao}
+        salvando={salvando}
+        erroApi={erroEdicao}
+      />
 
       <ParticipantesGrid participants={bench?.rows} loading={benchLoading} />
 

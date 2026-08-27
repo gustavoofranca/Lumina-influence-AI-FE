@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Calendar, Check, Download, FileText,
@@ -307,8 +307,13 @@ export default function NovoRelatorio() {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const [step, setStep] = useState(1)
-  const [campaignId, setCampaignId] = useState('')
+  // Chegando de "Gerar Relatório" na tela da campanha, o passo 1 já está
+  // respondido — repetir a escolha faria o atalho custar um clique a mais.
+  const [searchParams] = useSearchParams()
+  const campanhaPreSelecionada = searchParams.get('campanha') || ''
+
+  const [step, setStep] = useState(campanhaPreSelecionada ? 2 : 1)
+  const [campaignId, setCampaignId] = useState(campanhaPreSelecionada)
   const [period, setPeriod] = useState({ start: '', end: '' })
   const [influencerIds, setInfluencerIds] = useState(new Set())
   const [sections, setSections] = useState(new Set(SECTION_KEYS))

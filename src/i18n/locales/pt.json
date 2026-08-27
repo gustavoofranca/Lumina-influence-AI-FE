@@ -448,6 +448,20 @@
         "progress":          "Período decorrido"
       }
     },
+    "editModal": {
+      "title": "Editar campanha",
+      "brand": "Marca",
+      "name": "Nome da campanha",
+      "start": "Início",
+      "end": "Fim",
+      "budget": "Orçamento (R$)",
+      "budgetHint": "Valor total contratado, em reais.",
+      "status": "STATUS",
+      "brandRequired": "A marca é obrigatória.",
+      "periodRequired": "Informe início e fim do período.",
+      "periodInverted": "O fim não pode ser antes do início.",
+      "budgetInvalid": "Orçamento inválido."
+    },
     "status": {
       "active":    "Ativa",
       "planning":  "Planejamento",
@@ -555,6 +569,7 @@
       "deepAnalysis":     "DEEP ANALYSIS",
       "sessionId":        "Session ID",
       "lastAnalysis":     "Última análise em",
+      "quotaExceeded": "Cota diária do Gemini esgotada. O free tier permite 20 análises por dia, por projeto e por modelo — esperar não resolve, só o dia seguinte.",
       "rerun":            "Re-run Diagnosis",
       "share":            "Share Report"
     },

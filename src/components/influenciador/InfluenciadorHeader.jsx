@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, RotateCw, Share2 } from 'lucide-react'
+import { ArrowLeft, RotateCw } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Avatar from '../ui/Avatar.jsx'
@@ -33,7 +33,12 @@ function formatDate(iso, locale) {
   }
 }
 
-export default function InfluenciadorHeader({ influenciador }) {
+export default function InfluenciadorHeader({
+  influenciador,
+  onRerun,
+  reanalisando = false,
+  podeReanalisar = true,
+}) {
   const { t, i18n } = useTranslation()
   const inf = influenciador
 
@@ -106,11 +111,14 @@ export default function InfluenciadorHeader({ influenciador }) {
 
         {/* Acoes */}
         <div className="flex items-center gap-2 lg:shrink-0">
-          <Button variant="primary" leftIcon={RotateCw}>
+          <Button
+            variant="primary"
+            leftIcon={RotateCw}
+            loading={reanalisando}
+            disabled={!podeReanalisar}
+            onClick={onRerun}
+          >
             {t('influenciador.header.rerun')}
-          </Button>
-          <Button variant="secondary" leftIcon={Share2}>
-            {t('influenciador.header.share')}
           </Button>
         </div>
       </div>
