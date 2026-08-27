@@ -3,7 +3,6 @@ import { Play, ScanLine } from 'lucide-react'
 
 import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
-import Button from '../../ui/Button.jsx'
 
 /**
  * VideoAuditCard — thumbnail decorativa de reel + overlay de "scan" da IA
@@ -70,10 +69,6 @@ export default function VideoAuditCard() {
       </div>
 
       <ReelThumbnail duration={t('influenciador.videoAudit.duration')} />
-
-      <Button variant="outlined" size="md" fullWidth>
-        {t('influenciador.videoAudit.view')}
-      </Button>
     </Card>
   )
 }

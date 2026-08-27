@@ -623,8 +623,7 @@
     "videoAudit": {
       "title":    "Video Component Audit",
       "subtitle": "Frame-by-frame analysis of the latest reel",
-      "duration": "00:42",
-      "view":     "Open audit"
+      "duration": "00:42"
     },
     "conexoes": {
       "label": "CONNECTED ACCOUNTS",
