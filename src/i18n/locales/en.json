@@ -1,9 +1,9 @@
 {
   "notFound": {
-    "label":     "ERROR 404 · NEURAL DRIFT",
-    "title":     "Page not found",
-    "subtitle":  "The requested route is not connected to this product's neural mesh. Check the URL or go back to the main panel.",
-    "backHome":  "Back to home",
+    "label": "ERROR 404 · NEURAL DRIFT",
+    "title": "Page not found",
+    "subtitle": "The requested route is not connected to this product's neural mesh. Check the URL or go back to the main panel.",
+    "backHome": "Back to home",
     "goDashboard": "Open dashboard"
   },
   "common": {
@@ -31,9 +31,9 @@
     "continue": "Continue",
     "back": "Back",
     "next": "Next",
-      "apiError": "Failed to load data from the API.",
-      "apiErrorHint": "Check whether the back-end is running on localhost:5000.",
-      "retry": "Try again",
+    "apiError": "Failed to load data from the API.",
+    "apiErrorHint": "Check whether the back-end is running on localhost:5000.",
+    "retry": "Try again",
     "loading": "Loading...",
     "language": "Language",
     "português": "Português",
@@ -127,8 +127,12 @@
   },
   "landing": {
     "nav": {
-      "solutions": "Solutions", "pricing": "Pricing", "cases": "Cases", "api": "API",
-      "login": "Sign in", "cta": "Get started"
+      "solutions": "Solutions",
+      "pricing": "Pricing",
+      "cases": "Cases",
+      "api": "API",
+      "login": "Sign in",
+      "cta": "Get started"
     },
     "hero": {
       "label": "THE NEURAL ARCHITECT",
@@ -137,186 +141,243 @@
       "ctaPrimary": "Schedule a Demo",
       "ctaSecondary": "View Documentation",
       "mockup": {
-        "name": "Marina Costa", "handle": "@marinacosta",
-        "followers": "1.2M followers · Instagram", "badge": "ORGANIC",
+        "name": "Marina Costa",
+        "handle": "@marinacosta",
+        "followers": "1.2M followers · Instagram",
+        "badge": "ORGANIC",
         "sentimentLabel": "SENTIMENT ANALYSIS",
-        "positiveLabel": "positive", "suspiciousLabel": "suspicious",
-        "alertTitle": "⚡ AI DETECTED • Bot-Farm", "alertId": "Analysis ID: #PX-9921"
+        "positiveLabel": "positive",
+        "suspiciousLabel": "suspicious",
+        "alertTitle": "⚡ AI DETECTED • Bot-Farm",
+        "alertId": "Analysis ID: #PX-9921"
       }
     },
-    "logos": { "label": "AUTHORIZED OFFICIAL PARTNER INTEGRATIONS" },
+    "logos": {
+      "label": "AUTHORIZED OFFICIAL PARTNER INTEGRATIONS"
+    },
     "comparativo": {
       "label": "THE PROBLEM",
       "title": "Metrics without auditing are hidden losses",
       "chaos": {
-        "title": "The Manual Chaos", "badge": "42% ROI Wasted",
-        "items": ["Vanity metrics with no real context", "Impossible to separate organic from paid", "Bots inflate engagement artificially", "Slow and inaccurate manual reports", "ROI calculated by guesswork"]
+        "title": "The Manual Chaos",
+        "badge": "42% ROI Wasted",
+        "items": [
+          "Vanity metrics with no real context",
+          "Impossible to separate organic from paid",
+          "Bots inflate engagement artificially",
+          "Slow and inaccurate manual reports",
+          "ROI calculated by guesswork"
+        ]
       },
       "lumina": {
-        "title": "Lumina Intelligence", "badge": "12x More Insights",
-        "items": ["Real-time multimodal AI auditing", "Automatic organic vs paid separation", "Bot detection with confidence score", "Reports generated in seconds", "ROI proven with real data"]
+        "title": "Lumina Intelligence",
+        "badge": "12x More Insights",
+        "items": [
+          "Real-time multimodal AI auditing",
+          "Automatic organic vs paid separation",
+          "Bot detection with confidence score",
+          "Reports generated in seconds",
+          "ROI proven with real data"
+        ]
       }
     },
     "pilares": {
-      "label": "HOW IT WORKS", "title": "Neural Architecture in 3 Pillars",
+      "label": "HOW IT WORKS",
+      "title": "Neural Architecture in 3 Pillars",
       "items": [
-        { "title": "Official API Integration", "desc": "Direct connection to official Instagram, TikTok and YouTube APIs via OAuth 2.0. Real-time data, no scraping." },
-        { "title": "Qualitative AI Analysis", "desc": "Google Gemini analyzes sentiment, script quality, niche coherence and detects suspicious engagement patterns." },
-        { "title": "Real ROI Dashboards", "desc": "Interactive dashboards that prove real ROI. Compare influencers and export PDF reports." }
+        {
+          "title": "Official API Integration",
+          "desc": "Direct connection to official Instagram, TikTok and YouTube APIs via OAuth 2.0. Real-time data, no scraping."
+        },
+        {
+          "title": "Qualitative AI Analysis",
+          "desc": "Google Gemini analyzes sentiment, script quality, niche coherence and detects suspicious engagement patterns."
+        },
+        {
+          "title": "Real ROI Dashboards",
+          "desc": "Interactive dashboards that prove real ROI. Compare influencers and export PDF reports."
+        }
       ]
     },
     "plans": {
-      "label": "PRICING", "title": "Smart Investment",
+      "label": "PRICING",
+      "title": "Smart Investment",
       "agency": {
-        "badge": "MOST POPULAR", "name": "Agency Plan",
-        "price": "R$ 1,297", "period": "/month", "cta": "Get started",
-        "features": ["Up to 50 influencers", "500 AI analyses/month", "Cross-creator benchmarking", "PDF report export", "Priority support", "Real-time dashboard"]
+        "badge": "MOST POPULAR",
+        "name": "Agency Plan",
+        "price": "R$ 1,297",
+        "period": "/month",
+        "cta": "Get started",
+        "features": [
+          "Up to 50 influencers",
+          "500 AI analyses/month",
+          "Cross-creator benchmarking",
+          "PDF report export",
+          "Priority support",
+          "Real-time dashboard"
+        ]
       },
       "enterprise": {
-        "name": "Enterprise", "price": "Custom pricing", "cta": "Talk to us",
-        "features": ["Unlimited influencers", "Unlimited AI analyses", "Dedicated API with SLA", "Dedicated account manager", "Custom integrations", "Team training"]
+        "name": "Enterprise",
+        "price": "Custom pricing",
+        "cta": "Talk to us",
+        "features": [
+          "Unlimited influencers",
+          "Unlimited AI analyses",
+          "Dedicated API with SLA",
+          "Dedicated account manager",
+          "Custom integrations",
+          "Team training"
+        ]
       }
     },
     "footer": {
       "tagline": "Stop burning budget on vanity metrics.",
-      "product": "Product", "company": "Company",
+      "product": "Product",
+      "company": "Company",
       "copyright": "© 2025 Lumina Influence AI. All rights reserved.",
       "backToTop": "↑ Back to top",
       "links": {
-        "solutions": "Solutions", "pricing": "Pricing", "cases": "Cases", "api": "API",
-        "about": "About", "blog": "Blog", "careers": "Careers", "legal": "Legal"
+        "solutions": "Solutions",
+        "pricing": "Pricing",
+        "cases": "Cases",
+        "api": "API",
+        "about": "About",
+        "blog": "Blog",
+        "careers": "Careers",
+        "legal": "Legal"
       }
     }
   },
   "configuracoes": {
-    "title":    "Settings",
+    "title": "Settings",
     "subtitle": "Customize your account, agency and preferences.",
     "savedToast": "Changes saved successfully",
     "nav": {
-      "perfil":        "Profile",
-      "agencia":       "Agency",
-      "integracoes":   "Integrations",
-      "equipe":        "Team",
-      "plano":         "Plan",
-      "preferencias":  "Preferences"
+      "perfil": "Profile",
+      "agencia": "Agency",
+      "integracoes": "Integrations",
+      "equipe": "Team",
+      "plano": "Plan",
+      "preferencias": "Preferences"
     },
-    "save":   "Save changes",
+    "save": "Save changes",
     "saving": "Saving...",
     "cancel": "Cancel",
     "perfil": {
-      "title":        "Personal data",
-      "subtitle":     "Update your profile information.",
-      "name":         "Full name",
-      "email":        "Email",
+      "title": "Personal data",
+      "subtitle": "Update your profile information.",
+      "name": "Full name",
+      "email": "Email",
       "emailFromOauth": "Comes from the login provider and cannot be changed here."
     },
     "agencia": {
-      "title":       "Agency data",
-      "subtitle":    "Tax and contact information.",
-      "name":        "Legal name",
-      "cnpj":        "Tax ID"
+      "title": "Agency data",
+      "subtitle": "Tax and contact information.",
+      "name": "Legal name",
+      "cnpj": "Tax ID"
     },
     "integracoes": {
-      "title":     "Integrations",
-      "subtitle":  "Creator accounts connected via official OAuth, grouped by platform.",
-      "connected":     "Connected",
-      "disconnected":  "Not connected",
-      "lastSync":      "Last sync",
-      "neverSynced":   "Never synced",
-      "followers":     "Combined followers",
-      "accounts_one":  "{{count}} connected account",
+      "title": "Integrations",
+      "subtitle": "Creator accounts connected via official OAuth, grouped by platform.",
+      "connected": "Connected",
+      "disconnected": "Not connected",
+      "lastSync": "Last sync",
+      "neverSynced": "Never synced",
+      "followers": "Combined followers",
+      "accounts_one": "{{count}} connected account",
       "accounts_other": "{{count}} connected accounts",
-      "empty":         "No connected account",
-      "emptyHint":     "Accounts are connected from each influencer screen, where the creator is identified."
+      "empty": "No connected account",
+      "emptyHint": "Accounts are connected from each influencer screen, where the creator is identified."
     },
     "equipe": {
-      "title":     "Team",
-      "subtitle":  "Manage agency members and permissions.",
-      "invite":    "Invite member",
-      "active_one":   "{{count}} active",
+      "title": "Team",
+      "subtitle": "Manage agency members and permissions.",
+      "invite": "Invite member",
+      "active_one": "{{count}} active",
       "active_other": "{{count}} active",
       "columns": {
-        "member":   "Member",
-        "role":     "Role",
+        "member": "Member",
+        "role": "Role",
         "joinedAt": "Joined on"
       },
-      "remove":        "Remove",
-      "empty":         "No member in this agency",
+      "remove": "Remove",
+      "empty": "No member in this agency",
       "roles": {
-        "admin":   "Administrator",
+        "admin": "Administrator",
         "member": "Member",
-        "viewer":  "Read only"
+        "viewer": "Read only"
       },
       "inviteModal": {
-        "title":     "Invite new member",
-        "subtitle":  "Send an email invitation. The member will receive instructions to create their account.",
-        "email":     "Email",
-        "emailPh":   "new.member@agency.com",
+        "title": "Invite new member",
+        "subtitle": "Send an email invitation. The member will receive instructions to create their account.",
+        "email": "Email",
+        "emailPh": "new.member@agency.com",
         "roleLabel": "Agency role",
-        "name":      "Name",
-        "send":      "Send invitation",
-        "sending":   "Sending..."
+        "name": "Name",
+        "send": "Send invitation",
+        "sending": "Sending..."
       }
     },
     "plano": {
-      "title":       "Plan and billing",
-      "subtitle":    "Manage your subscription and usage limits.",
-      "current":     "Current plan",
-      "perMonth":    "/month",
-      "none":        "No plan associated with this agency",
+      "title": "Plan and billing",
+      "subtitle": "Manage your subscription and usage limits.",
+      "current": "Current plan",
+      "perMonth": "/month",
+      "none": "No plan associated with this agency",
       "billingSoon": "Plan changes and billing are not available yet.",
       "features": {
-        "influencers":  "Up to {{count}} monitored influencers",
-        "analyses":     "{{count}} AI analyses per month",
+        "influencers": "Up to {{count}} monitored influencers",
+        "analyses": "{{count}} AI analyses per month",
         "benchmarking": "Creator benchmarking"
       },
       "usage": {
-        "title":        "Current month usage",
-        "subtitle":     "Renewed monthly per billing cycle.",
-        "influencers":  "Monitored influencers",
-        "analyses":     "AI analyses run",
-        "reports":      "Reports generated"
+        "title": "Current month usage",
+        "subtitle": "Renewed monthly per billing cycle.",
+        "influencers": "Monitored influencers",
+        "analyses": "AI analyses run",
+        "reports": "Reports generated"
       },
       "actions": {
-        "upgrade":       "Upgrade to Enterprise"
+        "upgrade": "Upgrade to Enterprise"
       }
     },
     "preferencias": {
-      "title":    "Preferences",
+      "title": "Preferences",
       "subtitle": "Language, notifications and timezone.",
       "sessionOnly": "The time zone applies to this session. Keeping it across visits needs a new database field.",
       "notificationsNotSent": "These preferences are not stored yet and do not trigger any sending — the product has no notification service at this stage.",
       "language": {
-        "title":    "Interface language",
+        "title": "Interface language",
         "subtitle": "Applies immediately across all screens."
       },
       "timezone": {
-        "title":    "Timezone",
+        "title": "Timezone",
         "subtitle": "Sets the reference for displayed dates and times."
       },
       "theme": {
-        "title":    "Appearance",
+        "title": "Appearance",
         "subtitle": "Dark theme is the only one available in this version.",
-        "dark":     "Dark"
+        "dark": "Dark"
       },
       "notifications": {
-        "title":    "Notifications",
+        "title": "Notifications",
         "subtitle": "How you want to be notified.",
         "email": {
           "label": "Email — reports and critical alerts",
-          "desc":  "Receive important notifications directly in your inbox."
+          "desc": "Receive important notifications directly in your inbox."
         },
         "inApp": {
           "label": "In-app notifications",
-          "desc":  "Topbar bell shows new analyses and updates."
+          "desc": "Topbar bell shows new analyses and updates."
         },
         "weekly": {
           "label": "Weekly digest",
-          "desc":  "Every Monday, a summary of key metrics."
+          "desc": "Every Monday, a summary of key metrics."
         },
         "alerts": {
           "label": "Bot detection alerts",
-          "desc":  "Notify immediately when the model detects suspicious activity."
+          "desc": "Notify immediately when the model detects suspicious activity."
         }
       }
     }
@@ -343,95 +404,95 @@
   },
   "relatorios": {
     "list": {
-      "title":     "Reports",
-      "subtitle":  "History of generated reports and templates ready to export.",
+      "title": "Reports",
+      "subtitle": "History of generated reports and templates ready to export.",
       "newButton": "New Report",
-      "search":    "Search by name or campaign...",
+      "search": "Search by name or campaign...",
       "empty": {
-        "title":    "No reports yet",
+        "title": "No reports yet",
         "subtitle": "Create your first report from an existing campaign."
       },
       "columns": {
-        "name":      "Report",
-        "campaign":  "Campaign",
-        "period":    "Period",
+        "name": "Report",
+        "campaign": "Campaign",
+        "period": "Period",
         "createdAt": "Generated on",
-        "pages":     "Pages",
+        "pages": "Pages",
         "generatedBy": "Generated by"
       },
       "actions": {
-        "preview":  "Preview",
+        "preview": "Preview",
         "download": "Download PDF"
       }
     },
     "wizard": {
-      "back":       "Reports",
-      "title":      "New Report",
-      "subtitle":   "Build a report from a campaign in four steps.",
-      "next":       "Continue",
-      "previous":   "Back",
-      "generate":   "Generate report",
-      "exportPdf":  "Export PDF",
-      "exporting":  "Generating PDF...",
-      "exported":   "Report generated",
+      "back": "Reports",
+      "title": "New Report",
+      "subtitle": "Build a report from a campaign in four steps.",
+      "next": "Continue",
+      "previous": "Back",
+      "generate": "Generate report",
+      "exportPdf": "Export PDF",
+      "exporting": "Generating PDF...",
+      "exported": "Report generated",
       "exportedDesc": "The PDF download has started.",
       "defaultTitle": "Performance Report",
       "step1": {
-        "label":    "Campaign",
-        "title":    "Choose the campaign",
+        "label": "Campaign",
+        "title": "Choose the campaign",
         "subtitle": "Select which campaign this report is based on.",
-        "empty":    "No campaigns available."
+        "empty": "No campaigns available."
       },
       "step2": {
-        "label":      "Period & Creators",
-        "title":      "Period and influencers",
-        "subtitle":   "Set the report range and which creators to include.",
-        "startDate":  "Start date",
-        "endDate":    "End date",
-        "creators":   "Included influencers",
-        "all":        "All campaign participants",
-        "selected_one":   "{{count}} creator",
+        "label": "Period & Creators",
+        "title": "Period and influencers",
+        "subtitle": "Set the report range and which creators to include.",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "creators": "Included influencers",
+        "all": "All campaign participants",
+        "selected_one": "{{count}} creator",
         "selected_other": "{{count}} creators"
       },
       "step3": {
-        "label":    "Sections",
-        "title":    "Report sections",
+        "label": "Sections",
+        "title": "Report sections",
         "subtitle": "Pick what to include in the exported document.",
         "sections": {
-          "kpis":            "Key KPIs",
-          "kpisDesc":        "ROI, engagement, CAC and active creators count",
-          "growth":          "Growth chart",
-          "growthDesc":      "Organic reach vs paid traffic in the selected period",
-          "benchmark":       "Benchmarking table",
-          "benchmarkDesc":   "Side-by-side creator comparison",
-          "diagnostic":      "AI Diagnosis",
-          "diagnosticDesc":  "Qualitative analysis, sentiment and bot detection",
-          "recommendations":     "AI Recommendations",
+          "kpis": "Key KPIs",
+          "kpisDesc": "ROI, engagement, CAC and active creators count",
+          "growth": "Growth chart",
+          "growthDesc": "Organic reach vs paid traffic in the selected period",
+          "benchmark": "Benchmarking table",
+          "benchmarkDesc": "Side-by-side creator comparison",
+          "diagnostic": "AI Diagnosis",
+          "diagnosticDesc": "Qualitative analysis, sentiment and bot detection",
+          "recommendations": "AI Recommendations",
           "recommendationsDesc": "Suggested actions for upcoming cycles"
         }
       },
       "step4": {
-        "label":    "Preview",
-        "title":    "Report preview",
+        "label": "Preview",
+        "title": "Report preview",
         "subtitle": "Review the content before exporting."
       },
       "errors": {
         "selectCampaign": "Select a campaign to continue.",
         "selectCreators": "Select at least one creator.",
-        "selectSection":  "Select at least one section."
+        "selectSection": "Select at least one section."
       }
     },
     "preview": {
-      "page":            "Page",
-      "of":              "of",
-      "title":           "Performance Report",
-      "preparedFor":     "Prepared for",
-      "preparedBy":      "Prepared by",
-      "period":          "Covered period",
+      "page": "Page",
+      "of": "of",
+      "title": "Performance Report",
+      "preparedFor": "Prepared for",
+      "preparedBy": "Prepared by",
+      "period": "Covered period",
       "executiveSummary": "Executive summary",
-      "kpisTitle":       "Key indicators",
-      "growthTitle":     "Growth trajectory",
-      "benchmarkTitle":  "Creator benchmarking",
+      "kpisTitle": "Key indicators",
+      "growthTitle": "Growth trajectory",
+      "benchmarkTitle": "Creator benchmarking",
       "diagnosticTitle": "Qualitative diagnosis",
       "recommendationsTitle": "AI Recommendations",
       "summaryText": "This audit covers {{creators}} creators from the {{brand}} campaign. On average, {{organic}} of reach was organic and the sentiment index was {{sentiment}}. Total audited reach: {{reach}} across {{posts}} posts.",
@@ -439,26 +500,26 @@
       "growthPeriod": "Period",
       "noPosts": "No campaign posts in the selected period.",
       "noAnalysis": "No AI analysis recorded for this campaign's creators.",
-      "footerNote":      "Document generated by Lumina Influence AI · Confidential"
+      "footerNote": "Document generated by Lumina Influence AI · Confidential"
     }
   },
   "campanhas": {
     "list": {
-      "title":     "Campaigns",
-      "subtitle":  "Manage campaigns, budgets and creator performance.",
+      "title": "Campaigns",
+      "subtitle": "Manage campaigns, budgets and creator performance.",
       "newButton": "New Campaign",
-      "search":    "Search campaigns by brand or name...",
+      "search": "Search campaigns by brand or name...",
       "filterAll": "All",
       "empty": {
-        "title":    "No campaigns found",
+        "title": "No campaigns found",
         "subtitle": "Create your first campaign to start auditing creators together."
       },
       "card": {
-        "influencers_one":   "{{count}} creator",
+        "influencers_one": "{{count}} creator",
         "influencers_other": "{{count}} creators",
-        "budget":            "Budget",
-        "period":            "Period",
-        "progress":          "Period elapsed"
+        "budget": "Budget",
+        "period": "Period",
+        "progress": "Period elapsed"
       }
     },
     "editModal": {
@@ -476,102 +537,102 @@
       "budgetInvalid": "Invalid budget."
     },
     "status": {
-      "active":    "Active",
-      "planning":  "Planning",
-      "paused":    "Paused",
+      "active": "Active",
+      "planning": "Planning",
+      "paused": "Paused",
       "completed": "Completed"
     },
     "detail": {
       "back": "Campaigns",
       "header": {
-        "period":   "Period",
-        "budget":   "Budget",
-        "posts":    "Posts",
-        "reach":    "Total reach",
+        "period": "Period",
+        "budget": "Budget",
+        "posts": "Posts",
+        "reach": "Total reach",
         "sentiment": "Avg sentiment"
       },
       "actions": {
         "generateReport": "Generate Report",
-        "edit":           "Edit campaign"
+        "edit": "Edit campaign"
       },
       "participants": {
-        "title":    "Campaign Influencers",
+        "title": "Campaign Influencers",
         "subtitle": "Per-creator summary KPIs",
-        "posts":    "posts",
-        "cost":     "invested",
-        "empty":    "No influencer linked to this campaign"
+        "posts": "posts",
+        "cost": "invested",
+        "empty": "No influencer linked to this campaign"
       },
       "benchmark": {
-        "title":    "Benchmarking",
+        "title": "Benchmarking",
         "subtitle": "Side-by-side comparison of creators",
         "columns": {
-          "creator":      "Creator",
-          "totalReach":   "Reach",
-          "organic":      "% Organic",
-          "paid":         "% Paid",
-          "engagement":   "Engagement",
-          "sentiment":    "Sentiment",
-          "score":        "AI Score",
-          "cost":         "Cost"
+          "creator": "Creator",
+          "totalReach": "Reach",
+          "organic": "% Organic",
+          "paid": "% Paid",
+          "engagement": "Engagement",
+          "sentiment": "Sentiment",
+          "score": "AI Score",
+          "cost": "Cost"
         },
-        "empty":    "No benchmarking data for this campaign"
+        "empty": "No benchmarking data for this campaign"
       },
       "radar": {
-        "title":    "Performance Radar",
+        "title": "Performance Radar",
         "subtitle": "Multi-dimensional creator comparison",
         "axes": {
-          "reach":       "Reach",
-          "engagement":  "Engagement",
-          "sentiment":   "Sentiment",
-          "coherence":   "Brand Coherence",
-          "organic":     "Organic Reach"
+          "reach": "Reach",
+          "engagement": "Engagement",
+          "sentiment": "Sentiment",
+          "coherence": "Brand Coherence",
+          "organic": "Organic Reach"
         },
-        "empty":    "Not enough metrics to compare creators"
+        "empty": "Not enough metrics to compare creators"
       }
     },
     "wizard": {
-      "back":         "Back",
-      "title":        "New Campaign",
-      "subtitle":     "Create a campaign in three quick steps.",
-      "stepLabel":    "Step {{step}} of {{total}}",
-      "next":         "Continue",
-      "previous":     "Back",
-      "create":       "Create campaign",
-      "creating":     "Creating...",
+      "back": "Back",
+      "title": "New Campaign",
+      "subtitle": "Create a campaign in three quick steps.",
+      "stepLabel": "Step {{step}} of {{total}}",
+      "next": "Continue",
+      "previous": "Back",
+      "create": "Create campaign",
+      "creating": "Creating...",
       "step1": {
-        "label":      "Details",
-        "title":      "Campaign details",
-        "subtitle":   "Define brand, period and budget.",
-        "name":       "Campaign name",
-        "namePh":     "Summer 2026 — Tech Lifestyle",
-        "brand":      "Client brand",
-        "brandPh":    "NovaTech Pro",
-        "startDate":  "Start",
-        "endDate":    "End",
-        "budget":     "Budget (R$)",
-        "budgetPh":   "240000"
+        "label": "Details",
+        "title": "Campaign details",
+        "subtitle": "Define brand, period and budget.",
+        "name": "Campaign name",
+        "namePh": "Summer 2026 — Tech Lifestyle",
+        "brand": "Client brand",
+        "brandPh": "NovaTech Pro",
+        "startDate": "Start",
+        "endDate": "End",
+        "budget": "Budget (R$)",
+        "budgetPh": "240000"
       },
       "step2": {
-        "label":    "Influencers",
-        "title":    "Select influencers",
+        "label": "Influencers",
+        "title": "Select influencers",
         "subtitle": "Choose the creators that will join this campaign.",
-        "search":   "Search creator by name or @...",
-        "selected_one":   "{{count}} selected",
+        "search": "Search creator by name or @...",
+        "selected_one": "{{count}} selected",
         "selected_other": "{{count}} selected",
         "selectAtLeastOne": "Select at least one influencer.",
-        "empty":            "No influencer registered for this agency"
+        "empty": "No influencer registered for this agency"
       },
       "step3": {
-        "label":    "Confirmation",
-        "title":    "Review and create",
+        "label": "Confirmation",
+        "title": "Review and create",
         "subtitle": "Verify details before finalizing the campaign.",
-        "totalBudget":      "Total budget",
-        "perInfluencer":    "Avg cost per creator",
-        "estimatedReach":   "Estimated reach",
-        "createdSuccess":   "Campaign created successfully!"
+        "totalBudget": "Total budget",
+        "perInfluencer": "Avg cost per creator",
+        "estimatedReach": "Estimated reach",
+        "createdSuccess": "Campaign created successfully!"
       },
       "errors": {
-        "required":      "Required field.",
+        "required": "Required field.",
         "invalidPeriod": "Start date must be before end date.",
         "invalidBudget": "Budget must be greater than zero."
       }
@@ -579,51 +640,51 @@
   },
   "influenciador": {
     "header": {
-      "deepAnalysis":     "DEEP ANALYSIS",
-      "sessionId":        "Session ID",
-      "lastAnalysis":     "Last analysis on",
+      "deepAnalysis": "DEEP ANALYSIS",
+      "sessionId": "Session ID",
+      "lastAnalysis": "Last analysis on",
       "quotaExceeded": "Gemini daily quota exhausted. The free tier allows 20 analyses per day, per project and per model — waiting will not help, only the next day.",
-      "rerun":            "Re-run Diagnosis"
+      "rerun": "Re-run Diagnosis"
     },
     "tabs": {
-      "overview":  "Overview",
-      "posts":     "Analyzed Posts",
+      "overview": "Overview",
+      "posts": "Analyzed Posts",
       "diagnosis": "AI Diagnosis",
-      "history":   "History"
+      "history": "History"
     },
     "kpis": {
       "empty": "Diagnostic indicators unavailable — run an analysis.",
       "brandCoherence": "Brand Coherence",
       "sentimentIndex": "Sentiment Index",
-      "safetyRating":   "Safety Rating",
+      "safetyRating": "Safety Rating",
       "botProbability": "Bot Probability"
     },
     "sentiment": {
       "timelineEmpty": "Sentiment timeline not available from the API yet.",
-      "title":         "Sentiment Heatmap",
-      "subtitle":      "Emotional distribution across comments",
-      "tab24h":        "24H",
-      "tab7d":         "7D",
+      "title": "Sentiment Heatmap",
+      "subtitle": "Emotional distribution across comments",
+      "tab24h": "24H",
+      "tab7d": "7D",
       "clustersTitle": "Core Sentiment Clusters",
       "keywordsTitle": "Keyword Cloud Focus",
       "clusters": {
-        "technical":  "Technical Enthusiasm",
-        "purchase":   "Purchase Intent",
-        "neutral":    "Neutral Curiosity",
+        "technical": "Technical Enthusiasm",
+        "purchase": "Purchase Intent",
+        "neutral": "Neutral Curiosity",
         "skepticism": "Value Skepticism"
       }
     },
     "audience": {
       "empty": "Audience integrity unavailable — run an analysis.",
-      "title":          "Audience Integrity",
-      "subtitle":       "Audience composition by authenticity",
-      "organic":        "Organic audience",
+      "title": "Audience Integrity",
+      "subtitle": "Audience composition by authenticity",
+      "organic": "Organic audience",
       "verifiedHumans": "Verified Humans",
-      "suspicious":     "Suspicious Accounts",
-      "bots":           "Confirmed Bots"
+      "suspicious": "Suspicious Accounts",
+      "bots": "Confirmed Bots"
     },
     "videoAudit": {
-      "title":    "Video Component Audit",
+      "title": "Video Component Audit",
       "subtitle": "Frame-by-frame analysis of the latest reel",
       "duration": "00:42"
     },
@@ -641,32 +702,32 @@
     },
     "neuralConfidence": {
       "empty": "Neural confidence unavailable — run an analysis.",
-      "title":           "Neural Confidence",
-      "subtitle":        "Model confidence per dimension",
-      "scriptAccuracy":  "Script Accuracy",
-      "toneMatching":    "Tone Matching",
+      "title": "Neural Confidence",
+      "subtitle": "Model confidence per dimension",
+      "scriptAccuracy": "Script Accuracy",
+      "toneMatching": "Tone Matching",
       "demographicSync": "Demographic Sync"
     },
     "transcript": {
       "analyzedAt": "Transcribed in the analysis from {{data}}.",
       "emptyHint": "Transcription only exists in multimodal analyses, which read the video audio.",
       "empty": "No transcript available for this creator.",
-      "title":    "AI Transcript Highlight",
+      "title": "AI Transcript Highlight",
       "subtitle": "Key segments detected by the model",
-      "export":   "Export Text"
+      "export": "Export Text"
     },
     "recommendations": {
       "empty": "No recommendations generated yet.",
-      "title":    "AI Recommendations",
+      "title": "AI Recommendations",
       "subtitle": "Suggested actions for upcoming cycles",
-      "accept":   "Accept",
-      "ignore":   "Ignore",
+      "accept": "Accept",
+      "ignore": "Ignore",
       "accepted": "Accepted",
-      "ignored":  "Ignored",
+      "ignored": "Ignored",
       "priority": {
-        "high":   "High priority",
+        "high": "High priority",
         "medium": "Medium priority",
-        "low":    "Low priority"
+        "low": "Low priority"
       }
     },
     "overview": {
@@ -674,35 +735,35 @@
       "title": "Overview",
       "subtitle": "Key metrics and creator trends.",
       "metrics": {
-        "followers":     "Followers",
-        "engagement":    "Engagement",
-        "organicReach":  "Organic reach",
-        "paidReach":     "Paid traffic"
+        "followers": "Followers",
+        "engagement": "Engagement",
+        "organicReach": "Organic reach",
+        "paidReach": "Paid traffic"
       }
     },
     "posts": {
       "empty": "No analyzed posts for this creator.",
-      "title":    "Analyzed Posts",
+      "title": "Analyzed Posts",
       "subtitle": "Audited content from the last 30 days.",
       "columns": {
-        "post":      "Post",
-        "platform":  "Platform",
-        "date":      "Date",
-        "reach":     "Reach",
+        "post": "Post",
+        "platform": "Platform",
+        "date": "Date",
+        "reach": "Reach",
         "sentiment": "Sentiment",
-        "botRisk":   "Bot risk"
+        "botRisk": "Bot risk"
       }
     },
     "history": {
       "empty": "No analyses in the history for this creator.",
-      "title":    "Analysis History",
+      "title": "Analysis History",
       "subtitle": "Timeline of audits for this creator.",
-      "scope":    "Scope"
+      "scope": "Scope"
     },
     "notFound": {
-      "title":    "Influencer not found",
+      "title": "Influencer not found",
       "subtitle": "The requested creator is not connected to your agency.",
-      "back":     "Back to list"
+      "back": "Back to list"
     }
   },
   "influenciadores": {
@@ -716,27 +777,27 @@
       "status": "Status",
       "allStatuses": "All",
       "followersRange": "Followers",
-      "rangeAll":   "All",
+      "rangeAll": "All",
       "rangeMicro": "< 100k",
-      "rangeMid":   "100k – 500k",
+      "rangeMid": "100k – 500k",
       "rangeMacro": "500k – 1M",
-      "rangeMega":  "1M+",
+      "rangeMega": "1M+",
       "clear": "Clear filters",
       "results_one": "{{count}} result",
       "results_other": "{{count}} results"
     },
     "columns": {
-      "creator":      "Influencer",
-      "platforms":    "Platforms",
-      "followers":    "Followers",
-      "engagement":   "Engagement",
+      "creator": "Influencer",
+      "platforms": "Platforms",
+      "followers": "Followers",
+      "engagement": "Engagement",
       "lastAnalysis": "Last analysis",
-      "status":       "Status"
+      "status": "Status"
     },
     "status": {
-      "active":     "Active",
+      "active": "Active",
       "monitoring": "Monitor",
-      "risk":       "At risk"
+      "risk": "At risk"
     },
     "empty": {
       "title": "No influencers found",
@@ -744,8 +805,8 @@
     },
     "pagination": {
       "previous": "Previous",
-      "next":     "Next",
-      "page":     "Page {{page}} of {{total}}"
+      "next": "Next",
+      "page": "Page {{page}} of {{total}}"
     },
     "addModal": {
       "title": "Add Influencer",
@@ -766,63 +827,63 @@
     "label": "OVERVIEW",
     "title": "Network Resonance",
     "liveSync": "LIVE SYNC",
-    "empty":     "KPIs unavailable right now.",
+    "empty": "KPIs unavailable right now.",
     "filters": {
-      "period":      "Period",
-      "period7d":    "7 days",
-      "period30d":   "30 days",
-      "period90d":   "90 days",
-      "campaign":    "Campaign",
+      "period": "Period",
+      "period7d": "7 days",
+      "period30d": "30 days",
+      "period90d": "90 days",
+      "campaign": "Campaign",
       "allCampaigns": "All campaigns"
     },
     "kpis": {
-      "roi":          "Total ROI",
-      "engagement":   "Real Engagement",
-      "cac":          "Avg CAC",
-      "cacOptimal":   "Optimal range",
-      "active":       "Active Influencers"
+      "roi": "Total ROI",
+      "engagement": "Real Engagement",
+      "cac": "Avg CAC",
+      "cacOptimal": "Optimal range",
+      "active": "Active Influencers"
     },
     "growth": {
-      "title":     "Growth Trajectory",
-      "subtitle":  "Organic reach vs paid traffic",
-      "organic":   "Organic Reach",
-      "paid":      "Paid Traffic",
-      "empty":     "No reach data for the selected period."
+      "title": "Growth Trajectory",
+      "subtitle": "Organic reach vs paid traffic",
+      "organic": "Organic Reach",
+      "paid": "Paid Traffic",
+      "empty": "No reach data for the selected period."
     },
     "diagnostic": {
-      "label":           "FEATURED DIAGNOSIS",
-      "analysisId":      "Analysis ID",
+      "label": "FEATURED DIAGNOSIS",
+      "analysisId": "Analysis ID",
       "transcriptLabel": "AI TRANSCRIPTION",
       "pills": {
         "retention": "{{valor}} retention",
         "sentiment": "{{valor}} positive sentiment",
-        "botAlert":  "Bot alert: {{valor}}"
+        "botAlert": "Bot alert: {{valor}}"
       },
       "coherenceLabel": "BRAND COHERENCE SCORE",
-      "viewAnalysis":   "View full analysis",
-      "empty":          "No AI analysis available yet."
+      "viewAnalysis": "View full analysis",
+      "empty": "No AI analysis available yet."
     },
     "topNetworks": {
-      "title":    "Top Performing Networks",
+      "title": "Top Performing Networks",
       "subtitle": "Ranked by resonance score in period",
       "columns": {
-        "creator":         "Influencer",
-        "score":           "Resonance Score",
-        "viralPotential":  "Viral Potential",
-        "status":          "Status"
+        "creator": "Influencer",
+        "score": "Resonance Score",
+        "viralPotential": "Viral Potential",
+        "status": "Status"
       },
-      "viralHigh":   "High",
+      "viralHigh": "High",
       "viralMedium": "Medium",
-      "viralLow":    "Low",
-      "statusActive":     "Active",
+      "viralLow": "Low",
+      "statusActive": "Active",
       "statusMonitoring": "Monitor",
-      "statusRisk":       "At risk",
-      "empty":            "No influencer activity in the period."
+      "statusRisk": "At risk",
+      "empty": "No influencer activity in the period."
     },
     "networkDensity": {
-      "label":    "NETWORK DENSITY",
+      "label": "NETWORK DENSITY",
       "subtitle": "{{connected}} of {{total}} creators connected",
-      "empty":    "Density unavailable — connect a social account."
+      "empty": "Density unavailable — connect a social account."
     }
   },
   "app": {
@@ -830,22 +891,22 @@
     "tagline": "Stop burning budget on vanity metrics.",
     "description": "Influencer performance auditing powered by multimodal AI.",
     "nav": {
-      "dashboard":       "Overview",
+      "dashboard": "Overview",
       "influenciadores": "Influencers",
-      "campanhas":       "Campaigns",
-      "diagnostico":     "AI Diagnosis",
-      "relatorios":      "Reports",
-      "configuracoes":   "Settings"
+      "campanhas": "Campaigns",
+      "diagnostico": "AI Diagnosis",
+      "relatorios": "Reports",
+      "configuracoes": "Settings"
     },
     "sidebar": {
       "newCampaign": "New Campaign"
     },
     "topbar": {
       "searchPlaceholder": "Analyze creator...",
-      "upgrade":           "Upgrade",
-      "profile":           "My profile",
-      "settings":          "Settings",
-      "logout":            "Sign out"
+      "upgrade": "Upgrade",
+      "profile": "My profile",
+      "settings": "Settings",
+      "logout": "Sign out"
     }
   },
   "auth": {
@@ -856,7 +917,10 @@
       "password": "Password",
       "submit": "Sign in",
       "noAccount": "Don't have an account?",
-      "createAccount": "Create account"
+      "createAccount": "Create account",
+      "emailPlaceholder": "you@agency.com",
+      "google": "Sign in with Google",
+      "devHint": "Tip: leave the fields empty and click <1>{{acao}}</1> to sign in with the demo account (seeded data)."
     },
     "cadastro": {
       "title": "Start your journey",
@@ -865,6 +929,12 @@
       "hint": "We do not use passwords: access is through your Google account. On first sign-in you name your agency, and it is ready to receive influencers right away.",
       "hasAccount": "Already have an account?",
       "login": "Sign in"
+    },
+    "callback": {
+      "failed": "Sign-in failed",
+      "back": "Back to sign-in",
+      "authenticating": "Signing you in…",
+      "error": "Could not authenticate."
     }
   },
   "primeiroAcesso": {
@@ -876,5 +946,12 @@
     "confirm": "Continue",
     "saving": "Saving…",
     "skip": "Set later"
+  },
+  "campanha": {
+    "participantes": {
+      "score": "Score",
+      "engagement": "Eng.",
+      "followers": "Followers"
+    }
   }
 }

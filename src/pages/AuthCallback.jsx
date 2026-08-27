@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../context/AuthContext.jsx'
 import AuthLayout from '../layouts/AuthLayout.jsx'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Recebe o redirect do back-end após o OAuth Google:
@@ -10,6 +11,7 @@ import AuthLayout from '../layouts/AuthLayout.jsx'
  * Extrai o token do fragmento, carrega o usuário e entra no app.
  */
 export default function AuthCallback() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { loginWithTokens } = useAuth()
   const [error, setError] = useState(null)
@@ -29,7 +31,7 @@ export default function AuthCallback() {
     loginWithTokens(accessToken)
       .then(() => navigate(agenciaNova ? '/primeiro-acesso' : '/app/dashboard',
                            { replace: true }))
-      .catch((e) => setError(e.message || 'Falha ao autenticar.'))
+      .catch((e) => setError(e.message || t('auth.callback.error')))
   }, [loginWithTokens, navigate])
 
   return (
@@ -37,19 +39,19 @@ export default function AuthCallback() {
       <div className="text-center">
         {error ? (
           <>
-            <h1 className="font-display text-2xl font-bold text-tertiary-400">Falha no login</h1>
+            <h1 className="font-display text-2xl font-bold text-tertiary-400">{t('auth.callback.failed')}</h1>
             <p className="mt-2 text-sm text-text-secondary">{error}</p>
             <button
               onClick={() => navigate('/login')}
               className="mt-6 text-sm font-semibold text-accent hover:text-accent-strong"
             >
-              Voltar ao login
+              {t('auth.callback.back')}
             </button>
           </>
         ) : (
           <>
             <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
-            <p className="mt-4 text-sm text-text-secondary">Autenticando…</p>
+            <p className="mt-4 text-sm text-text-secondary">{t('auth.callback.authenticating')}</p>
           </>
         )}
       </div>

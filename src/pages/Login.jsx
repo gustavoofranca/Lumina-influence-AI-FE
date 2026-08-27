@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Mail, Lock } from 'lucide-react'
 
 import AuthLayout from '../layouts/AuthLayout.jsx'
@@ -54,7 +54,7 @@ export default function Login() {
         <Input
           label={t('auth.login.email')}
           type="email"
-          placeholder="voce@agencia.com"
+          placeholder={t('auth.login.emailPlaceholder')}
           leftIcon={Mail}
           value={email}
           onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })) }}
@@ -95,11 +95,14 @@ export default function Login() {
           size="lg"
           onClick={handleGoogle}
         >
-          Entrar com Google
+          {t('auth.login.google')}
         </Button>
         <p className="text-center text-[11px] text-text-muted">
-          Dica: deixe os campos vazios e clique em <b>{t('auth.login.submit')}</b> para
-          entrar com a conta de demonstração (dados seedados).
+          <Trans
+            i18nKey="auth.login.devHint"
+            values={{ acao: t('auth.login.submit') }}
+            components={{ 1: <b /> }}
+          />
         </p>
       </form>
 

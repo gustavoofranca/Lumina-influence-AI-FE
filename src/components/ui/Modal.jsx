@@ -85,7 +85,7 @@ export default function Modal({
               <span />
             )}
             {showCloseButton ? (
-              <IconButton icon={X} variant="ghost" size="sm" label="Fechar" onClick={onClose} />
+              <IconButton icon={X} variant="ghost" size="sm" label={t('common.a11y.close')} onClick={onClose} />
             ) : null}
           </div>
         )}

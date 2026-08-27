@@ -67,13 +67,13 @@ function ParticipantCard({ participant, t }) {
       </div>
 
       <div className="grid grid-cols-3 gap-2 border-t border-hairline pt-4">
-        <MiniKpi label="Score">
+        <MiniKpi label={t('campanha.participantes.score')}>
           <span className="text-gradient-brand">{p.resonanceScore ?? '—'}</span>
         </MiniKpi>
-        <MiniKpi label="Eng.">
+        <MiniKpi label={t('campanha.participantes.engagement')}>
           <span className="text-text-primary">{formatPct(p.engagement)}</span>
         </MiniKpi>
-        <MiniKpi label="Followers">
+        <MiniKpi label={t('campanha.participantes.followers')}>
           <span className="text-text-primary">{formatFollowers(p.followers)}</span>
         </MiniKpi>
       </div>
