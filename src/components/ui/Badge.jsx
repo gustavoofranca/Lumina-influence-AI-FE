@@ -5,13 +5,13 @@ import { cn } from '../../lib/cn.js'
  * Variantes refletem o vocabulario semantico do produto.
  */
 const VARIANTS = {
-  organic: 'bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20',
-  paid:    'bg-secondary-500/15 text-secondary-300 ring-1 ring-inset ring-secondary-500/20',
-  success: 'bg-emerald-500/15 text-emerald-300 ring-1 ring-inset ring-emerald-500/20',
-  warning: 'bg-amber-500/15 text-amber-300 ring-1 ring-inset ring-amber-500/20',
-  danger:  'bg-tertiary-500/15 text-tertiary-300 ring-1 ring-inset ring-tertiary-500/20',
-  info:    'bg-secondary-500/15 text-secondary-300 ring-1 ring-inset ring-secondary-500/20',
-  neutral: 'bg-neutral-700/60 text-neutral-200 ring-1 ring-inset ring-neutral-600/40',
+  organic: 'bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20',
+  paid:    'bg-secondary-500/15 text-tint-sky ring-1 ring-inset ring-secondary-500/20',
+  success: 'bg-emerald-500/15 text-positive ring-1 ring-inset ring-emerald-500/20',
+  warning: 'bg-amber-500/15 text-caution ring-1 ring-inset ring-amber-500/20',
+  danger:  'bg-tertiary-500/15 text-tint-rose ring-1 ring-inset ring-tertiary-500/20',
+  info:    'bg-secondary-500/15 text-tint-sky ring-1 ring-inset ring-secondary-500/20',
+  neutral: 'bg-bg-elevated/60 text-text-primary ring-1 ring-inset ring-hairline/40',
 }
 
 const SIZES = {

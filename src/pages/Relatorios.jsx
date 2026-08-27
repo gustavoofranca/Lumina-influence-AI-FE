@@ -26,16 +26,16 @@ function formatDate(iso, locale) {
 function RelatorioRow({ relatorio, onPreview, onDownload, t, locale }) {
   return (
     <div className={cn(
-      'flex flex-col gap-4 rounded-2xl border border-neutral-700/60 bg-neutral-900/40 p-5',
-      'transition-all duration-200 hover:border-primary/30 hover:bg-neutral-800/50',
+      'flex flex-col gap-4 rounded-2xl border border-hairline/60 bg-bg-base/40 p-5',
+      'transition-all duration-200 hover:border-primary/30 hover:bg-bg-surface/50',
       'lg:flex-row lg:items-center'
     )}>
-      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/25">
+      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/25">
         <FileText size={18} />
       </span>
 
       <div className="min-w-0 flex-1">
-        <h3 className="truncate font-display text-base font-bold text-neutral-100">
+        <h3 className="truncate font-display text-base font-bold text-text-primary">
           {relatorio.name}
         </h3>
         <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">
@@ -92,7 +92,7 @@ export default function Relatorios() {
       {/* Header */}
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {t('relatorios.list.title')}
           </h1>
           <p className="mt-1.5 text-sm text-text-secondary">{t('relatorios.list.subtitle')}</p>
@@ -119,7 +119,7 @@ export default function Relatorios() {
       <Card glass padding="md">
         {error ? null : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
               <FileSearch size={20} />
             </span>
             <CardTitle>{t('relatorios.list.empty.title')}</CardTitle>

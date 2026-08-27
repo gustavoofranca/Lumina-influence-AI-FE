@@ -22,8 +22,8 @@ export default function ApiErrorBanner({ error, onRetry, retrying = false, class
       role="alert"
       className={`flex flex-wrap items-start gap-3 rounded-xl border border-tertiary-500/30 bg-tertiary-500/10 px-4 py-3 ${className}`}
     >
-      <AlertTriangle size={18} className="mt-0.5 shrink-0 text-tertiary-300" />
-      <p className="min-w-0 flex-1 text-sm text-tertiary-200">{msg}{hint}</p>
+      <AlertTriangle size={18} className="mt-0.5 shrink-0 text-tint-rose" />
+      <p className="min-w-0 flex-1 text-sm text-tint-rose">{msg}{hint}</p>
       {onRetry && (
         <Button
           variant="outlined"

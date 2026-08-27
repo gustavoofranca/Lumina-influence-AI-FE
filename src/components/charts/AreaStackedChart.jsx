@@ -29,7 +29,7 @@ const formatNumber = (n) => {
 function CustomTooltip({ active, payload, label, formatValue }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-xl border border-primary/20 bg-neutral-900/95 px-3 py-2 shadow-glow-soft backdrop-blur">
+    <div className="rounded-xl border border-primary/20 bg-bg-base/95 px-3 py-2 shadow-glow-soft backdrop-blur">
       <p className="mb-1.5 text-xs font-semibold uppercase tracking-label text-text-muted">{label}</p>
       <div className="space-y-1">
         {payload.map((entry) => (
@@ -39,7 +39,7 @@ function CustomTooltip({ active, payload, label, formatValue }) {
               style={{ background: entry.color }}
             />
             <span className="text-text-secondary">{entry.name}:</span>
-            <span className="ml-auto font-semibold text-neutral-100">
+            <span className="ml-auto font-semibold text-text-primary">
               {formatValue(entry.value)}
             </span>
           </div>
@@ -72,7 +72,7 @@ export default function AreaStackedChart({
           })}
         </defs>
 
-        <CartesianGrid strokeDasharray="4 4" stroke="rgba(124,58,237,0.08)" vertical={false} />
+        <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
 
         <XAxis
           dataKey="x"

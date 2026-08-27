@@ -39,7 +39,7 @@ const Input = forwardRef(function Input(
       <div
         className={cn(
           'group flex items-center gap-2 rounded-xl bg-bg-input px-3.5',
-          'ring-1 ring-inset ring-neutral-700 transition-all duration-200',
+          'ring-1 ring-inset ring-hairline transition-all duration-200',
           'focus-within:ring-2 focus-within:ring-primary-500 focus-within:shadow-glow-soft',
           error && 'ring-tertiary-500/70 focus-within:ring-tertiary-500',
           rest.disabled && 'opacity-60'
@@ -50,7 +50,7 @@ const Input = forwardRef(function Input(
             size={16}
             className={cn(
               'shrink-0 text-text-muted transition-colors',
-              'group-focus-within:text-primary-300'
+              'group-focus-within:text-accent'
             )}
           />
         ) : null}
@@ -62,7 +62,7 @@ const Input = forwardRef(function Input(
           aria-invalid={!!error}
           aria-describedby={cn(errorId, helpId) || undefined}
           className={cn(
-            'h-11 w-full bg-transparent py-2 text-sm text-neutral-100',
+            'h-11 w-full bg-transparent py-2 text-sm text-text-primary',
             'placeholder:text-text-muted focus:outline-none',
             className
           )}
@@ -73,7 +73,7 @@ const Input = forwardRef(function Input(
       </div>
 
       {error ? (
-        <p id={errorId} className="mt-1.5 text-xs font-medium text-tertiary-300">
+        <p id={errorId} className="mt-1.5 text-xs font-medium text-tint-rose">
           {error}
         </p>
       ) : helperText ? (

@@ -20,8 +20,8 @@ function ChipToggle({ active, onClick, children, ariaLabel }) {
         'inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-all duration-150',
         'ring-1 ring-inset',
         active
-          ? 'bg-primary-600/20 text-primary-200 ring-primary-500/40'
-          : 'bg-neutral-800/60 text-text-secondary ring-neutral-700 hover:bg-neutral-700 hover:text-neutral-100'
+          ? 'bg-primary-600/20 text-accent-strong ring-primary-500/40'
+          : 'bg-bg-surface/60 text-text-secondary ring-hairline hover:bg-bg-elevated hover:text-text-primary'
       )}
     >
       {children}
@@ -61,7 +61,7 @@ export default function InfluenciadoresFilters({
           <button
             type="button"
             onClick={onClear}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-text-secondary transition-colors hover:bg-neutral-800 hover:text-neutral-100"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-text-secondary transition-colors hover:bg-bg-surface hover:text-text-primary"
           >
             <X size={13} />
             {t('influenciadores.filters.clear')}

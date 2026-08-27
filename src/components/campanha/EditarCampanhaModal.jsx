@@ -113,8 +113,8 @@ export default function EditarCampanhaModal({
                 className={cn(
                   'rounded-xl px-3 py-1.5 text-xs font-semibold ring-1 ring-inset transition-colors',
                   campos.status === s
-                    ? 'bg-primary-600/20 text-primary-200 ring-primary-500/40'
-                    : 'bg-neutral-800/60 text-text-secondary ring-neutral-700 hover:text-neutral-200'
+                    ? 'bg-primary-600/20 text-accent-strong ring-primary-500/40'
+                    : 'bg-bg-surface/60 text-text-secondary ring-hairline hover:text-text-primary'
                 )}
               >
                 {t(`campanhas.status.${s}`)}
@@ -124,7 +124,7 @@ export default function EditarCampanhaModal({
         </div>
 
         {(erro || erroApi) && (
-          <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tertiary-300">
+          <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tint-rose">
             {erro || erroApi}
           </p>
         )}

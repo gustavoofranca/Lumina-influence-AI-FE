@@ -29,7 +29,7 @@ export default function Tabs({
       <div className="overflow-x-auto">
       <div
         className={cn(
-          'inline-flex gap-1 rounded-2xl bg-neutral-800 p-1 ring-1 ring-inset ring-neutral-700',
+          'inline-flex gap-1 rounded-2xl bg-bg-surface p-1 ring-1 ring-inset ring-hairline',
           className
         )}
         role="tablist"
@@ -48,13 +48,13 @@ export default function Tabs({
                 SIZES[size],
                 active
                   ? 'bg-primary-600 text-white shadow-glow-soft'
-                  : 'text-text-secondary hover:bg-neutral-700 hover:text-neutral-100'
+                  : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
               )}
             >
               {Icon ? <Icon size={14} /> : null}
               {item.label}
               {item.count !== undefined ? (
-                <span className={cn('rounded-full px-1.5 text-[10px]', active ? 'bg-white/20' : 'bg-neutral-700/80 text-text-muted')}>
+                <span className={cn('rounded-full px-1.5 text-[10px]', active ? 'bg-white/20' : 'bg-bg-elevated/80 text-text-muted')}>
                   {item.count}
                 </span>
               ) : null}
@@ -70,7 +70,7 @@ export default function Tabs({
   return (
     <div
       role="tablist"
-      className={cn('flex gap-1 border-b border-neutral-700/80', className)}
+      className={cn('flex gap-1 border-b border-hairline/80', className)}
     >
       {items.map((item) => {
         const active = item.value === value
@@ -84,7 +84,7 @@ export default function Tabs({
             className={cn(
               'group relative inline-flex items-center gap-2 px-4 py-3 font-semibold transition-colors',
               SIZES[size],
-              active ? 'text-neutral-100' : 'text-text-secondary hover:text-neutral-200'
+              active ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
             )}
           >
             {Icon ? <Icon size={14} /> : null}
@@ -92,7 +92,7 @@ export default function Tabs({
             {item.count !== undefined ? (
               <span className={cn(
                 'rounded-full px-1.5 text-[10px] font-semibold',
-                active ? 'bg-primary-600/25 text-primary-200' : 'bg-neutral-800 text-text-muted'
+                active ? 'bg-primary-600/25 text-accent-strong' : 'bg-bg-surface text-text-muted'
               )}>
                 {item.count}
               </span>

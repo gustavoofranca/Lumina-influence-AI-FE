@@ -43,7 +43,7 @@ export default function Switch({
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base',
           checked
             ? 'bg-primary-600 shadow-glow-soft'
-            : 'bg-neutral-700 hover:bg-neutral-600'
+            : 'bg-bg-elevated hover:bg-neutral-600'
         )}
       >
         <span
@@ -56,7 +56,7 @@ export default function Switch({
 
       {(label || description) && (
         <span className="flex flex-col gap-0.5 select-none">
-          {label && <span className="text-sm font-semibold text-neutral-100">{label}</span>}
+          {label && <span className="text-sm font-semibold text-text-primary">{label}</span>}
           {description && (
             <span className="text-xs text-text-secondary leading-relaxed">{description}</span>
           )}

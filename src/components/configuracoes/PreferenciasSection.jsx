@@ -10,13 +10,13 @@ import { TIMEZONES } from '../../lib/constants.js'
 
 function PrefRow({ icon: Icon, title, subtitle, children }) {
   return (
-    <div className="flex flex-col gap-3 border-t border-neutral-800 pt-5 first:border-0 first:pt-0 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 border-t border-hairline pt-5 first:border-0 first:pt-0 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-start gap-3">
-        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20">
+        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20">
           <Icon size={15} />
         </span>
         <div>
-          <p className="font-semibold text-neutral-100">{title}</p>
+          <p className="font-semibold text-text-primary">{title}</p>
           <p className="mt-0.5 text-sm text-text-secondary">{subtitle}</p>
         </div>
       </div>
@@ -37,7 +37,7 @@ function PrefRow({ icon: Icon, title, subtitle, children }) {
  */
 function SessionOnlyNote({ children }) {
   return (
-    <p className="flex items-start gap-2 rounded-xl bg-neutral-900/40 px-3 py-2 text-xs leading-relaxed text-text-muted ring-1 ring-inset ring-neutral-800">
+    <p className="flex items-start gap-2 rounded-xl bg-bg-base/40 px-3 py-2 text-xs leading-relaxed text-text-muted ring-1 ring-inset ring-hairline">
       <Info size={13} className="mt-0.5 shrink-0" />
       {children}
     </p>
@@ -46,9 +46,9 @@ function SessionOnlyNote({ children }) {
 
 function NotificationToggleRow({ value, onChange, label, desc }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-xl bg-neutral-900/40 p-4 ring-1 ring-inset ring-neutral-800">
+    <div className="flex items-start justify-between gap-4 rounded-xl bg-bg-base/40 p-4 ring-1 ring-inset ring-hairline">
       <div>
-        <p className="text-sm font-semibold text-neutral-100">{label}</p>
+        <p className="text-sm font-semibold text-text-primary">{label}</p>
         <p className="mt-1 text-xs leading-relaxed text-text-secondary">{desc}</p>
       </div>
       <Switch checked={value} onChange={onChange} />
@@ -98,14 +98,14 @@ export default function PreferenciasSection() {
               value={timezone}
               onChange={(e) => setTimezone(e.target.value)}
               className={cn(
-                'h-10 min-w-[220px] cursor-pointer rounded-xl bg-bg-input px-3 text-sm text-neutral-100',
-                'ring-1 ring-inset ring-neutral-700 transition-all duration-150',
-                'hover:ring-neutral-600',
+                'h-10 min-w-[220px] cursor-pointer rounded-xl bg-bg-input px-3 text-sm text-text-primary',
+                'ring-1 ring-inset ring-hairline transition-all duration-150',
+                'hover:ring-hairline',
                 'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:shadow-glow-soft'
               )}
             >
               {TIMEZONES.map((tz) => (
-                <option key={tz.value} value={tz.value} className="bg-neutral-800">
+                <option key={tz.value} value={tz.value} className="bg-bg-surface">
                   {tz.label}
                 </option>
               ))}
@@ -119,7 +119,7 @@ export default function PreferenciasSection() {
             title={t('configuracoes.preferencias.theme.title')}
             subtitle={t('configuracoes.preferencias.theme.subtitle')}
           >
-            <span className="inline-flex items-center gap-2 rounded-xl bg-neutral-800 px-3 py-2 text-xs font-semibold text-neutral-200 ring-1 ring-inset ring-neutral-700">
+            <span className="inline-flex items-center gap-2 rounded-xl bg-bg-surface px-3 py-2 text-xs font-semibold text-text-primary ring-1 ring-inset ring-hairline">
               <Moon size={13} />
               {t('configuracoes.preferencias.theme.dark')}
             </span>

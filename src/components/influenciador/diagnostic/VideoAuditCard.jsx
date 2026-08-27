@@ -13,7 +13,7 @@ function ReelThumbnail({ duration }) {
     <div
       className={cn(
         'relative aspect-[9/12] overflow-hidden rounded-xl',
-        'border border-primary/15 bg-neutral-900'
+        'border border-primary/15 bg-bg-base'
       )}
       style={{
         background: [
@@ -44,13 +44,13 @@ function ReelThumbnail({ duration }) {
       </div>
 
       {/* Marker IA */}
-      <div className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-primary-600/30 px-2 py-1 text-[10px] font-bold text-primary-200 ring-1 ring-inset ring-primary-500/40 backdrop-blur">
+      <div className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-primary-600/30 px-2 py-1 text-[10px] font-bold text-accent-strong ring-1 ring-inset ring-primary-500/40 backdrop-blur">
         <ScanLine size={10} className="animate-pulse" />
         AI SCAN
       </div>
 
       {/* Duracao */}
-      <div className="absolute bottom-2 right-2 rounded-md bg-neutral-950/70 px-2 py-0.5 text-[10px] font-medium text-neutral-200 backdrop-blur tabular-nums">
+      <div className="absolute bottom-2 right-2 rounded-md bg-neutral-950/70 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur tabular-nums">
         {duration}
       </div>
     </div>

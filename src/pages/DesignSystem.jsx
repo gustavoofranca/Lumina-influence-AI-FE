@@ -74,7 +74,7 @@ const TABLE_COLUMNS = (t) => [
       <div className="flex items-center gap-3">
         <Avatar name={row.name} size="sm" />
         <div>
-          <div className="font-semibold text-neutral-100">{row.name}</div>
+          <div className="font-semibold text-text-primary">{row.name}</div>
           <div className="text-xs text-text-muted">{row.handle}</div>
         </div>
       </div>
@@ -143,7 +143,7 @@ export default function DesignSystem() {
           <div className="flex items-center justify-between">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-neutral-100"
+              className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-text-primary"
             >
               <ArrowLeft size={14} />
               {t('ds.back')}

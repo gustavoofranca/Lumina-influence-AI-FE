@@ -23,17 +23,17 @@ function PlatformCheckbox({ value, checked, onChange }) {
         'group flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150',
         checked
           ? 'border-primary-500/60 bg-primary-600/10 shadow-glow-soft'
-          : 'border-neutral-700/60 bg-neutral-900/40 hover:border-neutral-600 hover:bg-neutral-800'
+          : 'border-hairline/60 bg-bg-base/40 hover:border-hairline hover:bg-bg-surface'
       )}
     >
       <span className={cn(
         'inline-flex h-9 w-9 items-center justify-center rounded-lg',
-        checked ? 'bg-primary-600/30 text-primary-200' : 'bg-neutral-800 text-text-secondary'
+        checked ? 'bg-primary-600/30 text-accent-strong' : 'bg-bg-surface text-text-secondary'
       )}>
         <Icon size={16} />
       </span>
       <span className="flex-1">
-        <span className={cn('block text-sm font-semibold', checked ? 'text-neutral-100' : 'text-neutral-200')}>
+        <span className={cn('block text-sm font-semibold', checked ? 'text-text-primary' : 'text-text-primary')}>
           {meta.name}
         </span>
         <span className="block text-xs text-text-muted">OAuth 2.0</span>
@@ -42,7 +42,7 @@ function PlatformCheckbox({ value, checked, onChange }) {
         'inline-flex h-5 w-5 items-center justify-center rounded-md transition-all',
         checked
           ? 'bg-primary-600 text-white'
-          : 'border border-neutral-700 bg-transparent text-transparent group-hover:border-neutral-500'
+          : 'border border-hairline bg-transparent text-transparent group-hover:border-neutral-500'
       )}>
         <Check size={13} />
       </span>
@@ -124,7 +124,7 @@ export default function AdicionarInfluenciadorModal({
               />
             ))}
           </div>
-          {error && <p className="mt-2 text-xs font-medium text-tertiary-300">{error}</p>}
+          {error && <p className="mt-2 text-xs font-medium text-tint-rose">{error}</p>}
         </div>
 
         <ApiErrorBanner error={erroApi} />

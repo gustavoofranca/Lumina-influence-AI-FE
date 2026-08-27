@@ -30,7 +30,7 @@ function StackedAvatars({ participants, max = 4 }) {
         </span>
       ))}
       {extra > 0 && (
-        <span className="-ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-800 text-[10px] font-bold text-neutral-300 ring-2 ring-bg-surface">
+        <span className="-ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-bg-surface text-[10px] font-bold text-text-secondary ring-2 ring-bg-surface">
           +{extra}
         </span>
       )}
@@ -45,7 +45,7 @@ function MetaRow({ icon: Icon, label, value }) {
         <Icon size={11} />
         {label}
       </div>
-      <div className="mt-1 font-semibold text-neutral-100 truncate">{value}</div>
+      <div className="mt-1 font-semibold text-text-primary truncate">{value}</div>
     </div>
   )
 }
@@ -62,7 +62,7 @@ export default function CampanhaCard({ campanha }) {
         // min-w-0: o intervalo de datas usa `truncate`, que implica
         // white-space:nowrap — sem isso a largura mínima do card é a linha
         // inteira, e num celular ele empurra a página.
-        'group block min-w-0 rounded-2xl border border-primary/10 bg-neutral-800/60 p-5 backdrop-blur-md',
+        'group block min-w-0 rounded-2xl border border-primary/10 bg-bg-surface/60 p-5 backdrop-blur-md',
         'transition-all duration-200',
         'hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-glow-soft'
       )}
@@ -73,7 +73,7 @@ export default function CampanhaCard({ campanha }) {
           <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
             {c.brand}
           </span>
-          <h3 className="mt-1 truncate font-display text-lg font-bold text-neutral-100 group-hover:text-primary-200">
+          <h3 className="mt-1 truncate font-display text-lg font-bold text-text-primary group-hover:text-accent-strong">
             {c.name}
           </h3>
         </div>
@@ -97,7 +97,7 @@ export default function CampanhaCard({ campanha }) {
       </div>
 
       {/* Footer: avatars + progresso */}
-      <div className="mt-5 flex items-center justify-between gap-3 border-t border-neutral-700/60 pt-4">
+      <div className="mt-5 flex items-center justify-between gap-3 border-t border-hairline/60 pt-4">
         <div className="flex items-center gap-3">
           <StackedAvatars participants={participants} />
           <span className="text-xs text-text-muted">
@@ -107,7 +107,7 @@ export default function CampanhaCard({ campanha }) {
         </div>
         <ArrowUpRight
           size={16}
-          className="shrink-0 text-text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary-300"
+          className="shrink-0 text-text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
         />
       </div>
 

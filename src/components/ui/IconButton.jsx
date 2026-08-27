@@ -7,19 +7,19 @@ const VARIANTS = {
     'active:bg-primary-700'
   ),
   secondary: cn(
-    'bg-secondary-500/15 text-secondary-300 ring-1 ring-inset ring-secondary-500/30',
-    'hover:bg-secondary-500/25 hover:text-secondary-200',
+    'bg-secondary-500/15 text-tint-sky ring-1 ring-inset ring-secondary-500/30',
+    'hover:bg-secondary-500/25 hover:text-tint-sky',
     'active:bg-secondary-500/35'
   ),
   tertiary: cn(
-    'bg-tertiary-500/15 text-tertiary-300 ring-1 ring-inset ring-tertiary-500/30',
-    'hover:bg-tertiary-500/25 hover:text-tertiary-200',
+    'bg-tertiary-500/15 text-tint-rose ring-1 ring-inset ring-tertiary-500/30',
+    'hover:bg-tertiary-500/25 hover:text-tint-rose',
     'active:bg-tertiary-500/35'
   ),
   ghost: cn(
-    'bg-transparent text-neutral-300 ring-1 ring-inset ring-transparent',
-    'hover:bg-neutral-800 hover:text-neutral-100 hover:ring-neutral-700',
-    'active:bg-neutral-700'
+    'bg-transparent text-text-secondary ring-1 ring-inset ring-transparent',
+    'hover:bg-bg-surface hover:text-text-primary hover:ring-hairline',
+    'active:bg-bg-elevated'
   ),
 }
 

@@ -102,10 +102,10 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
                     'rounded-xl border px-3 py-2 text-left text-sm transition-all duration-150',
                     checked
                       ? 'border-primary-500/60 bg-primary-600/10 ring-1 ring-inset ring-primary-500/30 shadow-glow-soft'
-                      : 'border-neutral-700/60 bg-neutral-900/40 hover:bg-neutral-800/60'
+                      : 'border-hairline/60 bg-bg-base/40 hover:bg-bg-surface/60'
                   )}
                 >
-                  <span className={cn('block font-semibold', checked ? 'text-neutral-100' : 'text-neutral-200')}>
+                  <span className={cn('block font-semibold', checked ? 'text-text-primary' : 'text-text-primary')}>
                     {t(`configuracoes.equipe.roles.${key}`)}
                   </span>
                 </button>
@@ -180,9 +180,9 @@ export default function EquipeSection() {
         ) : !membros?.length ? (
           <EmptyState compact icon={Users} title={t('configuracoes.equipe.empty')} />
         ) : (
-          <div className="overflow-hidden rounded-2xl border border-neutral-700/60">
+          <div className="overflow-hidden rounded-2xl border border-hairline/60">
             <table className="w-full">
-              <thead className="bg-neutral-800/60">
+              <thead className="bg-bg-surface/60">
                 <tr>
                   <th className={TH}>{t('configuracoes.equipe.columns.member')}</th>
                   <th className={TH}>{t('configuracoes.equipe.columns.role')}</th>
@@ -192,12 +192,12 @@ export default function EquipeSection() {
               </thead>
               <tbody>
                 {membros.map((m) => (
-                  <tr key={m.id} className="border-t border-neutral-800/80 transition-colors hover:bg-neutral-700/30">
+                  <tr key={m.id} className="border-t border-hairline/80 transition-colors hover:bg-bg-elevated/30">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <Avatar name={m.name} size="sm" />
                         <div className="min-w-0">
-                          <div className="truncate font-semibold text-neutral-100">{m.name}</div>
+                          <div className="truncate font-semibold text-text-primary">{m.name}</div>
                           <div className="truncate text-xs text-text-muted">{m.email}</div>
                         </div>
                       </div>
@@ -216,7 +216,7 @@ export default function EquipeSection() {
                         aria-label={t('configuracoes.equipe.remove')}
                         onClick={() => onRemove(m.id)}
                         disabled={removingId === m.id}
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-tertiary-500/15 hover:text-tertiary-300 disabled:opacity-40"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-tertiary-500/15 hover:text-tint-rose disabled:opacity-40"
                       >
                         <Trash2 size={14} />
                       </button>

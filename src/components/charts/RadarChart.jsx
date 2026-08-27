@@ -22,14 +22,14 @@ const COLORS = ['#7C3AED', '#0EA5E9', '#22C55E', '#F43F5E']
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-xl border border-primary/20 bg-neutral-900/95 px-3 py-2 shadow-glow-soft backdrop-blur">
+    <div className="rounded-xl border border-primary/20 bg-bg-base/95 px-3 py-2 shadow-glow-soft backdrop-blur">
       <p className="mb-1.5 text-xs font-semibold uppercase tracking-label text-text-muted">{label}</p>
       <div className="space-y-1">
         {payload.map((entry) => (
           <div key={entry.dataKey} className="flex items-center gap-2 text-xs">
             <span className="h-2 w-2 rounded-full" style={{ background: entry.color }} />
             <span className="text-text-secondary">{entry.name}</span>
-            <span className="ml-auto font-semibold text-neutral-100 tabular-nums">
+            <span className="ml-auto font-semibold text-text-primary tabular-nums">
               {Math.round(entry.value)}
             </span>
           </div>
@@ -43,7 +43,7 @@ export default function RadarChart({ data, entities, height = 320 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
       <RechartsRadar data={data} outerRadius="75%">
-        <PolarGrid stroke="rgba(124,58,237,0.18)" />
+        <PolarGrid stroke="var(--chart-grid)" />
         <PolarAngleAxis
           dataKey="axis"
           tick={{ fill: '#94A3B8', fontSize: 11, fontWeight: 600 }}

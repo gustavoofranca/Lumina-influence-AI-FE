@@ -41,7 +41,7 @@ export default function AuthCallback() {
             <p className="mt-2 text-sm text-text-secondary">{error}</p>
             <button
               onClick={() => navigate('/login')}
-              className="mt-6 text-sm font-semibold text-primary-300 hover:text-primary-200"
+              className="mt-6 text-sm font-semibold text-accent hover:text-accent-strong"
             >
               Voltar ao login
             </button>

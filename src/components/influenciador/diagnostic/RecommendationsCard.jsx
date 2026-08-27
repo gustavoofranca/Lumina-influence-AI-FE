@@ -9,14 +9,14 @@ import EmptyState from '../../ui/EmptyState.jsx'
 import Skeleton from '../../ui/Skeleton.jsx'
 
 const PRIORITY_STYLES = {
-  high:   'bg-tertiary-500/15 text-tertiary-300 ring-tertiary-500/30',
-  medium: 'bg-amber-500/15    text-amber-300    ring-amber-500/30',
-  low:    'bg-primary-600/15  text-primary-300  ring-primary-500/25',
+  high:   'bg-tertiary-500/15 text-tint-rose ring-tertiary-500/30',
+  medium: 'bg-amber-500/15    text-caution    ring-amber-500/30',
+  low:    'bg-primary-600/15  text-accent  ring-primary-500/25',
 }
 
 const STATE_STYLES = {
-  accepted: { ring: 'ring-emerald-500/30 bg-emerald-500/5',   icon: Check, label: 'accepted', color: 'text-emerald-300' },
-  ignored:  { ring: 'ring-tertiary-500/25 bg-tertiary-500/5', icon: X,     label: 'ignored',  color: 'text-tertiary-300' },
+  accepted: { ring: 'ring-emerald-500/30 bg-emerald-500/5',   icon: Check, label: 'accepted', color: 'text-positive' },
+  ignored:  { ring: 'ring-tertiary-500/25 bg-tertiary-500/5', icon: X,     label: 'ignored',  color: 'text-tint-rose' },
 }
 
 function RecommendationItem({ rec, status, onAccept, onIgnore, t }) {
@@ -24,12 +24,12 @@ function RecommendationItem({ rec, status, onAccept, onIgnore, t }) {
 
   return (
     <li className={cn(
-      'rounded-2xl border border-neutral-700/60 bg-neutral-900/40 p-5 transition-all duration-200',
+      'rounded-2xl border border-hairline/60 bg-bg-base/40 p-5 transition-all duration-200',
       stateStyle && `ring-1 ${stateStyle.ring}`,
     )}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300 ring-1 ring-inset ring-primary-500/30">
+          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-600/20 text-accent ring-1 ring-inset ring-primary-500/30">
             <Sparkles size={14} />
           </span>
           <span className={cn(
@@ -49,7 +49,7 @@ function RecommendationItem({ rec, status, onAccept, onIgnore, t }) {
         )}
       </div>
 
-      <h4 className="mt-3 font-display text-base font-bold text-neutral-100">
+      <h4 className="mt-3 font-display text-base font-bold text-text-primary">
         {rec.title}
       </h4>
       <p className="mt-2 text-sm leading-relaxed text-text-secondary">

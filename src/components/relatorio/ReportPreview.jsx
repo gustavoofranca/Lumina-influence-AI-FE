@@ -26,12 +26,12 @@ function Page({ pageNumber, totalPages, children, t, brand }) {
     )}>
       <div className="flex items-center justify-between border-b-2 border-violet-600 px-10 py-4">
         <span className="font-display text-sm font-bold text-violet-700">▲ Lumina Influence AI</span>
-        <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{brand}</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">{brand}</span>
       </div>
 
       <div className="flex-1 overflow-hidden px-10 py-7">{children}</div>
 
-      <div className="flex items-center justify-between border-t border-neutral-200 px-10 py-3 text-[10px] text-neutral-400">
+      <div className="flex items-center justify-between border-t border-neutral-200 px-10 py-3 text-[10px] text-text-secondary">
         <span>{t('relatorios.preview.footerNote')}</span>
         <span>{pageNumber} / {totalPages}</span>
       </div>
@@ -54,11 +54,11 @@ function SectionTitle({ children }) {
 function MetaCell({ label, value, hint }) {
   return (
     <div>
-      <span className="block text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
+      <span className="block text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">
         {label}
       </span>
       <span className="mt-1 block font-bold text-neutral-900">{value}</span>
-      {hint && <span className="block text-xs text-neutral-500">{hint}</span>}
+      {hint && <span className="block text-xs text-text-muted">{hint}</span>}
     </div>
   )
 }
@@ -127,7 +127,7 @@ function KpisSection({ doc, t }) {
       <div className="mt-4 grid grid-cols-4 gap-3">
         {doc.kpis.map((kpi) => (
           <div key={kpi.label} className="rounded-lg bg-neutral-50 p-3 ring-1 ring-inset ring-neutral-200">
-            <span className="block text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
+            <span className="block text-[9px] font-semibold uppercase tracking-[0.12em] text-text-muted">
               {kpi.label}
             </span>
             <span className="mt-1.5 block font-display text-xl font-extrabold tabular-nums text-neutral-900">
@@ -136,7 +136,7 @@ function KpisSection({ doc, t }) {
             {typeof kpi.change === 'number' && (
               <span className={cn(
                 'text-[10px] font-semibold tabular-nums',
-                kpi.change > 0 ? 'text-emerald-600' : kpi.change < 0 ? 'text-rose-600' : 'text-neutral-500'
+                kpi.change > 0 ? 'text-emerald-600' : kpi.change < 0 ? 'text-rose-600' : 'text-text-muted'
               )}>
                 {kpi.change > 0 ? '+' : ''}{kpi.change}%
               </span>
@@ -148,11 +148,11 @@ function KpisSection({ doc, t }) {
   )
 }
 
-const TH = 'py-2 pr-3 text-[9px] font-bold uppercase tracking-[0.1em] text-neutral-500'
+const TH = 'py-2 pr-3 text-[9px] font-bold uppercase tracking-[0.1em] text-text-muted'
 const TD = 'py-2.5 pr-3 tabular-nums text-neutral-700'
 
 function EmptySection({ children }) {
-  return <p className="mt-4 text-xs text-neutral-500">{children}</p>
+  return <p className="mt-4 text-xs text-text-muted">{children}</p>
 }
 
 function GrowthSection({ doc, t }) {
@@ -235,7 +235,7 @@ function DiagnosticSection({ doc, t }) {
             <div key={d.display_name} className="rounded-lg bg-neutral-50 p-3 ring-1 ring-inset ring-neutral-200">
               <div className="flex items-center justify-between gap-3">
                 <span className="font-semibold text-neutral-900">
-                  {d.display_name} <span className="text-xs text-neutral-500">— {d.niche}</span>
+                  {d.display_name} <span className="text-xs text-text-muted">— {d.niche}</span>
                 </span>
                 <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-violet-600">
                   Bot {d.bot_probability}% · Coh. {d.brand_coherence}

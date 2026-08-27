@@ -19,7 +19,7 @@ function LinkCol({ label, keys, t }) {
           <li key={key}>
             <a
               href={ANCHORS[key]}
-              className="text-sm text-text-secondary transition-colors hover:text-neutral-100"
+              className="text-sm text-text-secondary transition-colors hover:text-text-primary"
             >
               {t(`landing.footer.links.${key}`)}
             </a>
@@ -59,7 +59,7 @@ export default function FooterSection() {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="transition-colors hover:text-neutral-100"
+            className="transition-colors hover:text-text-primary"
           >
             {t('landing.footer.backToTop')}
           </button>

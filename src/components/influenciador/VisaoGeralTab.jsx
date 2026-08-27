@@ -75,7 +75,7 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
             <ProgressBar label={t('influenciador.kpis.sentimentIndex')} value={inf.sentimentScore} showValue variant="success" />
             <ProgressBar label={t('influenciador.kpis.botProbability')} value={inf.botProbability} showValue variant="danger" />
           </div>
-          <div className="mt-auto rounded-xl border border-primary/15 bg-neutral-900/40 p-4">
+          <div className="mt-auto rounded-xl border border-primary/15 bg-bg-base/40 p-4">
             <span className="text-label">{t('influenciador.kpis.safetyRating')}</span>
             <div className="mt-2 flex items-end gap-2">
               <span className="font-display text-5xl font-extrabold text-gradient-brand">{inf.safetyRating}</span>

@@ -60,7 +60,7 @@ export default function NotFound() {
         </div>
 
         <div className="max-w-md space-y-3">
-          <h2 className="font-display text-2xl font-bold text-neutral-100">
+          <h2 className="font-display text-2xl font-bold text-text-primary">
             {t('notFound.title')}
           </h2>
           <p className="text-sm leading-relaxed text-text-secondary">
@@ -84,7 +84,7 @@ export default function NotFound() {
         </div>
 
         <div className="mt-4 flex items-center gap-2 text-xs text-text-muted">
-          <Sparkles size={12} className="text-primary-400" />
+          <Sparkles size={12} className="text-accent-soft" />
           <span>Lumina Influence AI · {t('app.tagline')}</span>
         </div>
       </div>

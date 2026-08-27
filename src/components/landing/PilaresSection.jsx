@@ -12,7 +12,7 @@ export default function PilaresSection() {
       <div className="mx-auto max-w-7xl">
         <div data-reveal className="mb-12 flex flex-col items-center gap-3 text-center">
           <span className="text-label">{t('landing.pilares.label')}</span>
-          <h2 className="font-display text-4xl font-bold text-neutral-100 lg:text-5xl">
+          <h2 className="font-display text-4xl font-bold text-text-primary lg:text-5xl">
             {t('landing.pilares.title')}
           </h2>
         </div>
@@ -30,7 +30,7 @@ export default function PilaresSection() {
                 <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20">
                   <Icon size={22} />
                 </div>
-                <h3 className="font-display text-xl font-bold text-neutral-100">{item.title}</h3>
+                <h3 className="font-display text-xl font-bold text-text-primary">{item.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-text-secondary">{item.desc}</p>
               </div>
             )

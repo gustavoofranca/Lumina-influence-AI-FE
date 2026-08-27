@@ -34,11 +34,11 @@ function UsageRow({ label, used, limit }) {
       <div className="mb-2 flex items-end justify-between">
         <span className="text-sm text-text-secondary">{label}</span>
         <span className="text-sm">
-          <span className="font-display font-bold tabular-nums text-neutral-100">{used}</span>
+          <span className="font-display font-bold tabular-nums text-text-primary">{used}</span>
           <span className="text-text-muted"> / {semTeto ? UNLIMITED : limit}</span>
         </span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-neutral-700/60">
+      <div className="h-1.5 overflow-hidden rounded-full bg-bg-elevated/60">
         {!semTeto && (
           <div
             className={cn('h-full rounded-full transition-all duration-500', tone)}
@@ -104,16 +104,16 @@ export default function PlanoSection() {
               {/* Só o que o plano de fato define. */}
               <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                 <li className="flex items-center gap-2 text-sm text-text-secondary">
-                  <Check size={14} className="shrink-0 text-primary-400" />
+                  <Check size={14} className="shrink-0 text-accent-soft" />
                   {t('configuracoes.plano.features.influencers', { count: plano.maxInfluencers })}
                 </li>
                 <li className="flex items-center gap-2 text-sm text-text-secondary">
-                  <Check size={14} className="shrink-0 text-primary-400" />
+                  <Check size={14} className="shrink-0 text-accent-soft" />
                   {t('configuracoes.plano.features.analyses', { count: plano.maxAnalysesPerMonth })}
                 </li>
                 {plano.allowBenchmarking && (
                   <li className="flex items-center gap-2 text-sm text-text-secondary">
-                    <Check size={14} className="shrink-0 text-primary-400" />
+                    <Check size={14} className="shrink-0 text-accent-soft" />
                     {t('configuracoes.plano.features.benchmarking')}
                   </li>
                 )}

@@ -23,11 +23,11 @@ export default function EmptyState({
       )}
     >
       {Icon && (
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
           <Icon size={20} />
         </span>
       )}
-      <h3 className="font-display text-base font-semibold text-neutral-200">{title}</h3>
+      <h3 className="font-display text-base font-semibold text-text-primary">{title}</h3>
       {description && (
         <p className="max-w-sm text-sm text-text-secondary">{description}</p>
       )}

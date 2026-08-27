@@ -20,7 +20,7 @@ export default function LogosSection() {
               key={name}
               data-reveal
               style={{ '--delay': `${i * 100}ms` }}
-              className="flex flex-col items-center gap-2 text-neutral-500 transition-colors hover:text-neutral-300"
+              className="flex flex-col items-center gap-2 text-text-muted transition-colors hover:text-text-secondary"
             >
               <Icon size={32} />
               <span className="text-xs font-semibold tracking-label">{name}</span>

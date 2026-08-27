@@ -29,7 +29,7 @@ export default function ComparativoSection() {
       <div className="mx-auto max-w-7xl">
         <div data-reveal className="mb-12 flex flex-col items-center gap-3 text-center">
           <span className="text-label">{t('landing.comparativo.label')}</span>
-          <h2 className="font-display text-4xl font-bold text-neutral-100 lg:text-5xl">
+          <h2 className="font-display text-4xl font-bold text-text-primary lg:text-5xl">
             {t('landing.comparativo.title')}
           </h2>
         </div>
@@ -38,10 +38,10 @@ export default function ComparativoSection() {
           <div
             data-reveal
             style={{ '--delay': '100ms' }}
-            className="rounded-2xl border border-neutral-700/60 bg-neutral-800/50 p-8"
+            className="rounded-2xl border border-hairline/60 bg-bg-surface/50 p-8"
           >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="font-display text-2xl font-bold text-neutral-200">{chaos.title}</h3>
+              <h3 className="font-display text-2xl font-bold text-text-primary">{chaos.title}</h3>
               <Badge variant="danger">{chaos.badge}</Badge>
             </div>
             <ItemList items={chaos.items} positive={false} />
@@ -50,10 +50,10 @@ export default function ComparativoSection() {
           <div
             data-reveal
             style={{ '--delay': '200ms' }}
-            className="rounded-2xl border-2 border-primary-500/70 bg-neutral-800/50 p-8 shadow-glow-soft"
+            className="rounded-2xl border-2 border-primary-500/70 bg-bg-surface/50 p-8 shadow-glow-soft"
           >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="font-display text-2xl font-bold text-neutral-100">{lumina.title}</h3>
+              <h3 className="font-display text-2xl font-bold text-text-primary">{lumina.title}</h3>
               <Badge variant="success">{lumina.badge}</Badge>
             </div>
             <ItemList items={lumina.items} positive={true} />

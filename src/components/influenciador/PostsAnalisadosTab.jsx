@@ -26,10 +26,10 @@ export default function PostsAnalisadosTab({ data, loading = false }) {
       header: t('influenciador.posts.columns.post'),
       render: (row) => (
         <div className="flex items-center gap-3">
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20">
             <ArrowUpRight size={14} />
           </span>
-          <span className="font-semibold text-neutral-100">{row.titulo}</span>
+          <span className="font-semibold text-text-primary">{row.titulo}</span>
         </div>
       ),
     },
@@ -52,7 +52,7 @@ export default function PostsAnalisadosTab({ data, loading = false }) {
       header: t('influenciador.posts.columns.reach'),
       align: 'right',
       render: (row) => (
-        <span className="font-medium text-neutral-200 tabular-nums">{formatFollowers(row.alcance)}</span>
+        <span className="font-medium text-text-primary tabular-nums">{formatFollowers(row.alcance)}</span>
       ),
     },
     {
@@ -66,9 +66,9 @@ export default function PostsAnalisadosTab({ data, loading = false }) {
           return <span className="tabular-nums text-text-muted">—</span>
         }
         const tone =
-          row.sentimentScore >= 85 ? 'text-emerald-300'
-          : row.sentimentScore >= 70 ? 'text-primary-300'
-          : 'text-amber-300'
+          row.sentimentScore >= 85 ? 'text-positive'
+          : row.sentimentScore >= 70 ? 'text-accent'
+          : 'text-caution'
         return <span className={cn('font-display font-bold tabular-nums', tone)}>{row.sentimentScore}</span>
       },
     },

@@ -39,10 +39,10 @@ export default function KpiCard({
 
   const changeColor =
     resolvedType === 'positive'
-      ? 'text-emerald-300 bg-emerald-500/10'
+      ? 'text-positive bg-emerald-500/10'
       : resolvedType === 'negative'
-      ? 'text-tertiary-300 bg-tertiary-500/10'
-      : 'text-neutral-300 bg-neutral-700/40'
+      ? 'text-tint-rose bg-tertiary-500/10'
+      : 'text-text-secondary bg-bg-elevated/40'
 
   const ChangeIcon = resolvedType === 'negative' ? ArrowDownRight : ArrowUpRight
   const formattedChange =
@@ -55,13 +55,13 @@ export default function KpiCard({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <span className="text-label">{label}</span>
-          <div className="mt-2 font-display text-3xl font-bold leading-none text-neutral-100">
+          <div className="mt-2 font-display text-3xl font-bold leading-none text-text-primary">
             {value}
           </div>
         </div>
 
         {Icon ? (
-          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20">
+          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20">
             <Icon size={18} />
           </span>
         ) : null}

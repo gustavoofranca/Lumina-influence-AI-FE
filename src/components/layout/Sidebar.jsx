@@ -38,8 +38,8 @@ function NavItem({ item, t, onClick }) {
         cn(
           'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150',
           isActive
-            ? 'bg-primary-600/20 text-neutral-100'
-            : 'text-text-secondary hover:bg-neutral-800 hover:text-neutral-100'
+            ? 'bg-primary-600/20 text-text-primary'
+            : 'text-text-secondary hover:bg-bg-surface hover:text-text-primary'
         )
       }
     >
@@ -49,7 +49,7 @@ function NavItem({ item, t, onClick }) {
           {isActive && (
             <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-primary-500 shadow-[0_0_8px_rgba(124,58,237,0.8)]" />
           )}
-          <Icon size={18} className={isActive ? 'text-primary-400' : 'text-neutral-500 group-hover:text-neutral-300'} />
+          <Icon size={18} className={isActive ? 'text-accent-soft' : 'text-text-muted group-hover:text-text-secondary'} />
           <span>{t(`app.nav.${item.key}`)}</span>
         </>
       )}
@@ -77,7 +77,7 @@ export default function Sidebar({ open, onClose }) {
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-40 flex w-64 flex-col',
-          'border-r border-primary/10 bg-neutral-900',
+          'border-r border-primary/10 bg-bg-base',
           'transition-transform duration-300 ease-in-out',
           open ? 'translate-x-0' : '-translate-x-full',
           'lg:translate-x-0' // sempre visível em desktop
@@ -86,7 +86,7 @@ export default function Sidebar({ open, onClose }) {
         {/* Header da sidebar */}
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-primary/10 px-5">
           <div className="flex items-center gap-2">
-            <Sparkles size={15} className="text-primary-400" />
+            <Sparkles size={15} className="text-accent-soft" />
             <span className="font-display text-base font-bold text-gradient-brand">Lumina</span>
           </div>
           <div className="flex items-center gap-2">
@@ -102,7 +102,7 @@ export default function Sidebar({ open, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-1 text-text-muted hover:bg-neutral-800 hover:text-neutral-100 lg:hidden"
+              className="rounded-lg p-1 text-text-muted hover:bg-bg-surface hover:text-text-primary lg:hidden"
               aria-label={t('common.a11y.closeMenu')}
             >
               <X size={16} />
@@ -121,7 +121,7 @@ export default function Sidebar({ open, onClose }) {
           </ul>
 
           {/* Separador */}
-          <div className="my-4 border-t border-neutral-800" />
+          <div className="my-4 border-t border-hairline" />
 
           {/* Itens secundários */}
           <ul className="space-y-1">

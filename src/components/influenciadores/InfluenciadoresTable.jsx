@@ -34,10 +34,10 @@ function EngagementCell({ value }) {
     return <span className="tabular-nums text-text-muted">{formatPct(null)}</span>
   }
   const tone =
-    value >= 8 ? 'text-emerald-300'
-    : value >= 5 ? 'text-primary-300'
-    : value >= 3 ? 'text-amber-300'
-    : 'text-tertiary-300'
+    value >= 8 ? 'text-positive'
+    : value >= 5 ? 'text-accent'
+    : value >= 3 ? 'text-caution'
+    : 'text-tint-rose'
   return <span className={cn('font-semibold tabular-nums', tone)}>{formatPct(value)}</span>
 }
 
@@ -45,10 +45,10 @@ function EmptyState() {
   const { t } = useTranslation()
   return (
     <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
+      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
         <SearchX size={20} />
       </span>
-      <h3 className="font-display text-lg font-semibold text-neutral-200">
+      <h3 className="font-display text-lg font-semibold text-text-primary">
         {t('influenciadores.empty.title')}
       </h3>
       <p className="max-w-sm text-sm text-text-secondary">
@@ -63,7 +63,7 @@ function Pagination({ page, totalPages, onPageChange }) {
   if (totalPages <= 1) return null
 
   return (
-    <div className="flex items-center justify-between gap-4 border-t border-neutral-800 px-5 py-3">
+    <div className="flex items-center justify-between gap-4 border-t border-hairline px-5 py-3">
       <span className="text-xs text-text-muted">
         {t('influenciadores.pagination.page', { page, total: totalPages })}
       </span>
@@ -75,7 +75,7 @@ function Pagination({ page, totalPages, onPageChange }) {
           className={cn(
             'inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors',
             'text-text-secondary disabled:opacity-40',
-            'enabled:hover:bg-neutral-800 enabled:hover:text-neutral-100'
+            'enabled:hover:bg-bg-surface enabled:hover:text-text-primary'
           )}
         >
           <ChevronLeft size={14} />
@@ -96,7 +96,7 @@ function Pagination({ page, totalPages, onPageChange }) {
                   'h-8 w-8 rounded-lg text-xs font-semibold transition-colors',
                   active
                     ? 'bg-primary-600 text-white shadow-glow-soft'
-                    : 'text-text-secondary hover:bg-neutral-800 hover:text-neutral-100'
+                    : 'text-text-secondary hover:bg-bg-surface hover:text-text-primary'
                 )}
                 aria-current={active ? 'page' : undefined}
               >
@@ -113,7 +113,7 @@ function Pagination({ page, totalPages, onPageChange }) {
           className={cn(
             'inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors',
             'text-text-secondary disabled:opacity-40',
-            'enabled:hover:bg-neutral-800 enabled:hover:text-neutral-100'
+            'enabled:hover:bg-bg-surface enabled:hover:text-text-primary'
           )}
         >
           {t('influenciadores.pagination.next')}
@@ -143,7 +143,7 @@ export default function InfluenciadoresTable({
         <div className="flex items-center gap-3">
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
-            <div className="truncate font-semibold text-neutral-100">{row.name}</div>
+            <div className="truncate font-semibold text-text-primary">{row.name}</div>
             <div className="truncate text-xs text-text-muted">{row.handle}</div>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function InfluenciadoresTable({
       header: t('influenciadores.columns.followers'),
       align: 'right',
       render: (row) => (
-        <span className="font-medium text-neutral-200 tabular-nums">
+        <span className="font-medium text-text-primary tabular-nums">
           {formatFollowers(row.followers)}
         </span>
       ),
@@ -204,7 +204,7 @@ export default function InfluenciadoresTable({
   // chegar é dizer algo falso — visível com banco remoto, onde a espera é longa.
   if (loading) {
     return (
-      <div className="overflow-hidden rounded-2xl border border-neutral-700/60 bg-neutral-800/40 p-4">
+      <div className="overflow-hidden rounded-2xl border border-hairline/60 bg-bg-surface/40 p-4">
         <div className="flex flex-col gap-2">
           {Array.from({ length: pageSize }, (_, i) => (
             <Skeleton key={i} className="h-14" rounded="rounded-xl" />
@@ -216,14 +216,14 @@ export default function InfluenciadoresTable({
 
   if (data.length === 0) {
     return (
-      <div className="overflow-hidden rounded-2xl border border-neutral-700/60 bg-neutral-800/40">
+      <div className="overflow-hidden rounded-2xl border border-hairline/60 bg-bg-surface/40">
         <EmptyState />
       </div>
     )
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-neutral-700/60 bg-neutral-800/40">
+    <div className="overflow-hidden rounded-2xl border border-hairline/60 bg-bg-surface/40">
       <Table
         columns={columns}
         data={pageRows}

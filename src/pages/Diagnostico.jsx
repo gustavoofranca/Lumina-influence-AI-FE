@@ -67,7 +67,7 @@ export default function Diagnostico() {
         <div className="flex items-center gap-3">
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
-            <span className="block truncate text-sm font-semibold text-neutral-100">
+            <span className="block truncate text-sm font-semibold text-text-primary">
               {row.name}
             </span>
             <span className="block truncate text-xs text-text-muted">{row.handle}</span>
@@ -86,7 +86,7 @@ export default function Diagnostico() {
       render: (row) => {
         const data = formatarData(row.lastAnalysis, i18n.language)
         return data ? (
-          <span className="text-sm tabular-nums text-neutral-200">{data}</span>
+          <span className="text-sm tabular-nums text-text-primary">{data}</span>
         ) : (
           <span className="text-xs text-text-muted">{t('diagnostico.neverAnalyzed')}</span>
         )
@@ -111,9 +111,9 @@ export default function Diagnostico() {
           return <span className="tabular-nums text-text-muted">—</span>
         }
         const tone =
-          row.botProbability <= 5 ? 'text-emerald-300'
-          : row.botProbability <= 15 ? 'text-amber-300'
-          : 'text-tertiary-300'
+          row.botProbability <= 5 ? 'text-positive'
+          : row.botProbability <= 15 ? 'text-caution'
+          : 'text-tint-rose'
         return (
           <span className={cn('font-semibold tabular-nums', tone)}>
             {formatPct(row.botProbability, 0)}
@@ -126,7 +126,7 @@ export default function Diagnostico() {
       header: t('diagnostico.columns.coherence'),
       align: 'right',
       render: (row) => (
-        <span className="font-semibold tabular-nums text-neutral-200">
+        <span className="font-semibold tabular-nums text-text-primary">
           {row.brandCoherence == null ? '—' : Math.round(row.brandCoherence)}
         </span>
       ),
@@ -153,12 +153,12 @@ export default function Diagnostico() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-2xl font-bold text-neutral-100">
+        <h1 className="font-display text-2xl font-bold text-text-primary">
           {t('diagnostico.title')}
         </h1>
         <p className="mt-1 text-sm text-text-secondary">{t('diagnostico.subtitle')}</p>
         {!loading && nuncaAnalisados > 0 && (
-          <p className="mt-2 text-xs text-amber-300">
+          <p className="mt-2 text-xs text-caution">
             {t('diagnostico.pendingHint', { count: nuncaAnalisados })}
           </p>
         )}

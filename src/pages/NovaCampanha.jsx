@@ -27,7 +27,7 @@ function Step1Detalhes({ data, errors, onChange, t }) {
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('campanhas.wizard.step1.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('campanhas.wizard.step1.subtitle')}</p>
@@ -96,13 +96,13 @@ function InfluenciadorRow({ inf, checked, onToggle }) {
         'border ring-1 ring-inset',
         checked
           ? 'border-primary-500/60 bg-primary-600/10 ring-primary-500/30'
-          : 'border-neutral-700/60 bg-neutral-900/40 ring-transparent hover:bg-neutral-800/60'
+          : 'border-hairline/60 bg-bg-base/40 ring-transparent hover:bg-bg-surface/60'
       )}
     >
       <Avatar name={inf.name} size="sm" />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate font-semibold text-neutral-100">{inf.name}</span>
+          <span className="truncate font-semibold text-text-primary">{inf.name}</span>
           <span className="truncate text-xs text-text-muted">{inf.handle}</span>
         </div>
         <div className="mt-1 flex items-center gap-3 text-xs text-text-muted">
@@ -116,7 +116,7 @@ function InfluenciadorRow({ inf, checked, onToggle }) {
           'inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-all',
           checked
             ? 'bg-primary-600 text-white'
-            : 'border border-neutral-700 bg-transparent text-transparent'
+            : 'border border-hairline bg-transparent text-transparent'
         )}
       >
         <Check size={13} />
@@ -141,7 +141,7 @@ function Step2Influenciadores({ influenciadores, loading, apiError, selected, on
     <Card glass className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="font-display text-xl font-bold text-neutral-100">
+          <h2 className="font-display text-xl font-bold text-text-primary">
             {t('campanhas.wizard.step2.title')}
           </h2>
           <p className="mt-1 text-sm text-text-secondary">{t('campanhas.wizard.step2.subtitle')}</p>
@@ -157,7 +157,7 @@ function Step2Influenciadores({ influenciadores, loading, apiError, selected, on
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {error && <p className="text-xs font-medium text-tertiary-300">{error}</p>}
+      {error && <p className="text-xs font-medium text-tint-rose">{error}</p>}
 
       <ApiErrorBanner error={apiError} />
 
@@ -196,30 +196,30 @@ function Step3Review({ data, selectedInfs, t, locale }) {
   return (
     <Card glass className="flex flex-col gap-6">
       <div>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('campanhas.wizard.step3.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('campanhas.wizard.step3.subtitle')}</p>
       </div>
 
       {/* Resumo da campanha */}
-      <div className="rounded-2xl border border-primary/15 bg-neutral-900/40 p-5">
+      <div className="rounded-2xl border border-primary/15 bg-bg-base/40 p-5">
         <div className="flex items-center gap-3">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20">
             <Megaphone size={18} />
           </span>
           <div>
             <CardLabel>{data.brand || '—'}</CardLabel>
-            <h3 className="mt-0.5 font-display text-lg font-bold text-neutral-100">
+            <h3 className="mt-0.5 font-display text-lg font-bold text-text-primary">
               {data.name || '—'}
             </h3>
           </div>
         </div>
-        <div className="mt-4 border-t border-neutral-700/60 pt-4 text-sm">
+        <div className="mt-4 border-t border-hairline/60 pt-4 text-sm">
           <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
             {t('campanhas.detail.header.period')}
           </span>
-          <div className="mt-0.5 font-semibold text-neutral-100">
+          <div className="mt-0.5 font-semibold text-text-primary">
             {data.startDate && data.endDate
               ? formatDateRange(data.startDate, data.endDate, locale)
               : '—'}
@@ -229,21 +229,21 @@ function Step3Review({ data, selectedInfs, t, locale }) {
 
       {/* KPIs estimados */}
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-xl bg-neutral-900/40 p-4 ring-1 ring-inset ring-neutral-800">
+        <div className="rounded-xl bg-bg-base/40 p-4 ring-1 ring-inset ring-hairline">
           <CardLabel>{t('campanhas.wizard.step3.totalBudget')}</CardLabel>
           <div className="mt-2 font-display text-2xl font-extrabold text-gradient-brand">
             {formatBudget(budget)}
           </div>
         </div>
-        <div className="rounded-xl bg-neutral-900/40 p-4 ring-1 ring-inset ring-neutral-800">
+        <div className="rounded-xl bg-bg-base/40 p-4 ring-1 ring-inset ring-hairline">
           <CardLabel>{t('campanhas.wizard.step3.perInfluencer')}</CardLabel>
-          <div className="mt-2 font-display text-2xl font-extrabold text-neutral-100">
+          <div className="mt-2 font-display text-2xl font-extrabold text-text-primary">
             {formatBudget(perCreator)}
           </div>
         </div>
-        <div className="rounded-xl bg-neutral-900/40 p-4 ring-1 ring-inset ring-neutral-800">
+        <div className="rounded-xl bg-bg-base/40 p-4 ring-1 ring-inset ring-hairline">
           <CardLabel>{t('campanhas.wizard.step3.estimatedReach')}</CardLabel>
-          <div className="mt-2 font-display text-2xl font-extrabold text-neutral-100">
+          <div className="mt-2 font-display text-2xl font-extrabold text-text-primary">
             {formatFollowers(totalReach)}
           </div>
         </div>
@@ -258,10 +258,10 @@ function Step3Review({ data, selectedInfs, t, locale }) {
           {selectedInfs.map((inf) => (
             <span
               key={inf.id}
-              className="inline-flex items-center gap-2 rounded-full bg-neutral-900/60 px-3 py-1.5 ring-1 ring-inset ring-neutral-700"
+              className="inline-flex items-center gap-2 rounded-full bg-bg-base/60 px-3 py-1.5 ring-1 ring-inset ring-hairline"
             >
               <Avatar name={inf.name} size="sm" />
-              <span className="text-sm font-medium text-neutral-200">{inf.name}</span>
+              <span className="text-sm font-medium text-text-primary">{inf.name}</span>
             </span>
           ))}
         </div>
@@ -376,10 +376,10 @@ export default function NovaCampanha() {
   if (created) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
-        <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-300 ring-1 ring-inset ring-emerald-500/30">
+        <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/15 text-positive ring-1 ring-inset ring-emerald-500/30">
           <Check size={28} />
         </span>
-        <h2 className="font-display text-2xl font-bold text-neutral-100">
+        <h2 className="font-display text-2xl font-bold text-text-primary">
           {t('campanhas.wizard.step3.createdSuccess')}
         </h2>
         <p className="text-sm text-text-secondary">{created.name}</p>
@@ -393,21 +393,21 @@ export default function NovaCampanha() {
       <header className="flex flex-col gap-4">
         <Link
           to="/app/campanhas"
-          className="inline-flex w-max items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-neutral-100"
+          className="inline-flex w-max items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-text-primary"
         >
           <ArrowLeft size={13} />
           {t('campanhas.detail.back')}
         </Link>
 
         <div>
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {t('campanhas.wizard.title')}
           </h1>
           <p className="mt-1.5 text-sm text-text-secondary">{t('campanhas.wizard.subtitle')}</p>
         </div>
 
         {/* Stepper */}
-        <div className="rounded-2xl border border-primary/10 bg-neutral-800/40 p-4">
+        <div className="rounded-2xl border border-primary/10 bg-bg-surface/40 p-4">
           <WizardStepper steps={steps} currentStep={step} />
         </div>
       </header>

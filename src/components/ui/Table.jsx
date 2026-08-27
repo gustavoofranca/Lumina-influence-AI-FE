@@ -32,17 +32,17 @@ export default function Table({
   return (
     // min-w-0: filho de grid/flex não encolhe abaixo do conteúdo sem isso, e
     // o overflow-x-auto de dentro nunca chega a valer.
-    <div className={cn('min-w-0 overflow-hidden rounded-2xl border border-neutral-700/60', className)}>
+    <div className={cn('min-w-0 overflow-hidden rounded-2xl border border-hairline/60', className)}>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-neutral-800/60">
+            <tr className="bg-bg-surface/60">
               {columns.map((col) => (
                 <th
                   key={col.key}
                   scope="col"
                   className={cn(
-                    'border-b border-neutral-700/60 px-4 py-3 text-[11px] font-semibold uppercase tracking-label text-text-label',
+                    'border-b border-hairline/60 px-4 py-3 text-[11px] font-semibold uppercase tracking-label text-text-label',
                     ALIGN[col.align || 'left']
                   )}
                   style={col.width ? { width: col.width } : undefined}
@@ -83,16 +83,16 @@ export default function Table({
                         : undefined
                     }
                     className={cn(
-                      'border-b border-neutral-800/80 last:border-0 transition-colors',
+                      'border-b border-hairline/80 last:border-0 transition-colors',
                       clickable &&
-                        'cursor-pointer hover:bg-neutral-700/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500'
+                        'cursor-pointer hover:bg-bg-elevated/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500'
                     )}
                   >
                     {columns.map((col) => (
                       <td
                         key={col.key}
                         className={cn(
-                          'px-4 text-sm text-neutral-200',
+                          'px-4 text-sm text-text-primary',
                           dense ? 'py-2' : 'py-3.5',
                           ALIGN[col.align || 'left']
                         )}

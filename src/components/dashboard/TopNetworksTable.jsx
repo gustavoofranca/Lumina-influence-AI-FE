@@ -10,9 +10,9 @@ import Table from '../ui/Table.jsx'
 import { formatFollowers } from '../../lib/format.js'
 
 const VIRAL_CONFIG = {
-  high:   { icon: Flame,     color: 'text-tertiary-300' },
-  medium: { icon: Activity,  color: 'text-amber-300' },
-  low:    { icon: Snowflake, color: 'text-secondary-300' },
+  high:   { icon: Flame,     color: 'text-tint-rose' },
+  medium: { icon: Activity,  color: 'text-caution' },
+  low:    { icon: Snowflake, color: 'text-tint-sky' },
 }
 
 const STATUS_VARIANT = {
@@ -26,14 +26,14 @@ function ScoreCell({ value }) {
     return <div className="text-right tabular-nums text-text-muted">—</div>
   }
   const tone =
-    value >= 85 ? 'text-emerald-300'
-    : value >= 70 ? 'text-primary-300'
-    : value >= 55 ? 'text-amber-300'
-    : 'text-tertiary-300'
+    value >= 85 ? 'text-positive'
+    : value >= 70 ? 'text-accent'
+    : value >= 55 ? 'text-caution'
+    : 'text-tint-rose'
 
   return (
     <div className="flex items-center justify-end gap-3">
-      <div className="h-1 w-16 overflow-hidden rounded-full bg-neutral-700/60">
+      <div className="h-1 w-16 overflow-hidden rounded-full bg-bg-elevated/60">
         <div
           className="h-full rounded-full bg-gradient-brand"
           style={{ width: `${value}%` }}
@@ -57,7 +57,7 @@ export default function TopNetworksTable({ data, loading = false }) {
         <div className="flex items-center gap-3">
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
-            <div className="truncate font-semibold text-neutral-100">{row.name}</div>
+            <div className="truncate font-semibold text-text-primary">{row.name}</div>
             <div className="truncate text-xs text-text-muted">
               {row.handle} · {formatFollowers(row.followers)}
             </div>

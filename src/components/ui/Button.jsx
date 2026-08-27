@@ -5,7 +5,7 @@ import { cn } from '../../lib/cn.js'
 /**
  * Button — 4 variantes oficiais (Figma):
  * - primary  : bg-primary-600 + glow violeta
- * - secondary: bg-neutral-800 (acoes secundarias)
+ * - secondary: bg-bg-surface (acoes secundarias)
  * - inverted : bg branco + texto escuro (CTAs em fundo escuro destacado)
  * - outlined : transparente + borda primary + texto primary
  */
@@ -16,9 +16,9 @@ const VARIANTS = {
     'active:bg-primary-700'
   ),
   secondary: cn(
-    'bg-neutral-800 text-neutral-100 ring-1 ring-inset ring-neutral-700',
-    'hover:bg-neutral-700 hover:ring-neutral-600',
-    'active:bg-neutral-800'
+    'bg-bg-surface text-text-primary ring-1 ring-inset ring-hairline',
+    'hover:bg-bg-elevated hover:ring-hairline',
+    'active:bg-bg-surface'
   ),
   inverted: cn(
     'bg-white text-neutral-900',
@@ -26,8 +26,8 @@ const VARIANTS = {
     'active:bg-neutral-300'
   ),
   outlined: cn(
-    'bg-transparent text-primary-300 ring-1 ring-inset ring-primary-500/60',
-    'hover:bg-primary-600/10 hover:text-primary-200 hover:ring-primary-400',
+    'bg-transparent text-accent ring-1 ring-inset ring-primary-500/60',
+    'hover:bg-primary-600/10 hover:text-accent-strong hover:ring-primary-400',
     'active:bg-primary-600/20'
   ),
 }

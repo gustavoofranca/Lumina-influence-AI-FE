@@ -9,9 +9,9 @@ import Skeleton from '../../ui/Skeleton.jsx'
 import { formatFollowers } from '../../../lib/format.js'
 
 const ROWS = [
-  { key: 'verifiedHumans', icon: ShieldCheck,    color: 'text-emerald-300', bg: 'bg-emerald-500/15', ring: 'ring-emerald-500/30' },
-  { key: 'suspicious',     icon: AlertTriangle,  color: 'text-amber-300',   bg: 'bg-amber-500/15',   ring: 'ring-amber-500/30' },
-  { key: 'bots',           icon: Bot,            color: 'text-tertiary-300', bg: 'bg-tertiary-500/15', ring: 'ring-tertiary-500/30' },
+  { key: 'verifiedHumans', icon: ShieldCheck,    color: 'text-positive', bg: 'bg-emerald-500/15', ring: 'ring-emerald-500/30' },
+  { key: 'suspicious',     icon: AlertTriangle,  color: 'text-caution',   bg: 'bg-amber-500/15',   ring: 'ring-amber-500/30' },
+  { key: 'bots',           icon: Bot,            color: 'text-tint-rose', bg: 'bg-tertiary-500/15', ring: 'ring-tertiary-500/30' },
 ]
 
 export default function AudienceIntegrityCard({ data, loading = false }) {
@@ -75,7 +75,7 @@ export default function AudienceIntegrityCard({ data, loading = false }) {
           return (
             <li
               key={row.key}
-              className="flex items-center gap-3 rounded-xl bg-neutral-900/40 px-3 py-2.5 ring-1 ring-inset ring-neutral-800"
+              className="flex items-center gap-3 rounded-xl bg-bg-base/40 px-3 py-2.5 ring-1 ring-inset ring-hairline"
             >
               <span className={cn('inline-flex h-8 w-8 items-center justify-center rounded-lg ring-1 ring-inset', row.bg, row.color, row.ring)}>
                 <Icon size={14} />
@@ -83,7 +83,7 @@ export default function AudienceIntegrityCard({ data, loading = false }) {
               <span className="flex-1 text-sm text-text-secondary">
                 {t(`influenciador.audience.${row.key}`)}
               </span>
-              <span className="font-semibold text-neutral-100 tabular-nums">
+              <span className="font-semibold text-text-primary tabular-nums">
                 {formatFollowers(data.totals[row.key])}
               </span>
             </li>

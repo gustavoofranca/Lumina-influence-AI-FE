@@ -12,12 +12,12 @@ const NAV_ANCHORS = { solutions: '#features', pricing: '#plans', cases: '#featur
 export default function HeaderSection() {
   const { t } = useTranslation()
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-neutral-900/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-bg-base/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6">
         <Link to="/" className="flex shrink-0 items-center gap-2">
           <Sparkles size={16} className="text-primary-400" />
           <span className="font-display text-lg font-bold text-gradient-brand">Lumina</span>
-          <span className="hidden font-display text-lg font-bold text-neutral-300 sm:inline">Influence AI</span>
+          <span className="hidden font-display text-lg font-bold text-text-secondary sm:inline">Influence AI</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -27,7 +27,7 @@ export default function HeaderSection() {
               href={NAV_ANCHORS[key]}
               className={cn(
                 'rounded-lg px-3 py-1.5 text-sm font-medium text-text-secondary',
-                'transition-colors hover:bg-neutral-800 hover:text-neutral-100'
+                'transition-colors hover:bg-bg-surface hover:text-text-primary'
               )}
             >
               {t(`landing.nav.${key}`)}

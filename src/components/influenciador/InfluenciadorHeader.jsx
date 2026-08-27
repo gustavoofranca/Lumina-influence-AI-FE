@@ -59,7 +59,7 @@ export default function InfluenciadorHeader({
       {/* Voltar */}
       <Link
         to="/app/influenciadores"
-        className="relative inline-flex items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-neutral-100"
+        className="relative inline-flex items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-text-primary"
       >
         <ArrowLeft size={13} />
         {t('influenciadores.title')}
@@ -80,12 +80,12 @@ export default function InfluenciadorHeader({
               )}
             </div>
 
-            <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+            <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
               {inf.name}
             </h1>
 
             <div className="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
-              <span className="font-medium text-neutral-300">{inf.handle}</span>
+              <span className="font-medium text-text-secondary">{inf.handle}</span>
               <span className="text-text-muted">·</span>
               <PlatformBadgeList platforms={inf.platforms} size={14} />
               <span className="text-text-muted">·</span>

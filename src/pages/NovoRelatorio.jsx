@@ -43,13 +43,13 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('relatorios.wizard.step1.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step1.subtitle')}</p>
       </div>
 
-      {error && <p className="text-xs font-medium text-tertiary-300">{error}</p>}
+      {error && <p className="text-xs font-medium text-tint-rose">{error}</p>}
 
       <ApiErrorBanner error={apiError} />
 
@@ -75,7 +75,7 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
                 'group flex flex-col gap-3 rounded-2xl border p-4 text-left transition-all duration-150',
                 checked
                   ? 'border-primary-500/60 bg-primary-600/10 shadow-glow-soft'
-                  : 'border-neutral-700/60 bg-neutral-900/40 hover:border-neutral-600 hover:bg-neutral-800/60'
+                  : 'border-hairline/60 bg-bg-base/40 hover:border-hairline hover:bg-bg-surface/60'
               )}
             >
               <div className="flex items-start justify-between gap-3">
@@ -83,20 +83,20 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
                   <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
                     {c.brand}
                   </span>
-                  <h3 className="mt-1 truncate font-display text-base font-bold text-neutral-100">
+                  <h3 className="mt-1 truncate font-display text-base font-bold text-text-primary">
                     {c.name}
                   </h3>
                 </div>
                 <span className={cn(
                   'inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-all',
-                  checked ? 'bg-primary-600 text-white' : 'border border-neutral-700 bg-transparent text-transparent'
+                  checked ? 'bg-primary-600 text-white' : 'border border-hairline bg-transparent text-transparent'
                 )}>
                   <Check size={13} />
                 </span>
               </div>
               <div className="flex items-center justify-between text-xs text-text-muted">
                 <span>{formatDateRange(c.startDate, c.endDate, locale)}</span>
-                <span className="font-semibold text-primary-300">{formatBudget(c.budget)}</span>
+                <span className="font-semibold text-accent">{formatBudget(c.budget)}</span>
               </div>
             </button>
           )
@@ -118,7 +118,7 @@ function Step2PeriodoInfluenciadores({
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('relatorios.wizard.step2.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step2.subtitle')}</p>
@@ -149,7 +149,7 @@ function Step2PeriodoInfluenciadores({
           </Badge>
         </div>
 
-        {error && <p className="mt-2 text-xs font-medium text-tertiary-300">{error}</p>}
+        {error && <p className="mt-2 text-xs font-medium text-tint-rose">{error}</p>}
 
         {loading ? (
           <div className="mt-3 grid gap-2 lg:grid-cols-2">
@@ -174,19 +174,19 @@ function Step2PeriodoInfluenciadores({
                   'border ring-1 ring-inset',
                   checked
                     ? 'border-primary-500/60 bg-primary-600/10 ring-primary-500/30'
-                    : 'border-neutral-700/60 bg-neutral-900/40 ring-transparent hover:bg-neutral-800/60'
+                    : 'border-hairline/60 bg-bg-base/40 ring-transparent hover:bg-bg-surface/60'
                 )}
               >
                 <Avatar name={inf.name} size="sm" />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-semibold text-neutral-100">{inf.name}</p>
+                  <p className="truncate font-semibold text-text-primary">{inf.name}</p>
                   <p className="truncate text-xs text-text-muted">
                     {inf.handle} · {formatFollowers(inf.followers)}
                   </p>
                 </div>
                 <span className={cn(
                   'inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-all',
-                  checked ? 'bg-primary-600 text-white' : 'border border-neutral-700 bg-transparent text-transparent'
+                  checked ? 'bg-primary-600 text-white' : 'border border-hairline bg-transparent text-transparent'
                 )}>
                   <Check size={13} />
                 </span>
@@ -207,13 +207,13 @@ function Step3Secoes({ selected, onToggle, error, t }) {
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('relatorios.wizard.step3.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step3.subtitle')}</p>
       </div>
 
-      {error && <p className="text-xs font-medium text-tertiary-300">{error}</p>}
+      {error && <p className="text-xs font-medium text-tint-rose">{error}</p>}
 
       <div className="grid gap-3 md:grid-cols-2">
         {SECTION_KEYS.map((key) => {
@@ -230,17 +230,17 @@ function Step3Secoes({ selected, onToggle, error, t }) {
                 'border ring-1 ring-inset',
                 checked
                   ? 'border-primary-500/60 bg-primary-600/10 ring-primary-500/30 shadow-glow-soft'
-                  : 'border-neutral-700/60 bg-neutral-900/40 ring-transparent hover:bg-neutral-800/60'
+                  : 'border-hairline/60 bg-bg-base/40 ring-transparent hover:bg-bg-surface/60'
               )}
             >
               <span className={cn(
                 'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1 ring-inset',
-                checked ? 'bg-primary-600/30 text-primary-200 ring-primary-500/40' : 'bg-neutral-800 text-text-secondary ring-neutral-700'
+                checked ? 'bg-primary-600/30 text-accent-strong ring-primary-500/40' : 'bg-bg-surface text-text-secondary ring-hairline'
               )}>
                 <Icon size={16} />
               </span>
               <div className="flex-1">
-                <p className={cn('font-semibold', checked ? 'text-neutral-100' : 'text-neutral-200')}>
+                <p className={cn('font-semibold', checked ? 'text-text-primary' : 'text-text-primary')}>
                   {t(`relatorios.wizard.step3.sections.${key}`)}
                 </p>
                 <p className="mt-0.5 text-xs leading-relaxed text-text-muted">
@@ -249,7 +249,7 @@ function Step3Secoes({ selected, onToggle, error, t }) {
               </div>
               <span className={cn(
                 'mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-all',
-                checked ? 'bg-primary-600 text-white' : 'border border-neutral-700 bg-transparent text-transparent'
+                checked ? 'bg-primary-600 text-white' : 'border border-hairline bg-transparent text-transparent'
               )}>
                 <Check size={13} />
               </span>
@@ -269,7 +269,7 @@ function Step4Preview({ documento, loading, apiError, onExport, exporting, t }) 
     <div className="flex flex-col gap-5">
       <Card glass className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-display text-xl font-bold text-neutral-100">
+          <h2 className="font-display text-xl font-bold text-text-primary">
             {t('relatorios.wizard.step4.title')}
           </h2>
           <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step4.subtitle')}</p>
@@ -423,20 +423,20 @@ export default function NovoRelatorio() {
       <header className="flex flex-col gap-4">
         <Link
           to="/app/relatorios"
-          className="inline-flex w-max items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-neutral-100"
+          className="inline-flex w-max items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-text-primary"
         >
           <ArrowLeft size={13} />
           {t('relatorios.wizard.back')}
         </Link>
 
         <div>
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {t('relatorios.wizard.title')}
           </h1>
           <p className="mt-1.5 text-sm text-text-secondary">{t('relatorios.wizard.subtitle')}</p>
         </div>
 
-        <div className="rounded-2xl border border-primary/10 bg-neutral-800/40 p-4">
+        <div className="rounded-2xl border border-primary/10 bg-bg-surface/40 p-4">
           <WizardStepper steps={stepperItems} currentStep={step} />
         </div>
       </header>

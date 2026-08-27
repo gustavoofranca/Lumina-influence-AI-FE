@@ -9,7 +9,7 @@ const PADDING = {
 
 /**
  * Card — container base do design system.
- * - Padrao: bg-neutral-800, border subtle
+ * - Padrao: bg-bg-surface, border subtle
  * - glass=true: glassmorphism (translucido + blur + border violeta sutil)
  * - hoverable=true: micro-elevacao em hover
  */
@@ -28,7 +28,7 @@ export default function Card({
         'rounded-2xl',
         glass
           ? 'card-glass'
-          : 'bg-neutral-800 border border-primary/10',
+          : 'bg-bg-surface border border-primary/10',
         hoverable && 'transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-glow-soft',
         PADDING[padding],
         className
@@ -46,7 +46,7 @@ export function CardHeader({ children, className = '' }) {
 
 export function CardTitle({ children, className = '' }) {
   return (
-    <h3 className={cn('font-display text-xl font-bold text-neutral-100', className)}>
+    <h3 className={cn('font-display text-xl font-bold text-text-primary', className)}>
       {children}
     </h3>
   )

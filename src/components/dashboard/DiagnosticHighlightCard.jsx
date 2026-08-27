@@ -15,7 +15,7 @@ function ReelThumbnail() {
     <div
       className={cn(
         'relative overflow-hidden rounded-xl',
-        'border border-primary/15 bg-neutral-900',
+        'border border-primary/15 bg-bg-base',
         'aspect-[16/9]'
       )}
       style={{
@@ -36,7 +36,7 @@ function ReelThumbnail() {
           <Play size={20} className="ml-0.5 fill-current" />
         </span>
       </div>
-      <div className="absolute bottom-2 left-2 rounded-md bg-neutral-950/70 px-2 py-0.5 text-[10px] font-medium text-neutral-200 backdrop-blur">
+      <div className="absolute bottom-2 left-2 rounded-md bg-neutral-950/70 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
         00:42
       </div>
     </div>
@@ -76,7 +76,7 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
         <div className="mt-3 flex items-center gap-3">
           <Avatar name={name} size="md" />
           <div className="min-w-0">
-            <p className="truncate font-semibold text-neutral-100">{name}</p>
+            <p className="truncate font-semibold text-text-primary">{name}</p>
             <p className="truncate text-xs text-text-muted">
               {t('dashboard.diagnostic.analysisId')}: #{data.analysisId}
             </p>
@@ -122,8 +122,8 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
         to={`/app/influenciadores/${data.influencerId}`}
         className={cn(
           'group inline-flex items-center justify-center gap-1.5 rounded-xl py-2 px-3',
-          'text-sm font-semibold text-primary-300 transition-colors',
-          'hover:bg-primary-600/10 hover:text-primary-200'
+          'text-sm font-semibold text-accent transition-colors',
+          'hover:bg-primary-600/10 hover:text-accent-strong'
         )}
       >
         {t('dashboard.diagnostic.viewAnalysis')}

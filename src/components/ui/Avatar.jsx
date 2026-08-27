@@ -11,11 +11,11 @@ const SIZE = {
 
 // Paleta deterministica: mesmo nome -> mesma cor de fallback
 const FALLBACK_TINTS = [
-  'bg-primary-600/30 text-primary-200 ring-primary-400/30',
-  'bg-secondary-500/25 text-secondary-200 ring-secondary-400/30',
-  'bg-tertiary-500/25 text-tertiary-200 ring-tertiary-400/30',
-  'bg-emerald-500/25 text-emerald-200 ring-emerald-400/30',
-  'bg-amber-500/25 text-amber-200 ring-amber-400/30',
+  'bg-primary-600/30 text-accent-strong ring-primary-400/30',
+  'bg-secondary-500/25 text-tint-sky ring-secondary-400/30',
+  'bg-tertiary-500/25 text-tint-rose ring-tertiary-400/30',
+  'bg-emerald-500/25 text-positive ring-emerald-400/30',
+  'bg-amber-500/25 text-caution ring-amber-400/30',
 ]
 
 function initialsOf(name = '') {
@@ -49,7 +49,7 @@ export default function Avatar({
         className={cn(
           'inline-flex items-center justify-center overflow-hidden rounded-full ring-1',
           dims.wrap,
-          showImage ? 'ring-primary/20 bg-neutral-800' : cn('font-semibold ring-1', dims.text, tintFor(name))
+          showImage ? 'ring-primary/20 bg-bg-surface' : cn('font-semibold ring-1', dims.text, tintFor(name))
         )}
         aria-label={name || 'avatar'}
         role="img"

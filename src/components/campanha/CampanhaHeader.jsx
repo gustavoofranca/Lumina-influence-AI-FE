@@ -24,7 +24,7 @@ function MetaCell({ label, value, accent = false }) {
       <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">{label}</span>
       <span className={cn(
         'font-display font-bold',
-        accent ? 'text-2xl text-gradient-brand' : 'text-base text-neutral-100'
+        accent ? 'text-2xl text-gradient-brand' : 'text-base text-text-primary'
       )}>
         {value}
       </span>
@@ -52,7 +52,7 @@ export default function CampanhaHeader({ campanha, metrics, onEdit }) {
       {/* Voltar */}
       <Link
         to="/app/campanhas"
-        className="relative inline-flex items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-neutral-100"
+        className="relative inline-flex items-center gap-1.5 text-xs text-text-secondary transition-colors hover:text-text-primary"
       >
         <ArrowLeft size={13} />
         {t('campanhas.detail.back')}
@@ -65,7 +65,7 @@ export default function CampanhaHeader({ campanha, metrics, onEdit }) {
             <Badge variant={STATUS_VARIANT[c.status]}>{t(`campanhas.status.${c.status}`)}</Badge>
           </div>
 
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {c.name}
           </h1>
         </div>

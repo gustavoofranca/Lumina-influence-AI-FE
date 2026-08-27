@@ -40,7 +40,7 @@ export default function DonutChart({
             outerRadius={size / 2 - 2}
             startAngle={90}
             endAngle={-270}
-            stroke="rgba(15,23,42,0.6)"
+            stroke="var(--bg-surface)"
             strokeWidth={2}
             paddingAngle={2}
             isAnimationActive={false}

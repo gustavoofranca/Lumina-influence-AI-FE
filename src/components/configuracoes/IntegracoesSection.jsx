@@ -38,7 +38,7 @@ function Stat({ label, children }) {
       <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
         {label}
       </span>
-      <span className="mt-1 block font-medium text-neutral-200">{children}</span>
+      <span className="mt-1 block font-medium text-text-primary">{children}</span>
     </div>
   )
 }
@@ -54,20 +54,20 @@ function PlataformaCard({ platform, dados, t, locale }) {
       'flex flex-col gap-4 rounded-2xl border p-5 transition-all duration-200',
       conectada
         ? 'border-primary/15 bg-primary-600/5 hover:border-primary/30'
-        : 'border-neutral-700/60 bg-neutral-900/40'
+        : 'border-hairline/60 bg-bg-base/40'
     )}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span className={cn(
             'inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-inset',
             conectada
-              ? 'bg-neutral-800 text-neutral-100 ring-primary/30'
-              : 'bg-neutral-800/60 text-text-muted ring-neutral-700'
+              ? 'bg-bg-surface text-text-primary ring-primary/30'
+              : 'bg-bg-surface/60 text-text-muted ring-hairline'
           )}>
             <Icon size={22} />
           </span>
           <div>
-            <h3 className="font-display text-base font-bold text-neutral-100">{meta.name}</h3>
+            <h3 className="font-display text-base font-bold text-text-primary">{meta.name}</h3>
             {conectada && (
               <p className="text-xs text-text-muted">
                 {t('configuracoes.integracoes.accounts', { count: dados.accounts })}
@@ -82,7 +82,7 @@ function PlataformaCard({ platform, dados, t, locale }) {
       </div>
 
       {conectada && (
-        <div className="grid grid-cols-2 gap-3 border-t border-neutral-800 pt-4 text-xs">
+        <div className="grid grid-cols-2 gap-3 border-t border-hairline pt-4 text-xs">
           <Stat label={t('configuracoes.integracoes.followers')}>
             {formatFollowers(dados.followers)}
           </Stat>

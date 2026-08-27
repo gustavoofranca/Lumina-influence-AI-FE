@@ -54,14 +54,14 @@ const Search = forwardRef(function Search(
       <div
         className={cn(
           'group flex h-11 items-center gap-2 rounded-xl bg-bg-input px-3.5',
-          'ring-1 ring-inset ring-neutral-700 transition-all duration-200',
+          'ring-1 ring-inset ring-hairline transition-all duration-200',
           'focus-within:ring-2 focus-within:ring-primary-500 focus-within:shadow-glow-soft',
           className
         )}
       >
         <SearchIcon
           size={16}
-          className="shrink-0 text-text-muted transition-colors group-focus-within:text-primary-300"
+          className="shrink-0 text-text-muted transition-colors group-focus-within:text-accent"
         />
         <input
           ref={ref}
@@ -74,7 +74,7 @@ const Search = forwardRef(function Search(
           placeholder={placeholder}
           autoFocus={autoFocus}
           className={cn(
-            'h-full w-full bg-transparent text-sm text-neutral-100',
+            'h-full w-full bg-transparent text-sm text-text-primary',
             'placeholder:text-text-muted focus:outline-none',
             // Esconde o "X" nativo do input[type=search] (Webkit/IE)
             '[&::-webkit-search-cancel-button]:hidden'
@@ -85,7 +85,7 @@ const Search = forwardRef(function Search(
             type="button"
             onClick={handleClear}
             aria-label={t('common.a11y.clear')}
-            className="shrink-0 rounded-md p-1 text-text-muted transition-colors hover:bg-neutral-800 hover:text-neutral-100"
+            className="shrink-0 rounded-md p-1 text-text-muted transition-colors hover:bg-bg-surface hover:text-text-primary"
           >
             <X size={14} />
           </button>

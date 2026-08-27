@@ -45,7 +45,7 @@ export default function Campanhas() {
       {/* Header */}
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {t('campanhas.list.title')}
           </h1>
           <p className="mt-1.5 text-sm text-text-secondary">{t('campanhas.list.subtitle')}</p>
@@ -76,12 +76,12 @@ export default function Campanhas() {
       {error ? null : filtered.length === 0 ? (
         <div className={cn(
           'flex flex-col items-center justify-center gap-3 py-16 text-center',
-          'rounded-2xl border border-neutral-700/60 bg-neutral-800/40'
+          'rounded-2xl border border-hairline/60 bg-bg-surface/40'
         )}>
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
+          <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
             <Megaphone size={20} />
           </span>
-          <h3 className="font-display text-lg font-semibold text-neutral-200">
+          <h3 className="font-display text-lg font-semibold text-text-primary">
             {t('campanhas.list.empty.title')}
           </h3>
           <p className="max-w-sm text-sm text-text-secondary">

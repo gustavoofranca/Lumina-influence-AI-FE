@@ -7,7 +7,7 @@ import EmptyState from '../../ui/EmptyState.jsx'
 import Skeleton from '../../ui/Skeleton.jsx'
 import { parseApiDate } from '../../../lib/format.js'
 
-const HIGHLIGHT = 'rounded-sm bg-primary-600/25 px-1 font-semibold text-primary-100'
+const HIGHLIGHT = 'rounded-sm bg-primary-600/25 px-1 font-semibold text-accent-strong'
 
 /**
  * Grifa as frases-chave dentro da transcrição. Case-insensitive.

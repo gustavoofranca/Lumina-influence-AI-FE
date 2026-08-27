@@ -82,12 +82,12 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
       </div>
 
       {erro && (
-        <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tertiary-300">
+        <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tint-rose">
           {erro}
         </p>
       )}
 
-      <ul className="flex flex-col divide-y divide-neutral-800">
+      <ul className="flex flex-col divide-y divide-hairline">
         {PLATFORMS.map((platform) => {
           const meta = PLATFORM_META[platform]
           const Icon = meta.Icon
@@ -102,7 +102,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
               </span>
 
               <div className="min-w-0 flex-1">
-                <span className="block text-sm font-semibold text-neutral-100">
+                <span className="block text-sm font-semibold text-text-primary">
                   {meta.name}
                 </span>
                 <span className="block truncate text-xs text-text-secondary">

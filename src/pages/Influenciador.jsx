@@ -112,10 +112,10 @@ export default function Influenciador() {
   if (!influenciador) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
-        <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
+        <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
           <UserX size={22} />
         </span>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('influenciador.notFound.title')}
         </h2>
         <p className="max-w-md text-sm text-text-secondary">{t('influenciador.notFound.subtitle')}</p>
@@ -151,7 +151,7 @@ export default function Influenciador() {
       />
 
       {erroAnalise && (
-        <p className="rounded-xl border border-tertiary-500/30 bg-tertiary-500/10 px-4 py-3 text-sm text-tertiary-300">
+        <p className="rounded-xl border border-tertiary-500/30 bg-tertiary-500/10 px-4 py-3 text-sm text-tint-rose">
           {erroAnalise}
         </p>
       )}

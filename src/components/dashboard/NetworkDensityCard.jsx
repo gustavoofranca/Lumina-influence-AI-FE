@@ -25,7 +25,7 @@ function NodeMapPreview() {
   ]
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-primary/15 bg-neutral-900/60 aspect-[4/3]">
+    <div className="relative overflow-hidden rounded-xl border border-primary/15 bg-bg-base/60 aspect-[4/3]">
       {/* Glow radial atrás */}
       <div
         aria-hidden

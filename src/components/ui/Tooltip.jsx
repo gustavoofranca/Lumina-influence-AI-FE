@@ -39,7 +39,7 @@ export default function Tooltip({
         role="tooltip"
         className={cn(
           'pointer-events-none absolute z-50 whitespace-nowrap rounded-md',
-          'bg-neutral-900/95 px-2 py-1 text-xs font-medium text-neutral-100',
+          'bg-bg-base/95 px-2 py-1 text-xs font-medium text-text-primary',
           'border border-primary/20 shadow-glow-soft backdrop-blur',
           'transition-opacity duration-150',
           open ? 'opacity-100' : 'opacity-0',

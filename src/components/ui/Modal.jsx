@@ -71,14 +71,14 @@ export default function Modal({
       <div
         className={cn(
           'relative w-full animate-fade-in',
-          'rounded-2xl border border-primary/15 bg-neutral-800 shadow-glow-soft',
+          'rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft',
           SIZES[size]
         )}
       >
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between gap-3 border-b border-neutral-700/60 px-6 py-4">
+          <div className="flex items-center justify-between gap-3 border-b border-hairline/60 px-6 py-4">
             {title ? (
-              <h2 id="modal-title" className="font-display text-lg font-bold text-neutral-100">
+              <h2 id="modal-title" className="font-display text-lg font-bold text-text-primary">
                 {title}
               </h2>
             ) : (
@@ -93,7 +93,7 @@ export default function Modal({
         <div className="px-6 py-5">{children}</div>
 
         {footer ? (
-          <div className="flex items-center justify-end gap-2 border-t border-neutral-700/60 px-6 py-4">
+          <div className="flex items-center justify-end gap-2 border-t border-hairline/60 px-6 py-4">
             {footer}
           </div>
         ) : null}

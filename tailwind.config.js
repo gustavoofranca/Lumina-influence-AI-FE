@@ -56,25 +56,41 @@ export default {
           900: '#0F172A', // base do app
           950: '#020617',
         },
-        // Tokens semânticos
+        // Tokens semânticos — apontam para as variáveis de index.css, que são
+        // redefinidas em :root[data-theme="light"]. Hex fixo aqui prenderia a
+        // classe a um tema só.
         bg: {
-          base:     '#0F172A',
-          surface:  '#1E293B',
-          elevated: '#334155',
-          input:    '#0a1020',
+          base:     'rgb(var(--bg-base-rgb) / <alpha-value>)',
+          surface:  'rgb(var(--bg-surface-rgb) / <alpha-value>)',
+          elevated: 'rgb(var(--bg-elevated-rgb) / <alpha-value>)',
+          input:    'var(--bg-input)',
         },
         text: {
-          primary:   '#F1F5F9',
-          secondary: '#94A3B8',
-          // #64748B dava 3.75:1 sobre o fundo base — abaixo do mínimo AA de
-          // 4.5 exigido pela Seção 7. #8593A8 dá 5.73 na base e 4.69 nos cards.
-          muted:     '#8593A8',
-          label:     '#94A3B8',
+          primary:   'rgb(var(--text-primary-rgb) / <alpha-value>)',
+          secondary: 'rgb(var(--text-secondary-rgb) / <alpha-value>)',
+          muted:     'rgb(var(--text-muted-rgb) / <alpha-value>)',
+          label:     'var(--text-label)',
         },
-        success: '#22C55E',
-        warning: '#F59E0B',
-        danger:  '#F43F5E',
-        info:    '#0EA5E9',
+        // Texto colorido que precisa trocar de tom entre os temas.
+        accent: {
+          DEFAULT: 'var(--accent)',
+          strong:  'var(--accent-strong)',
+          soft:    'var(--accent-soft)',
+        },
+        positive: 'var(--positive)',
+        caution:  'var(--caution)',
+        // Azul e coral usados como texto sobre a superfície do tema.
+        tint: {
+          sky:  'var(--tint-sky)',
+          rose: 'var(--tint-rose)',
+        },
+        // Trilho de barra e divisória: trocam de lado junto com o tema.
+        track:    'var(--track)',
+        hairline: 'rgb(var(--hairline-rgb) / <alpha-value>)',
+        success: 'var(--success)',
+        warning: 'var(--warning)',
+        danger:  'var(--danger)',
+        info:    'var(--info)',
       },
       fontFamily: {
         display: ['"Plus Jakarta Sans"', 'sans-serif'],

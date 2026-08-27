@@ -78,7 +78,7 @@ function MockupCard({ t }) {
         <div className="flex items-center gap-3">
           <Avatar name={m.name} size="md" />
           <div className="min-w-0">
-            <p className="font-semibold text-neutral-100">{m.name}</p>
+            <p className="font-semibold text-text-primary">{m.name}</p>
             <p className="text-xs text-text-muted">{m.followers}</p>
           </div>
           <Badge variant="organic" className="ml-auto shrink-0">{m.badge}</Badge>

@@ -1,6 +1,6 @@
 import { cn } from '../../lib/cn.js'
 
-const TRACK = 'overflow-hidden rounded-full bg-neutral-700/60'
+const TRACK = 'overflow-hidden rounded-full bg-bg-elevated/60'
 
 const VARIANTS = {
   primary: 'bg-gradient-brand',           // primary -> secondary
@@ -39,7 +39,7 @@ export default function ProgressBar({
         <div className="mb-1.5 flex items-center justify-between text-xs">
           {label ? <span className="text-label">{label}</span> : <span />}
           {showValue ? (
-            <span className={cn('font-semibold', medido ? 'text-neutral-200' : 'text-text-muted')}>
+            <span className={cn('font-semibold', medido ? 'text-text-primary' : 'text-text-muted')}>
               {medido ? `${Math.round(pct)}%` : '—'}
             </span>
           ) : null}

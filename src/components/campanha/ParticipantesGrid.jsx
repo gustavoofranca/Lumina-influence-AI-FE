@@ -40,22 +40,22 @@ function ParticipantCard({ participant, t }) {
     <Link
       to={`/app/influenciadores/${p.id}`}
       className={cn(
-        'group flex flex-col gap-4 rounded-2xl border border-neutral-700/60 bg-neutral-900/40 p-5',
+        'group flex flex-col gap-4 rounded-2xl border border-hairline/60 bg-bg-base/40 p-5',
         'transition-all duration-200',
-        'hover:-translate-y-0.5 hover:border-primary/30 hover:bg-neutral-800/60 hover:shadow-glow-soft'
+        'hover:-translate-y-0.5 hover:border-primary/30 hover:bg-bg-surface/60 hover:shadow-glow-soft'
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <Avatar name={p.name} size="md" />
           <div className="min-w-0">
-            <p className="truncate font-semibold text-neutral-100">{p.name}</p>
+            <p className="truncate font-semibold text-text-primary">{p.name}</p>
             <p className="truncate text-xs text-text-muted">{p.handle}</p>
           </div>
         </div>
         <ArrowUpRight
           size={14}
-          className="shrink-0 text-text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary-300"
+          className="shrink-0 text-text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
         />
       </div>
 
@@ -66,23 +66,23 @@ function ParticipantCard({ participant, t }) {
         </Badge>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 border-t border-neutral-800 pt-4">
+      <div className="grid grid-cols-3 gap-2 border-t border-hairline pt-4">
         <MiniKpi label="Score">
           <span className="text-gradient-brand">{p.resonanceScore ?? '—'}</span>
         </MiniKpi>
         <MiniKpi label="Eng.">
-          <span className="text-neutral-100">{formatPct(p.engagement)}</span>
+          <span className="text-text-primary">{formatPct(p.engagement)}</span>
         </MiniKpi>
         <MiniKpi label="Followers">
-          <span className="text-neutral-100">{formatFollowers(p.followers)}</span>
+          <span className="text-text-primary">{formatFollowers(p.followers)}</span>
         </MiniKpi>
       </div>
 
       <div className="flex items-center justify-between rounded-lg bg-primary-600/10 px-3 py-2 ring-1 ring-inset ring-primary-500/20">
-        <span className="text-[10px] font-semibold uppercase tracking-label text-primary-300">
+        <span className="text-[10px] font-semibold uppercase tracking-label text-accent">
           {p.posts} {t('campanhas.detail.participants.posts')}
         </span>
-        <span className="text-sm font-bold text-primary-200 tabular-nums">
+        <span className="text-sm font-bold text-accent-strong tabular-nums">
           {formatBudget(p.cost)}
         </span>
       </div>

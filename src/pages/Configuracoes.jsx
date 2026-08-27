@@ -39,7 +39,7 @@ export default function Configuracoes() {
     <div className="flex flex-col gap-6">
       {/* Header */}
       <header>
-        <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+        <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
           {t('configuracoes.title')}
         </h1>
         <p className="mt-1.5 text-sm text-text-secondary">{t('configuracoes.subtitle')}</p>
@@ -60,7 +60,7 @@ export default function Configuracoes() {
                     'ring-1 ring-inset whitespace-nowrap',
                     active
                       ? 'bg-primary-600 text-white shadow-glow-soft ring-primary-400'
-                      : 'bg-neutral-800/60 text-text-secondary ring-neutral-700 hover:bg-neutral-700 hover:text-neutral-100'
+                      : 'bg-bg-surface/60 text-text-secondary ring-hairline hover:bg-bg-elevated hover:text-text-primary'
                   )}
                 >
                   <Icon size={14} />
@@ -87,14 +87,14 @@ export default function Configuracoes() {
                     className={cn(
                       'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150',
                       active
-                        ? 'bg-primary-600/20 text-neutral-100'
-                        : 'text-text-secondary hover:bg-neutral-800 hover:text-neutral-100'
+                        ? 'bg-primary-600/20 text-text-primary'
+                        : 'text-text-secondary hover:bg-bg-surface hover:text-text-primary'
                     )}
                   >
                     {active && (
                       <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-primary-500 shadow-[0_0_8px_rgba(124,58,237,0.8)]" />
                     )}
-                    <Icon size={16} className={active ? 'text-primary-400' : 'text-neutral-500 group-hover:text-neutral-300'} />
+                    <Icon size={16} className={active ? 'text-accent-soft' : 'text-text-muted group-hover:text-text-secondary'} />
                     {t(`configuracoes.nav.${s.key}`)}
                   </Link>
                 </li>

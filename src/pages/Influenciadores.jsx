@@ -91,7 +91,7 @@ export default function Influenciadores() {
       {/* Header */}
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {t('influenciadores.title')}
           </h1>
           <p className="mt-1.5 text-sm text-text-secondary">{t('influenciadores.subtitle')}</p>

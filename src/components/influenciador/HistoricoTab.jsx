@@ -19,12 +19,12 @@ function ScoreBar({ value, label }) {
     <div className="flex flex-col items-end gap-1">
       <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">{label}</span>
       <div className="flex items-center gap-2">
-        <div className="h-1 w-20 overflow-hidden rounded-full bg-neutral-700/60">
+        <div className="h-1 w-20 overflow-hidden rounded-full bg-bg-elevated/60">
           {value == null ? null : (
             <div className="h-full rounded-full bg-gradient-brand" style={{ width: `${value}%` }} />
           )}
         </div>
-        <span className="font-display text-sm font-bold tabular-nums text-neutral-100">{value ?? '—'}</span>
+        <span className="font-display text-sm font-bold tabular-nums text-text-primary">{value ?? '—'}</span>
       </div>
     </div>
   )
@@ -75,21 +75,21 @@ export default function HistoricoTab({ data, loading = false }) {
               )}
             />
 
-            <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-neutral-700/60 bg-neutral-900/40 p-4 transition-colors hover:bg-neutral-800/40">
-              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-primary-300 ring-1 ring-inset ring-primary-500/20">
+            <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-hairline/60 bg-bg-base/40 p-4 transition-colors hover:bg-bg-surface/40">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20">
                 <FileSearch size={16} />
               </span>
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-semibold text-primary-300">#{item.id}</span>
+                  <span className="font-mono text-xs font-semibold text-accent">#{item.id}</span>
                   {i === 0 && (
-                    <span className="inline-flex items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-inset ring-emerald-500/30">
+                    <span className="inline-flex items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-positive ring-1 ring-inset ring-emerald-500/30">
                       Latest
                     </span>
                   )}
                 </div>
-                <div className="mt-0.5 text-sm font-medium text-neutral-200">
+                <div className="mt-0.5 text-sm font-medium text-text-primary">
                   {formatDate(item.data, i18n.language)} · {t('influenciador.history.scope')}: {item.escopo}
                 </div>
               </div>

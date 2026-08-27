@@ -21,9 +21,9 @@ export default function WizardStepper({ steps, currentStep }) {
               className={cn(
                 'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold',
                 'ring-1 ring-inset transition-all duration-200',
-                done   && 'bg-emerald-500/20 text-emerald-300 ring-emerald-500/40',
+                done   && 'bg-emerald-500/20 text-positive ring-emerald-500/40',
                 active && 'bg-primary-600 text-white ring-primary-400 shadow-glow-soft',
-                !done && !active && 'bg-neutral-800 text-text-muted ring-neutral-700'
+                !done && !active && 'bg-bg-surface text-text-muted ring-hairline'
               )}
             >
               {done ? <Check size={14} /> : num}
@@ -31,7 +31,7 @@ export default function WizardStepper({ steps, currentStep }) {
 
             <span className={cn(
               'min-w-0 truncate text-xs font-semibold uppercase tracking-label transition-colors',
-              active ? 'text-neutral-100' : done ? 'text-emerald-300' : 'text-text-muted'
+              active ? 'text-text-primary' : done ? 'text-positive' : 'text-text-muted'
             )}>
               {step.label}
             </span>
@@ -41,7 +41,7 @@ export default function WizardStepper({ steps, currentStep }) {
                 aria-hidden
                 className={cn(
                   'h-px flex-1 transition-colors duration-200',
-                  done ? 'bg-emerald-500/40' : 'bg-neutral-700'
+                  done ? 'bg-emerald-500/40' : 'bg-bg-elevated'
                 )}
               />
             )}

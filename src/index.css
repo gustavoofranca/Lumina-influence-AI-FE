@@ -83,6 +83,91 @@
   --warning: #F59E0B;
   --danger:  var(--tertiary);
   --info:    var(--secondary);
+
+  /* Os mesmos semânticos em canais RGB. O Tailwind precisa deste formato para
+     resolver bg-bg-surface/60 — com hex, a opacidade é silenciosamente
+     ignorada e o card perde a translucidez. */
+  --bg-base-rgb:      15 23 42;
+  --bg-surface-rgb:   30 41 59;
+  --bg-elevated-rgb:  51 65 85;
+  --text-primary-rgb:   241 245 249;
+  --text-secondary-rgb: 148 163 184;
+  --text-muted-rgb:     133 147 168;
+  --hairline-rgb:      124 58 237;
+
+  /* Texto colorido sobre a superfície do tema. No escuro são os tons claros;
+     no claro precisam escurecer, senão reprovam em contraste. */
+  --accent:        var(--primary-300);
+  --accent-strong: var(--primary-200);
+  --accent-soft:   var(--primary-400);
+  --positive:      #86EFAC;
+  --caution:       #FCD34D;
+  --tint-sky:      var(--secondary-300);
+  --tint-rose:     var(--tertiary-300);
+
+  /* Superfície de vidro e trilhos: no escuro, translúcido sobre o fundo. */
+  --glass-bg:      rgba(30, 41, 59, 0.60);
+  --track:         var(--neutral-700);
+  --scrollbar-track: var(--neutral-900);
+  --scrollbar-thumb: var(--neutral-700);
+  --shadow-card:   none;
+  --chart-grid:    rgba(148, 163, 184, 0.18);
+}
+
+/* ===========================================================
+   Tema claro
+   A regra que gera esta paleta: o fundo do tema escuro vira a tinta.
+   A marca (violeta, azul, gradiente) é a mesma nos dois — é o que
+   impede o claro de parecer outro produto.
+   =========================================================== */
+:root[data-theme="light"] {
+  --bg-base:     #F6F7FB;  /* branco levemente frio, puxado do slate da marca */
+  --bg-surface:  #FFFFFF;
+  --bg-elevated: #EEF1F8;
+  --bg-input:    #FFFFFF;
+
+  --text-primary:   var(--neutral-900);  /* o fundo do escuro, virado tinta */
+  --text-secondary: var(--neutral-600);  /* 8,3:1 sobre a base */
+  /* Não é o neutral-500: medido, ele dá 4,45:1 sobre a base e reprova em AA
+     por pouco. Este dá 5,06 na base e 5,41 no card — o espelho exato do que o
+     tema escuro já precisou fazer com o #8593A8. */
+  --text-muted:     #5D6B80;
+  --text-label:     #5D6B80;
+
+  --border-subtle:  var(--neutral-200);
+  --border-default: var(--neutral-300);
+
+  /* Glow de neon não existe sobre papel: vira luz difusa. */
+  --glow-primary: 0 8px 24px rgba(124, 58, 237, 0.18);
+  --glow-soft:    0 4px 16px rgba(124, 58, 237, 0.10);
+  --shadow-card:  0 1px 2px rgba(15, 23, 42, 0.04);
+
+  --bg-base-rgb:      246 247 251;
+  --bg-surface-rgb:   255 255 255;
+  --bg-elevated-rgb:  238 241 248;
+  --text-primary-rgb:   15 23 42;
+  --text-secondary-rgb: 71 85 105;
+  --text-muted-rgb:     93 107 128;
+  --hairline-rgb:      203 213 225;
+
+  --accent:        var(--primary-700);  /* 7,0:1 sobre a base */
+  --accent-strong: var(--primary-800);
+  --accent-soft:   var(--primary-600);  /* 5,4:1 */
+  --positive:      #15803D;
+  --caution:       #B45309;
+  --tint-sky:      var(--secondary-700);
+  --tint-rose:     var(--tertiary-700);
+
+  --glass-bg:      rgba(255, 255, 255, 0.72);
+  --track:         var(--neutral-200);
+  --scrollbar-track: var(--neutral-100);
+  --scrollbar-thumb: var(--neutral-300);
+  --chart-grid:    rgba(100, 116, 139, 0.18);
+
+  /* Verde e coral de hoje dão 2,3:1 e 3,3:1 sobre branco: reprovam em AA. */
+  --success: #16A34A;
+  --warning: #B45309;
+  --danger:  var(--tertiary-600);
 }
 
 /* ===========================================================
@@ -106,14 +191,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Modo escuro sempre — nunca invertemos */
 :root { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
 
-/* Scrollbar discreta no tema escuro */
+/* Scrollbar discreta, no tom do tema ativo */
 *::-webkit-scrollbar { width: 10px; height: 10px; }
-*::-webkit-scrollbar-track { background: var(--neutral-900); }
-*::-webkit-scrollbar-thumb { background: var(--neutral-700); border-radius: 8px; }
-*::-webkit-scrollbar-thumb:hover { background: var(--neutral-600); }
+*::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+*::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 8px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 /* ===========================================================
    Camada de utilitários do design system
@@ -168,15 +253,16 @@ body {
 
   /* Glow padrão de CTA primary */
   .shadow-glow-primary {
-    box-shadow: 0 0 24px rgba(124, 58, 237, 0.40);
+    box-shadow: var(--glow-primary);
   }
 
   /* Card glassmorphism padrão */
   .card-glass {
-    background-color: rgba(30, 41, 59, 0.60);
+    background-color: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(124, 58, 237, 0.10);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-card);
   }
 }
 

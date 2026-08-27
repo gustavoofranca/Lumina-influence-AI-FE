@@ -27,9 +27,9 @@ function CampaignDropdown({ options, value, onChange, label }) {
         onClick={() => setOpen((p) => !p)}
         className={cn(
           'inline-flex h-10 min-w-[220px] items-center justify-between gap-2 rounded-xl px-3.5',
-          'bg-bg-input ring-1 ring-inset ring-neutral-700',
-          'text-sm text-neutral-100 transition-all duration-150',
-          'hover:ring-neutral-600',
+          'bg-bg-input ring-1 ring-inset ring-hairline',
+          'text-sm text-text-primary transition-all duration-150',
+          'hover:ring-hairline',
           open && 'ring-2 ring-primary-500 shadow-glow-soft'
         )}
         aria-haspopup="listbox"
@@ -37,7 +37,7 @@ function CampaignDropdown({ options, value, onChange, label }) {
       >
         <span className="flex flex-col items-start min-w-0">
           <span className="text-[10px] font-semibold tracking-label text-text-muted">{label}</span>
-          <span className="truncate text-sm font-medium text-neutral-100">{selected?.name}</span>
+          <span className="truncate text-sm font-medium text-text-primary">{selected?.name}</span>
         </span>
         <ChevronDown
           size={14}
@@ -50,7 +50,7 @@ function CampaignDropdown({ options, value, onChange, label }) {
           role="listbox"
           className={cn(
             'absolute right-0 top-full z-30 mt-2 max-h-72 w-full min-w-[260px] overflow-y-auto p-1.5',
-            'animate-fade-in rounded-2xl border border-primary/15 bg-neutral-800 shadow-glow-soft'
+            'animate-fade-in rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft'
           )}
         >
           {options.map((opt) => {
@@ -63,12 +63,12 @@ function CampaignDropdown({ options, value, onChange, label }) {
                   className={cn(
                     'flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-sm transition-colors',
                     active
-                      ? 'bg-primary-600/15 text-primary-200'
-                      : 'text-text-secondary hover:bg-neutral-700 hover:text-neutral-100'
+                      ? 'bg-primary-600/15 text-accent-strong'
+                      : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
                   )}
                 >
                   <span className="truncate">{opt.name}</span>
-                  {active && <Check size={14} className="shrink-0 text-primary-300" />}
+                  {active && <Check size={14} className="shrink-0 text-accent" />}
                 </button>
               </li>
             )
@@ -96,7 +96,7 @@ export default function DashboardHeader({
       <div className="flex flex-col gap-3">
         <span className="text-label">{t('dashboard.label')}</span>
         <div className="flex items-center gap-3">
-          <h1 className="font-display text-3xl font-bold text-neutral-100 lg:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
             {t('dashboard.title')}
           </h1>
           <StatusIndicator label={t('dashboard.liveSync')} color="success" />

@@ -66,10 +66,10 @@ export default function Campanha() {
   if (!campanha) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
-        <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
+        <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
           <Megaphone size={22} />
         </span>
-        <h2 className="font-display text-xl font-bold text-neutral-100">
+        <h2 className="font-display text-xl font-bold text-text-primary">
           {t('campanhas.list.empty.title')}
         </h2>
         <Link to="/app/campanhas">

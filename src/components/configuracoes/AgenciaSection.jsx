@@ -67,7 +67,7 @@ export default function AgenciaSection({ onSave }) {
             <Sparkles size={22} />
           </span>
           <div className="min-w-0">
-            <p className="font-display text-lg font-bold text-neutral-100">{fields.name}</p>
+            <p className="font-display text-lg font-bold text-text-primary">{fields.name}</p>
             {agencia?.plan && (
               <p className="text-xs text-text-muted">{agencia.plan.name}</p>
             )}

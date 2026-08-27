@@ -64,7 +64,7 @@ function ClusterRow({ cluster, t }) {
       <span className="flex-1 text-sm text-text-secondary">
         {t(`influenciador.sentiment.clusters.${cluster.key}`)}
       </span>
-      <span className="font-display text-sm font-bold text-neutral-100 tabular-nums">
+      <span className="font-display text-sm font-bold text-text-primary tabular-nums">
         {cluster.value}%
       </span>
     </li>
@@ -73,9 +73,9 @@ function ClusterRow({ cluster, t }) {
 
 function KeywordPill({ word, weight, sentiment }) {
   const variant = {
-    positive: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/25',
-    neutral:  'bg-neutral-700/60 text-neutral-200 ring-neutral-600/40',
-    negative: 'bg-tertiary-500/15 text-tertiary-300 ring-tertiary-500/25',
+    positive: 'bg-emerald-500/15 text-positive ring-emerald-500/25',
+    neutral:  'bg-bg-elevated/60 text-text-primary ring-hairline/40',
+    negative: 'bg-tertiary-500/15 text-tint-rose ring-tertiary-500/25',
   }[sentiment]
 
   // Tamanho proporcional ao peso (0.4 - 0.95) -> classes

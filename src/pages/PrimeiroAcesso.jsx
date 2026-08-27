@@ -51,7 +51,7 @@ export default function PrimeiroAcesso() {
   return (
     <AuthLayout>
       <div className="w-full max-w-md">
-        <h1 className="font-display text-2xl font-bold text-neutral-100">
+        <h1 className="font-display text-2xl font-bold text-text-primary">
           {t('primeiroAcesso.title')}
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-text-secondary">
@@ -75,7 +75,7 @@ export default function PrimeiroAcesso() {
             <button
               type="button"
               onClick={seguir}
-              className="text-sm font-medium text-text-secondary transition-colors hover:text-neutral-200"
+              className="text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
             >
               {t('primeiroAcesso.skip')}
             </button>

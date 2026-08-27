@@ -69,7 +69,7 @@ export default function PerfilSection({ onSave }) {
         <div className="flex items-center gap-4">
           <Avatar name={name || user?.name || '?'} size="xl" />
           <div>
-            <p className="font-display text-lg font-bold text-neutral-100">
+            <p className="font-display text-lg font-bold text-text-primary">
               {user?.name}
             </p>
             {user?.role && (

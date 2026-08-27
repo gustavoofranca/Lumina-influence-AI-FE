@@ -42,7 +42,7 @@ export function YouTubeIcon({ size = 20, className = '' }) {
 
 export const PLATFORM_META = {
   instagram: { name: 'Instagram', Icon: InstagramIcon, color: 'text-pink-400' },
-  tiktok:    { name: 'TikTok',    Icon: TikTokIcon,    color: 'text-neutral-200' },
+  tiktok:    { name: 'TikTok',    Icon: TikTokIcon,    color: 'text-text-primary' },
   youtube:   { name: 'YouTube',   Icon: YouTubeIcon,   color: 'text-tertiary-400' },
 }
 
@@ -61,7 +61,7 @@ export function PlatformBadgeList({ platforms, size = 16, className = '' }) {
           <span
             key={p}
             title={name}
-            className={`inline-flex h-6 w-6 items-center justify-center rounded-md bg-neutral-800/80 ${color}`}
+            className={`inline-flex h-6 w-6 items-center justify-center rounded-md bg-bg-surface/80 ${color}`}
           >
             <Icon size={size - 2} />
           </span>
