@@ -7,6 +7,8 @@
     "goDashboard": "Abrir dashboard"
   },
   "common": {
+    "themeLight": "Mudar para o tema claro",
+    "themeDark": "Mudar para o tema escuro",
     "noRecords": "Nenhum registro",
     "a11y": {
       "loading": "Carregando",

@@ -6,8 +6,10 @@ import ComparativoSection   from '../components/landing/ComparativoSection.jsx'
 import PilaresSection       from '../components/landing/PilaresSection.jsx'
 import PlansSection         from '../components/landing/PlansSection.jsx'
 import FooterSection        from '../components/landing/FooterSection.jsx'
+import { useDarkOnly } from '../hooks/useDarkOnly.js'
 
 export default function LandingPage() {
+  useDarkOnly()
   useScrollReveal()
 
   return (

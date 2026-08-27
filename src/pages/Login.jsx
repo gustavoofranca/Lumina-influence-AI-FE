@@ -9,8 +9,10 @@ import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { googleLoginUrl } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
+import { useDarkOnly } from '../hooks/useDarkOnly.js'
 
 export default function Login() {
+  useDarkOnly()
   const { t } = useTranslation()
   const { devLogin } = useAuth()
   const navigate = useNavigate()
@@ -42,7 +44,7 @@ export default function Login() {
   return (
     <AuthLayout>
       <div className="mb-8 text-center">
-        <h1 className="font-display text-3xl font-bold text-neutral-100">
+        <h1 className="font-display text-3xl font-bold text-text-primary">
           {t('auth.login.title')}
         </h1>
         <p className="mt-2 text-sm text-text-secondary">{t('auth.login.subtitle')}</p>
@@ -71,7 +73,7 @@ export default function Login() {
         />
 
         {apiError && (
-          <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tertiary-300">
+          <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tint-rose">
             {apiError}
           </p>
         )}
@@ -103,7 +105,7 @@ export default function Login() {
 
       <p className={cn('mt-6 text-center text-sm text-text-secondary')}>
         {t('auth.login.noAccount')}{' '}
-        <Link to="/cadastro" className="font-semibold text-primary-300 hover:text-primary-200">
+        <Link to="/cadastro" className="font-semibold text-accent hover:text-accent-strong">
           {t('auth.login.createAccount')}
         </Link>
       </p>

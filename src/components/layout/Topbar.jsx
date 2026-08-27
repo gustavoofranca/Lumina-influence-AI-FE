@@ -9,6 +9,7 @@ import IconButton from '../ui/IconButton.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Button from '../ui/Button.jsx'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
+import ThemeSwitcher from '../ui/ThemeSwitcher.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 
 function AvatarDropdown({ user, onLogout }) {
@@ -44,9 +45,9 @@ function AvatarDropdown({ user, onLogout }) {
         onClick={() => setOpen((p) => !p)}
         className={cn(
           'flex items-center gap-2 rounded-2xl px-2 py-1.5',
-          'text-neutral-300 transition-all duration-150',
-          'hover:bg-neutral-800',
-          open && 'bg-neutral-800'
+          'text-text-secondary transition-all duration-150',
+          'hover:bg-bg-surface',
+          open && 'bg-bg-surface'
         )}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -64,11 +65,11 @@ function AvatarDropdown({ user, onLogout }) {
       {open && (
         <div className={cn(
           'absolute right-0 top-full mt-2 w-52 animate-fade-in',
-          'rounded-2xl border border-primary/15 bg-neutral-800 shadow-glow-soft'
+          'rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft'
         )}>
           {/* Info do usuário */}
-          <div className="border-b border-neutral-700/60 px-4 py-3">
-            <p className="text-sm font-semibold text-neutral-100 truncate">{user?.name}</p>
+          <div className="border-b border-hairline/60 px-4 py-3">
+            <p className="text-sm font-semibold text-text-primary truncate">{user?.name}</p>
             <p className="mt-0.5 text-xs text-text-muted truncate">{user?.email}</p>
           </div>
 
@@ -81,7 +82,7 @@ function AvatarDropdown({ user, onLogout }) {
                   <Link
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-neutral-700 hover:text-neutral-100"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-bg-elevated hover:text-text-primary"
                   >
                     <Icon size={15} />
                     {item.label}
@@ -94,7 +95,7 @@ function AvatarDropdown({ user, onLogout }) {
               <button
                 type="button"
                 onClick={() => { setOpen(false); onLogout() }}
-                className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-tertiary-300 transition-colors hover:bg-tertiary-500/10 hover:text-tertiary-200"
+                className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-tint-rose transition-colors hover:bg-tertiary-500/10 hover:text-tint-rose"
               >
                 <LogOut size={15} />
                 {t('app.topbar.logout')}
@@ -119,7 +120,7 @@ export default function Topbar({ onMenuClick }) {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-4 border-b border-primary/10 bg-neutral-900/90 px-4 backdrop-blur-md lg:px-6">
+    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-4 border-b border-primary/10 bg-bg-base/90 px-4 backdrop-blur-md lg:px-6">
       {/* Botão menu (mobile) */}
       <IconButton
         icon={Menu}
@@ -157,7 +158,9 @@ export default function Topbar({ onMenuClick }) {
 
         <LanguageSwitcher variant="icon" />
 
-        <div className="ml-1 h-5 w-px bg-neutral-700" aria-hidden />
+        <ThemeSwitcher />
+
+        <div className="ml-1 h-5 w-px bg-bg-elevated" aria-hidden />
 
         <AvatarDropdown user={user} onLogout={handleLogout} />
       </div>

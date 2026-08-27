@@ -25,7 +25,7 @@ export default function AuthLayout({ children }) {
       {/* Language switcher + logo no topo */}
       <div className="relative mb-8 flex w-full max-w-md items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <Sparkles size={15} className="text-primary-400" />
+          <Sparkles size={15} className="text-accent-soft" />
           <span className="font-display text-base font-bold text-gradient-brand">
             Lumina Influence AI
           </span>
@@ -35,7 +35,7 @@ export default function AuthLayout({ children }) {
 
       {/* Card central */}
       <div className="relative w-full max-w-md animate-fade-in">
-        <div className="rounded-2xl border border-primary/15 bg-neutral-800/70 p-8 shadow-glow-soft backdrop-blur-md">
+        <div className="rounded-2xl border border-primary/15 bg-bg-surface/70 p-8 shadow-glow-soft backdrop-blur-md">
           {children}
         </div>
       </div>
