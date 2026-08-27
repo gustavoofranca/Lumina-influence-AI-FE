@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { ArrowLeft, Megaphone } from 'lucide-react'
 
 import Button from '../components/ui/Button.jsx'
+import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import CampanhaHeader     from '../components/campanha/CampanhaHeader.jsx'
 import ParticipantesGrid  from '../components/campanha/ParticipantesGrid.jsx'
 import BenchmarkTable     from '../components/campanha/BenchmarkTable.jsx'
@@ -15,7 +16,8 @@ import { getCampaign, getCampaignBenchmarking, updateCampaign } from '../service
 export default function Campanha() {
   const { t } = useTranslation()
   const { id } = useParams()
-  const { data: campanha, loading, refetch: recarregarCampanha } =
+  const { data: campanha, loading, error: erroCarregamento,
+          refetch: recarregarCampanha } =
     useApi(() => getCampaign(id), [id])
   const { data: bench, loading: benchLoading, refetch: recarregarBench } =
     useApi(() => getCampaignBenchmarking(id), [id])
@@ -43,6 +45,20 @@ export default function Campanha() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+      </div>
+    )
+  }
+
+  // Mesma distinção da tela do criador: erro de carregamento não é 404.
+  if (erroCarregamento) {
+    return (
+      <div className="flex flex-col gap-4">
+        <ApiErrorBanner error={erroCarregamento} onRetry={recarregarCampanha} />
+        <Link to="/app/campanhas" className="self-start">
+          <Button variant="outlined" leftIcon={ArrowLeft}>
+            {t('campanhas.detail.back')}
+          </Button>
+        </Link>
       </div>
     )
   }

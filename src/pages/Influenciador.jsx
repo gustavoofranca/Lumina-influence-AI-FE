@@ -6,6 +6,7 @@ import { ArrowLeft, UserX } from 'lucide-react'
 import Tabs from '../components/ui/Tabs.jsx'
 import Button from '../components/ui/Button.jsx'
 import Toast from '../components/ui/Toast.jsx'
+import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { PLATFORM_META } from '../components/icons/PlatformIcons.jsx'
 import InfluenciadorHeader from '../components/influenciador/InfluenciadorHeader.jsx'
 import VisaoGeralTab        from '../components/influenciador/VisaoGeralTab.jsx'
@@ -36,7 +37,8 @@ export default function Influenciador() {
     setSearchParams(limpo, { replace: true })
   }, [recemConectada, searchParams, setSearchParams])
 
-  const { data: influenciador, loading, refetch: recarregarInfluenciador } =
+  const { data: influenciador, loading, error: erroCarregamento,
+          refetch: recarregarInfluenciador } =
     useApi(() => getInfluencer(id), [id])
   const { data: analysis, loading: loadingAnalysis, refetch: recarregarAnalise } =
     useApi(() => getInfluencerAnalysis(id), [id])
@@ -87,6 +89,21 @@ export default function Influenciador() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+      </div>
+    )
+  }
+
+  // Falha de carregamento não é ausência de recurso: dizer "não encontrado"
+  // num erro de rede manda o usuário procurar um problema que não existe.
+  if (erroCarregamento) {
+    return (
+      <div className="flex flex-col gap-4">
+        <ApiErrorBanner error={erroCarregamento} onRetry={recarregarInfluenciador} />
+        <Link to="/app/influenciadores" className="self-start">
+          <Button variant="outlined" leftIcon={ArrowLeft}>
+            {t('influenciador.notFound.back')}
+          </Button>
+        </Link>
       </div>
     )
   }

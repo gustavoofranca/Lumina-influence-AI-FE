@@ -69,7 +69,7 @@ export default function Relatorios() {
   const [search, setSearch] = useState('')
   const [toast, setToast] = useState(null)
 
-  const { data: reports, error } = useApi(listReports, [])
+  const { data: reports, error, refetch} = useApi(listReports, [])
   const all = reports || []
 
   const filtered = useMemo(() => {
@@ -105,7 +105,7 @@ export default function Relatorios() {
         </Link>
       </header>
 
-      <ApiErrorBanner error={error} />
+      <ApiErrorBanner error={error} onRetry={refetch} />
 
       <div className="max-w-lg">
         <Search
@@ -117,7 +117,7 @@ export default function Relatorios() {
 
       {/* Lista */}
       <Card glass padding="md">
-        {filtered.length === 0 ? (
+        {error ? null : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-800 text-text-muted">
               <FileSearch size={20} />

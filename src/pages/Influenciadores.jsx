@@ -109,7 +109,7 @@ export default function Influenciadores() {
         </div>
       </header>
 
-      <ApiErrorBanner error={error} />
+      <ApiErrorBanner error={error} onRetry={refetch} />
 
       {/* Filtros */}
       <InfluenciadoresFilters
@@ -126,13 +126,17 @@ export default function Influenciadores() {
       />
 
       {/* Tabela + paginação */}
-      <InfluenciadoresTable
-        data={filtered}
-        page={page}
-        pageSize={PAGE_SIZE}
-        onPageChange={setPage}
-        loading={loading}
-      />
+      {/* Com erro de carregamento a tabela não é renderizada: o estado vazio
+          dela diria "nenhum criador", afirmando ausência onde houve falha. */}
+      {error ? null : (
+        <InfluenciadoresTable
+          data={filtered}
+          page={page}
+          pageSize={PAGE_SIZE}
+          onPageChange={setPage}
+          loading={loading}
+        />
+      )}
 
       {/* Modal */}
       <AdicionarInfluenciadorModal

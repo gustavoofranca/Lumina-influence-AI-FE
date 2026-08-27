@@ -67,7 +67,7 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
           {t('configuracoes.equipe.inviteModal.subtitle')}
         </p>
 
-        <ApiErrorBanner error={error} />
+        <ApiErrorBanner error={error} onRetry={refetch} />
 
         <Input
           label={t('configuracoes.equipe.inviteModal.name')}

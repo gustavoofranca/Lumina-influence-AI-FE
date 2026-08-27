@@ -50,7 +50,7 @@ export default function Diagnostico() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
 
-  const { data, loading, error } = useApi(() => listInfluencers({ enriched: true }), [])
+  const { data, loading, error, refetch} = useApi(() => listInfluencers({ enriched: true }), [])
 
   const linhas = useMemo(
     () => [...(data || [])].sort(ordenarPorAnaliseRecente),
@@ -164,7 +164,7 @@ export default function Diagnostico() {
         )}
       </header>
 
-      {error && <ApiErrorBanner error={error} />}
+      {error && <ApiErrorBanner error={error} onRetry={refetch} />}
 
       {loading ? (
         <div className="flex flex-col gap-2">
@@ -172,7 +172,7 @@ export default function Diagnostico() {
             <Skeleton key={i} className="h-14" rounded="rounded-xl" />
           ))}
         </div>
-      ) : (
+      ) : error ? null : (
         <Table
           columns={colunas}
           data={linhas}

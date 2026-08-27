@@ -98,7 +98,7 @@ function PlataformaCard({ platform, dados, t, locale }) {
 
 export default function IntegracoesSection() {
   const { t, i18n } = useTranslation()
-  const { data: conexoes, loading, error } = useApi(listPlatformConnections, [])
+  const { data: conexoes, loading, error, refetch} = useApi(listPlatformConnections, [])
 
   const porPlataforma = new Map((conexoes || []).map((c) => [c.platform, c]))
 
@@ -112,7 +112,7 @@ export default function IntegracoesSection() {
         </p>
       </div>
 
-      <ApiErrorBanner error={error} />
+      <ApiErrorBanner error={error} onRetry={refetch} />
 
       {loading ? (
         <div className="grid gap-4 lg:grid-cols-3">

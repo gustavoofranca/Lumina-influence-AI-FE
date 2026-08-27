@@ -52,7 +52,8 @@ function UsageRow({ label, used, limit }) {
 
 export default function PlanoSection() {
   const { t, i18n } = useTranslation()
-  const { data: agencia, loading: agencyLoading, error: agencyError } = useApi(getAgency, [])
+  const { data: agencia, loading: agencyLoading, error: agencyError,
+          refetch: recarregarAgencia } = useApi(getAgency, [])
   const { data: usage, loading: usageLoading, error: usageError } = useApi(
     () => getAgencyUsage(agencia.id),
     [agencia?.id],
@@ -65,7 +66,7 @@ export default function PlanoSection() {
 
   return (
     <div className="flex flex-col gap-6">
-      <ApiErrorBanner error={agencyError || usageError} />
+      <ApiErrorBanner error={agencyError || usageError} onRetry={recarregarAgencia} />
 
       <Card glass className={cn(
         'relative overflow-hidden border-2 border-primary-500/50',

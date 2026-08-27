@@ -17,7 +17,7 @@ export default function Dashboard() {
   const [period, setPeriod]     = useState('30d')
   const [campaign, setCampaign] = useState('all')
 
-  const { data: overview, loading, error } = useApi(
+  const { data: overview, loading, error, refetch} = useApi(
     () => getOverview({ period, campaignId: campaign }), [period, campaign])
   const { data: density, loading: loadingDensity } = useApi(getNetworkDensity, [])
   const { data: campaignOpts } = useApi(getCampaignOptions, [])
@@ -35,7 +35,7 @@ export default function Dashboard() {
         campaigns={campaignOptions}
       />
 
-      <ApiErrorBanner error={error} />
+      <ApiErrorBanner error={error} onRetry={refetch} />
 
       <KpiGrid data={overview?.kpis} loading={loading} />
 

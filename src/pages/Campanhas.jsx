@@ -19,7 +19,7 @@ export default function Campanhas() {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
-  const { data: campaigns, error } = useApi(listCampaigns, [])
+  const { data: campaigns, error, refetch} = useApi(listCampaigns, [])
   const all = campaigns || []
 
   const filtered = useMemo(() => {
@@ -58,7 +58,7 @@ export default function Campanhas() {
         </Link>
       </header>
 
-      <ApiErrorBanner error={error} />
+      <ApiErrorBanner error={error} onRetry={refetch} />
 
       {/* Filtros */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -73,7 +73,7 @@ export default function Campanhas() {
       </div>
 
       {/* Lista */}
-      {filtered.length === 0 ? (
+      {error ? null : filtered.length === 0 ? (
         <div className={cn(
           'flex flex-col items-center justify-center gap-3 py-16 text-center',
           'rounded-2xl border border-neutral-700/60 bg-neutral-800/40'

@@ -60,7 +60,7 @@ export default function AgenciaSection({ onSave }) {
           </p>
         </div>
 
-        <ApiErrorBanner error={error || saveError} />
+        <ApiErrorBanner error={error || saveError} onRetry={refetch} />
 
         <div className="flex items-center gap-4 rounded-2xl border border-primary/15 bg-primary-600/5 p-4">
           <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-soft">
