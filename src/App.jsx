@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
 import { AuthProvider }  from './context/AuthContext.jsx'
@@ -34,11 +35,12 @@ const NotFound         = lazy(() => import('./pages/NotFound.jsx'))
 
 /** Exibido enquanto o chunk da rota carrega. */
 function RouteFallback() {
+  const { t } = useTranslation()
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
       <div
         role="status"
-        aria-label="Carregando"
+        aria-label={t('common.a11y.loading')}
         className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent"
       />
     </div>

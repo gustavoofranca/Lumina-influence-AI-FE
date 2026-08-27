@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react'
 
@@ -26,6 +27,7 @@ export default function Toast({
   type = 'info',
   autoHideMs = 3500,
 }) {
+  const { t } = useTranslation()
   useEffect(() => {
     if (!open || !autoHideMs) return
     const timer = setTimeout(() => onClose?.(), autoHideMs)
@@ -56,7 +58,7 @@ export default function Toast({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Fechar"
+          aria-label={t('common.a11y.close')}
           className="shrink-0 rounded-md p-1 text-text-muted transition-colors hover:bg-neutral-700 hover:text-neutral-100"
         >
           <X size={14} />

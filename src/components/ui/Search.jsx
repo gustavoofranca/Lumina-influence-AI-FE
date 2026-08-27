@@ -1,4 +1,5 @@
 import { forwardRef, useId } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Search as SearchIcon, X } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
@@ -26,6 +27,7 @@ const Search = forwardRef(function Search(
   ref
 ) {
   const reactId = useId()
+  const { t } = useTranslation()
   const id = idProp || reactId
 
   const handleKeyDown = (e) => {
@@ -65,6 +67,7 @@ const Search = forwardRef(function Search(
           ref={ref}
           id={id}
           type="search"
+          aria-label={label ? undefined : placeholder}
           value={value}
           onChange={onChange}
           onKeyDown={handleKeyDown}
@@ -81,7 +84,7 @@ const Search = forwardRef(function Search(
           <button
             type="button"
             onClick={handleClear}
-            aria-label="Limpar"
+            aria-label={t('common.a11y.clear')}
             className="shrink-0 rounded-md p-1 text-text-muted transition-colors hover:bg-neutral-800 hover:text-neutral-100"
           >
             <X size={14} />

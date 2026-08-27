@@ -7,6 +7,14 @@
     "goDashboard": "Abrir dashboard"
   },
   "common": {
+    "noRecords": "Nenhum registro",
+    "a11y": {
+      "loading": "Carregando",
+      "close": "Fechar",
+      "closeMenu": "Fechar menu",
+      "openMenu": "Abrir menu",
+      "clear": "Limpar"
+    },
     "login": "Entrar",
     "logout": "Sair",
     "signup": "Cadastrar",

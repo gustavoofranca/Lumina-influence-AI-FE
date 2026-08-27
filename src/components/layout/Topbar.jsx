@@ -123,7 +123,7 @@ export default function Topbar({ onMenuClick }) {
       {/* Botão menu (mobile) */}
       <IconButton
         icon={Menu}
-        label="Abrir menu"
+        label={t('common.a11y.openMenu')}
         variant="ghost"
         size="md"
         onClick={onMenuClick}

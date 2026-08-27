@@ -67,7 +67,9 @@
 
   --text-primary:   var(--neutral-100);
   --text-secondary: var(--neutral-400);
-  --text-muted:     var(--neutral-500);
+  /* Não é o neutral-500: aquele continua servindo de fundo e borda. Este é
+     o mínimo que atinge contraste AA sobre a base e sobre os cards. */
+  --text-muted:     #8593A8;
   --text-label:     var(--neutral-400);
 
   --border-subtle:  rgba(124, 58, 237, 0.10);

@@ -67,7 +67,7 @@ export default function Sidebar({ open, onClose }) {
       {open && (
         <button
           type="button"
-          aria-label="Fechar menu"
+          aria-label={t('common.a11y.closeMenu')}
           onClick={onClose}
           className="fixed inset-0 z-30 bg-neutral-950/60 backdrop-blur-sm lg:hidden"
         />
@@ -103,7 +103,7 @@ export default function Sidebar({ open, onClose }) {
               type="button"
               onClick={onClose}
               className="rounded-lg p-1 text-text-muted hover:bg-neutral-800 hover:text-neutral-100 lg:hidden"
-              aria-label="Fechar menu"
+              aria-label={t('common.a11y.closeMenu')}
             >
               <X size={16} />
             </button>

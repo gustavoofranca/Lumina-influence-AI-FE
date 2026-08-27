@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
@@ -27,6 +28,7 @@ export default function Modal({
   closeOnOverlayClick = true,
   showCloseButton = true,
 }) {
+  const { t } = useTranslation()
   // Trava scroll do body
   useEffect(() => {
     if (!open) return
@@ -59,7 +61,7 @@ export default function Modal({
       {/* Overlay */}
       <button
         type="button"
-        aria-label="Fechar"
+        aria-label={t('common.a11y.close')}
         onClick={() => closeOnOverlayClick && onClose?.()}
         className="absolute inset-0 bg-neutral-950/70 backdrop-blur-sm"
         tabIndex={-1}

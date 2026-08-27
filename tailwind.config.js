@@ -66,7 +66,9 @@ export default {
         text: {
           primary:   '#F1F5F9',
           secondary: '#94A3B8',
-          muted:     '#64748B',
+          // #64748B dava 3.75:1 sobre o fundo base — abaixo do mínimo AA de
+          // 4.5 exigido pela Seção 7. #8593A8 dá 5.73 na base e 4.69 nos cards.
+          muted:     '#8593A8',
           label:     '#94A3B8',
         },
         success: '#22C55E',

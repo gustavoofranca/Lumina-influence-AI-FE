@@ -1,4 +1,5 @@
 import { cn } from '../../lib/cn.js'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Table — tabela leve para listagens internas.
@@ -25,6 +26,7 @@ export default function Table({
   className = '',
   dense = false,
 }) {
+  const { t } = useTranslation()
   const empty = data.length === 0
 
   return (
@@ -55,7 +57,7 @@ export default function Table({
             {empty ? (
               <tr>
                 <td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-text-muted">
-                  {emptyState || '— sem registros —'}
+                  {emptyState || t('common.noRecords')}
                 </td>
               </tr>
             ) : (
@@ -66,9 +68,24 @@ export default function Table({
                   <tr
                     key={key}
                     onClick={clickable ? () => onRowClick(row, i) : undefined}
+                    // Linha clicável precisa de foco e de Enter/Espaço: só
+                    // onClick a deixa acessível apenas por mouse.
+                    tabIndex={clickable ? 0 : undefined}
+                    role={clickable ? 'button' : undefined}
+                    onKeyDown={
+                      clickable
+                        ? (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              onRowClick(row, i)
+                            }
+                          }
+                        : undefined
+                    }
                     className={cn(
                       'border-b border-neutral-800/80 last:border-0 transition-colors',
-                      clickable && 'cursor-pointer hover:bg-neutral-700/40'
+                      clickable &&
+                        'cursor-pointer hover:bg-neutral-700/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500'
                     )}
                   >
                     {columns.map((col) => (
