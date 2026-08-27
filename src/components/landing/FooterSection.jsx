@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { Sparkles } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
+import LuminaWordmark from '../ui/LuminaWordmark.jsx'
 
 const PRODUCT_KEYS = ['solutions', 'pricing', 'cases', 'api']
 const COMPANY_KEYS = ['about', 'blog', 'careers', 'legal']
@@ -37,12 +37,7 @@ export default function FooterSection() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-3">
           <div>
-            <div className="flex items-center gap-2">
-              <Sparkles size={16} className="text-primary-400" />
-              <span className="font-display text-lg font-bold text-gradient-brand">
-                Lumina Influence AI
-              </span>
-            </div>
+            <LuminaWordmark markClassName="w-9" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-text-secondary">
               {t('landing.footer.tagline')}
             </p>

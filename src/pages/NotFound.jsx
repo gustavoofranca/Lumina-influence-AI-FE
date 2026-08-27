@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Home, LayoutDashboard, Sparkles } from 'lucide-react'
+import { Home, LayoutDashboard } from 'lucide-react'
 
 import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
 import StatusIndicator from '../components/ui/StatusIndicator.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
+import LuminaMark from '../components/ui/LuminaMark.jsx'
 
 export default function NotFound() {
   const { t } = useTranslation()
@@ -84,7 +85,7 @@ export default function NotFound() {
         </div>
 
         <div className="mt-4 flex items-center gap-2 text-xs text-text-muted">
-          <Sparkles size={12} className="text-accent-soft" />
+          <LuminaMark as="icon" className="w-4 shrink-0 rounded" />
           <span>Lumina Influence AI · {t('app.tagline')}</span>
         </div>
       </div>
