@@ -570,8 +570,7 @@
       "sessionId":        "Session ID",
       "lastAnalysis":     "Last analysis on",
       "quotaExceeded": "Gemini daily quota exhausted. The free tier allows 20 analyses per day, per project and per model — waiting will not help, only the next day.",
-      "rerun":            "Re-run Diagnosis",
-      "share":            "Share Report"
+      "rerun":            "Re-run Diagnosis"
     },
     "tabs": {
       "overview":  "Overview",
@@ -811,7 +810,6 @@
     "networkDensity": {
       "label":    "NETWORK DENSITY",
       "subtitle": "{{connected}} of {{total}} creators connected",
-      "expand":   "Expand Node Map",
       "empty":    "Density unavailable — connect a social account."
     }
   },
