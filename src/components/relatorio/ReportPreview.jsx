@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
+import LuminaMark from '../ui/LuminaMark.jsx'
 
 /**
  * Pré-visualização do relatório.
