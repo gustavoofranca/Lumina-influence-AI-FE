@@ -658,7 +658,7 @@
       }
     },
     "overview": {
-      "growthEmpty": "Série de crescimento por criador ainda não disponível na API.",
+      "growthEmpty": "Sem posts no período para montar a série de crescimento.",
       "title": "Visão Geral",
       "subtitle": "Métricas principais e tendências do criador.",
       "metrics": {

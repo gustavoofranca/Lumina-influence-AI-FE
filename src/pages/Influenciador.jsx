@@ -147,6 +147,7 @@ export default function Influenciador() {
         {tab === 'overview'  && (
           <VisaoGeralTab
             influenciador={influenciador}
+            growth={analysis?.growth_trajectory}
             onContasChange={recarregarInfluenciador}
           />
         )}
