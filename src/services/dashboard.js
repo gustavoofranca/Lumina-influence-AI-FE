@@ -31,7 +31,13 @@ function adaptFeatured(f) {
     analysisId: (f.analysis_id || '').slice(0, 8),
     transcript: f.transcript || '—',
     brandCoherence: Math.round(f.brand_coherence || 0),
-    pills: (f.pills || []).map((p) => ({ key: PILL_KEY_MAP[p.key] || p.key, variant: p.variant })),
+    // O valor vem do back-end: o rótulo traz um {{valor}} e não um número
+    // escrito à mão, que seria o mesmo para todos os criadores.
+    pills: (f.pills || []).map((p) => ({
+      key: PILL_KEY_MAP[p.key] || p.key,
+      variant: p.variant,
+      valuePct: p.value_pct ?? null,
+    })),
   }
 }
 

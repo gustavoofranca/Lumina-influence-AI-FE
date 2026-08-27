@@ -783,9 +783,9 @@
       "analysisId":      "Analysis ID",
       "transcriptLabel": "AI TRANSCRIPTION",
       "pills": {
-        "retention": "High Retention",
-        "sentiment": "85% Positive Sentiment",
-        "botAlert":  "AI Alert: Bot detection"
+        "retention": "{{valor}} retention",
+        "sentiment": "{{valor}} positive sentiment",
+        "botAlert":  "Bot alert: {{valor}}"
       },
       "coherenceLabel": "BRAND COHERENCE SCORE",
       "viewAnalysis":   "View full analysis",

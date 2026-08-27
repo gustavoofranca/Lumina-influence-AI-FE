@@ -99,7 +99,9 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
       <div className="flex flex-wrap gap-2">
         {data.pills.map((pill) => (
           <Badge key={pill.key} variant={pill.variant} size="sm" uppercase={false}>
-            {t(`dashboard.diagnostic.pills.${pill.key}`)}
+            {t(`dashboard.diagnostic.pills.${pill.key}`, {
+              valor: pill.valuePct == null ? '—' : `${pill.valuePct}%`,
+            })}
           </Badge>
         ))}
       </div>
