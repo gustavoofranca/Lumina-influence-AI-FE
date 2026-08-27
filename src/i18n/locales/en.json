@@ -634,6 +634,7 @@
       "disconnect": "Disconnect",
       "notLinked": "No account linked",
       "unavailable": "Integration not configured in this environment",
+      "notCollecting": "linked, not collecting",
       "lastSync": "synced {{data}}",
       "connected": "{{plataforma}} connected successfully."
     },

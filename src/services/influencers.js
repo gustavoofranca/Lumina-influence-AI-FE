@@ -28,6 +28,9 @@ export function adaptInfluencer(i) {
       handle: sa.handle,
       followers: sa.follower_count ?? 0,
       lastSync: sa.last_synced_at || null,
+      // A conta sobrevive à desconexão para preservar os posts: existir não é
+      // estar conectada, e só o back-end sabe se ainda há token.
+      connected: sa.connected === true,
     })),
     followers: i.total_followers || 0,
     status: STATUS_MAP[i.status] || 'active',

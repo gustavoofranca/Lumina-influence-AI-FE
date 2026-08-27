@@ -110,6 +110,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                     <>
                       @{conta.handle} · {formatFollowers(conta.followers)}
                       {sync ? ` · ${t('influenciador.conexoes.lastSync', { data: sync })}` : ''}
+                      {conta.connected ? '' : ` · ${t('influenciador.conexoes.notCollecting')}`}
                     </>
                   ) : indisponivel ? (
                     t('influenciador.conexoes.unavailable')
@@ -119,7 +120,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                 </span>
               </div>
 
-              {conta ? (
+              {conta?.connected ? (
                 <div className="flex shrink-0 items-center gap-2">
                   <Button
                     variant="outlined"
