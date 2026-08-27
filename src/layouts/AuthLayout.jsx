@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Sparkles } from 'lucide-react'
 
 import LanguageSwitcher from '../components/ui/LanguageSwitcher.jsx'
 import StatusIndicator from '../components/ui/StatusIndicator.jsx'
 import { useTranslation } from 'react-i18next'
+import LuminaWordmark from '../components/ui/LuminaWordmark.jsx'
 
 export default function AuthLayout({ children }) {
   const { t } = useTranslation()
@@ -24,11 +24,8 @@ export default function AuthLayout({ children }) {
 
       {/* Language switcher + logo no topo */}
       <div className="relative mb-8 flex w-full max-w-md items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <Sparkles size={15} className="text-accent-soft" />
-          <span className="font-display text-base font-bold text-gradient-brand">
-            Lumina Influence AI
-          </span>
+        <Link to="/" aria-label="Lumina Influence AI">
+          <LuminaWordmark compact markClassName="w-9" />
         </Link>
         <LanguageSwitcher />
       </div>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 424 256" role="img" aria-label="Lumina">
+  <!-- Símbolo Lumina: a íris aberta e os cinco sinais que saem dela.
+       Vetorizado da arte original, com os ângulos regularizados para
+       -22°, -11°, 0°, +11° e +22°. O branco fica restrito ao ponto de
+       origem: é ele que precisa ler como fonte de luz, não o anel. -->
+  <defs>
+    <linearGradient id="ls-arco-topo" x1="84" y1="128" x2="276" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.02" stop-color="#DDD6FE"/>
+      <stop offset="0.16" stop-color="#8B5CF6"/>
+      <stop offset="0.58" stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#2E1065"/>
+    </linearGradient>
+    <linearGradient id="ls-arco-base" x1="84" y1="128" x2="276" y2="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.02" stop-color="#DDD6FE"/>
+      <stop offset="0.18" stop-color="#8B5CF6"/>
+      <stop offset="0.66" stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#F43F5E"/>
+    </linearGradient>
+    <linearGradient id="ls-feixe" x1="84" y1="128" x2="402" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.55" stop-color="#67E8F9"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="ls-flare" x1="10" y1="128" x2="84" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.85"/>
+    </linearGradient>
+    <radialGradient id="ls-brilho" cx="84" cy="128" r="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.40" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- A íris, aberta à direita: é por essa fenda que os sinais saem -->
+  <path d="M84 128 A96 96 0 0 1 274.54 111.33" fill="none" stroke="url(#ls-arco-topo)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M84 128 A96 96 0 0 0 274.54 144.67" fill="none" stroke="url(#ls-arco-base)" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Rastro à esquerda: o sinal que entra -->
+  <path d="M10 128 H84" stroke="url(#ls-flare)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Os cinco sinais que saem, do mais frio ao mais quente -->
+  <g stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M84 128 H402" stroke="url(#ls-feixe)"/>
+    <path d="M281.99 86.79 L348.75 59.82" stroke="#8B5CF6"/>
+    <path d="M287.98 107.01 L358.66 93.27" stroke="#D946EF"/>
+    <path d="M287.98 148.99 L358.66 162.73" stroke="#FB7185"/>
+    <path d="M281.99 169.21 L348.75 196.18" stroke="#F43F5E"/>
+  </g>
+  <g>
+    <circle cx="276" cy="128" r="8" fill="#22D3EE"/>
+    <circle cx="348.75" cy="59.82" r="8" fill="#8B5CF6"/>
+    <circle cx="358.66" cy="93.27" r="8" fill="#D946EF"/>
+    <circle cx="402" cy="128" r="8" fill="#22D3EE"/>
+    <circle cx="358.66" cy="162.73" r="8" fill="#FB7185"/>
+    <circle cx="348.75" cy="196.18" r="8" fill="#F43F5E"/>
+  </g>
+
+  <!-- Ponto de origem: onde o sinal vira leitura -->
+  <circle cx="84" cy="128" r="22" fill="url(#ls-brilho)"/>
+  <circle cx="84" cy="128" r="10" fill="#FFFFFF"/>
+</svg>

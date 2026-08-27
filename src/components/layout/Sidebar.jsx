@@ -8,13 +8,13 @@ import {
   FileText,
   Settings,
   Plus,
-  Sparkles,
   X,
 } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Button from '../ui/Button.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
+import LuminaWordmark from '../ui/LuminaWordmark.jsx'
 
 const NAV_ITEMS = [
   { key: 'dashboard',       icon: LayoutDashboard, path: '/app/dashboard' },
@@ -84,16 +84,13 @@ export default function Sidebar({ open, onClose }) {
         )}
       >
         {/* Header da sidebar */}
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-primary/10 px-5">
-          <div className="flex items-center gap-2">
-            <Sparkles size={15} className="text-accent-soft" />
-            <span className="font-display text-base font-bold text-gradient-brand">Lumina</span>
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-primary/10 px-5">
+          <LuminaWordmark compact showTagline={false} markClassName="w-7" className="shrink-0" />
+          <div className="flex min-w-0 items-center gap-2">
             {/* Era "ENTERPRISE V2.4", versão inventada. O nome da agência é
                 real, já vem no contexto e diz em qual conta você está. */}
             <span
-              className="max-w-[9rem] truncate text-[10px] font-semibold uppercase tracking-label text-text-muted"
+              className="truncate text-[10px] font-semibold uppercase tracking-label text-text-muted"
               title={agency?.name || ''}
             >
               {agency?.name || ''}
