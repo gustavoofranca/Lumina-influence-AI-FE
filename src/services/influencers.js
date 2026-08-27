@@ -12,7 +12,14 @@ export function adaptInfluencerStatus(status) {
 
 export function adaptInfluencer(i) {
   const m = i.metrics || {}
-  const handle = i.social_accounts?.[0]?.handle
+  // A conta de maior audiência responde pelo criador. Pegar a primeira da lista
+  // fazia o @ do cabeçalho mudar de acordo com a ordem em que o banco devolveu
+  // as contas: reconectar o YouTube trocou "@anapsouza" por "@G".
+  const principal = (i.social_accounts || []).reduce(
+    (maior, sa) => ((sa.follower_count ?? 0) > (maior?.follower_count ?? -1) ? sa : maior),
+    null
+  )
+  const handle = principal?.handle
   return {
     id: i.id,
     name: i.display_name,
