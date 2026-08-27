@@ -695,8 +695,7 @@
       "empty": "Nenhuma análise no histórico deste criador.",
       "title":    "Histórico de Análises",
       "subtitle": "Linha do tempo de auditorias deste criador.",
-      "scope":    "Escopo",
-      "viewReport": "Ver relatório"
+      "scope":    "Escopo"
     },
     "notFound": {
       "title":    "Influenciador não encontrado",

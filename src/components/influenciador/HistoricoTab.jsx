@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { FileSearch, ChevronRight } from 'lucide-react'
+import { FileSearch } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
@@ -98,14 +98,6 @@ export default function HistoricoTab({ data, loading = false }) {
                 <ScoreBar label={t('influenciador.kpis.brandCoherence')} value={item.brandCoherence} />
                 <ScoreBar label={t('influenciador.kpis.sentimentIndex')} value={item.sentimentScore} />
               </div>
-
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-semibold text-text-secondary transition-colors hover:bg-neutral-800 hover:text-neutral-100"
-              >
-                {t('influenciador.history.viewReport')}
-                <ChevronRight size={13} />
-              </button>
             </div>
           </li>
         ))}

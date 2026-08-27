@@ -695,8 +695,7 @@
       "empty": "No analyses in the history for this creator.",
       "title":    "Analysis History",
       "subtitle": "Timeline of audits for this creator.",
-      "scope":    "Scope",
-      "viewReport": "View report"
+      "scope":    "Scope"
     },
     "notFound": {
       "title":    "Influencer not found",
