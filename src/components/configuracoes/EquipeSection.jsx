@@ -67,7 +67,10 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
           {t('configuracoes.equipe.inviteModal.subtitle')}
         </p>
 
-        <ApiErrorBanner error={error} onRetry={refetch} />
+        {/* Sem `onRetry`: aqui o erro é do envio do convite, e refazer a ação é
+            submeter o formulário de novo — recarregar a lista não ajudaria.
+            `refetch` nem existe neste escopo; vive no componente da seção. */}
+        <ApiErrorBanner error={error} />
 
         <Input
           label={t('configuracoes.equipe.inviteModal.name')}
