@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Check } from 'lucide-react'
 
-import Button from '../ui/Button.jsx'
-import Badge from '../ui/Badge.jsx'
+import { cn } from '../../lib/cn.js'
+import checkAgencia from '../../assets/landing/check-agency.svg'
+import checkEnterprise from '../../assets/landing/check-enterprise.svg'
 
-function FeatureItem({ text }) {
+function Features({ itens, icone, tom }) {
   return (
-    <li className="flex items-center gap-2.5 text-sm text-text-secondary">
-      <Check size={14} className="shrink-0 text-primary-400" />
-      {text}
-    </li>
+    <ul className="flex flex-col gap-4">
+      {itens.map((texto) => (
+        <li key={texto} className={cn('flex items-center gap-3 text-sm leading-5', tom)}>
+          <img src={icone} alt="" aria-hidden className="size-[15px] shrink-0" />
+          {texto}
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -20,53 +24,84 @@ export default function PlansSection() {
   const enterprise = t('landing.plans.enterprise', { returnObjects: true })
 
   return (
-    <section id="plans" className="px-6 py-24">
-      <div className="mx-auto max-w-7xl">
-        <div data-reveal className="mb-12 flex flex-col items-center gap-3 text-center">
-          <span className="text-label">{t('landing.plans.label')}</span>
-          <h2 className="font-display text-4xl font-bold text-text-primary lg:text-5xl">
+    <section id="plans" className="mx-auto w-full max-w-[1280px] px-8 py-24">
+      <div className="flex flex-col items-center gap-16">
+        <div data-reveal className="flex flex-col items-center gap-4 text-center">
+          <h2 className="font-display text-3xl font-extrabold leading-10 text-landing-text lg:text-4xl">
             {t('landing.plans.title')}
           </h2>
+          <p className="max-w-[576px] text-base leading-6 text-landing-muted">
+            {t('landing.plans.subtitle')}
+          </p>
         </div>
 
-        <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
-          {/* Agência — destacado */}
+        <div className="grid w-full max-w-[896px] gap-8 lg:grid-cols-2">
+          {/* Agência — moldura em gradiente, como no design */}
           <div
             data-reveal
-            style={{ '--delay': '100ms' }}
-            className="relative rounded-2xl border-2 border-primary-500/70 bg-bg-surface/70 p-8 shadow-glow-primary"
+            style={{ '--delay': '100ms', backgroundImage: 'linear-gradient(134deg, #BD9DFF 0%, #34B5FA 100%)' }}
+            className="rounded-3xl p-1 drop-shadow-[0_0_20px_rgba(189,157,255,0.2)]"
           >
-            <div className="absolute -top-3 left-8">
-              <Badge variant="organic">{agency.badge}</Badge>
+            <div className="flex h-full flex-col rounded-[22.4px] bg-landing-card p-10">
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="font-display text-2xl font-bold leading-8 text-landing-text">
+                  {agency.name}
+                </h3>
+                <span className={cn(
+                  'shrink-0 rounded-full bg-landing-violet/20 px-3 py-1',
+                  'text-[10px] font-semibold uppercase leading-[15px] tracking-[1px] text-landing-violet'
+                )}>
+                  {agency.badge}
+                </span>
+              </div>
+
+              <p className="mt-4 flex items-baseline gap-1">
+                <span className="text-4xl font-semibold leading-10 text-landing-text">{agency.price}</span>
+                <span className="text-base leading-6 text-landing-muted">{agency.period}</span>
+              </p>
+
+              <div className="mt-8">
+                <Features itens={agency.features} icone={checkAgencia} tom="text-landing-text" />
+              </div>
+
+              <Link
+                to="/cadastro"
+                className={cn(
+                  'mt-10 block rounded-xl bg-landing-violet py-4 text-center',
+                  'text-base font-semibold text-landing-ink transition-opacity hover:opacity-90'
+                )}
+              >
+                {agency.cta}
+              </Link>
             </div>
-            <h3 className="font-display text-2xl font-bold text-text-primary">{agency.name}</h3>
-            <div className="mt-4 flex items-end gap-1">
-              <span className="font-display text-5xl font-extrabold text-text-primary">{agency.price}</span>
-              <span className="mb-1 text-sm text-text-muted">{agency.period}</span>
-            </div>
-            <ul className="mt-6 space-y-3">
-              {agency.features.map((f, i) => <FeatureItem key={i} text={f} />)}
-            </ul>
-            <Link to="/cadastro" className="mt-8 block">
-              <Button variant="primary" fullWidth size="lg">{agency.cta}</Button>
-            </Link>
           </div>
 
           {/* Enterprise */}
           <div
             data-reveal
             style={{ '--delay': '200ms' }}
-            className="rounded-2xl border border-hairline/60 bg-bg-surface/50 p-8"
+            className="flex flex-col rounded-3xl border border-landing-line/20 bg-landing-surface p-10"
           >
-            <h3 className="font-display text-2xl font-bold text-text-primary">{enterprise.name}</h3>
-            <div className="mt-4">
-              <span className="font-display text-4xl font-bold text-text-secondary">{enterprise.price}</span>
+            <h3 className="font-display text-2xl font-bold leading-8 text-landing-text">
+              {enterprise.name}
+            </h3>
+            <p className="mt-4 text-4xl font-semibold leading-10 text-landing-muted">
+              {enterprise.price}
+            </p>
+
+            <div className="mt-8">
+              <Features itens={enterprise.features} icone={checkEnterprise} tom="text-landing-muted" />
             </div>
-            <ul className="mt-6 space-y-3">
-              {enterprise.features.map((f, i) => <FeatureItem key={i} text={f} />)}
-            </ul>
-            <Link to="/cadastro" className="mt-8 block">
-              <Button variant="outlined" fullWidth size="lg">{enterprise.cta}</Button>
+
+            <Link
+              to="/cadastro"
+              className={cn(
+                'mt-10 block rounded-xl border border-landing-line/30 bg-landing-elevated py-4',
+                'text-center text-base font-semibold text-landing-text transition-colors',
+                'hover:border-landing-line/50'
+              )}
+            >
+              {enterprise.cta}
             </Link>
           </div>
         </div>

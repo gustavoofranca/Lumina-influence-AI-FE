@@ -13,7 +13,7 @@ export default function LandingPage() {
   useScrollReveal()
 
   return (
-    <div className="min-h-screen bg-bg-base text-text-primary">
+    <div className="min-h-screen bg-landing-bg font-sans text-landing-text">
       <HeaderSection />
       <HeroSection />
       <LogosSection />

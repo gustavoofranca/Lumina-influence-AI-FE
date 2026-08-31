@@ -127,126 +127,126 @@
   },
   "landing": {
     "nav": {
-      "solutions": "Soluções",
-      "pricing": "Preços",
-      "cases": "Cases",
+      "solutions": "Solutions",
+      "pricing": "Pricing",
+      "cases": "Case Studies",
       "api": "API",
-      "login": "Entrar",
-      "cta": "Começar agora"
+      "login": "Sign In",
+      "cta": "Sign Up"
     },
     "hero": {
-      "label": "THE NEURAL ARCHITECT",
-      "h1": "Pare de queimar verba com métricas de vaidade.",
-      "subtitle": "Audite influenciadores com IA multimodal. Separe alcance orgânico de tráfego pago. Comprove ROI real.",
+      "label": "The Neural Architect",
+      "h1Line1": "Pare de queimar",
+      "h1Line2": "verba com",
+      "h1Highlight1": "métricas de",
+      "h1Highlight2": "vaidade.",
+      "subtitle": "Auditoria definitiva via IA que separa bots de humanos com APIs oficiais. Decisões baseadas em dados reais, não em curtidas fantasmas.",
       "ctaPrimary": "Agendar Demonstração",
       "ctaSecondary": "Ver Documentação",
-      "mockup": {
-        "name": "Marina Costa",
-        "handle": "@marinacosta",
-        "followers": "1.2M seguidores · Instagram",
-        "badge": "ORGANIC",
-        "sentimentLabel": "SENTIMENT ANALYSIS",
-        "positiveLabel": "positivo",
-        "suspiciousLabel": "suspeito",
-        "alertTitle": "⚡ IA DETECTOU • Bot-Farm",
-        "alertId": "Análise ID: #PX-9921"
+      "dashboardAlt": "Painel da Lumina com a análise de um criador",
+      "card": {
+        "label": "Detecção Crítica",
+        "title": "Bot-Farm Detectada",
+        "metric": "Probabilidade AI",
+        "value": "87.4%"
       }
     },
     "logos": {
-      "label": "AUTHORIZED OFFICIAL PARTNER INTEGRATIONS"
+      "label": "Authorized Official Partner Integrations"
     },
     "comparativo": {
-      "label": "PROBLEMA",
       "title": "Métricas sem auditoria são prejuízo oculto",
+      "subtitle": "Sua equipe gasta 40h semanais em planilhas que não detectam a verdade. Veja a diferença:",
       "chaos": {
         "title": "O Caos Manual",
-        "badge": "42% ROI Desperdiçado",
         "items": [
-          "Métricas de vaidade sem contexto real",
-          "Impossível separar orgânico de pago",
-          "Bots inflam engajamento artificialmente",
-          "Relatórios manuais lentos e imprecisos",
-          "ROI calculado por suposição"
-        ]
+          "Print-screens falsificáveis de influenciadores.",
+          "Auditoria baseada em \"feeling\" e volume de likes.",
+          "Falta de tracking oficial de conversão e ROI."
+        ],
+        "metricLabel": "Perda Estimada",
+        "metricValue": "42% ROI Desperdiçado"
       },
       "lumina": {
         "title": "Inteligência Lumina",
-        "badge": "12x Mais Insights",
         "items": [
-          "Auditoria multimodal com IA em tempo real",
-          "Separação automática orgânico vs pago",
-          "Detecção de bots com score de confiança",
-          "Relatórios gerados em segundos",
-          "ROI comprovado com dados reais"
-        ]
+          "Conexão direta via API oficial (Dados 100% reais).",
+          "Análise de sentimento e NLP em tempo real.",
+          "Dashboard unificado de ROI transacional."
+        ],
+        "metricLabel": "Ganho em Eficiência",
+        "metricValue": "12x Mais Insights"
       }
     },
     "pilares": {
-      "label": "COMO FUNCIONA",
       "title": "Arquitetura Neural em 3 Pilares",
+      "subtitle": "Tecnologia proprietária desenvolvida para o mercado enterprise de influência.",
       "items": [
         {
           "title": "Official API Integration",
-          "desc": "Conexão direta com APIs oficiais de Instagram, TikTok e YouTube via OAuth 2.0. Dados em tempo real, sem scraping."
+          "desc": "Eliminamos o \"scraping\" instável. Conectamos diretamente aos servidores da Meta e Google para extrair métricas de primeira mão, garantindo segurança e veracidade."
         },
         {
           "title": "Qualitative AI Analysis",
-          "desc": "Google Gemini analisa sentimento, qualidade de roteiro, coerência de nicho e detecta padrões de engajamento suspeito."
+          "desc": "Nossa IA processa scripts e comentários usando NLP (Natural Language Processing) para detectar se o engajamento é genuíno ou gerado por bots de engajamento."
         },
         {
           "title": "Real ROI Dashboards",
-          "desc": "Dashboards interativos que comprovam ROI real. Compare influenciadores e exporte relatórios em PDF."
+          "desc": "Visualize o impacto direto em vendas. Atribuímos conversões a influenciadores específicos através de links rastreáveis e integração com seu e-commerce."
         }
-      ]
+      ],
+      "chips": [
+        "INSTAGRAM",
+        "TIKTOK"
+      ],
+      "nlpLabel": "NLP SCORE",
+      "nlpValue": "94% Genuíno",
+      "roiAlt": "Visualização de atribuição de conversão por criador"
     },
     "plans": {
-      "label": "PLANOS",
       "title": "Investimento com Inteligência",
+      "subtitle": "Escolha o plano ideal para a escala da sua operação.",
       "agency": {
-        "badge": "MAIS POPULAR",
+        "badge": "Popular",
         "name": "Plano Agência",
-        "price": "R$ 1.297",
+        "price": "R$ 2.490",
         "period": "/mês",
-        "cta": "Começar agora",
+        "cta": "Começar Agora",
         "features": [
-          "Até 50 influenciadores",
-          "500 análises IA/mês",
-          "Benchmarking entre criadores",
-          "Exportação de relatórios PDF",
-          "Suporte prioritário",
-          "Dashboard em tempo real"
+          "Até 50 Influenciadores/mês",
+          "Auditoria NLP em tempo real",
+          "Dashboards compartilháveis",
+          "Suporte 24h via Slack"
         ]
       },
       "enterprise": {
-        "name": "Enterprise",
-        "price": "Sob consulta",
-        "cta": "Falar com time",
+        "name": "Plano Enterprise",
+        "price": "Sob Consulta",
+        "cta": "Falar com Especialista",
         "features": [
           "Influenciadores ilimitados",
-          "Análises IA ilimitadas",
-          "API dedicada com SLA",
-          "Gerente de conta dedicado",
-          "Integrações customizadas",
-          "Treinamento da equipe"
+          "Acesso total via API (Webhooks)",
+          "Custom NLP Training",
+          "Dedicated Account Manager"
         ]
       }
     },
     "footer": {
-      "tagline": "Pare de queimar verba com métricas de vaidade.",
+      "tagline": "A plataforma líder em auditoria neural para campanhas de influência de alto desempenho.",
       "product": "Product",
       "company": "Company",
-      "copyright": "© 2025 Lumina Influence AI. Todos os direitos reservados.",
+      "copyright": "© 2026 Lumina Influence AI. Neural Architect Systems.",
       "backToTop": "↑ Voltar ao topo",
       "links": {
-        "solutions": "Soluções",
-        "pricing": "Preços",
-        "cases": "Cases",
-        "api": "API",
-        "about": "Sobre",
-        "blog": "Blog",
-        "careers": "Carreiras",
-        "legal": "Legal"
-      }
+        "features": "Features",
+        "apiDocs": "API Docs",
+        "solutions": "Solutions",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "contact": "Contact"
+      },
+      "ctaQuestion": "Pronto para auditar sua próxima campanha?",
+      "ctaLink": "Comece sua auditoria grátis hoje →"
     }
   },
   "configuracoes": {
