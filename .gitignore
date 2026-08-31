@@ -38,6 +38,9 @@ Thumbs.db
 # Coverage / testes
 coverage/
 .nyc_output/
+e2e/test-results/
+e2e/relatorio/
+e2e/playwright-report/
 
 # Sessoes de brainstorming local
 .superpowers/
