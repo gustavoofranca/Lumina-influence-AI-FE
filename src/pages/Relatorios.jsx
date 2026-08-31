@@ -6,8 +6,9 @@ import { Plus, FileText, Download, Eye, FileSearch } from 'lucide-react'
 import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
 import Search from '../components/ui/Search.jsx'
-import Card, { CardLabel, CardTitle } from '../components/ui/Card.jsx'
+import Card, { CardLabel } from '../components/ui/Card.jsx'
 import Skeleton from '../components/ui/Skeleton.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
 import Toast from '../components/ui/Toast.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { formatDateRange } from '../lib/format.js'
@@ -125,15 +126,11 @@ export default function Relatorios() {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
-              <FileSearch size={20} />
-            </span>
-            <CardTitle>{t('relatorios.list.empty.title')}</CardTitle>
-            <p className="max-w-sm text-sm text-text-secondary">
-              {t('relatorios.list.empty.subtitle')}
-            </p>
-          </div>
+          <EmptyState
+            icon={FileSearch}
+            title={t('relatorios.list.empty.title')}
+            description={t('relatorios.list.empty.subtitle')}
+          />
         ) : (
           <div className="space-y-3">
             <CardLabel>

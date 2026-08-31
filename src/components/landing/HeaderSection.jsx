@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Menu, X } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
@@ -66,6 +67,17 @@ function useSecaoVisivel() {
 export default function HeaderSection() {
   const { t } = useTranslation()
   const secao = useSecaoVisivel()
+  // Abaixo de 1024px o menu de seções não cabe na barra. Sem este disclosure a
+  // landing simplesmente não tinha navegação no celular.
+  const [aberto, setAberto] = useState(false)
+  const idMenu = useId()
+
+  useEffect(() => {
+    if (!aberto) return
+    const fechar = (e) => e.key === 'Escape' && setAberto(false)
+    window.addEventListener('keydown', fechar)
+    return () => window.removeEventListener('keydown', fechar)
+  }, [aberto])
 
   return (
     <header className={cn(
@@ -101,6 +113,16 @@ export default function HeaderSection() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <button
+            type="button"
+            onClick={() => setAberto((v) => !v)}
+            aria-expanded={aberto}
+            aria-controls={idMenu}
+            aria-label={t(aberto ? 'common.a11y.closeMenu' : 'common.a11y.openMenu')}
+            className="rounded-lg p-1.5 text-landing-muted transition-colors hover:text-landing-text lg:hidden"
+          >
+            {aberto ? <X size={20} /> : <Menu size={20} />}
+          </button>
           <LanguageSwitcher />
           <Link
             to="/login"
@@ -126,6 +148,42 @@ export default function HeaderSection() {
           </Link>
         </div>
       </div>
+
+      {aberto && (
+        <nav
+          id={idMenu}
+          className="border-t border-landing-line/15 bg-landing-bg/95 px-8 py-4 lg:hidden"
+        >
+          <ul className="flex flex-col gap-1">
+            {NAV.map(({ key, anchor }) => (
+              <li key={key}>
+                <a
+                  href={anchor}
+                  onClick={() => setAberto(false)}
+                  className={cn(
+                    'block rounded-lg px-2 py-2.5 text-sm font-medium text-landing-muted',
+                    'transition-colors hover:bg-landing-glass/40 hover:text-landing-text'
+                  )}
+                >
+                  {t(`landing.nav.${key}`)}
+                </a>
+              </li>
+            ))}
+            <li>
+              <Link
+                to="/login"
+                onClick={() => setAberto(false)}
+                className={cn(
+                  'block rounded-lg px-2 py-2.5 text-sm font-medium text-landing-muted',
+                  'transition-colors hover:bg-landing-glass/40 hover:text-landing-text sm:hidden'
+                )}
+              >
+                {t('landing.nav.login')}
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
     </header>
   )
 }

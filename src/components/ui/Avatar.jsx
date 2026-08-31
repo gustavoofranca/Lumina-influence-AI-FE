@@ -51,8 +51,10 @@ export default function Avatar({
           dims.wrap,
           showImage ? 'ring-primary/20 bg-bg-surface' : cn('font-semibold ring-1', dims.text, tintFor(name))
         )}
-        aria-label={name || 'avatar'}
-        role="img"
+        // Com imagem, quem carrega o nome acessível é o alt do <img>; repetir
+        // aqui faz o leitor anunciar "Ana Souza, imagem, Ana Souza, imagem".
+        aria-label={showImage ? undefined : name || 'avatar'}
+        role={showImage ? undefined : 'img'}
       >
         {showImage ? (
           <img

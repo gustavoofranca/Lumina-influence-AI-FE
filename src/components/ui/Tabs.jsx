@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import { cn } from '../../lib/cn.js'
 
 /**
@@ -8,6 +10,15 @@ import { cn } from '../../lib/cn.js'
  *   value   = string (controlado)
  *   onChange(nextValue)
  *   variant = 'underline' (padrao) | 'pills'
+ *
+ * Segue o padrão ARIA de abas: só a aba ativa entra na ordem de tabulação e as
+ * setas movem entre elas. Sem isso, `role="tab"` promete uma navegação que não
+ * existe — o leitor de tela anuncia "aba 2 de 4, use as setas" e as setas não
+ * fazem nada.
+ *
+ * `aria-controls` fica de fora de propósito: o painel é renderizado pela página,
+ * fora deste componente, e apontar para um id que pode não existir é pior que
+ * omitir o atributo.
  */
 const SIZES = {
   sm: 'text-xs',
@@ -22,6 +33,31 @@ export default function Tabs({
   size = 'md',
   className = '',
 }) {
+  const listaRef = useRef(null)
+
+  /** Setas movem o foco e a seleção; Home e End vão para as pontas. */
+  const navegarPorTeclado = (e) => {
+    const teclas = {
+      ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1,
+    }
+    const passo = teclas[e.key]
+    const inicio = e.key === 'Home'
+    const fim = e.key === 'End'
+    if (passo === undefined && !inicio && !fim) return
+
+    e.preventDefault()
+    const atual = items.findIndex((i) => i.value === value)
+    let alvo
+    if (inicio) alvo = 0
+    else if (fim) alvo = items.length - 1
+    else alvo = (atual + passo + items.length) % items.length
+
+    const proximo = items[alvo]
+    if (!proximo) return
+    onChange?.(proximo.value)
+    listaRef.current?.querySelectorAll('[role="tab"]')[alvo]?.focus()
+  }
+
   if (variant === 'pills') {
     // A barra é inline-flex para abraçar o conteúdo no desktop. O invólucro de
     // bloco existe para que ela role num celular em vez de ser cortada.
@@ -33,6 +69,8 @@ export default function Tabs({
           className
         )}
         role="tablist"
+        ref={listaRef}
+        onKeyDown={navegarPorTeclado}
       >
         {items.map((item) => {
           const active = item.value === value
@@ -42,6 +80,7 @@ export default function Tabs({
               key={item.value}
               role="tab"
               aria-selected={active}
+              tabIndex={active ? 0 : -1}
               onClick={() => onChange?.(item.value)}
               className={cn(
                 'inline-flex items-center gap-2 rounded-xl px-3 py-1.5 font-semibold transition-all duration-200',
@@ -70,6 +109,8 @@ export default function Tabs({
   return (
     <div
       role="tablist"
+      ref={listaRef}
+      onKeyDown={navegarPorTeclado}
       className={cn('flex gap-1 border-b border-hairline/80', className)}
     >
       {items.map((item) => {
@@ -80,6 +121,7 @@ export default function Tabs({
             key={item.value}
             role="tab"
             aria-selected={active}
+            tabIndex={active ? 0 : -1}
             onClick={() => onChange?.(item.value)}
             className={cn(
               'group relative inline-flex items-center gap-2 px-4 py-3 font-semibold transition-colors',

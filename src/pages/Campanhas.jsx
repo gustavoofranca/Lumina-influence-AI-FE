@@ -10,6 +10,7 @@ import Tabs from '../components/ui/Tabs.jsx'
 import CampanhaCard from '../components/campanhas/CampanhaCard.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import Skeleton from '../components/ui/Skeleton.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { listCampaigns } from '../services/campaigns.js'
 
@@ -84,19 +85,12 @@ export default function Campanhas() {
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className={cn(
-          'flex flex-col items-center justify-center gap-3 py-16 text-center',
-          'rounded-2xl border border-hairline/60 bg-bg-surface/40'
-        )}>
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
-            <Megaphone size={20} />
-          </span>
-          <h3 className="font-display text-lg font-semibold text-text-primary">
-            {t('campanhas.list.empty.title')}
-          </h3>
-          <p className="max-w-sm text-sm text-text-secondary">
-            {t('campanhas.list.empty.subtitle')}
-          </p>
+        <div className="rounded-2xl border border-hairline/60 bg-bg-surface/40">
+          <EmptyState
+            icon={Megaphone}
+            title={t('campanhas.list.empty.title')}
+            description={t('campanhas.list.empty.subtitle')}
+          />
         </div>
       ) : (
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

@@ -69,9 +69,11 @@ export default function Table({
                     key={key}
                     onClick={clickable ? () => onRowClick(row, i) : undefined}
                     // Linha clicável precisa de foco e de Enter/Espaço: só
-                    // onClick a deixa acessível apenas por mouse.
+                    // onClick a deixa acessível apenas por mouse. Mas sem
+                    // `role="button"`: ele substitui a semântica de linha e o
+                    // leitor de tela para de anunciar "linha 3 de 12" e de ler
+                    // o cabeçalho junto da célula.
                     tabIndex={clickable ? 0 : undefined}
-                    role={clickable ? 'button' : undefined}
                     onKeyDown={
                       clickable
                         ? (e) => {
