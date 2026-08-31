@@ -153,10 +153,10 @@ export default function Diagnostico() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-2xl font-bold text-text-primary">
+        <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
           {t('diagnostico.title')}
         </h1>
-        <p className="mt-1 text-sm text-text-secondary">{t('diagnostico.subtitle')}</p>
+        <p className="mt-1.5 text-sm text-text-secondary">{t('diagnostico.subtitle')}</p>
         {!loading && nuncaAnalisados > 0 && (
           <p className="mt-2 text-xs text-caution">
             {t('diagnostico.pendingHint', { count: nuncaAnalisados })}

@@ -405,6 +405,8 @@
   "relatorios": {
     "list": {
       "title": "Reports",
+      "downloadStarted": "Download started",
+      "downloadFailed": "Download failed",
       "subtitle": "History of generated reports and templates ready to export.",
       "newButton": "New Report",
       "search": "Search by name or campaign...",

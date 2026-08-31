@@ -405,6 +405,8 @@
   "relatorios": {
     "list": {
       "title": "Relatórios",
+      "downloadStarted": "Download iniciado",
+      "downloadFailed": "Falha no download",
       "subtitle": "Histórico de relatórios gerados e modelos prontos para exportar.",
       "newButton": "Novo Relatório",
       "search": "Buscar por nome ou campanha...",

@@ -1,5 +1,5 @@
 /** Serviço de relatórios — lista, gera e baixa o PDF real. */
-import { api, getAccessToken } from '../lib/api.js'
+import { api } from '../lib/api.js'
 
 export function adaptReport(r) {
   const included = r.sections?.included || []

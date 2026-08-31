@@ -85,7 +85,7 @@ const Search = forwardRef(function Search(
             type="button"
             onClick={handleClear}
             aria-label={t('common.a11y.clear')}
-            className="shrink-0 rounded-md p-1 text-text-muted transition-colors hover:bg-bg-surface hover:text-text-primary"
+            className="shrink-0 rounded-md p-1.5 text-text-muted transition-colors hover:bg-bg-surface hover:text-text-primary"
           >
             <X size={14} />
           </button>

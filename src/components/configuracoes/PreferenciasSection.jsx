@@ -95,6 +95,7 @@ export default function PreferenciasSection() {
             subtitle={t('configuracoes.preferencias.timezone.subtitle')}
           >
             <select
+              aria-label={t('configuracoes.preferencias.timezone.title')}
               value={timezone}
               onChange={(e) => setTimezone(e.target.value)}
               className={cn(

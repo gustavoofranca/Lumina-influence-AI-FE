@@ -7,6 +7,7 @@ import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
 import Search from '../components/ui/Search.jsx'
 import Card, { CardLabel, CardTitle } from '../components/ui/Card.jsx'
+import Skeleton from '../components/ui/Skeleton.jsx'
 import Toast from '../components/ui/Toast.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { formatDateRange } from '../lib/format.js'
@@ -69,7 +70,7 @@ export default function Relatorios() {
   const [search, setSearch] = useState('')
   const [toast, setToast] = useState(null)
 
-  const { data: reports, error, refetch} = useApi(listReports, [])
+  const { data: reports, loading, error, refetch} = useApi(listReports, [])
   const all = reports || []
 
   const filtered = useMemo(() => {
@@ -81,9 +82,9 @@ export default function Relatorios() {
   const handleDownload = async (r) => {
     try {
       await downloadReport(r.id, r.name)
-      setToast({ type: 'success', message: 'Download iniciado', desc: `${r.name}.pdf` })
+      setToast({ type: 'success', message: t('relatorios.list.downloadStarted'), desc: `${r.name}.pdf` })
     } catch (e) {
-      setToast({ type: 'error', message: 'Falha no download', desc: e.message })
+      setToast({ type: 'error', message: t('relatorios.list.downloadFailed'), desc: e.message })
     }
   }
 
@@ -117,7 +118,13 @@ export default function Relatorios() {
 
       {/* Lista */}
       <Card glass padding="md">
-        {error ? null : filtered.length === 0 ? (
+        {error ? null : loading ? (
+          <div className="space-y-3">
+            {Array.from({ length: 4 }, (_, i) => (
+              <Skeleton key={i} className="h-[72px]" rounded="rounded-xl" />
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
               <FileSearch size={20} />

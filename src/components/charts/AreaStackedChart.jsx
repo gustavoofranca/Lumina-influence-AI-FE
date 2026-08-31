@@ -62,7 +62,7 @@ export default function AreaStackedChart({
       <AreaChart data={data} margin={{ top: 10, right: 8, left: -8, bottom: 0 }}>
         <defs>
           {series.map((s, i) => {
-            const color = s.color || COLOR_FALLBACK[i] || '#94A3B8'
+            const color = s.color || COLOR_FALLBACK[i] || 'var(--primary-600)'
             return (
               <linearGradient key={s.key} id={`${baseId}-${s.key}`} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%"  stopColor={color} stopOpacity={0.5} />
@@ -76,14 +76,14 @@ export default function AreaStackedChart({
 
         <XAxis
           dataKey="x"
-          stroke="#64748B"
-          tick={{ fill: '#94A3B8', fontSize: 11 }}
+          stroke="var(--chart-text)"
+          tick={{ fill: 'var(--chart-text)', fontSize: 11 }}
           axisLine={false}
           tickLine={false}
         />
         <YAxis
-          stroke="#64748B"
-          tick={{ fill: '#94A3B8', fontSize: 11 }}
+          stroke="var(--chart-text)"
+          tick={{ fill: 'var(--chart-text)', fontSize: 11 }}
           tickFormatter={formatValue}
           axisLine={false}
           tickLine={false}
@@ -95,7 +95,7 @@ export default function AreaStackedChart({
         />
 
         {series.map((s, i) => {
-          const color = s.color || COLOR_FALLBACK[i] || '#94A3B8'
+          const color = s.color || COLOR_FALLBACK[i] || 'var(--primary-600)'
           return (
             <Area
               key={s.key}

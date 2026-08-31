@@ -21,7 +21,11 @@ export default function Dashboard() {
     () => getOverview({ period, campaignId: campaign }), [period, campaign])
   const { data: density, loading: loadingDensity, error: erroDensity,
           refetch: recarregarDensity } = useApi(getNetworkDensity, [])
-  const { data: campaignOpts } = useApi(getCampaignOptions, [])
+  // Sem o erro na mão, a lista que falhou cai calada no rótulo "Todas as
+  // campanhas" e o usuário filtra — ou deixa de filtrar — sobre um seletor que
+  // não carregou.
+  const { data: campaignOpts, error: erroCampanhas,
+          refetch: recarregarCampanhas } = useApi(getCampaignOptions, [])
 
   const campaignOptions = (campaignOpts || [{ value: 'all', name: t('dashboard.filters.allCampaigns') }])
     .map((c) => (c.value === 'all' ? { ...c, name: t('dashboard.filters.allCampaigns') } : c))
@@ -37,6 +41,7 @@ export default function Dashboard() {
       />
 
       <ApiErrorBanner error={error} onRetry={refetch} />
+      <ApiErrorBanner error={erroCampanhas} onRetry={recarregarCampanhas} />
 
       <KpiGrid data={overview?.kpis} loading={loading} />
 

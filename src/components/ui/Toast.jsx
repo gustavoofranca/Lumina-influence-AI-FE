@@ -59,7 +59,7 @@ export default function Toast({
           type="button"
           onClick={onClose}
           aria-label={t('common.a11y.close')}
-          className="shrink-0 rounded-md p-1 text-text-muted transition-colors hover:bg-bg-elevated hover:text-text-primary"
+          className="shrink-0 rounded-md p-1.5 text-text-muted transition-colors hover:bg-bg-elevated hover:text-text-primary"
         >
           <X size={14} />
         </button>

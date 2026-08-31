@@ -9,6 +9,7 @@ import Search from '../components/ui/Search.jsx'
 import Tabs from '../components/ui/Tabs.jsx'
 import CampanhaCard from '../components/campanhas/CampanhaCard.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import Skeleton from '../components/ui/Skeleton.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { listCampaigns } from '../services/campaigns.js'
 
@@ -19,7 +20,7 @@ export default function Campanhas() {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
-  const { data: campaigns, error, refetch} = useApi(listCampaigns, [])
+  const { data: campaigns, loading, error, refetch} = useApi(listCampaigns, [])
   const all = campaigns || []
 
   const filtered = useMemo(() => {
@@ -73,7 +74,16 @@ export default function Campanhas() {
       </div>
 
       {/* Lista */}
-      {error ? null : filtered.length === 0 ? (
+      {/* `loading` vem antes do vazio de propósito: sem isso a tela afirma
+          "nenhuma campanha ainda" no intervalo entre o primeiro render e a
+          resposta da API — a mesma família do zero versus nulo da ADR-003. */}
+      {error ? null : loading ? (
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 6 }, (_, i) => (
+            <Skeleton key={i} className="h-[196px]" rounded="rounded-2xl" />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
         <div className={cn(
           'flex flex-col items-center justify-center gap-3 py-16 text-center',
           'rounded-2xl border border-hairline/60 bg-bg-surface/40'

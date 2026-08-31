@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
@@ -29,6 +29,9 @@ export default function Modal({
   showCloseButton = true,
 }) {
   const { t } = useTranslation()
+  const cardRef = useRef(null)
+  const focoAnterior = useRef(null)
+
   // Trava scroll do body
   useEffect(() => {
     if (!open) return
@@ -48,6 +51,48 @@ export default function Modal({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [open, onClose])
+
+  // Foco: leva para dentro ao abrir, prende enquanto está aberto e devolve ao
+  // fechar. Sem isso, `aria-modal` promete um confinamento que não existe — o
+  // Tab passeia pela página bloqueada atrás do overlay e quem usa teclado ou
+  // leitor de tela não alcança o formulário.
+  useEffect(() => {
+    if (!open) return
+    focoAnterior.current = document.activeElement
+
+    const focaveis = () =>
+      [...(cardRef.current?.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      ) ?? [])].filter((el) => el.offsetParent !== null)
+
+    const primeiros = focaveis()
+    ;(primeiros[0] ?? cardRef.current)?.focus()
+
+    const prender = (e) => {
+      if (e.key !== 'Tab') return
+      const alvos = focaveis()
+      if (!alvos.length) {
+        e.preventDefault()
+        return
+      }
+      const primeiro = alvos[0]
+      const ultimo = alvos[alvos.length - 1]
+      const atual = document.activeElement
+      if (e.shiftKey && (atual === primeiro || !cardRef.current?.contains(atual))) {
+        e.preventDefault()
+        ultimo.focus()
+      } else if (!e.shiftKey && atual === ultimo) {
+        e.preventDefault()
+        primeiro.focus()
+      }
+    }
+
+    document.addEventListener('keydown', prender, true)
+    return () => {
+      document.removeEventListener('keydown', prender, true)
+      focoAnterior.current?.focus?.()
+    }
+  }, [open])
 
   if (!open) return null
 
@@ -69,8 +114,10 @@ export default function Modal({
 
       {/* Card */}
       <div
+        ref={cardRef}
+        tabIndex={-1}
         className={cn(
-          'relative w-full animate-fade-in',
+          'relative w-full animate-fade-in outline-none',
           'rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft',
           SIZES[size]
         )}

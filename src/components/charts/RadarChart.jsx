@@ -46,12 +46,12 @@ export default function RadarChart({ data, entities, height = 320 }) {
         <PolarGrid stroke="var(--chart-grid)" />
         <PolarAngleAxis
           dataKey="axis"
-          tick={{ fill: '#94A3B8', fontSize: 11, fontWeight: 600 }}
+          tick={{ fill: 'var(--chart-text)', fontSize: 11, fontWeight: 600 }}
         />
         <PolarRadiusAxis
           angle={90}
           domain={[0, 100]}
-          tick={{ fill: '#475569', fontSize: 10 }}
+          tick={{ fill: 'var(--chart-text)', fontSize: 10 }}
           tickCount={5}
           axisLine={false}
         />

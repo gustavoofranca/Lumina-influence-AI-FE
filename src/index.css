@@ -112,6 +112,9 @@
   --scrollbar-thumb: var(--neutral-700);
   --shadow-card:   none;
   --chart-grid:    rgba(148, 163, 184, 0.18);
+  /* Rótulo de eixo: precisa passar em contraste nos dois temas, e o SVG usa
+     `fill`, que a varredura de contraste por `color` não enxerga. */
+  --chart-text:    #94A3B8;
 }
 
 /* ===========================================================
@@ -163,6 +166,7 @@
   --scrollbar-track: var(--neutral-100);
   --scrollbar-thumb: var(--neutral-300);
   --chart-grid:    rgba(100, 116, 139, 0.18);
+  --chart-text:    #475569;  /* 7,4:1 sobre a superfície clara */
 
   /* Verde e coral de hoje dão 2,3:1 e 3,3:1 sobre branco: reprovam em AA. */
   --success: #16A34A;
