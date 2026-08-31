@@ -40,14 +40,17 @@ export default function Influenciador() {
   const { data: influenciador, loading, error: erroCarregamento,
           refetch: recarregarInfluenciador } =
     useApi(() => getInfluencer(id), [id])
-  const { data: analysis, loading: loadingAnalysis, refetch: recarregarAnalise } =
+  const { data: analysis, loading: loadingAnalysis, error: erroAnalysis,
+          refetch: recarregarAnalise } =
     useApi(() => getInfluencerAnalysis(id), [id])
-  const { data: posts, loading: loadingPosts, refetch: recarregarPosts } =
+  const { data: posts, loading: loadingPosts, error: erroPosts,
+          refetch: recarregarPosts } =
     useApi(() => getInfluencerPosts(id), [id])
   const [reanalisando, setReanalisando] = useState(false)
   const [erroAnalise, setErroAnalise] = useState(null)
 
-  const { data: historico, loading: loadingHistorico, refetch: recarregarHistorico } =
+  const { data: historico, loading: loadingHistorico, error: erroHistorico,
+          refetch: recarregarHistorico } =
     useApi(() => getInfluencerAnalysisHistory(id), [id])
 
   /**
@@ -128,6 +131,17 @@ export default function Influenciador() {
     )
   }
 
+  // Cada aba tem sua propria chamada, e falha de carregamento nao pode sair como
+  // estado vazio: dizer "nenhuma analise no historico" quando a requisicao voltou
+  // 500 e afirmar sobre o criador um fato que ninguem mediu — na tela que existe
+  // para auditar. O banner substitui o conteudo da aba em vez de aparecer acima
+  // dele, senao o estado vazio continua na tela contradizendo o erro.
+  const falhaDaAba = {
+    posts: { erro: erroPosts, recarregar: recarregarPosts },
+    diagnosis: { erro: erroAnalysis, recarregar: recarregarAnalise },
+    history: { erro: erroHistorico, recarregar: recarregarHistorico },
+  }[tab]
+
   const tabItems = [
     { value: 'overview',  label: t('influenciador.tabs.overview') },
     { value: 'posts',     label: t('influenciador.tabs.posts') },
@@ -161,16 +175,22 @@ export default function Influenciador() {
 
       {/* Conteudo */}
       <div>
-        {tab === 'overview'  && (
-          <VisaoGeralTab
-            influenciador={influenciador}
-            growth={analysis?.growth_trajectory}
-            onContasChange={recarregarInfluenciador}
-          />
+        {falhaDaAba?.erro ? (
+          <ApiErrorBanner error={falhaDaAba.erro} onRetry={falhaDaAba.recarregar} />
+        ) : (
+          <>
+            {tab === 'overview'  && (
+              <VisaoGeralTab
+                influenciador={influenciador}
+                growth={analysis?.growth_trajectory}
+                onContasChange={recarregarInfluenciador}
+              />
+            )}
+            {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
+            {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} loading={loadingAnalysis} />}
+            {tab === 'history'   && <HistoricoTab data={historico} loading={loadingHistorico} />}
+          </>
         )}
-        {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
-        {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} loading={loadingAnalysis} />}
-        {tab === 'history'   && <HistoricoTab data={historico} loading={loadingHistorico} />}
       </div>
 
       <Toast

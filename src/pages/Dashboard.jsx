@@ -19,7 +19,8 @@ export default function Dashboard() {
 
   const { data: overview, loading, error, refetch} = useApi(
     () => getOverview({ period, campaignId: campaign }), [period, campaign])
-  const { data: density, loading: loadingDensity } = useApi(getNetworkDensity, [])
+  const { data: density, loading: loadingDensity, error: erroDensity,
+          refetch: recarregarDensity } = useApi(getNetworkDensity, [])
   const { data: campaignOpts } = useApi(getCampaignOptions, [])
 
   const campaignOptions = (campaignOpts || [{ value: 'all', name: t('dashboard.filters.allCampaigns') }])
@@ -55,7 +56,11 @@ export default function Dashboard() {
           <TopNetworksTable data={overview?.topNetworks} loading={loading} />
         </div>
         <div>
-          <NetworkDensityCard data={density} loading={loadingDensity} />
+          {erroDensity ? (
+            <ApiErrorBanner error={erroDensity} onRetry={recarregarDensity} />
+          ) : (
+            <NetworkDensityCard data={density} loading={loadingDensity} />
+          )}
         </div>
       </section>
     </div>

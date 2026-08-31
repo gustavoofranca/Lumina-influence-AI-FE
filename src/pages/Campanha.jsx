@@ -19,7 +19,8 @@ export default function Campanha() {
   const { data: campanha, loading, error: erroCarregamento,
           refetch: recarregarCampanha } =
     useApi(() => getCampaign(id), [id])
-  const { data: bench, loading: benchLoading, refetch: recarregarBench } =
+  const { data: bench, loading: benchLoading, error: erroBench,
+          refetch: recarregarBench } =
     useApi(() => getCampaignBenchmarking(id), [id])
 
   const [editando, setEditando] = useState(false)
@@ -98,16 +99,25 @@ export default function Campanha() {
         erroApi={erroEdicao}
       />
 
-      <ParticipantesGrid participants={bench?.rows} loading={benchLoading} />
+      {/* Benchmarking que falhou nao pode sair como campanha sem participante:
+          os tres blocos abaixo leem a mesma chamada, entao o erro os substitui
+          de uma vez, com a acao de tentar de novo. */}
+      {erroBench ? (
+        <ApiErrorBanner error={erroBench} onRetry={recarregarBench} />
+      ) : (
+        <>
+          <ParticipantesGrid participants={bench?.rows} loading={benchLoading} />
 
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <BenchmarkTable rows={bench?.rows} loading={benchLoading} />
-        </div>
-        <div>
-          <RadarComparison radar={bench?.radar} loading={benchLoading} />
-        </div>
-      </section>
+          <section className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <BenchmarkTable rows={bench?.rows} loading={benchLoading} />
+            </div>
+            <div>
+              <RadarComparison radar={bench?.radar} loading={benchLoading} />
+            </div>
+          </section>
+        </>
+      )}
     </div>
   )
 }

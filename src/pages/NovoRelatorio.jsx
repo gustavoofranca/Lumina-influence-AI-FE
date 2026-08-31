@@ -111,7 +111,7 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
 // Step 2: Período + Influenciadores
 // =============================================================================
 function Step2PeriodoInfluenciadores({
-  participants, loading, period, onPeriodChange,
+  participants, loading, apiError, period, onPeriodChange,
   selectedIds, onToggleId,
   error, t,
 }) {
@@ -156,6 +156,13 @@ function Step2PeriodoInfluenciadores({
             {Array.from({ length: 4 }, (_, i) => (
               <Skeleton key={i} className="h-[58px]" rounded="rounded-xl" />
             ))}
+          </div>
+        ) : apiError ? (
+          // Lista que falhou nao pode virar "nenhum influenciador vinculado":
+          // a badge ao lado ja diz quantos criadores a campanha tem, e as duas
+          // afirmacoes se contradizem na mesma tela.
+          <div className="mt-3">
+            <ApiErrorBanner error={apiError} />
           </div>
         ) : participants.length === 0 ? (
           <EmptyState compact icon={Users} title={t('campanhas.detail.participants.empty')} />
@@ -327,7 +334,10 @@ export default function NovoRelatorio() {
     useApi(listCampaigns, [])
 
   // Métricas dos participantes só existem no benchmarking da campanha.
-  const { data: bench, loading: benchLoading } = useApi(
+  // Sem o erro na mao, o benchmarking que falhou vira lista vazia de
+  // participantes e o usuario segue o assistente achando que a campanha nao tem
+  // criador nenhum.
+  const { data: bench, loading: benchLoading, error: benchError } = useApi(
     () => getCampaignBenchmarking(campaignId),
     [campaignId],
     { enabled: Boolean(campaignId) }
@@ -459,6 +469,7 @@ export default function NovoRelatorio() {
           <Step2PeriodoInfluenciadores
             participants={participants}
             loading={benchLoading}
+            apiError={benchError}
             period={period}
             onPeriodChange={setPeriod}
             selectedIds={influencerIds}
