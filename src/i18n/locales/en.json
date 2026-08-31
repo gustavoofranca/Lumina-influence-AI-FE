@@ -686,7 +686,8 @@
     "videoAudit": {
       "title": "Video Component Audit",
       "subtitle": "Frame-by-frame analysis of the latest reel",
-      "duration": "00:42"
+      "duration": "00:42",
+      "aiScan": "AI SCAN"
     },
     "conexoes": {
       "label": "CONNECTED ACCOUNTS",
@@ -758,7 +759,8 @@
       "empty": "No analyses in the history for this creator.",
       "title": "Analysis History",
       "subtitle": "Timeline of audits for this creator.",
-      "scope": "Scope"
+      "scope": "Scope",
+      "latest": "Latest"
     },
     "notFound": {
       "title": "Influencer not found",

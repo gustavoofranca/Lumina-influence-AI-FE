@@ -85,7 +85,7 @@ export default function HistoricoTab({ data, loading = false }) {
                   <span className="font-mono text-xs font-semibold text-accent">#{item.id}</span>
                   {i === 0 && (
                     <span className="inline-flex items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-positive ring-1 ring-inset ring-emerald-500/30">
-                      Latest
+                      {t('influenciador.history.latest')}
                     </span>
                   )}
                 </div>

@@ -8,7 +8,7 @@ import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
  * VideoAuditCard — thumbnail decorativa de reel + overlay de "scan" da IA
  * para sugerir analise frame-a-frame em andamento.
  */
-function ReelThumbnail({ duration }) {
+function ReelThumbnail({ duration, scanLabel }) {
   return (
     <div
       className={cn(
@@ -46,7 +46,7 @@ function ReelThumbnail({ duration }) {
       {/* Marker IA */}
       <div className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-primary-600/30 px-2 py-1 text-[10px] font-bold text-accent-strong ring-1 ring-inset ring-primary-500/40 backdrop-blur">
         <ScanLine size={10} className="animate-pulse" />
-        AI SCAN
+        {scanLabel}
       </div>
 
       {/* Duracao */}
@@ -68,7 +68,10 @@ export default function VideoAuditCard() {
         <p className="mt-1 text-sm text-text-secondary">{t('influenciador.videoAudit.subtitle')}</p>
       </div>
 
-      <ReelThumbnail duration={t('influenciador.videoAudit.duration')} />
+      <ReelThumbnail
+        duration={t('influenciador.videoAudit.duration')}
+        scanLabel={t('influenciador.videoAudit.aiScan')}
+      />
     </Card>
   )
 }
