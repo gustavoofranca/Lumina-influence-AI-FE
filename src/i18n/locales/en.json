@@ -243,6 +243,7 @@
         "solutions": "Solutions",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
+        "deletion": "Data Deletion",
         "contact": "Contact"
       },
       "ctaQuestion": "Ready to audit your next campaign?",
@@ -956,6 +957,147 @@
       "score": "Score",
       "engagement": "Eng.",
       "followers": "Followers"
+    }
+  },
+  "legal": {
+    "back": "Back to home",
+    "updatedAt": "Last updated: {{date}}",
+    "privacy": {
+      "title": "Privacy Policy",
+      "updated": "August 31, 2026",
+      "intro": "This policy explains what data Lumina Influence AI collects, why it collects it, and what you can do about it. It covers the web platform and the Instagram, YouTube and TikTok integrations. Questions: {{email}}.",
+      "sections": [
+        {
+          "h": "1. Who handles your data",
+          "p": "Lumina Influence AI is operated by K13 WEB, which is responsible for the processing described here. To exercise any right under this policy, write to {{email}}."
+        },
+        {
+          "h": "2. Data we collect",
+          "p": "Account data: name, work email, role within the agency, and the identifier returned by your login provider (Google or Microsoft). We never receive or store your password for those providers.\nUsage data: pages visited, campaigns and reports created, and technical error logs. Used to operate and debug the service.\nData from the social accounts you connect: the professional profile's identifier and username, follower count, and recent posts with caption, date, thumbnail, media type and performance metrics (reach, views, likes, comments, shares and saves). We also collect a sample of each post's public comments, including the commenter's username.\nAccess tokens: stored encrypted and used only for the calls described in this policy."
+        },
+        {
+          "h": "3. What we do with it",
+          "p": "We use the data to build the performance dashboard, compare creators within a campaign, generate diagnostics, and produce the PDF reports you export. None of these uses involves selling data or targeted advertising.\nWe do not use collected data to train artificial intelligence models, and we do not allow our vendors to do so."
+        },
+        {
+          "h": "4. Artificial intelligence analysis",
+          "p": "Platform diagnostics are produced by Google's Gemini model, acting as a data processor. We send it the caption text, the post's metrics and the comment sample; when an audit includes video analysis, the file is uploaded, processed and deleted from Google's service once the analysis ends.\nThe analysis is an automated reading and can be wrong. It does not replace human judgement and is not used to make automated decisions about people."
+        },
+        {
+          "h": "5. Legal basis",
+          "p": "Account and usage data are processed to perform the service agreement (Brazil's LGPD, art. 7, V). Collection from social platforms happens under your explicit consent, given on each platform's own authorization screen (LGPD, art. 7, I), and can be withdrawn at any time — see section 8.\nFor users in the European Economic Area, the corresponding bases are performance of a contract and consent under the GDPR."
+        },
+        {
+          "h": "6. Who we share it with",
+          "p": "We do not sell, rent or trade personal data. We share it only with the vendors the service needs in order to run: Google (authentication and AI analysis), Microsoft (authentication), and the managed database provider that hosts the application. Each processes the data only on our instructions.\nWe may disclose information when required by a court order or legal obligation."
+        },
+        {
+          "h": "7. How long we keep it",
+          "p": "Account data and content you create are kept while the account exists. Metrics and comments collected from the platforms are kept while the connection is active, and are deleted when you disconnect the account or delete the creator.\nTechnical error logs are discarded within 90 days. Expired access tokens are removed automatically by the platform's cleanup job."
+        },
+        {
+          "h": "8. Your rights and how to exercise them",
+          "p": "You may confirm that processing exists, and access, correct, anonymize, port or erase your data, as well as withdraw the consent given to the social platforms.\nDisconnection and deletion can be done directly in the platform; step-by-step instructions are on the data deletion page. You can also revoke Lumina's access from your Facebook, Instagram, Google or TikTok settings — collection stops immediately in that case. Written requests to {{email}} are answered within 15 days."
+        },
+        {
+          "h": "9. Security",
+          "p": "All traffic uses HTTPS. Access tokens are encrypted at rest with a key managed outside the database. Access to data inside the platform is scoped to the agency the user belongs to, and that separation is checked by automated tests on every change.\nNo system is immune. If an incident poses a relevant risk, we notify the affected people and the competent authority."
+        },
+        {
+          "h": "10. Minors",
+          "p": "Lumina Influence AI is a professional tool and is not intended for anyone under 18. We do not knowingly collect data from children or teenagers; if we identify such an account, it is removed."
+        },
+        {
+          "h": "11. Changes to this policy",
+          "p": "Material changes are announced in the platform before taking effect, and the update date at the top of this page is always revised."
+        },
+        {
+          "h": "12. Contact",
+          "p": "Privacy questions, requests and complaints: {{email}}."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "updated": "August 31, 2026",
+      "intro": "These terms govern the use of the Lumina Influence AI platform. By creating an account or using the service, you agree to them. Questions: {{email}}.",
+      "sections": [
+        {
+          "h": "1. What Lumina Influence AI is",
+          "p": "It is an influencer marketing auditing platform: it gathers metrics from the accounts you connect, compares creators within a campaign, generates AI-assisted diagnostics, and exports reports."
+        },
+        {
+          "h": "2. Who may use it",
+          "p": "The service is intended for agencies, brands and professionals aged 18 or over. You are responsible for keeping your account credentials confidential and for everything done with them."
+        },
+        {
+          "h": "3. Connected social accounts",
+          "p": "By connecting an Instagram, YouTube or TikTok account, you confirm that you are authorized by the profile owner to do so. Collection is limited to the permissions granted on the platform's authorization screen and follows each platform's own terms.\nYou can disconnect at any time, either in the platform or from the social network's own settings."
+        },
+        {
+          "h": "4. Acceptable use",
+          "p": "You may not use the platform to violate third-party rights, work around API technical limits, resell access, extract data in bulk for another purpose, or submit unlawful content.\nWe may suspend accounts that compromise service stability or breach the terms of the connected platforms."
+        },
+        {
+          "h": "5. Limits of the metrics and the analysis",
+          "p": "The metrics shown are the ones each platform returns through its API, and may differ from the numbers seen in the native app because of window and definition differences — Instagram's move from \"impressions\" to \"views\" is one example.\nThe split between organic and paid reach is not measured by Instagram's public API; in demonstration environments it comes from sample data and is labelled as such.\nAI-generated diagnostics are decision support, not a guarantee of results. You remain responsible for the business decisions you make from them."
+        },
+        {
+          "h": "6. Intellectual property",
+          "p": "The Lumina Influence AI software, brand and design belong to K13 WEB. The content you enter and the data collected from your accounts remain yours; you grant us only the licence needed to operate the service."
+        },
+        {
+          "h": "7. Plans and payment",
+          "p": "Available features, usage limits and prices are the ones stated on the plans page at the time of purchase. Price changes are announced in advance and do not apply retroactively to a cycle already paid."
+        },
+        {
+          "h": "8. Availability and liability",
+          "p": "We work to keep the service available, but it depends on third-party APIs that may change, throttle requests or go down. We do not guarantee uninterrupted operation.\nTo the maximum extent permitted by law, our liability is limited to the amount paid for the service in the 12 months preceding the event."
+        },
+        {
+          "h": "9. Termination",
+          "p": "You may close your account at any time; data deletion follows the Privacy Policy. We may terminate accounts that breach these terms, with prior notice whenever possible."
+        },
+        {
+          "h": "10. Governing law",
+          "p": "These terms are governed by Brazilian law, with the user's domicile as the venue for any dispute."
+        },
+        {
+          "h": "11. Contact",
+          "p": "Questions about these terms: {{email}}."
+        }
+      ]
+    },
+    "deletion": {
+      "title": "Data deletion",
+      "updated": "August 31, 2026",
+      "intro": "This page explains how to erase the data Lumina Influence AI holds about you and about the social accounts you connected. Every path below results in permanent deletion — there is no recycle bin.",
+      "sections": [
+        {
+          "h": "1. Disconnect a social account",
+          "p": "Erases the access token, the posts collected from that account and the comments attached to them. The creator stays registered in the platform, with no data from the disconnected network.\nPath: sign in, open Influencers, pick the creator, go to the Connected accounts tab and use Disconnect on the network you want."
+        },
+        {
+          "h": "2. Delete a creator",
+          "p": "Erases the creator's record and, with it, every connected account, post, comment and generated analysis.\nPath: Influencers, open the creator, and use Delete in the page menu."
+        },
+        {
+          "h": "3. Delete your user account",
+          "p": "Erases your account and your access to the platform. If you are the agency's only administrator, deletion also removes the agency's data: creators, campaigns, reports and all collected history.\nPath: Settings, Account tab, Delete account. The action asks for written confirmation."
+        },
+        {
+          "h": "4. Revoke access from the social network itself",
+          "p": "You can cut Lumina's access without signing in to the platform:\nFacebook and Instagram: Settings & privacy, Settings, Apps and websites, select Lumina Influence AI and remove.\nGoogle and YouTube: myaccount.google.com/permissions, select Lumina Influence AI and remove access.\nTikTok: Settings, Security and permissions, Manage app permissions.\nRevoking stops collection immediately. To erase what was already collected, use one of the paths above or the email request."
+        },
+        {
+          "h": "5. Request deletion by email",
+          "p": "If you no longer have access to the platform, write to {{email}} from or citing the email used to register, saying what you want erased. We verify identity before acting and answer within 15 days, as required by the LGPD."
+        },
+        {
+          "h": "6. What may remain",
+          "p": "Technical error logs, which hold no post content, are discarded within 90 days by the cleanup job. Data we are legally required to retain — tax records, for example — is kept only for the statutory period and used for no other purpose."
+        }
+      ]
     }
   }
 }

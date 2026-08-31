@@ -34,6 +34,13 @@ const Welcome          = lazy(() => import('./pages/Welcome.jsx'))
 const DesignSystem     = lazy(() => import('./pages/DesignSystem.jsx'))
 const NotFound         = lazy(() => import('./pages/NotFound.jsx'))
 
+// Páginas legais: exigidas pelo App Review da Meta, que compara a política
+// publicada com as configurações do app. Ficam fora do bundle inicial porque
+// quase ninguém as abre, mas precisam existir em URL própria e estável.
+const Privacidade      = lazy(() => import('./pages/Privacidade.jsx'))
+const Termos           = lazy(() => import('./pages/Termos.jsx'))
+const ExclusaoDeDados  = lazy(() => import('./pages/ExclusaoDeDados.jsx'))
+
 /** Exibido enquanto o chunk da rota carrega. */
 function RouteFallback() {
   const { t } = useTranslation()
@@ -63,6 +70,9 @@ function AnimatedRoutes() {
             element={<ProtectedRoute><PrimeiroAcesso /></ProtectedRoute>}
           />
           <Route path="/cadastro"        element={<Cadastro />} />
+          <Route path="/privacidade"     element={<Privacidade />} />
+          <Route path="/termos"          element={<Termos />} />
+          <Route path="/exclusao-de-dados" element={<ExclusaoDeDados />} />
 
           {/* App interno — protegido + AppLayout */}
           <Route

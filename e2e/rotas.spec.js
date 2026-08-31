@@ -15,7 +15,14 @@ import { entrarComoAdmin, coletarErros } from './apoio/sessao.js'
  */
 const API = process.env.LUMINA_API || 'http://localhost:5000/api/v1'
 
-const ROTAS_PUBLICAS = ['/', '/login', '/cadastro', '/rota-que-nao-existe']
+const ROTAS_PUBLICAS = [
+  '/', '/login', '/cadastro',
+  // Páginas legais: o conteúdo delas é conferido em `paginas-legais.spec.js`.
+  // Entram aqui também porque esta lista é o que sustenta a promessa do
+  // arquivo — rota fora dela é rota que ninguém verifica renderizar.
+  '/privacidade', '/termos', '/exclusao-de-dados',
+  '/rota-que-nao-existe',
+]
 
 const ROTAS_DO_APP = [
   '/app/dashboard',

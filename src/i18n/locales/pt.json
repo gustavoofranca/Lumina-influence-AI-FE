@@ -243,6 +243,7 @@
         "solutions": "Solutions",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
+        "deletion": "Exclusão de dados",
         "contact": "Contact"
       },
       "ctaQuestion": "Pronto para auditar sua próxima campanha?",
@@ -956,6 +957,147 @@
       "score": "Score",
       "engagement": "Eng.",
       "followers": "Seguidores"
+    }
+  },
+  "legal": {
+    "back": "Voltar para a página inicial",
+    "updatedAt": "Última atualização: {{date}}",
+    "privacy": {
+      "title": "Política de Privacidade",
+      "updated": "31 de agosto de 2026",
+      "intro": "Esta política explica quais dados a Lumina Influence AI coleta, por que os coleta e o que você pode fazer a respeito. Ela vale para a plataforma web e para as integrações com Instagram, YouTube e TikTok. Dúvidas: {{email}}.",
+      "sections": [
+        {
+          "h": "1. Quem trata os seus dados",
+          "p": "A Lumina Influence AI é operada pela K13 WEB, responsável pelas decisões sobre o tratamento descrito aqui. Para exercer qualquer direito previsto nesta política, escreva para {{email}}."
+        },
+        {
+          "h": "2. Dados que coletamos",
+          "p": "Dados de cadastro: nome, e-mail corporativo, função na agência e o identificador devolvido pelo provedor de login (Google ou Microsoft). Não recebemos nem armazenamos a sua senha desses provedores.\nDados de uso: páginas acessadas, campanhas e relatórios criados, e registros técnicos de erro. Servem para operar e depurar o serviço.\nDados das contas sociais que você conecta: identificador e nome de usuário do perfil profissional, número de seguidores, e as publicações recentes com legenda, data, miniatura, tipo de mídia e métricas de desempenho (alcance, visualizações, curtidas, comentários, compartilhamentos e salvamentos). Coletamos também uma amostra dos comentários públicos de cada publicação, com o nome de usuário de quem comentou.\nTokens de acesso: guardados criptografados e usados apenas para as chamadas descritas nesta política."
+        },
+        {
+          "h": "3. O que fazemos com esses dados",
+          "p": "Usamos os dados para montar o painel de desempenho, comparar criadores dentro de uma campanha, gerar diagnósticos e produzir os relatórios em PDF que você exporta. Nenhum desses usos envolve venda de dados nem publicidade direcionada.\nNão usamos os dados coletados para treinar modelos de inteligência artificial, nem permitimos que nossos fornecedores o façam."
+        },
+        {
+          "h": "4. Análise por inteligência artificial",
+          "p": "Os diagnósticos da plataforma são produzidos pelo modelo Gemini, do Google, que atua como operador dos dados. Enviamos a ele o texto da legenda, as métricas da publicação e a amostra de comentários; quando a auditoria inclui análise de vídeo, o arquivo é enviado, processado e apagado do serviço do Google ao final da análise.\nA análise é uma leitura automatizada e pode errar. Ela não substitui julgamento humano e não é usada para tomar decisões automatizadas sobre pessoas."
+        },
+        {
+          "h": "5. Base legal",
+          "p": "Tratamos dados de cadastro e de uso para executar o contrato de prestação do serviço (LGPD, art. 7º, V). A coleta nas plataformas sociais acontece mediante o seu consentimento explícito, dado na tela de autorização da própria plataforma (LGPD, art. 7º, I), e pode ser revogado a qualquer momento — veja a seção 8.\nPara usuários no Espaço Econômico Europeu, as bases correspondentes são a execução de contrato e o consentimento previstos no GDPR."
+        },
+        {
+          "h": "6. Com quem compartilhamos",
+          "p": "Não vendemos, alugamos nem cedemos dados pessoais. Compartilhamos apenas com os fornecedores necessários para o serviço funcionar: Google (autenticação e análise por IA), Microsoft (autenticação) e o provedor de banco de dados gerenciado onde a aplicação roda. Cada um trata os dados apenas conforme nossas instruções.\nPodemos divulgar informações quando exigido por decisão judicial ou obrigação legal."
+        },
+        {
+          "h": "7. Por quanto tempo guardamos",
+          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conexão estiver ativa e são apagados quando você desconecta a conta ou exclui o criador.\nRegistros técnicos de erro são descartados em até 90 dias. Tokens de acesso expirados são removidos automaticamente pela rotina de limpeza da plataforma."
+        },
+        {
+          "h": "8. Seus direitos e como exercê-los",
+          "p": "Você pode confirmar a existência de tratamento, acessar, corrigir, anonimizar, portar ou eliminar seus dados, e revogar o consentimento dado às plataformas sociais.\nA desconexão e a exclusão podem ser feitas diretamente na plataforma; o passo a passo está na página de exclusão de dados. Também é possível revogar o acesso da Lumina pelas configurações do Facebook, do Instagram, do Google ou do TikTok — nesse caso paramos de coletar imediatamente. Pedidos por escrito para {{email}} são respondidos em até 15 dias."
+        },
+        {
+          "h": "9. Segurança",
+          "p": "Todo tráfego usa HTTPS. Tokens de acesso são criptografados em repouso com chave gerenciada fora do banco de dados. O acesso aos dados dentro da plataforma é limitado pela agência a que o usuário pertence, e essa separação é verificada por testes automatizados a cada mudança.\nNenhum sistema é imune. Em caso de incidente com risco relevante, notificamos os titulares afetados e a autoridade competente."
+        },
+        {
+          "h": "10. Menores de idade",
+          "p": "A Lumina Influence AI é uma ferramenta profissional e não se destina a menores de 18 anos. Não coletamos conscientemente dados de crianças e adolescentes; se identificarmos um cadastro desse tipo, ele é removido."
+        },
+        {
+          "h": "11. Mudanças nesta política",
+          "p": "Alterações relevantes são anunciadas na plataforma antes de entrar em vigor, e a data de atualização no topo desta página é sempre revista."
+        },
+        {
+          "h": "12. Contato",
+          "p": "Dúvidas, pedidos e reclamações sobre privacidade: {{email}}."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Termos de Uso",
+      "updated": "31 de agosto de 2026",
+      "intro": "Estes termos regem o uso da plataforma Lumina Influence AI. Ao criar uma conta ou usar o serviço, você concorda com eles. Dúvidas: {{email}}.",
+      "sections": [
+        {
+          "h": "1. O que é a Lumina Influence AI",
+          "p": "É uma plataforma de auditoria de marketing de influência: ela reúne as métricas das contas que você conecta, compara criadores dentro de uma campanha, gera diagnósticos assistidos por inteligência artificial e exporta relatórios."
+        },
+        {
+          "h": "2. Quem pode usar",
+          "p": "O serviço é destinado a agências, marcas e profissionais maiores de 18 anos. Você é responsável por manter a confidencialidade do acesso à sua conta e por tudo que for feito com ela."
+        },
+        {
+          "h": "3. Contas sociais conectadas",
+          "p": "Ao conectar uma conta do Instagram, YouTube ou TikTok, você declara que tem autorização do titular do perfil para fazê-lo. A coleta é limitada às permissões concedidas na tela de autorização da plataforma e obedece aos termos de cada uma delas.\nVocê pode desconectar a qualquer momento, pela plataforma ou pelas configurações da própria rede social."
+        },
+        {
+          "h": "4. Uso aceitável",
+          "p": "É proibido usar a plataforma para violar direitos de terceiros, contornar limites técnicos das APIs, revender o acesso, extrair dados em massa para outra finalidade, ou submeter conteúdo ilegal.\nPodemos suspender contas que comprometam a estabilidade do serviço ou violem os termos das plataformas conectadas."
+        },
+        {
+          "h": "5. Limites das métricas e das análises",
+          "p": "As métricas exibidas são as que cada plataforma devolve pela sua API, e podem divergir dos números vistos no aplicativo nativo por diferenças de janela e de definição — a mudança de \"impressões\" para \"visualizações\" no Instagram é um exemplo.\nA separação entre alcance orgânico e pago não é medida pela API pública do Instagram; nos ambientes de demonstração ela vem de dados de exemplo e está identificada como tal.\nOs diagnósticos gerados por inteligência artificial são apoio à decisão, não garantia de resultado. Você é responsável pelas decisões comerciais que tomar a partir deles."
+        },
+        {
+          "h": "6. Propriedade intelectual",
+          "p": "O software, a marca e o design da Lumina Influence AI pertencem à K13 WEB. O conteúdo que você insere e os dados coletados das suas contas continuam seus; você nos concede apenas a licença necessária para operar o serviço."
+        },
+        {
+          "h": "7. Planos e pagamento",
+          "p": "Recursos disponíveis, limites de uso e valores são os informados na página de planos no momento da contratação. Mudanças de preço são comunicadas com antecedência e não retroagem ao ciclo já pago."
+        },
+        {
+          "h": "8. Disponibilidade e responsabilidade",
+          "p": "Trabalhamos para manter o serviço disponível, mas ele depende de APIs de terceiros que podem mudar, limitar chamadas ou sair do ar. Não garantimos operação ininterrupta.\nNa máxima extensão permitida pela lei, nossa responsabilidade se limita ao valor pago pelo serviço nos 12 meses anteriores ao evento."
+        },
+        {
+          "h": "9. Encerramento",
+          "p": "Você pode encerrar a conta quando quiser; a exclusão dos dados segue o descrito na Política de Privacidade. Podemos encerrar contas que violem estes termos, com aviso prévio sempre que possível."
+        },
+        {
+          "h": "10. Lei aplicável",
+          "p": "Estes termos são regidos pela lei brasileira, eleito o foro do domicílio do usuário para eventuais disputas."
+        },
+        {
+          "h": "11. Contato",
+          "p": "Dúvidas sobre estes termos: {{email}}."
+        }
+      ]
+    },
+    "deletion": {
+      "title": "Exclusão de dados",
+      "updated": "31 de agosto de 2026",
+      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Todos os caminhos abaixo levam à exclusão definitiva — não há lixeira.",
+      "sections": [
+        {
+          "h": "1. Desconectar uma conta social",
+          "p": "Apaga o token de acesso, as publicações coletadas daquela conta e os comentários vinculados a elas. O criador continua cadastrado na plataforma, sem dados da rede desconectada.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, vá até a aba Contas conectadas e use Desconectar na rede desejada."
+        },
+        {
+          "h": "2. Excluir um criador",
+          "p": "Apaga o cadastro do criador e, junto com ele, todas as contas conectadas, publicações, comentários e análises geradas.\nCaminho: Influenciadores, abra o criador, e use Excluir no menu da página."
+        },
+        {
+          "h": "3. Excluir a sua conta de usuário",
+          "p": "Apaga o seu cadastro e o acesso à plataforma. Se você for o único administrador da agência, a exclusão remove também os dados da agência: criadores, campanhas, relatórios e todo o histórico coletado.\nCaminho: Configurações, aba Conta, opção Excluir conta. A ação pede confirmação por escrito."
+        },
+        {
+          "h": "4. Revogar o acesso pela própria rede social",
+          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use um dos caminhos acima ou o pedido por e-mail."
+        },
+        {
+          "h": "5. Pedir a exclusão por e-mail",
+          "p": "Se você não tem mais acesso à plataforma, escreva para {{email}} com o e-mail usado no cadastro e o que deseja apagar. Confirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD."
+        },
+        {
+          "h": "6. O que pode permanecer",
+          "p": "Registros técnicos de erro, sem conteúdo de publicação, são descartados em até 90 dias pela rotina de limpeza. Dados que a lei nos obrigue a reter — registros fiscais, por exemplo — são mantidos apenas pelo prazo legal e não são usados para nenhuma outra finalidade."
+        }
+      ]
     }
   }
 }

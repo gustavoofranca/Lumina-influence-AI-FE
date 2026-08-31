@@ -1,13 +1,35 @@
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'
+import { EMAIL_CONTATO } from '../../lib/contato.js'
 
 const PRODUTO = ['features', 'apiDocs', 'solutions']
-const EMPRESA = ['privacy', 'terms', 'contact']
-const ANCORAS = {
+const EMPRESA = ['privacy', 'terms', 'deletion', 'contact']
+
+// Âncora começando com '#' rola na própria landing; o resto é rota da
+// aplicação e precisa de <Link>, senão o navegador recarrega a página inteira.
+// Privacidade, termos e exclusão apontavam para '#' — um link que não leva a
+// lugar nenhum é reprovação certa no App Review da Meta, que abre cada um.
+const DESTINOS = {
   features: '#features', apiDocs: '#features', solutions: '#features',
-  privacy: '#', terms: '#', contact: '#',
+  privacy: '/privacidade', terms: '/termos', deletion: '/exclusao-de-dados',
+  contact: `mailto:${EMAIL_CONTATO}`,
+}
+
+// O texto de 12px deixa o alvo com 15px de altura; o padding vertical leva a
+// 27px sem mexer no ritmo da coluna.
+const ESTILO_LINK = cn(
+  'inline-block py-1.5 text-xs leading-4 text-landing-muted',
+  'transition-colors hover:text-landing-text'
+)
+
+function LinkDoRodape({ destino, children }) {
+  if (destino.startsWith('#') || destino.startsWith('mailto:')) {
+    return <a href={destino} className={ESTILO_LINK}>{children}</a>
+  }
+  return <Link to={destino} className={ESTILO_LINK}>{children}</Link>
 }
 
 function Coluna({ titulo, chaves, t }) {
@@ -17,17 +39,9 @@ function Coluna({ titulo, chaves, t }) {
       <ul className="flex flex-col gap-4">
         {chaves.map((chave) => (
           <li key={chave}>
-            <a
-              href={ANCORAS[chave]}
-              className={cn(
-                // O texto de 12px deixa o alvo com 15px de altura; o padding
-                // vertical leva a 27px sem mexer no ritmo da coluna.
-                'inline-block py-1.5 text-xs leading-4 text-landing-muted',
-                'transition-colors hover:text-landing-text'
-              )}
-            >
+            <LinkDoRodape destino={DESTINOS[chave]}>
               {t(`landing.footer.links.${chave}`)}
-            </a>
+            </LinkDoRodape>
           </li>
         ))}
       </ul>
