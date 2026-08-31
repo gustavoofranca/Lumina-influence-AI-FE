@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn.js'
 import setaCta from '../../assets/landing/cta-arrow.svg'
 import iconeInsight from '../../assets/landing/insight-icon.svg'
-import painel from '../../assets/landing/hero-dashboard.png'
+import painel from '../../assets/landing/hero-dashboard.webp'
 
 /** Cartão flutuante sobre a arte do painel: o achado que o produto existe para dar. */
 function CartaoInsight({ t }) {

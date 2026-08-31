@@ -6,9 +6,12 @@ import { cn } from '../../lib/cn.js'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'
 
+// `secao` só existe para os dois itens que têm seção própria. Cases e API
+// apontam para a mesma âncora de Solutions e não podem acender junto com ela —
+// três itens realçados ao mesmo tempo não dizem nada sobre onde o leitor está.
 const NAV = [
-  { key: 'solutions', anchor: '#features' },
-  { key: 'pricing',   anchor: '#plans' },
+  { key: 'solutions', anchor: '#features', secao: 'features' },
+  { key: 'pricing',   anchor: '#plans',    secao: 'plans' },
   { key: 'cases',     anchor: '#features' },
   { key: 'api',       anchor: '#features' },
 ]
@@ -75,8 +78,8 @@ export default function HeaderSection() {
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {NAV.map(({ key, anchor }) => {
-            const ativo = anchor === `#${secao}`
+          {NAV.map(({ key, anchor, secao: alvo }) => {
+            const ativo = alvo === secao
             return (
               <a
                 key={key}
