@@ -14,8 +14,10 @@ export default function Skeleton({
       aria-hidden
       className={cn(
         'animate-shimmer bg-[length:800px_100%]',
-        // Gradiente sutil entre dois tons de neutral para o efeito shimmer
-        'bg-[linear-gradient(90deg,theme(colors.neutral.800)_0%,theme(colors.neutral.700)_50%,theme(colors.neutral.800)_100%)]',
+        // Gradiente entre superfície e elevado — os dois trocam com o tema. Em
+        // neutral fixo, o placeholder saía como bloco escuro sobre o papel
+        // claro, e a varredura de contraste não pegava porque não há texto aqui.
+        'bg-[linear-gradient(90deg,rgb(var(--bg-surface-rgb))_0%,rgb(var(--bg-elevated-rgb))_50%,rgb(var(--bg-surface-rgb))_100%)]',
         rounded,
         className
       )}
