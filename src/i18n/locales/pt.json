@@ -993,11 +993,11 @@
         },
         {
           "h": "7. Por quanto tempo guardamos",
-          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conexão estiver ativa e são apagados quando você desconecta a conta ou exclui o criador.\nRegistros técnicos de erro são descartados em até 90 dias. Tokens de acesso expirados são removidos automaticamente pela rotina de limpeza da plataforma."
+          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conta permanecer cadastrada: desconectar a rede interrompe a coleta e apaga o token, mas preserva o histórico já coletado, para que desligar a coleta não apague o trabalho de análise junto. Para apagar também esse histórico, basta pedir — o caminho está na página de exclusão de dados.\nRegistros técnicos de erro são descartados em até 90 dias. Tokens de acesso expirados são removidos automaticamente pela rotina de limpeza da plataforma."
         },
         {
           "h": "8. Seus direitos e como exercê-los",
-          "p": "Você pode confirmar a existência de tratamento, acessar, corrigir, anonimizar, portar ou eliminar seus dados, e revogar o consentimento dado às plataformas sociais.\nA desconexão e a exclusão podem ser feitas diretamente na plataforma; o passo a passo está na página de exclusão de dados. Também é possível revogar o acesso da Lumina pelas configurações do Facebook, do Instagram, do Google ou do TikTok — nesse caso paramos de coletar imediatamente. Pedidos por escrito para {{email}} são respondidos em até 15 dias."
+          "p": "Você pode confirmar a existência de tratamento, acessar, corrigir, anonimizar, portar ou eliminar seus dados, e revogar o consentimento dado às plataformas sociais.\nA desconexão de uma rede social é feita na própria plataforma, e interrompe a coleta na hora. A exclusão dos dados já coletados é feita por pedido para {{email}}, respondido em até 15 dias. O passo a passo dos dois está na página de exclusão de dados.\nTambém é possível revogar o acesso da Lumina pelas configurações do Facebook, do Instagram, do Google ou do TikTok — nesse caso paramos de coletar imediatamente."
         },
         {
           "h": "9. Segurança",
@@ -1071,31 +1071,23 @@
     "deletion": {
       "title": "Exclusão de dados",
       "updated": "31 de agosto de 2026",
-      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Todos os caminhos abaixo levam à exclusão definitiva — não há lixeira.",
+      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Desconectar interrompe a coleta; para apagar o que já foi coletado, o caminho é o pedido descrito na seção 3. Toda exclusão é definitiva — não há lixeira.",
       "sections": [
         {
           "h": "1. Desconectar uma conta social",
-          "p": "Apaga o token de acesso, as publicações coletadas daquela conta e os comentários vinculados a elas. O criador continua cadastrado na plataforma, sem dados da rede desconectada.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, vá até a aba Contas conectadas e use Desconectar na rede desejada."
+          "p": "Apaga o token de acesso guardado e interrompe imediatamente qualquer nova coleta daquela conta. As publicações e comentários já coletados permanecem — a desconexão preserva o histórico de propósito, para que desligar a coleta não apague o trabalho de análise junto. Para apagar também o que já foi coletado, use o pedido por e-mail da seção 3.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, e no cartão \"Contas conectadas\" da aba Visão Geral use Desconectar na rede desejada."
         },
         {
-          "h": "2. Excluir um criador",
-          "p": "Apaga o cadastro do criador e, junto com ele, todas as contas conectadas, publicações, comentários e análises geradas.\nCaminho: Influenciadores, abra o criador, e use Excluir no menu da página."
+          "h": "2. Revogar o acesso pela própria rede social",
+          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use a seção 3."
         },
         {
-          "h": "3. Excluir a sua conta de usuário",
-          "p": "Apaga o seu cadastro e o acesso à plataforma. Se você for o único administrador da agência, a exclusão remove também os dados da agência: criadores, campanhas, relatórios e todo o histórico coletado.\nCaminho: Configurações, aba Conta, opção Excluir conta. A ação pede confirmação por escrito."
+          "h": "3. Pedir a exclusão dos dados por e-mail",
+          "p": "É o caminho que apaga de fato: escreva para {{email}} dizendo o que deseja excluir — uma conta social e as publicações coletadas dela, um criador inteiro, ou a sua conta de usuário e todos os dados da agência.\nConfirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD. A exclusão é definitiva: não há lixeira, e os dados não são recuperáveis depois.\nExcluir um criador remove junto todas as contas conectadas, publicações, comentários e análises geradas. Excluir a conta do único administrador da agência remove também os dados da agência: criadores, campanhas, relatórios e todo o histórico coletado."
         },
         {
-          "h": "4. Revogar o acesso pela própria rede social",
-          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use um dos caminhos acima ou o pedido por e-mail."
-        },
-        {
-          "h": "5. Pedir a exclusão por e-mail",
-          "p": "Se você não tem mais acesso à plataforma, escreva para {{email}} com o e-mail usado no cadastro e o que deseja apagar. Confirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD."
-        },
-        {
-          "h": "6. O que pode permanecer",
-          "p": "Registros técnicos de erro, sem conteúdo de publicação, são descartados em até 90 dias pela rotina de limpeza. Dados que a lei nos obrigue a reter — registros fiscais, por exemplo — são mantidos apenas pelo prazo legal e não são usados para nenhuma outra finalidade."
+          "h": "4. O que pode permanecer",
+          "p": "Registros técnicos de erro, que não guardam conteúdo de publicação, são descartados em até 90 dias pela rotina de limpeza. Dados que a lei nos obrigue a reter — registros fiscais, por exemplo — são mantidos apenas pelo prazo legal e não são usados para nenhuma outra finalidade."
         }
       ]
     }
