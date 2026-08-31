@@ -1,9 +1,10 @@
 import { lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import { AuthProvider }  from './context/AuthContext.jsx'
 import ProtectedRoute    from './components/auth/ProtectedRoute.jsx'
+import RouteTransition from './components/layout/RouteTransition.jsx'
 import AppLayout         from './layouts/AppLayout.jsx'
 
 // Entradas públicas ficam no bundle inicial: são o primeiro paint e carregar
@@ -47,20 +48,10 @@ function RouteFallback() {
   )
 }
 
-/**
- * AnimatedRoutes — wrapper que re-monta a subarvore de rotas a cada
- * navegacao para acionar a animacao fade-in via key={pathname}.
- *
- * Usa o segmento "raiz" da URL como chave (ex: /app/dashboard ->
- * "/app") para nao re-acionar a transicao quando apenas o path interno
- * de uma area muda — apenas em mudancas reais de "secao".
- */
+/** AnimatedRoutes — tabela de rotas envolvida pela transição de seção. */
 function AnimatedRoutes() {
-  const location = useLocation()
-  const sectionKey = location.pathname.split('/').slice(0, 3).join('/') || '/'
-
   return (
-    <div key={sectionKey} className="animate-fade-in">
+    <RouteTransition>
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           {/* Público */}
@@ -104,7 +95,7 @@ function AnimatedRoutes() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-    </div>
+    </RouteTransition>
   )
 }
 
