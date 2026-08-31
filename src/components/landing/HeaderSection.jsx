@@ -86,7 +86,9 @@ export default function HeaderSection() {
                 href={anchor}
                 aria-current={ativo ? 'true' : undefined}
                 className={cn(
-                  'pb-1.5 text-sm font-medium transition-colors',
+                  // min-w garante o alvo de 24px do WCAG 2.5.8: "API" mede 23px
+                  // de largura e ficava abaixo do mínimo.
+                  'min-w-6 pb-1.5 text-center text-sm font-medium transition-colors',
                   ativo
                     ? 'border-b-2 border-landing-violet text-landing-violet'
                     : 'text-landing-muted hover:text-landing-text'
@@ -103,7 +105,9 @@ export default function HeaderSection() {
           <Link
             to="/login"
             className={cn(
-              'hidden whitespace-nowrap text-sm font-medium text-landing-muted',
+              // py-1 leva o alvo de 20px para 28px sem deslocar nada: o flex
+              // centraliza o item na barra.
+              'hidden whitespace-nowrap py-1 text-sm font-medium text-landing-muted',
               'transition-colors hover:text-landing-text sm:block'
             )}
           >

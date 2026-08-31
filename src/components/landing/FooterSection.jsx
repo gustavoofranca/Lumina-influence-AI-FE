@@ -19,7 +19,12 @@ function Coluna({ titulo, chaves, t }) {
           <li key={chave}>
             <a
               href={ANCORAS[chave]}
-              className="text-xs leading-4 text-landing-muted transition-colors hover:text-landing-text"
+              className={cn(
+                // O texto de 12px deixa o alvo com 15px de altura; o padding
+                // vertical leva a 27px sem mexer no ritmo da coluna.
+                'inline-block py-1.5 text-xs leading-4 text-landing-muted',
+                'transition-colors hover:text-landing-text'
+              )}
             >
               {t(`landing.footer.links.${chave}`)}
             </a>
