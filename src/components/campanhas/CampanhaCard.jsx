@@ -41,7 +41,7 @@ function StackedAvatars({ participants, max = 4 }) {
 function MetaRow({ icon: Icon, label, value }) {
   return (
     <div>
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-label text-text-muted">
+      <div className="flex items-center gap-1.5 text-label">
         <Icon size={11} />
         {label}
       </div>
@@ -70,7 +70,10 @@ export default function CampanhaCard({ campanha }) {
       {/* Header: marca + status */}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
+          {/* `block truncate` mantém a marca em uma linha: com o rótulo em 12px,
+              "LUMIÈRE COSMÉTICOS" quebrava em duas e desalinhava o cartão em
+              relação aos vizinhos da grade. */}
+          <span className="block truncate text-label">
             {c.brand}
           </span>
           <h3 className="mt-1 truncate font-display text-lg font-bold text-text-primary group-hover:text-accent-strong">

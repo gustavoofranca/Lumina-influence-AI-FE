@@ -60,7 +60,7 @@ export default function AudienceIntegrityCard({ data, loading = false }) {
               <span className="block font-display text-4xl font-extrabold text-gradient-brand tabular-nums">
                 {data.organic}%
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
+              <span className="text-label">
                 {t('influenciador.audience.organic')}
               </span>
             </div>

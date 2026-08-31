@@ -25,7 +25,7 @@ const LOADING_SLOTS = 4
 function MiniKpi({ label, children }) {
   return (
     <div>
-      <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
+      <span className="block text-label">
         {label}
       </span>
       <span className="mt-1 block font-display text-lg font-bold tabular-nums">{children}</span>

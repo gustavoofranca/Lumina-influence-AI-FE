@@ -36,7 +36,7 @@ function CampaignDropdown({ options, value, onChange, label }) {
         aria-expanded={open}
       >
         <span className="flex flex-col items-start min-w-0">
-          <span className="text-[10px] font-semibold tracking-label text-text-muted">{label}</span>
+          <span className="text-label normal-case">{label}</span>
           <span className="truncate text-sm font-medium text-text-primary">{selected?.name}</span>
         </span>
         <ChevronDown

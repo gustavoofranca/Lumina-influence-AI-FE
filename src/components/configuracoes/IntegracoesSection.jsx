@@ -35,7 +35,7 @@ function formatSync(iso, locale) {
 function Stat({ label, children }) {
   return (
     <div>
-      <span className="block text-[10px] font-semibold uppercase tracking-label text-text-muted">
+      <span className="block text-label">
         {label}
       </span>
       <span className="mt-1 block font-medium text-text-primary">{children}</span>

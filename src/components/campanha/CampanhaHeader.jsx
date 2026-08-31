@@ -21,7 +21,7 @@ const STATUS_VARIANT = {
 function MetaCell({ label, value, accent = false }) {
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">{label}</span>
+      <span className="text-label">{label}</span>
       <span className={cn(
         'font-display font-bold',
         accent ? 'text-2xl text-gradient-brand' : 'text-base text-text-primary'

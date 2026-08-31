@@ -80,7 +80,7 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
+                  <span className="text-label">
                     {c.brand}
                   </span>
                   <h3 className="mt-1 truncate font-display text-base font-bold text-text-primary">

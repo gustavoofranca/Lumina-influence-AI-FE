@@ -102,7 +102,7 @@ export default function Sidebar({ open, onClose }) {
         {agency?.name && (
           <div className="shrink-0 border-b border-primary/10 px-5 py-2.5">
             <span
-              className="block truncate text-[10px] font-semibold uppercase tracking-label text-text-muted"
+              className="block truncate text-label"
               title={agency.name}
             >
               {agency.name}

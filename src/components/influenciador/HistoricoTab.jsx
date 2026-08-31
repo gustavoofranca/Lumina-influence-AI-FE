@@ -17,7 +17,7 @@ function formatDate(iso, locale) {
 function ScoreBar({ value, label }) {
   return (
     <div className="flex flex-col items-end gap-1">
-      <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">{label}</span>
+      <span className="text-label">{label}</span>
       <div className="flex items-center gap-2">
         <div className="h-1 w-20 overflow-hidden rounded-full bg-bg-elevated/60">
           {value == null ? null : (

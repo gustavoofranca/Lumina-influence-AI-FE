@@ -216,7 +216,7 @@ function Step3Review({ data, selectedInfs, t, locale }) {
           </div>
         </div>
         <div className="mt-4 border-t border-hairline/60 pt-4 text-sm">
-          <span className="text-[10px] font-semibold uppercase tracking-label text-text-muted">
+          <span className="text-label">
             {t('campanhas.detail.header.period')}
           </span>
           <div className="mt-0.5 font-semibold text-text-primary">
