@@ -12,6 +12,11 @@ export default function Skeleton({
   return (
     <div
       aria-hidden
+      // Marca estável para a verificação de carregamento. Sem texto e com
+      // `aria-hidden`, este elemento é invisível para toda varredura que
+      // percorre conteúdo — e foi por isso que ele passou meses saindo como
+      // bloco escuro no tema claro sem nada acusar.
+      data-skeleton=""
       className={cn(
         'animate-shimmer bg-[length:800px_100%]',
         // Gradiente entre superfície e elevado — os dois trocam com o tema. Em
