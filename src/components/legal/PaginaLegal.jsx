@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-react'
@@ -26,12 +25,6 @@ export default function PaginaLegal({ base }) {
 
   const secoes = t(`${base}.sections`, { returnObjects: true })
   const lista = Array.isArray(secoes) ? secoes : []
-
-  useEffect(() => {
-    const anterior = document.title
-    document.title = `${t(`${base}.title`)} · Lumina Influence AI`
-    return () => { document.title = anterior }
-  }, [base, t])
 
   return (
     <div className="min-h-screen bg-landing-bg font-sans text-landing-text">

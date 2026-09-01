@@ -31,11 +31,14 @@ export default function AuthLayout({ children }) {
       </div>
 
       {/* Card central */}
-      <div className="relative w-full max-w-md animate-fade-in">
+      {/* `main` e não `div`: é o marco que leva o leitor de tela direto ao
+          formulário, pulando cabeçalho e decoração. Login e cadastro eram as
+          únicas telas do produto sem nenhum marco de conteúdo. */}
+      <main className="relative w-full max-w-md animate-fade-in">
         <div className="rounded-2xl border border-primary/15 bg-bg-surface/70 p-8 shadow-glow-soft backdrop-blur-md">
           {children}
         </div>
-      </div>
+      </main>
 
       {/* Status rodapé */}
       <div className="relative mt-8">

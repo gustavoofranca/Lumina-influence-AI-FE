@@ -104,9 +104,12 @@ export default function Configuracoes() {
         </nav>
 
         {/* Conteudo */}
-        <main className="min-w-0">
+        {/* `section`, e não `main`: o AppLayout já é o marco principal, e dois
+            `main` na mesma página deixam o leitor de tela sem saber qual é o
+            conteúdo. O painel de abas é uma seção dentro dele. */}
+        <section className="min-w-0" aria-label={t('configuracoes.title')}>
           <ActiveSection onSave={() => setToastOpen(true)} />
-        </main>
+        </section>
       </div>
 
       <Toast

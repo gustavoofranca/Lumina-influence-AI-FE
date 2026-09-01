@@ -44,11 +44,17 @@ export function CardHeader({ children, className = '' }) {
   return <div className={cn('mb-4 flex items-start justify-between gap-3', className)}>{children}</div>
 }
 
-export function CardTitle({ children, className = '' }) {
+/**
+ * Título de cartão. Nasce como `h2` porque um cartão é seção direta da página,
+ * e a única coisa acima dele é o `h1` da tela — sair de `h1` para `h3`, como
+ * era antes, pula um nível e quebra a navegação por cabeçalho no leitor de
+ * tela. `as` existe para os cartões aninhados dentro de outro cartão.
+ */
+export function CardTitle({ children, className = '', as: Tag = 'h2' }) {
   return (
-    <h3 className={cn('font-display text-xl font-bold text-text-primary', className)}>
+    <Tag className={cn('font-display text-xl font-bold text-text-primary', className)}>
       {children}
-    </h3>
+    </Tag>
   )
 }
 

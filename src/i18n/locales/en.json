@@ -1148,5 +1148,21 @@
         }
       ]
     }
+  },
+  "titulos": {
+    "dashboard": "Overview",
+    "influenciadores": "Influencers",
+    "campanhas": "Campaigns",
+    "diagnostico": "AI Diagnosis",
+    "relatorios": "Reports",
+    "configuracoes": "Settings",
+    "novaCampanha": "New campaign",
+    "novoRelatorio": "New report",
+    "login": "Sign in",
+    "cadastro": "Create account",
+    "primeiroAcesso": "First access",
+    "landing": "Neural auditing for influence campaigns",
+    "welcome": "Welcome",
+    "designSystem": "Design system"
   }
 }

@@ -76,9 +76,9 @@ export default function CampanhaCard({ campanha }) {
           <span className="block truncate text-label">
             {c.brand}
           </span>
-          <h3 className="mt-1 truncate font-display text-lg font-bold text-text-primary group-hover:text-accent-strong">
+          <h2 className="mt-1 truncate font-display text-lg font-bold text-text-primary group-hover:text-accent-strong">
             {c.name}
-          </h3>
+          </h2>
         </div>
         <Badge variant={STATUS_VARIANT[c.status]}>
           {t(`campanhas.status.${c.status}`)}

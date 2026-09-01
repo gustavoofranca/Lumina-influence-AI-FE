@@ -35,7 +35,7 @@ function LinkDoRodape({ destino, children }) {
 function Coluna({ titulo, chaves, t }) {
   return (
     <div className="flex flex-col gap-6">
-      <h4 className="text-base font-semibold leading-6 text-white">{titulo}</h4>
+      <h2 className="text-base font-semibold leading-6 text-white">{titulo}</h2>
       <ul className="flex flex-col gap-4">
         {chaves.map((chave) => (
           <li key={chave}>

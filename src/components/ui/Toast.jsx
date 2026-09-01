@@ -18,6 +18,16 @@ const TYPE_STYLES = {
  *
  * Uso simples: estado open + setOpen(false) ao fechar:
  *   <Toast open={open} onClose={() => setOpen(false)} message="..." type="info" />
+ *
+ * **A região viva existe sempre, mesmo fechada.** Leitor de tela só anuncia
+ * mudança dentro de um nó que ele já estava observando; criar o nó junto com a
+ * mensagem faz o anúncio se perder. Como este componente é o que confirma as
+ * ações destrutivas — "criador excluído", "conta desconectada e 3 publicações
+ * apagadas" —, perder o anúncio significa apagar dado sem retorno audível.
+ *
+ * Erro vai em `role="alert"` (assertivo, interrompe a leitura); o resto em
+ * `role="status"` (educado, espera a pausa). A distinção é o que separa
+ * "aconteceu o que você pediu" de "algo deu errado agora".
  */
 export default function Toast({
   open,
@@ -34,13 +44,20 @@ export default function Toast({
     return () => clearTimeout(timer)
   }, [open, autoHideMs, onClose])
 
-  if (!open) return null
-
   const style = TYPE_STYLES[type] || TYPE_STYLES.info
   const Icon  = style.icon
+  const urgente = type === 'error'
 
   return createPortal(
-    <div className="fixed bottom-6 right-6 z-[70] max-w-sm animate-fade-in">
+    <div
+      data-toast-live
+      role={urgente ? 'alert' : 'status'}
+      aria-live={urgente ? 'assertive' : 'polite'}
+      aria-atomic="true"
+      className="fixed bottom-6 right-6 z-[70] max-w-sm"
+    >
+      {!open ? null : (
+      <div className="animate-fade-in">
       <div className={cn(
         'flex items-start gap-3 rounded-2xl border border-primary/20 bg-bg-surface/95 p-4 backdrop-blur-md',
         'shadow-glow-soft ring-1 ring-inset',
@@ -64,6 +81,8 @@ export default function Toast({
           <X size={14} />
         </button>
       </div>
+      </div>
+      )}
     </div>,
     document.body
   )

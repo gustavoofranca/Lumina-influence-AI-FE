@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider }  from './context/AuthContext.jsx'
 import ProtectedRoute    from './components/auth/ProtectedRoute.jsx'
 import RouteTransition from './components/layout/RouteTransition.jsx'
+import TituloDaPagina from './components/layout/TituloDaPagina.jsx'
 import AppLayout         from './layouts/AppLayout.jsx'
 
 // Entradas públicas ficam no bundle inicial: são o primeiro paint e carregar
@@ -58,6 +59,8 @@ function RouteFallback() {
 /** AnimatedRoutes — tabela de rotas envolvida pela transição de seção. */
 function AnimatedRoutes() {
   return (
+    <>
+    <TituloDaPagina />
     <RouteTransition>
       <Suspense fallback={<RouteFallback />}>
         <Routes>
@@ -106,6 +109,7 @@ function AnimatedRoutes() {
         </Routes>
       </Suspense>
     </RouteTransition>
+    </>
   )
 }
 

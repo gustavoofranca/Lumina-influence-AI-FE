@@ -15,11 +15,15 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-landing-bg font-sans text-landing-text">
       <HeaderSection />
+      {/* Um marco de conteúdo: sem ele o leitor de tela não tem como pular a
+          navegação e cair no miolo da página. */}
+      <main>
       <HeroSection />
       <LogosSection />
       <ComparativoSection />
       <PilaresSection />
       <PlansSection />
+      </main>
       <FooterSection />
     </div>
   )

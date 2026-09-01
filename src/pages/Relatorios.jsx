@@ -37,9 +37,9 @@ function RelatorioRow({ relatorio, onPreview, onDownload, t, locale }) {
       </span>
 
       <div className="min-w-0 flex-1">
-        <h3 className="truncate font-display text-base font-bold text-text-primary">
+        <h2 className="truncate font-display text-base font-bold text-text-primary">
           {relatorio.name}
-        </h3>
+        </h2>
         <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">
           <span>{formatDateRange(relatorio.period.start, relatorio.period.end, locale)}</span>
           <span>·</span>

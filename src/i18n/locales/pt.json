@@ -1148,5 +1148,21 @@
         }
       ]
     }
+  },
+  "titulos": {
+    "dashboard": "Visão Geral",
+    "influenciadores": "Influenciadores",
+    "campanhas": "Campanhas",
+    "diagnostico": "Diagnóstico IA",
+    "relatorios": "Relatórios",
+    "configuracoes": "Configurações",
+    "novaCampanha": "Nova campanha",
+    "novoRelatorio": "Novo relatório",
+    "login": "Entrar",
+    "cadastro": "Criar conta",
+    "primeiroAcesso": "Primeiro acesso",
+    "landing": "Auditoria neural de campanhas de influência",
+    "welcome": "Boas-vindas",
+    "designSystem": "Design system"
   }
 }
