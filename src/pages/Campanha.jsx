@@ -11,15 +11,25 @@ import BenchmarkTable     from '../components/campanha/BenchmarkTable.jsx'
 import RadarComparison    from '../components/campanha/RadarComparison.jsx'
 import EditarCampanhaModal from '../components/campanha/EditarCampanhaModal.jsx'
 import ConfirmacaoDigitada from '../components/ui/ConfirmacaoDigitada.jsx'
+import AdicionarParticipanteModal from '../components/campanha/AdicionarParticipanteModal.jsx'
+import Toast from '../components/ui/Toast.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { excluirCampanha, getCampaign, getCampaignBenchmarking, updateCampaign }
-  from '../services/campaigns.js'
+import { excluirCampanha, getCampaign, getCampaignBenchmarking, removerParticipante,
+  updateCampaign } from '../services/campaigns.js'
 
 export default function Campanha() {
   const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
   const [excluindo, setExcluindo] = useState(false)
+  const [adicionando, setAdicionando] = useState(false)
+  const [removendo, setRemovendo] = useState(null)
+  const [aviso, setAviso] = useState(null)
+
+  /** Recarrega as duas fontes: o detalhe traz o vínculo, o benchmarking os cards. */
+  const recarregarTudo = async () => {
+    await Promise.all([recarregarCampanha(), recarregarBench()])
+  }
   const { data: campanha, loading, error: erroCarregamento,
           refetch: recarregarCampanha } =
     useApi(() => getCampaign(id), [id])
@@ -95,6 +105,47 @@ export default function Campanha() {
         onExcluir={() => setExcluindo(true)}
       />
 
+      <Toast
+        open={Boolean(aviso)}
+        onClose={() => setAviso(null)}
+        type="success"
+        message={aviso || ''}
+      />
+
+      <AdicionarParticipanteModal
+        open={adicionando}
+        onClose={() => setAdicionando(false)}
+        campanhaId={id}
+        jaVinculados={(bench?.rows || []).map((p) => p.id)}
+        onAdicionado={async (nome) => {
+          setAdicionando(false)
+          await recarregarTudo()
+          setAviso(t('campanha.participantes.added', { nome }))
+        }}
+      />
+
+      <ConfirmacaoDigitada
+        open={Boolean(removendo)}
+        onClose={() => setRemovendo(null)}
+        titulo={t('campanha.participantes.removeTitle')}
+        aviso={t('campanha.participantes.removeWarning', {
+          nome: removendo?.name, campanha: campanha?.name,
+        })}
+        preservados={[
+          t('campanha.participantes.removeKeptCreator'),
+          t('campanha.participantes.removeKeptPosts'),
+        ]}
+        palavra={removendo?.name}
+        rotuloConfirmar={t('campanha.participantes.removeConfirm')}
+        onConfirmar={async () => {
+          const nome = removendo.name
+          await removerParticipante(id, removendo.id)
+          setRemovendo(null)
+          await recarregarTudo()
+          setAviso(t('campanha.participantes.removed', { nome }))
+        }}
+      />
+
       <ConfirmacaoDigitada
         open={excluindo}
         onClose={() => setExcluindo(false)}
@@ -136,7 +187,12 @@ export default function Campanha() {
         <ApiErrorBanner error={erroBench} onRetry={recarregarBench} />
       ) : (
         <>
-          <ParticipantesGrid participants={bench?.rows} loading={benchLoading} />
+          <ParticipantesGrid
+            participants={bench?.rows}
+            loading={benchLoading}
+            onAdicionar={() => setAdicionando(true)}
+            onRemover={setRemovendo}
+          />
 
           <section className="grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">

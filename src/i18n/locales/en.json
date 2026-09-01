@@ -1026,7 +1026,22 @@
     "participantes": {
       "score": "Score",
       "engagement": "Eng.",
-      "followers": "Followers"
+      "followers": "Followers",
+      "add": "Add creator",
+      "addTitle": "Add creator to the campaign",
+      "addSubtitle": "Pick who joins this campaign and the agreed fee.",
+      "creator": "Creator",
+      "fee": "Fee (R$)",
+      "confirm": "Add",
+      "noneLeft": "Every creator in the agency is already in this campaign.",
+      "added": "{{nome}} joined the campaign.",
+      "remove": "Remove from campaign",
+      "removeTitle": "Remove from campaign",
+      "removeWarning": "{{nome}} will no longer be part of {{campanha}}.",
+      "removeKeptCreator": "The creator stays registered, with all their history",
+      "removeKeptPosts": "Their collected posts keep existing",
+      "removeConfirm": "Remove",
+      "removed": "{{nome}} left the campaign."
     },
     "excluir": {
       "title": "Delete campaign",

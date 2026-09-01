@@ -1026,7 +1026,22 @@
     "participantes": {
       "score": "Score",
       "engagement": "Eng.",
-      "followers": "Seguidores"
+      "followers": "Seguidores",
+      "add": "Adicionar criador",
+      "addTitle": "Adicionar criador à campanha",
+      "addSubtitle": "Escolha quem entra nesta campanha e o cachê contratado.",
+      "creator": "Criador",
+      "fee": "Cachê (R$)",
+      "confirm": "Adicionar",
+      "noneLeft": "Todos os criadores da agência já estão nesta campanha.",
+      "added": "{{nome}} entrou na campanha.",
+      "remove": "Remover da campanha",
+      "removeTitle": "Remover da campanha",
+      "removeWarning": "{{nome}} deixa de fazer parte de {{campanha}}.",
+      "removeKeptCreator": "O criador continua cadastrado, com todo o histórico",
+      "removeKeptPosts": "As publicações coletadas dele continuam existindo",
+      "removeConfirm": "Remover",
+      "removed": "{{nome}} saiu da campanha."
     },
     "excluir": {
       "title": "Excluir campanha",

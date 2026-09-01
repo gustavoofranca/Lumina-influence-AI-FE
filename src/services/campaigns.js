@@ -179,3 +179,24 @@ export async function getCampaignBenchmarking(id) {
 export async function excluirCampanha(id) {
   await api.delete(`/campaigns/${id}`)
 }
+
+/**
+ * Vincula um criador a uma campanha que já existe.
+ *
+ * Até esta frente os participantes só podiam ser escolhidos na criação: depois
+ * disso a lista era imutável, num produto cuja unidade de trabalho é a
+ * campanha. Recontratar ou dispensar é a decisão que o sistema apoia.
+ */
+export async function adicionarParticipante(campaignId, { influencerId, feeReais = 0 }) {
+  const res = await api.post(`/campaigns/${campaignId}/participants`, {
+    influencer_id: influencerId,
+    // O back-end grava em centavos; a tela fala em reais.
+    fee_brl_cents: Math.round(Number(feeReais || 0) * 100),
+  })
+  return res.data
+}
+
+/** Desvincula o criador. Ele e as publicações dele permanecem. */
+export async function removerParticipante(campaignId, influencerId) {
+  await api.delete(`/campaigns/${campaignId}/participants/${influencerId}`)
+}

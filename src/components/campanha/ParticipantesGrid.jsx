@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowUpRight, Users } from 'lucide-react'
+import { ArrowUpRight, Users, UserPlus, X } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
+import Button from '../ui/Button.jsx'
+import IconButton from '../ui/IconButton.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
@@ -33,10 +35,14 @@ function MiniKpi({ label, children }) {
   )
 }
 
-function ParticipantCard({ participant, t }) {
+function ParticipantCard({ participant, t, onRemover }) {
   const p = participant
 
   return (
+    // O remover fica **fora** da âncora. Botão dentro de link é a armadilha que
+    // a bateria já registrou: o alvo de toque passa a ser a linha inteira e o
+    // clique navega em vez de agir.
+    <div className="relative">
     <Link
       to={`/app/influenciadores/${p.id}`}
       className={cn(
@@ -55,7 +61,7 @@ function ParticipantCard({ participant, t }) {
         </div>
         <ArrowUpRight
           size={14}
-          className="shrink-0 text-text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
+          className="mr-7 shrink-0 text-text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
         />
       </div>
 
@@ -87,18 +93,40 @@ function ParticipantCard({ participant, t }) {
         </span>
       </div>
     </Link>
+
+    {onRemover ? (
+      <div className="absolute right-3 top-3">
+        <IconButton
+          icon={X}
+          variant="ghost"
+          size="sm"
+          label={t('campanha.participantes.remove')}
+          onClick={() => onRemover(p)}
+        />
+      </div>
+    ) : null}
+    </div>
   )
 }
 
-export default function ParticipantesGrid({ participants, loading = false }) {
+export default function ParticipantesGrid({
+  participants, loading = false, onAdicionar, onRemover,
+}) {
   const { t } = useTranslation()
 
   return (
     <Card glass className="flex flex-col gap-5">
-      <div>
-        <CardLabel>{t('campanhas.detail.participants.title')}</CardLabel>
-        <CardTitle className="mt-1.5">{t('campanhas.detail.participants.title')}</CardTitle>
-        <p className="mt-1 text-sm text-text-secondary">{t('campanhas.detail.participants.subtitle')}</p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <CardLabel>{t('campanhas.detail.participants.title')}</CardLabel>
+          <CardTitle className="mt-1.5">{t('campanhas.detail.participants.title')}</CardTitle>
+          <p className="mt-1 text-sm text-text-secondary">{t('campanhas.detail.participants.subtitle')}</p>
+        </div>
+        {onAdicionar ? (
+          <Button variant="secondary" size="sm" leftIcon={UserPlus} onClick={onAdicionar}>
+            {t('campanha.participantes.add')}
+          </Button>
+        ) : null}
       </div>
 
       {loading ? (
@@ -112,7 +140,7 @@ export default function ParticipantesGrid({ participants, loading = false }) {
       ) : (
         <div className={GRID}>
           {participants.map((p) => (
-            <ParticipantCard key={p.id} participant={p} t={t} />
+            <ParticipantCard key={p.id} participant={p} t={t} onRemover={onRemover} />
           ))}
         </div>
       )}
