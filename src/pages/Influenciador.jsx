@@ -24,20 +24,25 @@ export default function Influenciador() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const [modalExcluir, setModalExcluir] = useState(false)
-  // Desconectar pode ter apagado o histórico; o cartão devolve a frase que
-  // descreve o que de fato aconteceu, e não um "pronto" genérico.
-  const [avisoContas, setAvisoContas] = useState(null)
+  // **Um** aviso por página. Dois `Toast` montados juntos criam duas regiões
+  // vivas, e o leitor de tela passa a observar dois nós para o mesmo tipo de
+  // anúncio — além de permitir dois cartões sobrepostos no mesmo canto.
+  // O texto vem de quem agiu: desconectar pode ter apagado o histórico, e
+  // sincronizar relata conta a conta.
+  const [aviso, setAviso] = useState(null)
 
   // O callback do OAuth devolve o navegador com ?conectado=<plataforma>. Abrir
   // direto na Visão Geral coloca o cartão de contas à vista de quem acabou de
   // vincular — cair no Diagnóstico faria a ação parecer não ter surtido efeito.
   const recemConectada = searchParams.get('conectado')
   const [tab, setTab] = useState(recemConectada ? 'overview' : 'diagnosis')
-  const [avisoConexao, setAvisoConexao] = useState(recemConectada)
 
   // Some com o parâmetro para que um F5 não repita o aviso.
   useEffect(() => {
     if (!recemConectada) return
+    setAviso(t('influenciador.conexoes.connected', {
+      plataforma: PLATFORM_META[recemConectada]?.name || recemConectada,
+    }))
     const limpo = new URLSearchParams(searchParams)
     limpo.delete('conectado')
     setSearchParams(limpo, { replace: true })
@@ -210,7 +215,7 @@ export default function Influenciador() {
                   // Também recarrega os posts: purgar o histórico esvazia a aba,
                   // e deixá-la com o conteúdo antigo mostraria dado apagado.
                   await recarregarPosts()
-                  if (mensagem) setAvisoContas(mensagem)
+                  if (mensagem) setAviso(mensagem)
                 }}
               />
             )}
@@ -229,19 +234,10 @@ export default function Influenciador() {
       </div>
 
       <Toast
-        open={Boolean(avisoContas)}
-        onClose={() => setAvisoContas(null)}
+        open={Boolean(aviso)}
+        onClose={() => setAviso(null)}
         type="success"
-        message={avisoContas || ''}
-      />
-
-      <Toast
-        open={Boolean(avisoConexao)}
-        onClose={() => setAvisoConexao(null)}
-        type="success"
-        message={t('influenciador.conexoes.connected', {
-          plataforma: PLATFORM_META[avisoConexao]?.name || avisoConexao,
-        })}
+        message={aviso || ''}
       />
     </div>
   )

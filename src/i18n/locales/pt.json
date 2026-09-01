@@ -725,7 +725,18 @@
       "unavailable": "Integração não configurada neste ambiente",
       "notCollecting": "vinculada, sem coleta ativa",
       "lastSync": "sync {{data}}",
-      "connected": "{{plataforma}} conectado com sucesso."
+      "connected": "{{plataforma}} conectado com sucesso.",
+      "sync": "Sincronizar agora",
+      "syncing": "Sincronizando…",
+      "syncResult": {
+        "synced": "{{rede}}: {{novos}} publicação nova, {{atualizados}} atualizada.",
+        "synced_other": "{{rede}}: {{novos}} publicações novas, {{atualizados}} atualizadas.",
+        "simulated": "{{rede}}: modo demonstração — os números cresceram sobre o dado de exemplo, sem coleta real.",
+        "not_connected": "{{rede}}: sem token guardado, nada foi coletado.",
+        "token_revoked": "{{rede}}: a autorização foi revogada na plataforma. Reconecte a conta.",
+        "rate_limited": "{{rede}}: a plataforma limitou as requisições. Tente mais tarde.",
+        "nothing": "Nenhuma conta vinculada para sincronizar."
+      }
     },
     "neuralConfidence": {
       "empty": "Confiança neural indisponível — rode uma análise.",

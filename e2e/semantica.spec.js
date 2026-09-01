@@ -100,6 +100,11 @@ for (const rota of [...PUBLICAS, ...INTERNAS]) {
     // Controle sem nome é anunciado como "botão", e só.
     expect(a.semNome, JSON.stringify(a.semNome, null, 2)).toEqual([])
 
+    // Mais de uma região viva para o mesmo tipo de anúncio faz o leitor de tela
+    // observar dois nós e permite dois cartões no mesmo canto. A página do
+    // criador tinha dois `Toast` montados juntos, e foi assim que apareceu.
+    expect(a.regioesVivas, `mais de uma região viva em ${rota}`).toBeLessThanOrEqual(1)
+
     expect(erros).toEqual([])
   })
 }

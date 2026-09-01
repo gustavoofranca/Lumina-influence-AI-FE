@@ -725,7 +725,18 @@
       "unavailable": "Integration not configured in this environment",
       "notCollecting": "linked, not collecting",
       "lastSync": "synced {{data}}",
-      "connected": "{{plataforma}} connected successfully."
+      "connected": "{{plataforma}} connected successfully.",
+      "sync": "Sync now",
+      "syncing": "Syncing…",
+      "syncResult": {
+        "synced": "{{rede}}: {{novos}} new post, {{atualizados}} updated.",
+        "synced_other": "{{rede}}: {{novos}} new posts, {{atualizados}} updated.",
+        "simulated": "{{rede}}: demo mode — the numbers grew over sample data, with no real collection.",
+        "not_connected": "{{rede}}: no stored token, nothing was collected.",
+        "token_revoked": "{{rede}}: authorization was revoked on the platform. Reconnect the account.",
+        "rate_limited": "{{rede}}: the platform throttled the requests. Try again later.",
+        "nothing": "No linked account to sync."
+      }
     },
     "neuralConfidence": {
       "empty": "Neural confidence unavailable — run an analysis.",

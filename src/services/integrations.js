@@ -30,3 +30,17 @@ export async function disconnectAccount(platform, socialAccountId, { purgarColet
   })
   return res.data
 }
+
+/**
+ * Força a coleta das contas conectadas de um criador.
+ *
+ * Devolve o resultado **por conta**, e o chamador precisa olhar cada um: o
+ * back-end responde 200 mesmo quando uma conta falha, com `status` dizendo o
+ * que houve — `synced`, `simulated`, `not_connected`, `token_revoked` ou
+ * `rate_limited`. Resumir tudo como "sincronizado" transformaria token
+ * revogado em sucesso, que é a mesma família de defeito que o projeto persegue.
+ */
+export async function sincronizarContas(influencerId) {
+  const res = await api.post(`/influencers/${influencerId}/sync`)
+  return res.data
+}

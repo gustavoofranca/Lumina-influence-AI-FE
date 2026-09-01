@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link2, Unlink, Plug } from 'lucide-react'
+import { Link2, Unlink, Plug, RefreshCw } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
@@ -8,7 +8,7 @@ import Button from '../ui/Button.jsx'
 import DesconectarModal from './DesconectarModal.jsx'
 import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
-import { getConnectUrl, disconnectAccount } from '../../services/integrations.js'
+import { getConnectUrl, disconnectAccount, sincronizarContas } from '../../services/integrations.js'
 
 const PLATFORMS = Object.keys(PLATFORM_META)
 
@@ -64,6 +64,43 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
   // clica, não por um padrão invisível.
   const [aDesconectar, setADesconectar] = useState(null)
 
+  const [sincronizando, setSincronizando] = useState(false)
+
+  /**
+   * Pede a coleta agora, em vez de esperar o agendador de 6 em 6 horas.
+   *
+   * O resumo é montado **por conta**, e não como um "pronto" único: o back-end
+   * responde 200 mesmo quando uma delas falha, e dizer "sincronizado" com um
+   * token revogado no meio seria transformar falha em sucesso.
+   */
+  const sincronizar = async () => {
+    setErro(null)
+    setSincronizando(true)
+    try {
+      const r = await sincronizarContas(influenciador.id)
+      const contas = r?.accounts || []
+      const linhas = contas.map((c) => {
+        const rede = PLATFORM_META[c.platform]?.name || c.platform
+        if (c.status === 'synced') {
+          return t('influenciador.conexoes.syncResult.synced', {
+            rede, novos: c.posts_created ?? 0, atualizados: c.posts_updated ?? 0,
+            count: c.posts_created ?? 0,
+          })
+        }
+        return t(`influenciador.conexoes.syncResult.${c.status}`, {
+          rede, defaultValue: `${rede}: ${c.status}`,
+        })
+      })
+      await onChange?.(
+        linhas.length ? linhas.join(' ') : t('influenciador.conexoes.syncResult.nothing')
+      )
+    } catch (err) {
+      setErro(err.message)
+    } finally {
+      setSincronizando(false)
+    }
+  }
+
   const desconectar = async (purgar) => {
     const alvo = aDesconectar
     if (!alvo) return
@@ -97,12 +134,27 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
       onConfirmar={desconectar}
     />
     <Card glass className="flex flex-col gap-5">
-      <div>
-        <CardLabel>{t('influenciador.conexoes.label')}</CardLabel>
-        <CardTitle className="mt-1.5">{t('influenciador.conexoes.title')}</CardTitle>
-        <p className="mt-1 text-sm text-text-secondary">
-          {t('influenciador.conexoes.subtitle')}
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <CardLabel>{t('influenciador.conexoes.label')}</CardLabel>
+          <CardTitle className="mt-1.5">{t('influenciador.conexoes.title')}</CardTitle>
+          <p className="mt-1 text-sm text-text-secondary">
+            {t('influenciador.conexoes.subtitle')}
+          </p>
+        </div>
+        {/* Sem este botão, conectar uma conta e não ver dado chegar era o
+            comportamento normal: a coleta só acontecia no agendador, de 6 em 6
+            horas, e nada na tela dizia isso. */}
+        <Button
+          variant="secondary"
+          size="sm"
+          leftIcon={RefreshCw}
+          loading={sincronizando}
+          disabled={sincronizando}
+          onClick={sincronizar}
+        >
+          {t(sincronizando ? 'influenciador.conexoes.syncing' : 'influenciador.conexoes.sync')}
+        </Button>
       </div>
 
       {erro && (
