@@ -755,7 +755,9 @@
         "high": "High priority",
         "medium": "Medium priority",
         "low": "Low priority"
-      }
+      },
+      "decidedBy": "{{nome}} decided on {{data}}",
+      "undo": "Undo"
     },
     "overview": {
       "growthEmpty": "No posts in the period to build the growth series.",

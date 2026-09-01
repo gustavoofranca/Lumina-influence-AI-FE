@@ -29,7 +29,9 @@ const KPI_ICONS = {
 // O back-end devolve sempre os mesmos quatro indicadores de diagnostico.
 const KPI_SLOTS = 4
 
-export default function DiagnosticoTab({ analysis, loading = false }) {
+export default function DiagnosticoTab({
+  analysis, loading = false, influencerId, onRecarregarAnalise,
+}) {
   const { t } = useTranslation()
   const kpis = adaptDiagnosticKpis(analysis?.diagnostic_kpis)
 
@@ -97,6 +99,9 @@ export default function DiagnosticoTab({ analysis, loading = false }) {
       <RecommendationsCard
         data={adaptRecommendations(analysis?.recommendations)}
         loading={loading}
+        influencerId={influencerId}
+        analysisId={analysis?.latest_analysis_id}
+        onRecarregar={onRecarregarAnalise}
       />
     </div>
   )

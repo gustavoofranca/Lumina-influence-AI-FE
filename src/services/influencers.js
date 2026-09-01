@@ -224,11 +224,40 @@ export function adaptSentimentClusters(rows) {
 
 export function adaptRecommendations(rows) {
   return (rows || []).map((r, i) => ({
-    id: `rec-${i + 1}`,
+    // O índice vem do back-end: é a identidade estável do item, porque a
+    // recomendação vive dentro do JSON da análise e não tem id próprio.
+    // Gerar `rec-N` aqui dava um id que não valia nada fora desta tela — e era
+    // por isso que a decisão não tinha onde ser gravada.
+    index: r.index ?? i,
+    id: `rec-${r.index ?? i}`,
     priority: r.priority,
     title: r.title,
     description: r.description,
+    decision: r.decision ?? null,
+    decidedBy: r.decided_by ?? null,
+    decidedAt: r.decided_at ?? null,
   }))
+}
+
+/**
+ * Registra o que a agência decidiu sobre uma recomendação da IA.
+ *
+ * `decisao` é 'accepted' ou 'ignored'. Idempotente: decidir de novo troca a
+ * decisão vigente e registra quem a tomou.
+ */
+export async function decidirRecomendacao(influencerId, { analysisId, index, decisao }) {
+  const res = await api.put(`/influencers/${influencerId}/recommendations/${index}`, {
+    analysis_id: analysisId,
+    decision: decisao,
+  })
+  return res.data
+}
+
+/** Devolve a recomendação ao estado indeciso — decidir por engano acontece. */
+export async function desfazerDecisaoDeRecomendacao(influencerId, { analysisId, index }) {
+  await api.delete(
+    `/influencers/${influencerId}/recommendations/${index}?analysis_id=${analysisId}`
+  )
 }
 
 /**

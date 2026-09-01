@@ -7,6 +7,11 @@ import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
 import Button from '../../ui/Button.jsx'
 import EmptyState from '../../ui/EmptyState.jsx'
 import Skeleton from '../../ui/Skeleton.jsx'
+import ApiErrorBanner from '../../ui/ApiErrorBanner.jsx'
+import {
+  decidirRecomendacao,
+  desfazerDecisaoDeRecomendacao,
+} from '../../../services/influencers.js'
 
 const PRIORITY_STYLES = {
   high:   'bg-tertiary-500/15 text-tint-rose ring-tertiary-500/30',
@@ -19,7 +24,7 @@ const STATE_STYLES = {
   ignored:  { ring: 'ring-tertiary-500/25 bg-tertiary-500/5', icon: X,     label: 'ignored',  color: 'text-tint-rose' },
 }
 
-function RecommendationItem({ rec, status, onAccept, onIgnore, t }) {
+function RecommendationItem({ rec, status, ocupado, onAccept, onIgnore, onDesfazer, t, i18n }) {
   const stateStyle = status && STATE_STYLES[status]
 
   return (
@@ -56,24 +61,95 @@ function RecommendationItem({ rec, status, onAccept, onIgnore, t }) {
         {rec.description}
       </p>
 
-      {/* Acoes — somente se ainda nao foi decidida */}
-      {!status && (
+      {!status ? (
         <div className="mt-4 flex items-center gap-2">
-          <Button variant="primary" size="sm" leftIcon={Check} onClick={onAccept}>
+          <Button variant="primary" size="sm" leftIcon={Check} loading={ocupado}
+                  disabled={ocupado} onClick={onAccept}>
             {t('influenciador.recommendations.accept')}
           </Button>
-          <Button variant="secondary" size="sm" leftIcon={X} onClick={onIgnore}>
+          <Button variant="secondary" size="sm" leftIcon={X} loading={ocupado}
+                  disabled={ocupado} onClick={onIgnore}>
             {t('influenciador.recommendations.ignore')}
           </Button>
+        </div>
+      ) : (
+        // Quem decidiu e quando: uma auditoria em que ninguém responde pelo
+        // aceite não é auditoria. E o desfazer existe porque decidir por
+        // engano é diferente de decidir — sem ele um clique errado congelava
+        // o item, e a tela passava a afirmar uma decisão que ninguém tomou.
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">
+          {rec.decidedBy ? (
+            <span>
+              {t('influenciador.recommendations.decidedBy', {
+                nome: rec.decidedBy,
+                data: formatarData(rec.decidedAt, i18n.language),
+              })}
+            </span>
+          ) : null}
+          <button
+            type="button"
+            onClick={onDesfazer}
+            disabled={ocupado}
+            className="font-semibold text-accent underline-offset-2 transition-opacity hover:underline disabled:opacity-50"
+          >
+            {t('influenciador.recommendations.undo')}
+          </button>
         </div>
       )}
     </li>
   )
 }
 
-export default function RecommendationsCard({ data, loading = false }) {
-  const { t } = useTranslation()
-  const [decisions, setDecisions] = useState({}) // { [recId]: 'accepted' | 'ignored' }
+/** Data curta e local. Sem data, `new Date(null)` cairia na epoch. */
+function formatarData(iso, idioma) {
+  if (!iso) return ''
+  try {
+    return new Date(iso).toLocaleDateString(idioma === 'pt' ? 'pt-BR' : 'en-US', {
+      day: '2-digit', month: 'short',
+    })
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * Recomendações da IA, com a decisão da agência.
+ *
+ * A decisão **vem do servidor** e volta para ele. Antes ela vivia num
+ * `useState` local: aceitar uma recomendação não acontecia de verdade, sumia ao
+ * recarregar, e ninguém respondia por ela. Numa ferramenta de auditoria, o
+ * registro do que a agência decidiu é parte do produto, não enfeite da tela.
+ */
+export default function RecommendationsCard({
+  data, loading = false, influencerId, analysisId, onRecarregar,
+}) {
+  const { t, i18n } = useTranslation()
+  const [ocupado, setOcupado] = useState(null)
+  const [erro, setErro] = useState(null)
+
+  const decidir = async (rec, decisao) => {
+    if (!influencerId || !analysisId) return
+    setOcupado(rec.index)
+    setErro(null)
+    try {
+      if (decisao === null) {
+        await desfazerDecisaoDeRecomendacao(influencerId, {
+          analysisId, index: rec.index,
+        })
+      } else {
+        await decidirRecomendacao(influencerId, {
+          analysisId, index: rec.index, decisao,
+        })
+      }
+      // Recarrega do servidor em vez de adivinhar o novo estado: quem decidiu e
+      // quando são do servidor, e inventá-los aqui seria a mesma mentira de antes.
+      await onRecarregar?.()
+    } catch (err) {
+      setErro(err)
+    } finally {
+      setOcupado(null)
+    }
+  }
 
   if (loading) {
     return (
@@ -101,15 +177,20 @@ export default function RecommendationsCard({ data, loading = false }) {
         <p className="mt-1 text-sm text-text-secondary">{t('influenciador.recommendations.subtitle')}</p>
       </div>
 
+      {erro ? <ApiErrorBanner error={erro} /> : null}
+
       <ul className="space-y-3">
         {data.map((rec) => (
           <RecommendationItem
             key={rec.id}
             rec={rec}
-            status={decisions[rec.id]}
-            onAccept={() => setDecisions((p) => ({ ...p, [rec.id]: 'accepted' }))}
-            onIgnore={() => setDecisions((p) => ({ ...p, [rec.id]: 'ignored' }))}
+            status={rec.decision}
+            ocupado={ocupado === rec.index}
+            onAccept={() => decidir(rec, 'accepted')}
+            onIgnore={() => decidir(rec, 'ignored')}
+            onDesfazer={() => decidir(rec, null)}
             t={t}
+            i18n={i18n}
           />
         ))}
       </ul>

@@ -755,7 +755,9 @@
         "high": "Alta prioridade",
         "medium": "Média prioridade",
         "low": "Baixa prioridade"
-      }
+      },
+      "decidedBy": "{{nome}} decidiu em {{data}}",
+      "undo": "Desfazer"
     },
     "overview": {
       "growthEmpty": "Sem posts no período para montar a série de crescimento.",

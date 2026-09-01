@@ -215,7 +215,14 @@ export default function Influenciador() {
               />
             )}
             {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
-            {tab === 'diagnosis' && <DiagnosticoTab analysis={analysis} loading={loadingAnalysis} />}
+            {tab === 'diagnosis' && (
+              <DiagnosticoTab
+                analysis={analysis}
+                loading={loadingAnalysis}
+                influencerId={id}
+                onRecarregarAnalise={recarregarAnalise}
+              />
+            )}
             {tab === 'history'   && <HistoricoTab data={historico} loading={loadingHistorico} />}
           </>
         )}
