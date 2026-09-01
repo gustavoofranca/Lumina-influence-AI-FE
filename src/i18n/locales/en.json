@@ -1042,7 +1042,7 @@
         },
         {
           "h": "7. How long we keep it",
-          "p": "Account data and content you create are kept while the account exists. Metrics and comments collected from the platforms are kept while the account remains registered: disconnecting a network stops collection and erases the token, and you choose right there whether the history already collected goes with it. Deleting the creator, or your account, erases everything gathered from them.\nTechnical error logs are discarded within 90 days. Expired access tokens are removed automatically by the platform's cleanup job."
+          "p": "Account data and content you create are kept while the account exists. Metrics and comments collected from the platforms are kept while the account remains registered: disconnecting a network stops collection and erases the token, and you choose right there whether the history already collected goes with it. Deleting the creator, or your account, erases everything gathered from them.\nA daily job removes access tokens that have expired and can no longer be renewed, and discards API usage records older than 90 days — the only technical record we keep in the database. Other execution logs go to the server's standard output and are retained by the hosting environment, not by us."
         },
         {
           "h": "8. Your rights and how to exercise them",

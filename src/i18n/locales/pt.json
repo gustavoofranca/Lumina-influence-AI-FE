@@ -1042,7 +1042,7 @@
         },
         {
           "h": "7. Por quanto tempo guardamos",
-          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conta permanecer cadastrada: desconectar a rede interrompe a coleta e apaga o token, e você escolhe na hora se o histórico já coletado vai junto. Excluir o criador, ou a sua conta, apaga tudo o que foi recolhido dele.\nRegistros técnicos de erro são descartados em até 90 dias. Tokens de acesso expirados são removidos automaticamente pela rotina de limpeza da plataforma."
+          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conta permanecer cadastrada: desconectar a rede interrompe a coleta e apaga o token, e você escolhe na hora se o histórico já coletado vai junto. Excluir o criador, ou a sua conta, apaga tudo o que foi recolhido dele.\nUma rotina diária remove os tokens de acesso que expiraram e já não podem ser renovados, e descarta o registro de uso de API com mais de 90 dias — é o único registro técnico que guardamos em banco. Os demais registros de execução vão para a saída padrão do servidor e são retidos pelo ambiente de hospedagem, não por nós."
         },
         {
           "h": "8. Seus direitos e como exercê-los",
