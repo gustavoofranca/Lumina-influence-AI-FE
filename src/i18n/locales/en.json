@@ -647,7 +647,8 @@
       "sessionId": "Session ID",
       "lastAnalysis": "Last analysis on",
       "quotaExceeded": "Gemini daily quota exhausted. The free tier allows 20 analyses per day, per project and per model — waiting will not help, only the next day.",
-      "rerun": "Re-run Diagnosis"
+      "rerun": "Re-run Diagnosis",
+      "followersLabel": "followers"
     },
     "tabs": {
       "overview": "Overview",
@@ -769,6 +770,20 @@
       "title": "Influencer not found",
       "subtitle": "The requested creator is not connected to your agency.",
       "back": "Back to list"
+    },
+    "excluir": {
+      "title": "Delete creator",
+      "trigger": "Delete creator",
+      "warning": "You are about to delete {{nome}} and everything Lumina collected about this creator.",
+      "items": {
+        "accounts": "The connected accounts and the stored access tokens",
+        "posts": "The collected posts and the comments attached to them",
+        "analyses": "The diagnostics and the analysis history"
+      },
+      "irreversible": "Deletion is permanent. There is no recycle bin and the data cannot be recovered.",
+      "prompt": "Type {{nome}} to confirm",
+      "confirm": "Delete permanently",
+      "done": "{{nome}} was deleted and the collected data was erased."
     }
   },
   "influenciadores": {
@@ -1071,22 +1086,26 @@
     "deletion": {
       "title": "Data deletion",
       "updated": "August 31, 2026",
-      "intro": "This page explains how to erase the data Lumina Influence AI holds about you and about the social accounts you connected. Disconnecting stops collection; to erase what was already collected, use the request described in section 3. Every deletion is permanent — there is no recycle bin.",
+      "intro": "This page explains how to erase the data Lumina Influence AI holds about you and about the social accounts you connected. Disconnecting stops collection; to erase what was already collected, delete the creator — section 2. Every deletion is permanent — there is no recycle bin.",
       "sections": [
         {
           "h": "1. Disconnect a social account",
-          "p": "Erases the stored access token and immediately stops any further collection from that account. Posts and comments already collected remain — disconnection preserves the history on purpose, so that turning collection off does not erase the analysis work along with it. To erase what was already collected as well, use the email request in section 3.\nPath: sign in, open Influencers, pick the creator, and in the \"Connected accounts\" card on the Overview tab use Disconnect on the network you want."
+          "p": "Erases the stored access token and immediately stops any further collection from that account. Posts and comments already collected remain — disconnection preserves the history on purpose, so that turning collection off does not erase the analysis work along with it. To erase what was already collected as well, delete the creator — section 2.\nPath: sign in, open Influencers, pick the creator, and in the \"Connected accounts\" card on the Overview tab use Disconnect on the network you want."
         },
         {
-          "h": "2. Revoke access from the social network itself",
-          "p": "You can cut Lumina's access without signing in to the platform:\nFacebook and Instagram: Settings & privacy, Settings, Apps and websites, select Lumina Influence AI and remove.\nGoogle and YouTube: myaccount.google.com/permissions, select Lumina Influence AI and remove access.\nTikTok: Settings, Security and permissions, Manage app permissions.\nRevoking stops collection immediately. To erase what was already collected, use section 3."
+          "h": "2. Delete a creator and everything collected from them",
+          "p": "Erases the creator's record and, in cascade, every connected account, stored token, collected post, comment and generated analysis. This is the path that actually erases what Lumina gathered from the platforms.\nPath: sign in, open Influencers, pick the creator and use Delete creator at the top of the page. The confirmation asks you to type the creator's name, because deletion is permanent — there is no recycle bin and the data cannot be recovered."
         },
         {
-          "h": "3. Request data deletion by email",
-          "p": "This is the path that actually erases: write to {{email}} saying what you want deleted — one social account and the posts collected from it, an entire creator, or your user account and all of the agency's data.\nWe verify identity before acting and answer within 15 days, as required by Brazil's LGPD. Deletion is permanent: there is no recycle bin, and the data cannot be recovered afterwards.\nDeleting a creator also removes every connected account, post, comment and generated analysis. Deleting the account of the agency's only administrator also removes the agency's data: creators, campaigns, reports and all collected history."
+          "h": "3. Revoke access from the social network itself",
+          "p": "You can cut Lumina's access without signing in to the platform:\nFacebook and Instagram: Settings & privacy, Settings, Apps and websites, select Lumina Influence AI and remove.\nGoogle and YouTube: myaccount.google.com/permissions, select Lumina Influence AI and remove access.\nTikTok: Settings, Security and permissions, Manage app permissions.\nRevoking stops collection immediately. To erase what was already collected, use section 2."
         },
         {
-          "h": "4. What may remain",
+          "h": "4. Request data deletion by email",
+          "p": "This is the path for what the interface does not cover: deleting your user account and the agency's data. Write to {{email}} saying what you want deleted.\nWe verify identity before acting and answer within 15 days, as required by Brazil's LGPD. Deleting the account of the agency's only administrator also removes creators, campaigns, reports and all collected history."
+        },
+        {
+          "h": "5. What may remain",
           "p": "Technical error logs, which hold no post content, are discarded within 90 days by the cleanup job. Data we are legally required to retain — tax records, for example — is kept only for the statutory period and used for no other purpose."
         }
       ]

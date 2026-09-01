@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, RotateCw } from 'lucide-react'
+import { ArrowLeft, RotateCw, Trash2 } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Avatar from '../ui/Avatar.jsx'
@@ -36,6 +36,7 @@ function formatDate(iso, locale) {
 export default function InfluenciadorHeader({
   influenciador,
   onRerun,
+  onExcluir,
   reanalisando = false,
   podeReanalisar = true,
 }) {
@@ -89,7 +90,9 @@ export default function InfluenciadorHeader({
               <span className="text-text-muted">·</span>
               <PlatformBadgeList platforms={inf.platforms} size={14} />
               <span className="text-text-muted">·</span>
-              <span>{formatFollowers(inf.followers)} seguidores</span>
+              <span>
+                {formatFollowers(inf.followers)} {t('influenciador.header.followersLabel')}
+              </span>
               <span className="text-text-muted">·</span>
               <Badge variant="neutral" uppercase={false}>{inf.niche}</Badge>
             </div>
@@ -119,6 +122,12 @@ export default function InfluenciadorHeader({
             onClick={onRerun}
           >
             {t('influenciador.header.rerun')}
+          </Button>
+          {/* Exclusão fica em `secondary`: é ação destrutiva e definitiva, não
+              deve competir visualmente com a ação principal da tela. O aviso e
+              a confirmação digitada moram no modal. */}
+          <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
+            {t('influenciador.excluir.trigger')}
           </Button>
         </div>
       </div>

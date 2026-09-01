@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, UserX } from 'lucide-react'
 
@@ -13,6 +13,7 @@ import VisaoGeralTab        from '../components/influenciador/VisaoGeralTab.jsx'
 import PostsAnalisadosTab   from '../components/influenciador/PostsAnalisadosTab.jsx'
 import DiagnosticoTab       from '../components/influenciador/DiagnosticoTab.jsx'
 import HistoricoTab         from '../components/influenciador/HistoricoTab.jsx'
+import ExcluirCriadorModal from '../components/influenciador/ExcluirCriadorModal.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { analyzePost, getInfluencer, getInfluencerAnalysis, getInfluencerAnalysisHistory, getInfluencerPosts }
   from '../services/influencers.js'
@@ -20,7 +21,9 @@ import { analyzePost, getInfluencer, getInfluencerAnalysis, getInfluencerAnalysi
 export default function Influenciador() {
   const { t } = useTranslation()
   const { id } = useParams()
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+  const [modalExcluir, setModalExcluir] = useState(false)
 
   // O callback do OAuth devolve o navegador com ?conectado=<plataforma>. Abrir
   // direto na Visão Geral coloca o cartão de contas à vista de quem acabou de
@@ -153,6 +156,7 @@ export default function Influenciador() {
     <div className="flex flex-col gap-6">
       <InfluenciadorHeader
         onRerun={reanalisar}
+        onExcluir={() => setModalExcluir(true)}
         reanalisando={reanalisando}
         podeReanalisar={Boolean(posts?.length)}
         influenciador={
@@ -169,6 +173,21 @@ export default function Influenciador() {
           {erroAnalise}
         </p>
       )}
+
+      <ExcluirCriadorModal
+        open={modalExcluir}
+        onClose={() => setModalExcluir(false)}
+        influenciador={influenciador}
+        onExcluido={() => {
+          // `replace` de propósito: voltar pelo histórico cairia na página de um
+          // criador que não existe mais, e a tela de "não encontrado" pareceria
+          // defeito em vez de consequência.
+          navigate('/app/influenciadores', {
+            replace: true,
+            state: { excluido: influenciador?.name },
+          })
+        }}
+      />
 
       {/* Tabs */}
       <Tabs items={tabItems} value={tab} onChange={setTab} />

@@ -647,7 +647,8 @@
       "sessionId": "Session ID",
       "lastAnalysis": "Última análise em",
       "quotaExceeded": "Cota diária do Gemini esgotada. O free tier permite 20 análises por dia, por projeto e por modelo — esperar não resolve, só o dia seguinte.",
-      "rerun": "Re-run Diagnosis"
+      "rerun": "Re-run Diagnosis",
+      "followersLabel": "seguidores"
     },
     "tabs": {
       "overview": "Visão Geral",
@@ -769,6 +770,20 @@
       "title": "Influenciador não encontrado",
       "subtitle": "O criador solicitado não está conectado à sua agência.",
       "back": "Voltar para a lista"
+    },
+    "excluir": {
+      "title": "Excluir criador",
+      "trigger": "Excluir criador",
+      "warning": "Você está prestes a excluir {{nome}} e tudo que a Lumina coletou sobre esse criador.",
+      "items": {
+        "accounts": "As contas conectadas e os tokens de acesso guardados",
+        "posts": "As publicações coletadas e os comentários vinculados a elas",
+        "analyses": "Os diagnósticos e o histórico de análises"
+      },
+      "irreversible": "A exclusão é definitiva. Não há lixeira e os dados não podem ser recuperados.",
+      "prompt": "Digite {{nome}} para confirmar",
+      "confirm": "Excluir definitivamente",
+      "done": "{{nome}} foi excluído e os dados coletados foram apagados."
     }
   },
   "influenciadores": {
@@ -1071,22 +1086,26 @@
     "deletion": {
       "title": "Exclusão de dados",
       "updated": "31 de agosto de 2026",
-      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Desconectar interrompe a coleta; para apagar o que já foi coletado, o caminho é o pedido descrito na seção 3. Toda exclusão é definitiva — não há lixeira.",
+      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Desconectar interrompe a coleta; para apagar o que já foi coletado, o caminho é excluir o criador, na seção 2. Toda exclusão é definitiva — não há lixeira.",
       "sections": [
         {
           "h": "1. Desconectar uma conta social",
-          "p": "Apaga o token de acesso guardado e interrompe imediatamente qualquer nova coleta daquela conta. As publicações e comentários já coletados permanecem — a desconexão preserva o histórico de propósito, para que desligar a coleta não apague o trabalho de análise junto. Para apagar também o que já foi coletado, use o pedido por e-mail da seção 3.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, e no cartão \"Contas conectadas\" da aba Visão Geral use Desconectar na rede desejada."
+          "p": "Apaga o token de acesso guardado e interrompe imediatamente qualquer nova coleta daquela conta. As publicações e comentários já coletados permanecem — a desconexão preserva o histórico de propósito, para que desligar a coleta não apague o trabalho de análise junto. Para apagar também o que já foi coletado, exclua o criador — seção 2.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, e no cartão \"Contas conectadas\" da aba Visão Geral use Desconectar na rede desejada."
         },
         {
-          "h": "2. Revogar o acesso pela própria rede social",
-          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use a seção 3."
+          "h": "2. Excluir um criador e tudo que foi coletado dele",
+          "p": "Apaga o cadastro do criador e, em cascata, todas as contas conectadas, os tokens guardados, as publicações coletadas, os comentários e as análises geradas. É o caminho que apaga de fato o que a Lumina recolheu das plataformas.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador e use Excluir criador no topo da página. A confirmação pede que você digite o nome do criador, porque a exclusão é definitiva — não há lixeira e os dados não podem ser recuperados."
         },
         {
-          "h": "3. Pedir a exclusão dos dados por e-mail",
-          "p": "É o caminho que apaga de fato: escreva para {{email}} dizendo o que deseja excluir — uma conta social e as publicações coletadas dela, um criador inteiro, ou a sua conta de usuário e todos os dados da agência.\nConfirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD. A exclusão é definitiva: não há lixeira, e os dados não são recuperáveis depois.\nExcluir um criador remove junto todas as contas conectadas, publicações, comentários e análises geradas. Excluir a conta do único administrador da agência remove também os dados da agência: criadores, campanhas, relatórios e todo o histórico coletado."
+          "h": "3. Revogar o acesso pela própria rede social",
+          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use a seção 2."
         },
         {
-          "h": "4. O que pode permanecer",
+          "h": "4. Pedir a exclusão dos dados por e-mail",
+          "p": "É o caminho para o que a interface não cobre: a exclusão da sua conta de usuário e dos dados da agência. Escreva para {{email}} dizendo o que deseja excluir.\nConfirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD. Excluir a conta do único administrador da agência remove também criadores, campanhas, relatórios e todo o histórico coletado."
+        },
+        {
+          "h": "5. O que pode permanecer",
           "p": "Registros técnicos de erro, que não guardam conteúdo de publicação, são descartados em até 90 dias pela rotina de limpeza. Dados que a lei nos obrigue a reter — registros fiscais, por exemplo — são mantidos apenas pelo prazo legal e não são usados para nenhuma outra finalidade."
         }
       ]

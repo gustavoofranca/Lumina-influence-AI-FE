@@ -91,6 +91,20 @@ export async function getInfluencer(id) {
   return adaptInfluencer(res.data)
 }
 
+/**
+ * Exclusão definitiva do criador.
+ *
+ * O back-end faz delete físico com cascade: leva junto as contas sociais, os
+ * posts coletados, os comentários e as análises geradas. Não há soft delete e
+ * não há como desfazer — daí a confirmação digitada na interface.
+ *
+ * É também o caminho que a página pública de exclusão de dados promete ao
+ * titular; mudar este contrato exige revisar aquele texto.
+ */
+export async function deleteInfluencer(id) {
+  await api.delete(`/influencers/${id}`)
+}
+
 export async function getInfluencerAnalysis(id) {
   const res = await api.get(`/influencers/${id}/analysis`)
   return res.data
