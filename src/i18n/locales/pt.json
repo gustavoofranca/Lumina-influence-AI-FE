@@ -670,7 +670,10 @@
       "lastAnalysis": "Última análise em",
       "quotaExceeded": "Cota diária do Gemini esgotada. O free tier permite 20 análises por dia, por projeto e por modelo — esperar não resolve, só o dia seguinte.",
       "rerun": "Re-run Diagnosis",
-      "followersLabel": "seguidores"
+      "followersLabel": "seguidores",
+      "statusLabel": "Status do criador",
+      "statusSaving": "Salvando…",
+      "statusSaved": "Status alterado para {{status}}."
     },
     "tabs": {
       "overview": "Visão Geral",

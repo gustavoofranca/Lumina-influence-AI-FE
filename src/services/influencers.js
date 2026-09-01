@@ -10,6 +10,29 @@ export function adaptInfluencerStatus(status) {
   return STATUS_MAP[status] || 'active'
 }
 
+// O caminho de volta, para quando a agência muda o status na tela. Fica ao lado
+// do mapa de ida de propósito: dois mapas em arquivos diferentes divergem.
+const STATUS_PARA_API = Object.fromEntries(
+  Object.entries(STATUS_MAP).map(([api, visual]) => [visual, api])
+)
+
+export const STATUS_VISUAIS = Object.values(STATUS_MAP)
+
+/**
+ * Muda o status do criador.
+ *
+ * O status é um julgamento da agência sobre o criador — "ativo", "monitorar",
+ * "em risco" —, e até aqui vinha só do seed: aparecia no cabeçalho e ninguém
+ * podia mexer. Num produto de auditoria, esse é justamente o campo que o
+ * usuário precisa controlar.
+ */
+export async function atualizarStatusDoInfluenciador(id, statusVisual) {
+  const status = STATUS_PARA_API[statusVisual]
+  if (!status) throw new Error(`Status desconhecido: ${statusVisual}`)
+  const res = await api.patch(`/influencers/${id}`, { status })
+  return adaptInfluencer(res.data)
+}
+
 export function adaptInfluencer(i) {
   const m = i.metrics || {}
   // A conta de maior audiência responde pelo criador. Pegar a primeira da lista

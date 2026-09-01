@@ -6,16 +6,11 @@ import { cn } from '../../lib/cn.js'
 import Avatar from '../ui/Avatar.jsx'
 import Button from '../ui/Button.jsx'
 import Badge from '../ui/Badge.jsx'
-import StatusIndicator from '../ui/StatusIndicator.jsx'
+import StatusDoCriador from './StatusDoCriador.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
 
 const STATUS_VARIANT = {
-  active:     'success',
-  monitoring: 'warning',
-  risk:       'danger',
-}
-const STATUS_INDICATOR_COLOR = {
   active:     'success',
   monitoring: 'warning',
   risk:       'danger',
@@ -37,6 +32,8 @@ export default function InfluenciadorHeader({
   influenciador,
   onRerun,
   onExcluir,
+  onStatusChange,
+  salvandoStatus = false,
   reanalisando = false,
   podeReanalisar = true,
 }) {
@@ -98,9 +95,10 @@ export default function InfluenciadorHeader({
             </div>
 
             <div className="mt-1 flex items-center gap-3 text-xs">
-              <StatusIndicator
-                label={t(`influenciadores.status.${inf.status}`)}
-                color={STATUS_INDICATOR_COLOR[inf.status]}
+              <StatusDoCriador
+                valor={inf.status}
+                onChange={onStatusChange}
+                salvando={salvandoStatus}
               />
               {formatDate(inf.lastAnalysis, i18n.language) && (
                 <span className="text-text-muted">

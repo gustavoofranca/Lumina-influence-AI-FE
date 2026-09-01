@@ -15,8 +15,8 @@ import DiagnosticoTab       from '../components/influenciador/DiagnosticoTab.jsx
 import HistoricoTab         from '../components/influenciador/HistoricoTab.jsx'
 import ExcluirCriadorModal from '../components/influenciador/ExcluirCriadorModal.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { analyzePost, getInfluencer, getInfluencerAnalysis, getInfluencerAnalysisHistory, getInfluencerPosts }
-  from '../services/influencers.js'
+import { analyzePost, atualizarStatusDoInfluenciador, getInfluencer, getInfluencerAnalysis,
+  getInfluencerAnalysisHistory, getInfluencerPosts } from '../services/influencers.js'
 
 export default function Influenciador() {
   const { t } = useTranslation()
@@ -30,12 +30,29 @@ export default function Influenciador() {
   // O texto vem de quem agiu: desconectar pode ter apagado o histórico, e
   // sincronizar relata conta a conta.
   const [aviso, setAviso] = useState(null)
+  const [salvandoStatus, setSalvandoStatus] = useState(false)
 
   // O callback do OAuth devolve o navegador com ?conectado=<plataforma>. Abrir
   // direto na Visão Geral coloca o cartão de contas à vista de quem acabou de
   // vincular — cair no Diagnóstico faria a ação parecer não ter surtido efeito.
   const recemConectada = searchParams.get('conectado')
   const [tab, setTab] = useState(recemConectada ? 'overview' : 'diagnosis')
+
+  /** Muda o status e recarrega: o valor exibido tem que vir do que foi gravado. */
+  const mudarStatus = async (novo) => {
+    setSalvandoStatus(true)
+    try {
+      await atualizarStatusDoInfluenciador(id, novo)
+      await recarregarInfluenciador()
+      setAviso(t('influenciador.header.statusSaved', {
+        status: t(`influenciadores.status.${novo}`),
+      }))
+    } catch (err) {
+      setErroAnalise(err.message)
+    } finally {
+      setSalvandoStatus(false)
+    }
+  }
 
   // Some com o parâmetro para que um F5 não repita o aviso.
   useEffect(() => {
@@ -165,6 +182,8 @@ export default function Influenciador() {
       <InfluenciadorHeader
         onRerun={reanalisar}
         onExcluir={() => setModalExcluir(true)}
+        salvandoStatus={salvandoStatus}
+        onStatusChange={mudarStatus}
         reanalisando={reanalisando}
         podeReanalisar={Boolean(posts?.length)}
         influenciador={
