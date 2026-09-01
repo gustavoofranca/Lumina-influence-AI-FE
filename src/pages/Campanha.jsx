@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, Megaphone } from 'lucide-react'
 
@@ -10,12 +10,16 @@ import ParticipantesGrid  from '../components/campanha/ParticipantesGrid.jsx'
 import BenchmarkTable     from '../components/campanha/BenchmarkTable.jsx'
 import RadarComparison    from '../components/campanha/RadarComparison.jsx'
 import EditarCampanhaModal from '../components/campanha/EditarCampanhaModal.jsx'
+import ConfirmacaoDigitada from '../components/ui/ConfirmacaoDigitada.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { getCampaign, getCampaignBenchmarking, updateCampaign } from '../services/campaigns.js'
+import { excluirCampanha, getCampaign, getCampaignBenchmarking, updateCampaign }
+  from '../services/campaigns.js'
 
 export default function Campanha() {
   const { t } = useTranslation()
   const { id } = useParams()
+  const navigate = useNavigate()
+  const [excluindo, setExcluindo] = useState(false)
   const { data: campanha, loading, error: erroCarregamento,
           refetch: recarregarCampanha } =
     useApi(() => getCampaign(id), [id])
@@ -88,6 +92,32 @@ export default function Campanha() {
         campanha={campanha}
         metrics={bench?.totals}
         onEdit={() => setEditando(true)}
+        onExcluir={() => setExcluindo(true)}
+      />
+
+      <ConfirmacaoDigitada
+        open={excluindo}
+        onClose={() => setExcluindo(false)}
+        titulo={t('campanha.excluir.title')}
+        aviso={t('campanha.excluir.warning', { nome: campanha?.name })}
+        itens={[
+          t('campanha.excluir.items.participations'),
+          t('campanha.excluir.items.budget'),
+        ]}
+        preservados={[
+          t('campanha.excluir.kept.posts'),
+          t('campanha.excluir.kept.reports'),
+        ]}
+        palavra={campanha?.name}
+        rotuloConfirmar={t('campanha.excluir.confirm')}
+        onConfirmar={async () => {
+          await excluirCampanha(id)
+          // `replace`: voltar pelo histórico cairia na página de uma campanha
+          // que não existe mais, e a tela de "não encontrada" pareceria defeito.
+          navigate('/app/campanhas', {
+            replace: true, state: { excluida: campanha?.name },
+          })
+        }}
       />
 
       <EditarCampanhaModal

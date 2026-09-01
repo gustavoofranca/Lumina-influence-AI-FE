@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, FileText, Edit3 } from 'lucide-react'
+import { ArrowLeft, FileText, Edit3, Trash2 } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Badge from '../ui/Badge.jsx'
@@ -32,7 +32,7 @@ function MetaCell({ label, value, accent = false }) {
   )
 }
 
-export default function CampanhaHeader({ campanha, metrics, onEdit }) {
+export default function CampanhaHeader({ campanha, metrics, onEdit, onExcluir }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const c = campanha
@@ -77,6 +77,11 @@ export default function CampanhaHeader({ campanha, metrics, onEdit }) {
             onClick={() => navigate(`/app/relatorios/novo?campanha=${c.id}`)}
           >
             {t('campanhas.detail.actions.generateReport')}
+          </Button>
+          {/* Exclusão em `secondary`: é definitiva e não deve competir com a
+              ação principal da tela. O aviso mora no modal. */}
+          <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
+            {t('campanha.excluir.trigger')}
           </Button>
           <Button variant="secondary" leftIcon={Edit3} onClick={onEdit}>
             {t('campanhas.detail.actions.edit')}

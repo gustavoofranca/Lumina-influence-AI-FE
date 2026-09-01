@@ -37,7 +37,12 @@
     "loading": "Loading...",
     "language": "Language",
     "português": "Português",
-    "english": "English"
+    "english": "English",
+    "destructive": {
+      "kept": "What stays:",
+      "irreversible": "The action is permanent. There is no recycle bin and the data cannot be recovered.",
+      "prompt": "Type {{palavra}} to confirm"
+    }
   },
   "welcome": {
     "label": "Stage 0 — Setup complete",
@@ -1022,6 +1027,21 @@
       "score": "Score",
       "engagement": "Eng.",
       "followers": "Followers"
+    },
+    "excluir": {
+      "title": "Delete campaign",
+      "trigger": "Delete campaign",
+      "warning": "You are about to delete the campaign {{nome}}.",
+      "items": {
+        "participations": "The list of creators linked to this campaign",
+        "budget": "The campaign's budget, period and status history"
+      },
+      "kept": {
+        "posts": "Collected posts stay with the creators, unlinked from the campaign",
+        "reports": "Reports already generated stay available, unlinked from the campaign"
+      },
+      "confirm": "Delete permanently",
+      "done": "Campaign {{nome}} deleted."
     }
   },
   "legal": {

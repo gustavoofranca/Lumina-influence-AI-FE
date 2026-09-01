@@ -167,3 +167,15 @@ export async function getCampaignBenchmarking(id) {
     totals: sumTotals(rows),
   }
 }
+
+/**
+ * Exclui a campanha.
+ *
+ * O cascade leva as participações — quem estava nela —, mas **não** os posts
+ * nem os relatórios: os dois têm `SET NULL` e sobrevivem desvinculados. Vale
+ * dizer isso na confirmação: falar só do que se perde faz o usuário imaginar
+ * o pior, e aqui o pior é falso.
+ */
+export async function excluirCampanha(id) {
+  await api.delete(`/campaigns/${id}`)
+}

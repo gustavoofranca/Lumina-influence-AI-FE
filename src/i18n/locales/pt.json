@@ -37,7 +37,12 @@
     "loading": "Carregando...",
     "language": "Idioma",
     "português": "Português",
-    "english": "English"
+    "english": "English",
+    "destructive": {
+      "kept": "O que permanece:",
+      "irreversible": "A ação é definitiva. Não há lixeira e os dados não podem ser recuperados.",
+      "prompt": "Digite {{palavra}} para confirmar"
+    }
   },
   "welcome": {
     "label": "Etapa 0 — Setup concluído",
@@ -1022,6 +1027,21 @@
       "score": "Score",
       "engagement": "Eng.",
       "followers": "Seguidores"
+    },
+    "excluir": {
+      "title": "Excluir campanha",
+      "trigger": "Excluir campanha",
+      "warning": "Você está prestes a excluir a campanha {{nome}}.",
+      "items": {
+        "participations": "A lista de criadores vinculados a esta campanha",
+        "budget": "O orçamento, o período e o histórico de status da campanha"
+      },
+      "kept": {
+        "posts": "As publicações coletadas continuam nos criadores, sem vínculo com a campanha",
+        "reports": "Os relatórios já gerados continuam disponíveis, sem vínculo com a campanha"
+      },
+      "confirm": "Excluir definitivamente",
+      "done": "Campanha {{nome}} excluída."
     }
   },
   "legal": {

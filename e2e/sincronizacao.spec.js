@@ -33,16 +33,25 @@ test('sincronizar relata o resultado de cada conta', async ({ page }) => {
 
   const botao = page.getByRole('button', { name: /sincronizar agora|sync now/i })
   await expect(botao).toBeVisible({ timeout: 20_000 })
-  await botao.click()
+
+  // Sincroniza o teste com a **resposta**, e não com o relógio: o aviso some
+  // sozinho em 3,5 s, e uma asserção que só faz polling disputa com o
+  // auto-fechar — passava sozinha e falhava na suíte inteira, onde a chamada
+  // demora mais. Esperar a resposta põe as duas coisas na mesma linha do tempo.
+  const [resposta] = await Promise.all([
+    page.waitForResponse((r) => r.url().includes('/sync') && r.request().method() === 'POST',
+                         { timeout: 60_000 }),
+    botao.click(),
+  ])
+  expect(resposta.status()).toBe(200)
 
   // O aviso precisa nomear a rede e dizer o que aconteceu com ela — não um
   // "pronto" que serve para qualquer desfecho.
   const aviso = page.locator('[data-toast-live]')
   await expect(aviso).toContainText(
-    /Instagram|TikTok|YouTube|Nenhuma conta vinculada/i, { timeout: 30_000 }
+    /Instagram|TikTok|YouTube|Nenhuma conta vinculada/i, { timeout: 10_000 }
   )
-  const texto = await aviso.innerText()
-  expect(texto.length).toBeGreaterThan(15)
+  expect((await aviso.innerText()).length).toBeGreaterThan(15)
 })
 
 test('o resultado da sincronização é anunciado, não só desenhado', async ({ page }) => {

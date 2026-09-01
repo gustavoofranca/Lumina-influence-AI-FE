@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Plus, Megaphone } from 'lucide-react'
 
@@ -9,6 +9,7 @@ import Search from '../components/ui/Search.jsx'
 import Tabs from '../components/ui/Tabs.jsx'
 import CampanhaCard from '../components/campanhas/CampanhaCard.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import Toast from '../components/ui/Toast.jsx'
 import Skeleton from '../components/ui/Skeleton.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import { useApi } from '../hooks/useApi.js'
@@ -18,6 +19,8 @@ const STATUS_FILTER = ['all', 'active', 'planning', 'paused', 'completed']
 
 export default function Campanhas() {
   const { t } = useTranslation()
+  const location = useLocation()
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
@@ -42,8 +45,23 @@ export default function Campanhas() {
     count: s === 'all' ? all.length : all.filter((c) => c.status === s).length,
   }))
 
+  // A exclusão acontece na tela da campanha, que deixa de existir. O aviso
+  // viaja no state da navegação e é consumido aqui — sem ele a ação mais
+  // destrutiva da tela termina numa lista silenciosa.
+  const [excluida, setExcluida] = useState(location.state?.excluida || null)
+  useEffect(() => {
+    if (!location.state?.excluida) return
+    navigate(location.pathname, { replace: true, state: null })
+  }, [location.state, location.pathname, navigate])
+
   return (
     <div className="flex flex-col gap-6">
+      <Toast
+        open={Boolean(excluida)}
+        onClose={() => setExcluida(null)}
+        type="success"
+        message={t('campanha.excluir.done', { nome: excluida })}
+      />
       {/* Header */}
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
