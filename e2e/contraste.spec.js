@@ -67,24 +67,32 @@ function medirContraste({ minimoPequeno, minimoGrande }) {
   }
 
   const achados = []
+  // Mesmo princípio das varreduras em Python: descarte contabilizado, e não
+  // `continue` mudo. Uma regra larga demais aqui esvazia a medição, e o
+  // sintoma é um relatório limpo — indistinguível de uma tela sem defeito.
+  const descartes = {}
+  const descartar = (regra) => { descartes[regra] = (descartes[regra] || 0) + 1 }
   const alvos = [
     ...document.querySelectorAll('main *:not(svg):not(script):not(style)'),
     ...document.querySelectorAll('main svg text'),
   ]
   for (const el of alvos) {
     const texto = (el.textContent || '').trim()
-    if (!texto || texto.length > 120) continue
+    if (!texto) { descartar('sem texto'); continue }
+    if (texto.length > 120) { descartar('texto longo demais'); continue }
     const estilo = getComputedStyle(el)
-    if (estilo.visibility === 'hidden' || estilo.display === 'none') continue
+    if (estilo.visibility === 'hidden' || estilo.display === 'none') {
+      descartar('invisível'); continue
+    }
 
     const eSvg = el.ownerSVGElement != null
     // Aqui mora o ponto cego: SVG pinta com fill, e não com color.
     const frente = parse(eSvg ? estilo.fill : estilo.color)
-    if (!frente || frente.a === 0) continue
+    if (!frente || frente.a === 0) { descartar('sem cor de frente'); continue }
     // Nó com filho elemento repete o texto dos descendentes; só folha conta.
     // Vale para SVG também: Recharts aninha tspan dentro de text, e sem isto
     // o mesmo rótulo entra duas vezes no relatório.
-    if (el.children.length > 0) continue
+    if (el.children.length > 0) { descartar('não é folha'); continue }
 
     const tamanho = parseFloat(estilo.fontSize)
     const negrito = parseInt(estilo.fontWeight, 10) >= 700
@@ -99,7 +107,7 @@ function medirContraste({ minimoPequeno, minimoGrande }) {
       minimo: grande ? minimoGrande : minimoPequeno,
     })
   }
-  return achados
+  return { achados, descartes }
 }
 
 const MINIMOS = { minimoPequeno: 4.5, minimoGrande: 3.0 }
@@ -120,6 +128,8 @@ for (const tema of ['dark', 'light']) {
 
     const reprovados = []
     let rotulosDeSvgMedidos = 0
+    let medidosNoTotal = 0
+    const descartadosNoTotal = {}
 
     for (const rota of ROTAS) {
       await page.goto(rota)
@@ -138,16 +148,25 @@ for (const tema of ['dark', 'light']) {
       }
       await page.waitForTimeout(800)
 
-      for (const a of await page.evaluate(medirContraste, MINIMOS)) {
+      const { achados, descartes } = await page.evaluate(medirContraste, MINIMOS)
+      for (const [regra, quantos] of Object.entries(descartes)) {
+        descartadosNoTotal[regra] = (descartadosNoTotal[regra] || 0) + quantos
+      }
+      for (const a of achados) {
         if (a.svg) rotulosDeSvgMedidos += 1
         if (a.razao < a.minimo) reprovados.push({ rota, ...a })
       }
+      medidosNoTotal += achados.length
     }
 
     // A guarda contra teste vazio fica **dentro** do teste: sem ela, um seletor
     // que deixe de casar transforma "nenhuma falha" em "nenhuma medição", e os
     // dois se parecem no relatório. Foi assim que 2,4:1 sobreviveu duas vezes.
-    expect(rotulosDeSvgMedidos, 'nenhum rótulo em SVG foi medido').toBeGreaterThan(0)
+    // O balanço vai na mensagem: quem lê a falha precisa ver quanto foi medido
+    // e quanto foi filtrado, senão não tem como julgar se a regra está larga.
+    const balanco = JSON.stringify({ medidosNoTotal, rotulosDeSvgMedidos, descartadosNoTotal })
+    expect(rotulosDeSvgMedidos, `nenhum rótulo em SVG foi medido — ${balanco}`).toBeGreaterThan(0)
+    expect(medidosNoTotal, `nada foi medido — ${balanco}`).toBeGreaterThan(50)
     expect(reprovados, JSON.stringify(reprovados, null, 2)).toEqual([])
   })
 }
