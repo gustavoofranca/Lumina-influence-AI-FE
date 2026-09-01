@@ -24,6 +24,9 @@ export default function Influenciador() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const [modalExcluir, setModalExcluir] = useState(false)
+  // Desconectar pode ter apagado o histórico; o cartão devolve a frase que
+  // descreve o que de fato aconteceu, e não um "pronto" genérico.
+  const [avisoContas, setAvisoContas] = useState(null)
 
   // O callback do OAuth devolve o navegador com ?conectado=<plataforma>. Abrir
   // direto na Visão Geral coloca o cartão de contas à vista de quem acabou de
@@ -202,7 +205,13 @@ export default function Influenciador() {
               <VisaoGeralTab
                 influenciador={influenciador}
                 growth={analysis?.growth_trajectory}
-                onContasChange={recarregarInfluenciador}
+                onContasChange={async (mensagem) => {
+                  await recarregarInfluenciador()
+                  // Também recarrega os posts: purgar o histórico esvazia a aba,
+                  // e deixá-la com o conteúdo antigo mostraria dado apagado.
+                  await recarregarPosts()
+                  if (mensagem) setAvisoContas(mensagem)
+                }}
               />
             )}
             {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
@@ -211,6 +220,13 @@ export default function Influenciador() {
           </>
         )}
       </div>
+
+      <Toast
+        open={Boolean(avisoContas)}
+        onClose={() => setAvisoContas(null)}
+        type="success"
+        message={avisoContas || ''}
+      />
 
       <Toast
         open={Boolean(avisoConexao)}

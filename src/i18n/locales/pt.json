@@ -381,6 +381,28 @@
           "desc": "Avisar imediatamente quando o modelo detectar atividade suspeita."
         }
       }
+    },
+    "excluirConta": {
+      "title": "Excluir minha conta",
+      "subtitle": "Exclusão definitiva, pedida por você. Diferente de sair da plataforma: os dados são apagados, não desativados.",
+      "trigger": "Excluir minha conta",
+      "scopeAccount": "A exclusão remove a sua conta e o seu acesso. Os dados da agência permanecem com os outros administradores.",
+      "scopeAgency": "Você é o único administrador de {{agencia}}. Excluir a sua conta apaga a agência inteira:",
+      "counts": {
+        "influencers": "{{count}} criador cadastrado, com as contas conectadas, publicações e comentários coletados",
+        "influencers_other": "{{count}} criadores cadastrados, com as contas conectadas, publicações e comentários coletados",
+        "campaigns": "{{count}} campanha",
+        "campaigns_other": "{{count}} campanhas",
+        "reports": "{{count}} relatório",
+        "reports_other": "{{count}} relatórios",
+        "members": "{{count}} membro perderá o acesso",
+        "members_other": "{{count}} membros perderão o acesso"
+      },
+      "warningAccount": "Sua conta e seu acesso à plataforma serão apagados. Você será desconectado imediatamente.",
+      "warningAgency": "Sua conta e todos os dados da agência serão apagados: criadores, contas conectadas, publicações, comentários, campanhas e relatórios. Os outros membros perdem o acesso na hora.",
+      "irreversible": "Não há lixeira e não há como desfazer. Se quiser apenas sair, use Sair no menu.",
+      "prompt": "Digite {{palavra}} para confirmar",
+      "confirm": "Excluir definitivamente"
     }
   },
   "diagnostico": {
@@ -784,6 +806,18 @@
       "prompt": "Digite {{nome}} para confirmar",
       "confirm": "Excluir definitivamente",
       "done": "{{nome}} foi excluído e os dados coletados foram apagados."
+    },
+    "desconectar": {
+      "title": "Desconectar conta",
+      "explain": "Desconectar apaga o token de acesso e interrompe imediatamente qualquer nova coleta desta conta.",
+      "purgeLabel": "Apagar também o histórico já coletado",
+      "purgeHint": "Remove as publicações coletadas desta conta e os comentários vinculados a elas. O vínculo com a rede permanece, sem dados.",
+      "irreversible": "Não há lixeira: as publicações e os comentários apagados não podem ser recuperados.",
+      "confirm": "Desconectar",
+      "confirmPurge": "Desconectar e apagar",
+      "done": "Conta desconectada. O histórico coletado foi preservado.",
+      "donePurged": "Conta desconectada e {{count}} publicação apagada.",
+      "donePurged_other": "Conta desconectada e {{count}} publicações apagadas."
     }
   },
   "influenciadores": {
@@ -1008,11 +1042,11 @@
         },
         {
           "h": "7. Por quanto tempo guardamos",
-          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conta permanecer cadastrada: desconectar a rede interrompe a coleta e apaga o token, mas preserva o histórico já coletado, para que desligar a coleta não apague o trabalho de análise junto. Para apagar também esse histórico, basta pedir — o caminho está na página de exclusão de dados.\nRegistros técnicos de erro são descartados em até 90 dias. Tokens de acesso expirados são removidos automaticamente pela rotina de limpeza da plataforma."
+          "p": "Dados de cadastro e conteúdo criado por você ficam enquanto a conta existir. Métricas e comentários coletados das plataformas ficam enquanto a conta permanecer cadastrada: desconectar a rede interrompe a coleta e apaga o token, e você escolhe na hora se o histórico já coletado vai junto. Excluir o criador, ou a sua conta, apaga tudo o que foi recolhido dele.\nRegistros técnicos de erro são descartados em até 90 dias. Tokens de acesso expirados são removidos automaticamente pela rotina de limpeza da plataforma."
         },
         {
           "h": "8. Seus direitos e como exercê-los",
-          "p": "Você pode confirmar a existência de tratamento, acessar, corrigir, anonimizar, portar ou eliminar seus dados, e revogar o consentimento dado às plataformas sociais.\nA desconexão de uma rede social é feita na própria plataforma, e interrompe a coleta na hora. A exclusão dos dados já coletados é feita por pedido para {{email}}, respondido em até 15 dias. O passo a passo dos dois está na página de exclusão de dados.\nTambém é possível revogar o acesso da Lumina pelas configurações do Facebook, do Instagram, do Google ou do TikTok — nesse caso paramos de coletar imediatamente."
+          "p": "Você pode confirmar a existência de tratamento, acessar, corrigir, anonimizar, portar ou eliminar seus dados, e revogar o consentimento dado às plataformas sociais.\nTodos os caminhos de exclusão estão na própria plataforma — desconectar uma rede, excluir um criador e excluir a sua conta —, e o passo a passo de cada um está na página de exclusão de dados. Quem não tem mais acesso pode pedir por escrito para {{email}}, com resposta em até 15 dias.\nTambém é possível revogar o acesso da Lumina pelas configurações do Facebook, do Instagram, do Google ou do TikTok — nesse caso paramos de coletar imediatamente."
         },
         {
           "h": "9. Segurança",
@@ -1086,26 +1120,30 @@
     "deletion": {
       "title": "Exclusão de dados",
       "updated": "31 de agosto de 2026",
-      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Desconectar interrompe a coleta; para apagar o que já foi coletado, o caminho é excluir o criador, na seção 2. Toda exclusão é definitiva — não há lixeira.",
+      "intro": "Esta página explica como apagar os dados que a Lumina Influence AI guarda sobre você e sobre as contas sociais conectadas. Todos os caminhos abaixo são definitivos — não há lixeira e os dados não podem ser recuperados.",
       "sections": [
         {
           "h": "1. Desconectar uma conta social",
-          "p": "Apaga o token de acesso guardado e interrompe imediatamente qualquer nova coleta daquela conta. As publicações e comentários já coletados permanecem — a desconexão preserva o histórico de propósito, para que desligar a coleta não apague o trabalho de análise junto. Para apagar também o que já foi coletado, exclua o criador — seção 2.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, e no cartão \"Contas conectadas\" da aba Visão Geral use Desconectar na rede desejada."
+          "p": "Apaga o token de acesso e interrompe imediatamente qualquer nova coleta daquela conta. Ao desconectar, você escolhe o que fazer com o histórico: por padrão as publicações já coletadas são preservadas, para que desligar a coleta não apague o trabalho de análise junto; marcando \"Apagar também o histórico já coletado\", as publicações daquela conta e os comentários vinculados a elas são removidos na hora.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador, e no cartão \"Contas conectadas\" da aba Visão Geral use Desconectar na rede desejada."
         },
         {
           "h": "2. Excluir um criador e tudo que foi coletado dele",
-          "p": "Apaga o cadastro do criador e, em cascata, todas as contas conectadas, os tokens guardados, as publicações coletadas, os comentários e as análises geradas. É o caminho que apaga de fato o que a Lumina recolheu das plataformas.\nCaminho: entre na plataforma, abra Influenciadores, escolha o criador e use Excluir criador no topo da página. A confirmação pede que você digite o nome do criador, porque a exclusão é definitiva — não há lixeira e os dados não podem ser recuperados."
+          "p": "Apaga o cadastro do criador e, em cascata, todas as contas conectadas, os tokens guardados, as publicações coletadas, os comentários e as análises geradas.\nCaminho: Influenciadores, abra o criador e use Excluir criador no topo da página. A confirmação pede que você digite o nome do criador."
         },
         {
-          "h": "3. Revogar o acesso pela própria rede social",
-          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use a seção 2."
+          "h": "3. Excluir a sua conta de usuário",
+          "p": "Apaga a sua conta e o seu acesso à plataforma, de forma definitiva — é exclusão, não desativação. Se você for o único administrador da agência, a exclusão remove também todos os dados dela: criadores, contas conectadas, publicações, comentários, campanhas e relatórios, e os demais membros perdem o acesso.\nA tela mostra qual dos dois casos é o seu, com a contagem do que seria apagado, antes de pedir a confirmação.\nCaminho: Configurações, aba Perfil, cartão Excluir minha conta. A confirmação pede que você digite EXCLUIR."
         },
         {
-          "h": "4. Pedir a exclusão dos dados por e-mail",
-          "p": "É o caminho para o que a interface não cobre: a exclusão da sua conta de usuário e dos dados da agência. Escreva para {{email}} dizendo o que deseja excluir.\nConfirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD. Excluir a conta do único administrador da agência remove também criadores, campanhas, relatórios e todo o histórico coletado."
+          "h": "4. Revogar o acesso pela própria rede social",
+          "p": "Você pode cortar o acesso da Lumina sem entrar na plataforma:\nFacebook e Instagram: Configurações e privacidade, Configurações, Apps e sites, selecione Lumina Influence AI e remova.\nGoogle e YouTube: myaccount.google.com/permissions, selecione Lumina Influence AI e remova o acesso.\nTikTok: Configurações, Segurança e permissões, Gerenciar permissões de apps.\nA revogação interrompe a coleta imediatamente. Para apagar o que já foi coletado, use as seções 1, 2 ou 3."
         },
         {
-          "h": "5. O que pode permanecer",
+          "h": "5. Pedir a exclusão por e-mail",
+          "p": "Se você não tem mais acesso à plataforma, escreva para {{email}} dizendo o que deseja excluir. Confirmamos a identidade antes de executar e respondemos em até 15 dias, conforme a LGPD."
+        },
+        {
+          "h": "6. O que pode permanecer",
           "p": "Registros técnicos de erro, que não guardam conteúdo de publicação, são descartados em até 90 dias pela rotina de limpeza. Dados que a lei nos obrigue a reter — registros fiscais, por exemplo — são mantidos apenas pelo prazo legal e não são usados para nenhuma outra finalidade."
         }
       ]

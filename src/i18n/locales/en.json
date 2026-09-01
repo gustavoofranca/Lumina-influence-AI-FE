@@ -381,6 +381,28 @@
           "desc": "Notify immediately when the model detects suspicious activity."
         }
       }
+    },
+    "excluirConta": {
+      "title": "Delete my account",
+      "subtitle": "Permanent deletion, requested by you. Different from signing out: the data is erased, not deactivated.",
+      "trigger": "Delete my account",
+      "scopeAccount": "Deletion removes your account and your access. The agency's data stays with the other administrators.",
+      "scopeAgency": "You are the only administrator of {{agencia}}. Deleting your account erases the whole agency:",
+      "counts": {
+        "influencers": "{{count}} registered creator, with connected accounts, posts and comments collected",
+        "influencers_other": "{{count}} registered creators, with connected accounts, posts and comments collected",
+        "campaigns": "{{count}} campaign",
+        "campaigns_other": "{{count}} campaigns",
+        "reports": "{{count}} report",
+        "reports_other": "{{count}} reports",
+        "members": "{{count}} member will lose access",
+        "members_other": "{{count}} members will lose access"
+      },
+      "warningAccount": "Your account and your access to the platform will be erased. You will be signed out immediately.",
+      "warningAgency": "Your account and all of the agency's data will be erased: creators, connected accounts, posts, comments, campaigns and reports. The other members lose access at once.",
+      "irreversible": "There is no recycle bin and no undo. If you only want to leave, use Sign out in the menu.",
+      "prompt": "Type {{palavra}} to confirm",
+      "confirm": "Delete permanently"
     }
   },
   "diagnostico": {
@@ -784,6 +806,18 @@
       "prompt": "Type {{nome}} to confirm",
       "confirm": "Delete permanently",
       "done": "{{nome}} was deleted and the collected data was erased."
+    },
+    "desconectar": {
+      "title": "Disconnect account",
+      "explain": "Disconnecting erases the access token and immediately stops any further collection from this account.",
+      "purgeLabel": "Also erase the history already collected",
+      "purgeHint": "Removes the posts collected from this account and the comments attached to them. The link to the network remains, with no data.",
+      "irreversible": "There is no recycle bin: erased posts and comments cannot be recovered.",
+      "confirm": "Disconnect",
+      "confirmPurge": "Disconnect and erase",
+      "done": "Account disconnected. The collected history was preserved.",
+      "donePurged": "Account disconnected and {{count}} post erased.",
+      "donePurged_other": "Account disconnected and {{count}} posts erased."
     }
   },
   "influenciadores": {
@@ -1008,11 +1042,11 @@
         },
         {
           "h": "7. How long we keep it",
-          "p": "Account data and content you create are kept while the account exists. Metrics and comments collected from the platforms are kept while the account remains registered: disconnecting a network stops collection and erases the token, but preserves the history already collected, so that turning collection off does not erase the analysis work along with it. To erase that history too, just ask — the path is on the data deletion page.\nTechnical error logs are discarded within 90 days. Expired access tokens are removed automatically by the platform's cleanup job."
+          "p": "Account data and content you create are kept while the account exists. Metrics and comments collected from the platforms are kept while the account remains registered: disconnecting a network stops collection and erases the token, and you choose right there whether the history already collected goes with it. Deleting the creator, or your account, erases everything gathered from them.\nTechnical error logs are discarded within 90 days. Expired access tokens are removed automatically by the platform's cleanup job."
         },
         {
           "h": "8. Your rights and how to exercise them",
-          "p": "You may confirm that processing exists, and access, correct, anonymize, port or erase your data, as well as withdraw the consent given to the social platforms.\nDisconnecting a social network is done in the platform itself and stops collection at once. Erasing data already collected is done by request to {{email}}, answered within 15 days. Step-by-step instructions for both are on the data deletion page.\nYou can also revoke Lumina's access from your Facebook, Instagram, Google or TikTok settings — collection stops immediately in that case."
+          "p": "You may confirm that processing exists, and access, correct, anonymize, port or erase your data, as well as withdraw the consent given to the social platforms.\nEvery deletion path is in the platform itself — disconnecting a network, deleting a creator and deleting your account — and step-by-step instructions are on the data deletion page. Anyone who no longer has access can ask in writing at {{email}}, answered within 15 days.\nYou can also revoke Lumina's access from your Facebook, Instagram, Google or TikTok settings — collection stops immediately in that case."
         },
         {
           "h": "9. Security",
@@ -1086,26 +1120,30 @@
     "deletion": {
       "title": "Data deletion",
       "updated": "August 31, 2026",
-      "intro": "This page explains how to erase the data Lumina Influence AI holds about you and about the social accounts you connected. Disconnecting stops collection; to erase what was already collected, delete the creator — section 2. Every deletion is permanent — there is no recycle bin.",
+      "intro": "This page explains how to erase the data Lumina Influence AI holds about you and about the social accounts you connected. Every path below is permanent — there is no recycle bin and the data cannot be recovered.",
       "sections": [
         {
           "h": "1. Disconnect a social account",
-          "p": "Erases the stored access token and immediately stops any further collection from that account. Posts and comments already collected remain — disconnection preserves the history on purpose, so that turning collection off does not erase the analysis work along with it. To erase what was already collected as well, delete the creator — section 2.\nPath: sign in, open Influencers, pick the creator, and in the \"Connected accounts\" card on the Overview tab use Disconnect on the network you want."
+          "p": "Erases the access token and immediately stops any further collection from that account. When disconnecting you choose what happens to the history: by default the posts already collected are preserved, so that turning collection off does not erase the analysis work along with it; ticking \"Also erase the history already collected\" removes that account's posts and the comments attached to them right away.\nPath: sign in, open Influencers, pick the creator, and in the \"Connected accounts\" card on the Overview tab use Disconnect on the network you want."
         },
         {
           "h": "2. Delete a creator and everything collected from them",
-          "p": "Erases the creator's record and, in cascade, every connected account, stored token, collected post, comment and generated analysis. This is the path that actually erases what Lumina gathered from the platforms.\nPath: sign in, open Influencers, pick the creator and use Delete creator at the top of the page. The confirmation asks you to type the creator's name, because deletion is permanent — there is no recycle bin and the data cannot be recovered."
+          "p": "Erases the creator's record and, in cascade, every connected account, stored token, collected post, comment and generated analysis.\nPath: Influencers, open the creator and use Delete creator at the top of the page. The confirmation asks you to type the creator's name."
         },
         {
-          "h": "3. Revoke access from the social network itself",
-          "p": "You can cut Lumina's access without signing in to the platform:\nFacebook and Instagram: Settings & privacy, Settings, Apps and websites, select Lumina Influence AI and remove.\nGoogle and YouTube: myaccount.google.com/permissions, select Lumina Influence AI and remove access.\nTikTok: Settings, Security and permissions, Manage app permissions.\nRevoking stops collection immediately. To erase what was already collected, use section 2."
+          "h": "3. Delete your user account",
+          "p": "Erases your account and your access to the platform, permanently — this is deletion, not deactivation. If you are the agency's only administrator, it also removes all of the agency's data: creators, connected accounts, posts, comments, campaigns and reports, and the remaining members lose access.\nThe screen shows which of the two cases applies to you, with a count of what would be erased, before asking for confirmation.\nPath: Settings, Profile tab, Delete my account card. The confirmation asks you to type EXCLUIR."
         },
         {
-          "h": "4. Request data deletion by email",
-          "p": "This is the path for what the interface does not cover: deleting your user account and the agency's data. Write to {{email}} saying what you want deleted.\nWe verify identity before acting and answer within 15 days, as required by Brazil's LGPD. Deleting the account of the agency's only administrator also removes creators, campaigns, reports and all collected history."
+          "h": "4. Revoke access from the social network itself",
+          "p": "You can cut Lumina's access without signing in to the platform:\nFacebook and Instagram: Settings & privacy, Settings, Apps and websites, select Lumina Influence AI and remove.\nGoogle and YouTube: myaccount.google.com/permissions, select Lumina Influence AI and remove access.\nTikTok: Settings, Security and permissions, Manage app permissions.\nRevoking stops collection immediately. To erase what was already collected, use sections 1, 2 or 3."
         },
         {
-          "h": "5. What may remain",
+          "h": "5. Request deletion by email",
+          "p": "If you no longer have access to the platform, write to {{email}} saying what you want deleted. We verify identity before acting and answer within 15 days, as required by Brazil's LGPD."
+        },
+        {
+          "h": "6. What may remain",
           "p": "Technical error logs, which hold no post content, are discarded within 90 days by the cleanup job. Data we are legally required to retain — tax records, for example — is kept only for the statutory period and used for no other purpose."
         }
       ]

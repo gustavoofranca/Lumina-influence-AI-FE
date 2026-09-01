@@ -17,7 +17,16 @@ export async function getConnectUrl(influencerId, platform) {
   return res.data.auth_url
 }
 
-/** Desvincula a conta: apaga os tokens cifrados, preserva o histórico de posts. */
-export async function disconnectAccount(platform, socialAccountId) {
-  await api.post(`/integrations/${platform}/disconnect/${socialAccountId}`)
+/**
+ * Desliga a coleta de uma conta conectada.
+ *
+ * `purgarColetado` também apaga as publicações já coletadas daquela conta e os
+ * comentários vinculados a elas. O padrão preserva: desligar a coleta não deve
+ * apagar o trabalho de análise junto. Devolve quantos posts foram apagados.
+ */
+export async function disconnectAccount(platform, socialAccountId, { purgarColetado = false } = {}) {
+  const res = await api.post(`/integrations/${platform}/disconnect/${socialAccountId}`, {
+    purge_collected: purgarColetado,
+  })
+  return res.data
 }

@@ -5,6 +5,7 @@ import { Link2, Unlink, Plug } from 'lucide-react'
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Button from '../ui/Button.jsx'
+import DesconectarModal from './DesconectarModal.jsx'
 import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
 import { getConnectUrl, disconnectAccount } from '../../services/integrations.js'
@@ -58,13 +59,28 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
     }
   }
 
-  const desconectar = async (platform, socialAccountId) => {
+  // Desconectar deixou de ser um clique direto: a mesma ação pode preservar ou
+  // apagar o histórico coletado, e essa escolha precisa ser feita por quem
+  // clica, não por um padrão invisível.
+  const [aDesconectar, setADesconectar] = useState(null)
+
+  const desconectar = async (purgar) => {
+    const alvo = aDesconectar
+    if (!alvo) return
     setErro(null)
-    setOcupada(platform)
+    setOcupada(alvo.platform)
     try {
-      await disconnectAccount(platform, socialAccountId)
-      await onChange?.()
+      const r = await disconnectAccount(alvo.platform, alvo.id, { purgarColetado: purgar })
+      setADesconectar(null)
+      await onChange?.(
+        r?.posts_deleted
+          ? t('influenciador.desconectar.donePurged', { count: r.posts_deleted })
+          : t('influenciador.desconectar.done')
+      )
     } catch (err) {
+      // O erro fica no cartão, e o modal fecha: reabrir com a caixa remarcada
+      // faria a segunda tentativa herdar uma escolha que não foi refeita.
+      setADesconectar(null)
       setErro(err.message)
     } finally {
       setOcupada(null)
@@ -72,6 +88,14 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
   }
 
   return (
+    <>
+    <DesconectarModal
+      open={Boolean(aDesconectar)}
+      onClose={() => setADesconectar(null)}
+      conta={aDesconectar}
+      ocupada={Boolean(ocupada)}
+      onConfirmar={desconectar}
+    />
     <Card glass className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('influenciador.conexoes.label')}</CardLabel>
@@ -127,7 +151,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                     size="sm"
                     leftIcon={Unlink}
                     loading={ocupada === platform}
-                    onClick={() => desconectar(platform, conta.id)}
+                    onClick={() => setADesconectar({ platform, id: conta.id })}
                   >
                     {t('influenciador.conexoes.disconnect')}
                   </Button>
@@ -153,5 +177,6 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
         })}
       </ul>
     </Card>
+    </>
   )
 }

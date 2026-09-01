@@ -8,6 +8,7 @@ import Button from '../ui/Button.jsx'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
+import ExcluirContaCard from './ExcluirContaCard.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { updateOwnProfile } from '../../services/team.js'
 
@@ -105,6 +106,10 @@ export default function PerfilSection({ onSave }) {
           {saving ? t('configuracoes.saving') : t('configuracoes.save')}
         </Button>
       </div>
+
+      {/* Zona de perigo por último e visualmente separada: é o direito de
+          eliminação do titular, não uma preferência de perfil. */}
+      <ExcluirContaCard />
     </form>
   )
 }
