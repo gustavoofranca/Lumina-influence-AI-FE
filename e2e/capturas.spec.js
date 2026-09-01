@@ -126,6 +126,17 @@ test('regera o conjunto de capturas', async ({ page }) => {
   await pronta(page, { extra: 2000 })
   await fotografar(page, '11-relatorio-wizard.png')
 
+  // A pré-visualização exige percorrer os quatro passos — o mesmo caminho de
+  // `relatorio.spec.js`. Sem isto a figura 12 ficava congelada em 27/08, que é
+  // como o conjunto envelhece: a captura difícil é a que ninguém refaz.
+  await page.locator('main button').filter({ hasText: /→/ }).first().click()
+  for (let passo = 0; passo < 3; passo += 1) {
+    await page.getByRole('button', { name: /continuar|continue/i }).click()
+    await page.waitForTimeout(1200)
+  }
+  await pronta(page, { minimo: 400, extra: 3000 })
+  await fotografar(page, '12-relatorio-preview.png')
+
   await page.goto('/app/configuracoes/integracoes')
   await pronta(page)
   await fotografar(page, '13-configuracoes-integracoes.png')
