@@ -156,10 +156,15 @@
   --accent:        var(--primary-700);  /* 7,0:1 sobre a base */
   --accent-strong: var(--primary-800);
   --accent-soft:   var(--primary-600);  /* 5,4:1 */
-  --positive:      #15803D;
-  --caution:       #B45309;
-  --tint-sky:      var(--secondary-700);
-  --tint-rose:     var(--tertiary-700);
+  /* Um passo mais escuros que a versão anterior porque estes tokens quase nunca
+     pousam sobre branco puro: crachá e avatar os pintam sobre um tinte de 15% a
+     25% da própria cor, e é o resultado composto que o olho lê. Medidos sobre
+     branco davam 4,9-5,4:1 e pareciam folgados; compostos caíam para 3,6-4,4:1
+     e reprovavam em AA. A medição de contraste passou a compor as camadas. */
+  --positive:      #166534;  /* green-800  */
+  --caution:       #92400E;  /* amber-800  */
+  --tint-sky:      #075985;  /* sky-800    */
+  --tint-rose:     #9F1239;  /* rose-800   */
 
   --glass-bg:      rgba(255, 255, 255, 0.72);
   --track:         var(--neutral-200);

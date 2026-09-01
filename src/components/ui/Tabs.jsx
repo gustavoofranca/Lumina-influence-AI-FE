@@ -93,7 +93,17 @@ export default function Tabs({
               {Icon ? <Icon size={14} /> : null}
               {item.label}
               {item.count !== undefined ? (
-                <span className={cn('rounded-full px-1.5 text-[10px]', active ? 'bg-white/20' : 'bg-bg-elevated/80 text-text-muted')}>
+                // A 10px o contador é texto pequeno e precisa de 4,5:1, e as
+                // duas variantes reprovavam. Na aba ativa o branco caía a
+                // 3,97:1 porque `bg-white/20` **clareia** o violeta atrás —
+                // escurecer o chip é o que separa os dois. Na inativa o
+                // problema era o preenchimento: `bg-bg-elevated` é mais claro
+                // que a barra e comia o contraste do texto. Um anel no lugar do
+                // fundo mantém a forma de pílula e devolve a legibilidade.
+                <span className={cn(
+                  'rounded-full px-1.5 text-[10px] font-semibold',
+                  active ? 'bg-neutral-950/30 text-white' : 'ring-1 ring-inset ring-hairline text-text-secondary'
+                )}>
                   {item.count}
                 </span>
               ) : null}
@@ -134,7 +144,7 @@ export default function Tabs({
             {item.count !== undefined ? (
               <span className={cn(
                 'rounded-full px-1.5 text-[10px] font-semibold',
-                active ? 'bg-primary-600/25 text-accent-strong' : 'bg-bg-surface text-text-muted'
+                active ? 'bg-primary-600/25 text-accent-strong' : 'ring-1 ring-inset ring-hairline text-text-secondary'
               )}>
                 {item.count}
               </span>
