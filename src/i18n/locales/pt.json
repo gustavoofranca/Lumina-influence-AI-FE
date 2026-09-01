@@ -839,6 +839,15 @@
       "done": "Conta desconectada. O histórico coletado foi preservado.",
       "donePurged": "Conta desconectada e {{count}} publicação apagada.",
       "donePurged_other": "Conta desconectada e {{count}} publicações apagadas."
+    },
+    "editar": {
+      "title": "Editar criador",
+      "trigger": "Editar",
+      "name": "Nome",
+      "niche": "Nicho",
+      "bio": "Bio",
+      "save": "Salvar",
+      "saved": "Dados do criador atualizados."
     }
   },
   "influenciadores": {

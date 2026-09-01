@@ -839,6 +839,15 @@
       "done": "Account disconnected. The collected history was preserved.",
       "donePurged": "Account disconnected and {{count}} post erased.",
       "donePurged_other": "Account disconnected and {{count}} posts erased."
+    },
+    "editar": {
+      "title": "Edit creator",
+      "trigger": "Edit",
+      "name": "Name",
+      "niche": "Niche",
+      "bio": "Bio",
+      "save": "Save",
+      "saved": "Creator details updated."
     }
   },
   "influenciadores": {

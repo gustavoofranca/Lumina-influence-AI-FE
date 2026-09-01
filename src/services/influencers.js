@@ -26,6 +26,24 @@ export const STATUS_VISUAIS = Object.values(STATUS_MAP)
  * podia mexer. Num produto de auditoria, esse é justamente o campo que o
  * usuário precisa controlar.
  */
+/**
+ * Atualiza os dados editáveis do criador.
+ *
+ * Nome, nicho e bio apareciam na tela e vinham só do seed: a API aceitava
+ * `PATCH` desde a B4 e não havia campo. Envia apenas o que mudou — mandar o
+ * objeto inteiro sobrescreveria com o valor exibido um campo que outra pessoa
+ * alterou enquanto esta tela estava aberta.
+ */
+export async function atualizarInfluenciador(id, alterados) {
+  if (!Object.keys(alterados).length) return null
+  const corpo = {}
+  if ('name' in alterados) corpo.display_name = alterados.name
+  if ('niche' in alterados) corpo.niche = alterados.niche
+  if ('bio' in alterados) corpo.bio = alterados.bio
+  const res = await api.patch(`/influencers/${id}`, corpo)
+  return adaptInfluencer(res.data)
+}
+
 export async function atualizarStatusDoInfluenciador(id, statusVisual) {
   const status = STATUS_PARA_API[statusVisual]
   if (!status) throw new Error(`Status desconhecido: ${statusVisual}`)

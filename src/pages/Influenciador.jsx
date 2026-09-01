@@ -14,6 +14,7 @@ import PostsAnalisadosTab   from '../components/influenciador/PostsAnalisadosTab
 import DiagnosticoTab       from '../components/influenciador/DiagnosticoTab.jsx'
 import HistoricoTab         from '../components/influenciador/HistoricoTab.jsx'
 import ExcluirCriadorModal from '../components/influenciador/ExcluirCriadorModal.jsx'
+import EditarCriadorModal from '../components/influenciador/EditarCriadorModal.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { analyzePost, atualizarStatusDoInfluenciador, getInfluencer, getInfluencerAnalysis,
   getInfluencerAnalysisHistory, getInfluencerPosts } from '../services/influencers.js'
@@ -24,6 +25,7 @@ export default function Influenciador() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const [modalExcluir, setModalExcluir] = useState(false)
+  const [modalEditar, setModalEditar] = useState(false)
   // **Um** aviso por página. Dois `Toast` montados juntos criam duas regiões
   // vivas, e o leitor de tela passa a observar dois nós para o mesmo tipo de
   // anúncio — além de permitir dois cartões sobrepostos no mesmo canto.
@@ -182,6 +184,7 @@ export default function Influenciador() {
       <InfluenciadorHeader
         onRerun={reanalisar}
         onExcluir={() => setModalExcluir(true)}
+        onEditar={() => setModalEditar(true)}
         salvandoStatus={salvandoStatus}
         onStatusChange={mudarStatus}
         reanalisando={reanalisando}
@@ -200,6 +203,17 @@ export default function Influenciador() {
           {erroAnalise}
         </p>
       )}
+
+      <EditarCriadorModal
+        open={modalEditar}
+        onClose={() => setModalEditar(false)}
+        influenciador={influenciador}
+        onSalvo={async () => {
+          setModalEditar(false)
+          await recarregarInfluenciador()
+          setAviso(t('influenciador.editar.saved'))
+        }}
+      />
 
       <ExcluirCriadorModal
         open={modalExcluir}

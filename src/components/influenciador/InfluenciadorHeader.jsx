@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, RotateCw, Trash2 } from 'lucide-react'
+import { ArrowLeft, RotateCw, Trash2, Pencil } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Avatar from '../ui/Avatar.jsx'
@@ -32,6 +32,7 @@ export default function InfluenciadorHeader({
   influenciador,
   onRerun,
   onExcluir,
+  onEditar,
   onStatusChange,
   salvandoStatus = false,
   reanalisando = false,
@@ -124,6 +125,9 @@ export default function InfluenciadorHeader({
           {/* Exclusão fica em `secondary`: é ação destrutiva e definitiva, não
               deve competir visualmente com a ação principal da tela. O aviso e
               a confirmação digitada moram no modal. */}
+          <Button variant="secondary" leftIcon={Pencil} onClick={onEditar}>
+            {t('influenciador.editar.trigger')}
+          </Button>
           <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
             {t('influenciador.excluir.trigger')}
           </Button>
