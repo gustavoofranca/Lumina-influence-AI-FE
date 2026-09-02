@@ -715,7 +715,8 @@
       "organic": "Audiência orgânica",
       "verifiedHumans": "Verified Humans",
       "suspicious": "Suspicious Accounts",
-      "bots": "Confirmed Bots"
+      "bots": "Confirmed Bots",
+      "partial": "Esta análise não mediu a faixa suspeita — ela passou a ser medida em setembro de 2026. Rode uma nova análise para obter a composição completa."
     },
     "videoAudit": {
       "title": "Video Component Audit",

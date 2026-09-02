@@ -239,10 +239,13 @@ export function adaptAudienceIntegrity(a) {
     organic:    a.organic,
     suspicious: a.suspicious,
     bots:       a.bots,
+    // `?? null`, e não `?? 0`: a faixa não medida vira ausência, e o cartão
+    // deixa de desenhar a fatia. Zero seguidor suspeito é a afirmação oposta
+    // à de não ter medido (ADR-003).
     totals: {
-      verifiedHumans: totals.verified_humans ?? 0,
-      suspicious:     totals.suspicious ?? 0,
-      bots:           totals.bots ?? 0,
+      verifiedHumans: totals.verified_humans ?? null,
+      suspicious:     totals.suspicious ?? null,
+      bots:           totals.bots ?? null,
     },
   }
 }

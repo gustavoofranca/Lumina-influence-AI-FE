@@ -715,7 +715,8 @@
       "organic": "Organic audience",
       "verifiedHumans": "Verified Humans",
       "suspicious": "Suspicious Accounts",
-      "bots": "Confirmed Bots"
+      "bots": "Confirmed Bots",
+      "partial": "This analysis did not measure the suspicious band — it started being measured in September 2026. Run a new analysis for the full composition."
     },
     "videoAudit": {
       "title": "Video Component Audit",
