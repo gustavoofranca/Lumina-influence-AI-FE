@@ -9,8 +9,20 @@
 
 ## Status
 
-**Protótipo navegável v1.0 — pronto para banca.**
-Todas as 11 etapas concluídas: landing pública, autenticação, dashboard, listagem e análise individual de criadores, campanhas com benchmarking, relatórios em A4 e configurações. Desde a B11 as telas consomem a API real — não há mais dado mockado no projeto.
+**Aplicação integrada — pronta para banca.**
+
+As onze etapas de front-end estão concluídas: landing pública, autenticação,
+dashboard, listagem e análise individual de criadores, campanhas com
+benchmarking, relatórios em A4 e configurações. Desde a B11 **as telas consomem
+a API real** — não há dado fictício no front-end.
+
+O que o usuário faz na tela chega ao banco: conectar e sincronizar contas
+sociais, rodar análise do Gemini sobre conteúdo real, decidir sobre as
+recomendações da IA (com autoria e data), gerir participantes de campanha,
+editar e excluir criador, campanha e a própria conta.
+
+O que ainda vem do seed é dado de **demonstração**, e está rotulado como tal na
+interface — ver *Limites conhecidos*, abaixo.
 
 ---
 
@@ -133,8 +145,14 @@ Escala completa (50–900/950) e tokens semânticos (`bg-base`, `bg-surface`, `t
 
 ## Convenções
 
-- **Modo escuro sempre** — não há modo claro.
-- **Sem `localStorage`/`sessionStorage`** — Context + state em memória. Refresh perde sessão (intencional no protótipo).
+- **Dois temas.** O escuro é o padrão; o claro deriva dele por uma regra única
+  (o fundo do escuro vira a tinta) e a preferência persiste. Ambos verificados
+  em contraste AA por teste automatizado.
+- **Access token em `sessionStorage`, nunca em `localStorage`.** A sessão
+  sobrevive ao F5 e morre com a aba — decisão registrada na
+  [ADR-001](../Lumina-Influence-AI-BE/docs/adr/0001-jwt-stateless-sem-revogacao.md)
+  e travada por teste ponta a ponta. `localStorage` continua vedado: o token não
+  é revogável, e persistir entre sessões do navegador alargaria a janela dele.
 - **Sem TypeScript** nesta fase.
 - **Sem libs de UI prontas** (Material/Chakra/Antd) — tudo do zero com Tailwind.
 - Toda string visível ao usuário passa por `t('chave')` do `react-i18next`.
@@ -143,10 +161,33 @@ Escala completa (50–900/950) e tokens semânticos (`bg-base`, `bg-surface`, `t
 
 ---
 
-## Próximos passos (fora do escopo do TCC)
+## Testes
 
-- Backend Flask + PostgreSQL para integração real OAuth com Instagram/TikTok/YouTube
-- Integração com Google Gemini API para análises de IA reais
-- Exportação real de relatórios em PDF (atualmente exibe toast "em breve")
-- Refinamento de responsividade mobile (estrutura preparada com breakpoints `sm:`/`md:`/`lg:`)
-- Modelagem de personas e Predictive Layer (deliberadamente fora do escopo do TCC)
+Suíte ponta a ponta em Playwright, em [`e2e/`](./e2e/), com `package.json`
+próprio. Roda contra a aplicação em funcionamento:
+
+```bash
+cd e2e && npm install && npm test
+```
+
+Cobre a renderização de todas as rotas, login e persistência de sessão, estado
+de erro (que nunca deve aparecer como estado vazio), conta social, relatório,
+tema, idioma, foco e navegação por teclado, as páginas legais, os três caminhos
+de exclusão de dados, contraste WCAG AA nos dois temas — incluindo os rótulos
+em SVG — e a semântica que o leitor de tela recebe.
+
+## Limites conhecidos
+
+- **Instagram e TikTok** respondem `platform_not_configured`: exigem HTTPS
+  público e App Review aprovado. O YouTube está conectado por OAuth real. Ver
+  [`docs/meta-app-review.md`](../Lumina-Influence-AI-BE/docs/meta-app-review.md).
+- **A divisão entre alcance orgânico e pago vem do seed** — nenhuma das
+  plataformas concede essa métrica sem programa comercial
+  ([ADR-005](../Lumina-Influence-AI-BE/docs/adr/0005-alcance-organico-e-pago-vem-do-seed.md)).
+- **ROI e CAC são proxies declarados**, não números financeiros medidos
+  ([ADR-002](../Lumina-Influence-AI-BE/docs/adr/0002-kpis-financeiros-como-proxies.md)).
+
+## Fora do escopo do TCC
+
+- Modelagem de personas e Predictive Layer (decisão deliberada)
+- Refinamento fino de responsividade abaixo de 390px
