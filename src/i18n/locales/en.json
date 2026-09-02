@@ -999,13 +999,14 @@
       "title": "Welcome back",
       "subtitle": "Sign in to your account to continue.",
       "email": "Email",
-      "password": "Password",
       "submit": "Sign in",
       "noAccount": "Don't have an account?",
       "createAccount": "Create account",
       "emailPlaceholder": "you@agency.com",
       "google": "Sign in with Google",
-      "devHint": "Tip: leave the fields empty and click <1>{{acao}}</1> to sign in with the demo account (seeded data)."
+      "devHint": "Tip: leave the field empty and click <1>{{acao}}</1> to sign in with the demo account (seeded data).",
+      "devDisabled": "Demo access is disabled in this environment. Sign in with Google.",
+      "failed": "Could not sign in."
     },
     "cadastro": {
       "title": "Start your journey",

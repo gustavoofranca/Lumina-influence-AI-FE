@@ -38,3 +38,40 @@ test('sessão sobrevive ao F5 mas não à aba nova', async ({ page, context }) =
   await expect(outraAba).toHaveURL(/\/login/)
   await outraAba.close()
 })
+
+/**
+ * O produto não tem senha: a autenticação é OAuth 2.0 e nenhum modelo do
+ * back-end guarda credencial. A tela de login exibia um campo de senha assim
+ * mesmo — o valor digitado não era enviado a lugar nenhum e nada o verificava.
+ *
+ * Era a assinatura do projeto na primeira tela do produto: afirmar uma
+ * verificação que não acontece. Este teste existe para que o campo não volte.
+ */
+test('a tela de login não pede senha, porque o produto não tem senha', async ({ page }) => {
+  await page.goto('/login')
+  await expect(page.getByRole('button', { name: 'Autenticar' })).toBeVisible()
+  await expect(page.locator('input[type="password"]')).toHaveCount(0)
+})
+
+/**
+ * `DEV_LOGIN_ENABLED` é False fixo em staging e produção, então o atalho de
+ * demonstração responde 403 assim que o sistema sair do ambiente local — o que
+ * acontece no domínio HTTPS exigido pelo App Review da Meta. Sem este ramo o
+ * revisor lia "Forbidden" e não tinha como descobrir que a porta era o Google.
+ */
+test('com o atalho desligado, a tela diz qual é o caminho que resta', async ({ page }) => {
+  await page.route('**/auth/dev-login', (rota) =>
+    rota.fulfill({
+      status: 403,
+      contentType: 'application/json',
+      body: JSON.stringify({ error: { code: 'dev_login_disabled', message: 'dev-login desabilitado' } }),
+    })
+  )
+
+  await page.goto('/login')
+  await page.getByRole('button', { name: 'Autenticar' }).click()
+
+  await expect(page.getByText(/Google/i).first()).toBeVisible()
+  await expect(page.locator('form')).toContainText(/desativado/i)
+  await expect(page).toHaveURL(/\/login/)
+})

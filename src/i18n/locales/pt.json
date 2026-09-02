@@ -999,13 +999,14 @@
       "title": "Bem-vindo de volta",
       "subtitle": "Acesse sua conta para continuar.",
       "email": "E-mail",
-      "password": "Senha",
       "submit": "Autenticar",
       "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta",
       "emailPlaceholder": "voce@agencia.com",
       "google": "Entrar com Google",
-      "devHint": "Dica: deixe os campos vazios e clique em <1>{{acao}}</1> para entrar com a conta de demonstração (dados seedados)."
+      "devHint": "Dica: deixe o campo vazio e clique em <1>{{acao}}</1> para entrar com a conta de demonstração (dados seedados).",
+      "devDisabled": "O acesso de demonstração está desativado neste ambiente. Entre com o Google.",
+      "failed": "Não foi possível entrar."
     },
     "cadastro": {
       "title": "Comece sua jornada",

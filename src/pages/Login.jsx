@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next'
-import { Mail, Lock } from 'lucide-react'
+import { Mail } from 'lucide-react'
 
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Input from '../components/ui/Input.jsx'
@@ -18,12 +18,21 @@ export default function Login() {
   const navigate = useNavigate()
 
   const [email, setEmail]       = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors]     = useState({})
   const [loading, setLoading]   = useState(false)
   const [apiError, setApiError] = useState(null)
 
-  // Login local via dev-login (usa o e-mail digitado, ou o admin seedado se vazio).
+  /**
+   * Entra pela conta de demonstração (dev-login), com o e-mail digitado ou o
+   * admin seedado se vazio.
+   *
+   * Não há campo de senha porque não há senha: a autenticação do produto é
+   * OAuth 2.0 e nenhum modelo guarda credencial. O campo existia e não era
+   * enviado a lugar nenhum — afirmava uma verificação que não acontecia.
+   *
+   * `dev_login_disabled` é 403 e não é falha: em staging e produção o atalho
+   * é desligado por configuração, e o caminho passa a ser só o Google. Sem
+   * este ramo, o usuário lia "Forbidden" e não sabia o que fazer.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault()
     setApiError(null)
@@ -32,7 +41,11 @@ export default function Login() {
       await devLogin(email || undefined)
       navigate('/app/dashboard')
     } catch (err) {
-      setApiError(err.message || 'Falha no login.')
+      setApiError(
+        err.code === 'dev_login_disabled'
+          ? t('auth.login.devDisabled')
+          : err.message || t('auth.login.failed')
+      )
       setLoading(false)
     }
   }
@@ -57,19 +70,8 @@ export default function Login() {
           placeholder={t('auth.login.emailPlaceholder')}
           leftIcon={Mail}
           value={email}
-          onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })) }}
-          error={errors.email}
+          onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
-        />
-        <Input
-          label={t('auth.login.password')}
-          type="password"
-          placeholder="••••••••"
-          leftIcon={Lock}
-          value={password}
-          onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: undefined })) }}
-          error={errors.password}
-          autoComplete="current-password"
         />
 
         {apiError && (
