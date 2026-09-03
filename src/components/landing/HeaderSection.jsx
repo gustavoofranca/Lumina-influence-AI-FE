@@ -6,15 +6,14 @@ import { Menu, X } from 'lucide-react'
 import { cn } from '../../lib/cn.js'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'
+import { PILULA, TEXTO_PILULA } from './estilos.js'
 
-// `secao` só existe para os dois itens que têm seção própria. Cases e API
-// apontam para a mesma âncora de Solutions e não podem acender junto com ela —
-// três itens realçados ao mesmo tempo não dizem nada sobre onde o leitor está.
+// Um item por seção que existe de fato. Havia mais dois — "Case Studies" e
+// "API" — apontando para a mesma âncora de Solutions: rótulo de menu
+// prometendo conteúdo que a página não tem.
 const NAV = [
   { key: 'solutions', anchor: '#features', secao: 'features' },
   { key: 'pricing',   anchor: '#plans',    secao: 'plans' },
-  { key: 'cases',     anchor: '#features' },
-  { key: 'api',       anchor: '#features' },
 ]
 
 /**
@@ -82,7 +81,10 @@ export default function HeaderSection() {
   return (
     <header className={cn(
       'fixed inset-x-0 top-0 z-50 backdrop-blur-[12px]',
-      'bg-landing-bg/80 shadow-[0_25px_50px_-12px_rgba(6,14,32,0.4)]'
+      'bg-landing-bg/80',
+      // Régua que some nas duas pontas, como no arquivo: borda cheia bate na
+      // beirada da janela e fecha a barra como uma caixa.
+      'after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-hairline-fade after:content-[\'\']'
     )}>
       <div className="mx-auto flex h-20 w-full max-w-[1280px] items-center justify-between gap-6 px-8">
         <Link to="/" className="shrink-0" aria-label="Lumina Influence AI">
@@ -102,7 +104,7 @@ export default function HeaderSection() {
                   // de largura e ficava abaixo do mínimo.
                   'min-w-6 pb-1.5 text-center text-sm font-medium transition-colors',
                   ativo
-                    ? 'border-b-2 border-landing-violet text-landing-violet'
+                    ? 'border-b border-landing-measured text-landing-text'
                     : 'text-landing-muted hover:text-landing-text'
                 )}
               >
@@ -138,10 +140,8 @@ export default function HeaderSection() {
           <Link
             to="/cadastro"
             className={cn(
-              'whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold text-landing-ink',
-              'bg-gradient-to-br from-[#BD9DFF] to-[#8A4CFC]',
-              'shadow-[0_10px_15px_-3px_rgba(189,157,255,0.2),0_4px_6px_-4px_rgba(189,157,255,0.2)]',
-              'transition-transform hover:-translate-y-px'
+              PILULA, TEXTO_PILULA,
+              'whitespace-nowrap px-5 py-2 font-display text-sm font-semibold'
             )}
           >
             {t('landing.nav.cta')}

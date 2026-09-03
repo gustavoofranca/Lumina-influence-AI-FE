@@ -1,43 +1,93 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import setaCta from '../../assets/landing/cta-arrow.svg'
-import iconeInsight from '../../assets/landing/insight-icon.svg'
-import painel from '../../assets/landing/hero-dashboard.webp'
+import MalhaDeLuz from './MalhaDeLuz.jsx'
+import FundoDeThreads from './FundoDeThreads.jsx'
+import { PILULA, TEXTO_PILULA } from './estilos.js'
+import BotaoBrilhante from './BotaoBrilhante.jsx'
 
-/** Cartão flutuante sobre a arte do painel: o achado que o produto existe para dar. */
-function CartaoInsight({ t }) {
-  const c = t('landing.hero.card', { returnObjects: true })
-
+/**
+ * Herói centralizado, com o painel do produto largo embaixo do texto.
+ *
+ * O painel é a tese do produto e não uma captura: as colunas medidas preenchem,
+ * a não medida fica em contorno e diz por quê. É a ADR-003 — ausência nunca
+ * vira zero — como primeira coisa que a pessoa vê.
+ *
+ * Cor cheia é privilégio do dado medido. O `unmeasured` dá 3,35:1 sobre a base
+ * e por isso vive só no traço; o rótulo textual usa `muted`, que dá 8,5:1.
+ */
+function Metrica({ rotulo, valor, proporcao, animar }) {
   return (
-    <div className={cn(
-      'absolute -bottom-8 -left-8 w-[240px] max-w-[calc(100%-2rem)] rounded-xl p-6',
-      'border border-landing-violet/30 bg-landing-glass/40 backdrop-blur-md',
-      'shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]'
-    )}>
-      <div className="flex items-center gap-3">
-        <img src={iconeInsight} alt="" aria-hidden className="h-[35px] w-[38px] shrink-0" />
-        <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase leading-[15px] tracking-[0.5px] text-landing-muted">
-            {c.label}
-          </p>
-          <p className="text-sm font-semibold leading-5 text-landing-text">{c.title}</p>
-        </div>
-      </div>
-
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-landing-card">
+    <div className="flex flex-col gap-3 px-6 py-5">
+      <span className="text-sm text-landing-muted">{rotulo}</span>
+      <span className="font-display text-3xl font-semibold tabular-nums text-landing-text">
+        {valor}
+      </span>
+      <div className="h-px bg-landing-line/25">
         <div
-          className="h-full rounded-full bg-landing-danger shadow-[0_0_8px_0_rgba(255,111,126,0.6)]"
-          style={{ width: '87%' }}
+          className="h-px bg-landing-measured transition-[width] duration-[1400ms] ease-out motion-reduce:transition-none"
+          style={{ width: animar ? `${proporcao}%` : '0%' }}
         />
       </div>
-
-      <div className="mt-2 flex items-start justify-between gap-2">
-        <span className="text-[10px] font-medium leading-[15px] text-landing-muted">{c.metric}</span>
-        <span className="text-[10px] font-medium leading-[15px] text-landing-danger">{c.value}</span>
-      </div>
     </div>
+  )
+}
+
+function MetricaAusente({ rotulo, motivo }) {
+  return (
+    <div className="flex flex-col gap-3 px-6 py-5">
+      <span className="text-sm text-landing-muted">{rotulo}</span>
+      {/* Decorativo: quem usa leitor de tela recebe o motivo, que é o conteúdo. */}
+      <span
+        aria-hidden
+        className="block h-9 w-24 rounded-[3px] border border-dashed border-landing-unmeasured"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(135deg, rgba(90,100,128,0.3) 0 1px, transparent 1px 8px)',
+        }}
+      />
+      <p className="text-xs leading-relaxed text-landing-muted">{motivo}</p>
+    </div>
+  )
+}
+
+function PainelAuditoria({ t }) {
+  const [animar, setAnimar] = useState(false)
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setAnimar(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
+
+  const p = t('landing.hero.painel', { returnObjects: true })
+
+  return (
+    <figure className="m-0">
+      {/* Moldura de 1px em gradiente: o pai carrega o degradê, o filho recuado
+          1px carrega o fundo. `border-image` não convive com `border-radius`. */}
+      <div className="rounded-2xl bg-moldura-cartao p-px shadow-glow-card-forte">
+      <div className="overflow-hidden rounded-[15px] bg-landing-surface/90 backdrop-blur-xl">
+        <figcaption className="flex flex-wrap items-baseline justify-between gap-3 border-b border-landing-line/25 px-6 py-4">
+          <span className="font-display text-base font-semibold text-landing-text">
+            {p.titulo}
+          </span>
+          <span className="text-xs text-landing-muted">{p.periodo}</span>
+        </figcaption>
+
+        <div className="grid divide-landing-line/20 sm:grid-cols-2 sm:divide-x lg:grid-cols-4">
+          <Metrica rotulo={p.engajamento} valor="4,8%" proporcao={62} animar={animar} />
+          <Metrica rotulo={p.sentimento} valor="72" proporcao={72} animar={animar} />
+          <Metrica rotulo={p.bots} valor="12%" proporcao={12} animar={animar} />
+          <MetricaAusente rotulo={p.organico} motivo={p.organicoMotivo} />
+        </div>
+      </div>
+      </div>
+
+      <figcaption className="mt-4 text-center text-sm leading-relaxed text-landing-muted">
+        {p.legenda}
+      </figcaption>
+    </figure>
   )
 }
 
@@ -45,98 +95,72 @@ export default function HeroSection() {
   const { t } = useTranslation()
 
   return (
-    <section className="relative overflow-hidden pb-24 pt-32">
-      {/* Halo radial atrás do conteúdo */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(59% 59% at 50% 50%, rgba(189,157,255,0.15) 0%, rgba(189,157,255,0) 70%)',
-        }}
-      />
+    <section className="relative overflow-hidden pb-24 pt-32 sm:pt-36">
+      {/* Os fios entram abaixo da malha e acima do campo de estrelas, que é
+          `fixed` na camada 0 da página. */}
+      <FundoDeThreads />
+      {/* Arte do topo: o mesmo leque da faixa, girado meia volta para abrir
+          para baixo a partir de um ponto acima da dobra. No arquivo de
+          referência isto é um PNG pintado; aqui é gerado, para acompanhar os
+          tokens de cor em vez de envelhecer como binário. */}
+      <MalhaDeLuz className="inset-x-[-10%] top-[-220px] h-[560px] rotate-180 opacity-[0.55]" />
 
-      <div className="relative mx-auto grid w-full max-w-[1280px] items-center gap-16 px-8 lg:grid-cols-2">
-        <div className="flex flex-col gap-6">
-          <span className={cn(
-            'inline-flex w-fit items-center gap-2 rounded-full px-3.5 py-1.5',
-            'border border-landing-line/30 bg-landing-elevated'
-          )}>
-            <span className="relative flex size-2 shrink-0">
-              <span className="absolute inset-0 animate-ping rounded-full bg-landing-blue opacity-75" />
-              <span className="relative size-2 rounded-full bg-landing-blue" />
-            </span>
-            <span className="text-xs font-semibold uppercase leading-4 tracking-[1.2px] text-landing-blue">
-              {t('landing.hero.label')}
-            </span>
-          </span>
+      <div className="relative mx-auto flex w-full max-w-[1180px] flex-col items-center px-6 sm:px-8">
+        <span
+          className={cn(PILULA, TEXTO_PILULA, 'px-4 py-1.5 text-sm font-medium')}
+        >
+          {t('landing.hero.badge')}
+        </span>
 
-          <h1 className={cn(
-            'font-display font-extrabold tracking-[-1.8px] text-landing-text',
-            'text-[44px] leading-[1.05] sm:text-[56px] lg:text-[72px] lg:leading-[72px]'
-          )}>
-            {t('landing.hero.h1Line1')}<br />
-            {t('landing.hero.h1Line2')}<br />
-            <span className="bg-gradient-to-r from-[#BD9DFF] to-[#34B5FA] bg-clip-text text-transparent">
-              {t('landing.hero.h1Highlight1')}<br />
-              {t('landing.hero.h1Highlight2')}
-            </span>
-          </h1>
+        <h1
+          className={cn(
+            'mt-7 max-w-[16ch] text-center font-display font-semibold',
+            'bg-gradient-to-b from-white from-[22.5%] to-white/70 bg-clip-text text-transparent',
+            'text-[42px] leading-[1.03] tracking-[-0.035em]',
+            'sm:text-[62px] lg:text-[76px]'
+          )}
+        >
+          {t('landing.hero.h1')}
+        </h1>
 
-          <p className="max-w-[576px] text-lg leading-7 text-landing-muted lg:text-xl">
-            {t('landing.hero.subtitle')}
-          </p>
+        <p className="mt-6 max-w-[62ch] text-center text-lg leading-relaxed text-landing-muted">
+          {t('landing.hero.subtitle')}
+        </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-4">
-            <Link
-              to="/cadastro"
-              className={cn(
-                'inline-flex items-center justify-center gap-2 rounded-full px-8 py-4',
-                'text-lg font-semibold text-landing-ink',
-                'bg-gradient-to-br from-[#BD9DFF] to-[#8A4CFC]',
-                'shadow-[0_20px_25px_-5px_rgba(189,157,255,0.3),0_8px_10px_-6px_rgba(189,157,255,0.3)]',
-                'transition-transform hover:-translate-y-0.5'
-              )}
-            >
-              {t('landing.hero.ctaPrimary')}
-              <img src={setaCta} alt="" aria-hidden className="size-4" />
-            </Link>
-            <a
-              href="#features"
-              className={cn(
-                'inline-flex items-center justify-center rounded-full px-8 py-4',
-                'text-lg font-semibold text-landing-text backdrop-blur-md',
-                'border border-landing-line/20 bg-landing-glass/40',
-                'transition-colors hover:border-landing-line/40'
-              )}
-            >
-              {t('landing.hero.ctaSecondary')}
-            </a>
-          </div>
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <BotaoBrilhante
+            as={Link}
+            to="/cadastro"
+            className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-landing-measured"
+          >
+            {t('landing.hero.ctaPrimary')}
+          </BotaoBrilhante>
+          <a
+            href="#features"
+            className={cn(PILULA, TEXTO_PILULA, 'px-7 py-3 font-display text-base font-semibold')}
+          >
+            {t('landing.hero.ctaSecondary')}
+          </a>
         </div>
 
-        <div className="relative">
-          {/* Brilho difuso por trás do quadro */}
-          <div
+        {/* A malha é irmã do painel e ancorada no topo dele: `bottom-full`
+            põe a origem exatamente na borda de cima do cartão, e o desenho
+            transborda a largura do container para os raios não terminarem
+            visivelmente na margem. */}
+        <div className="relative mt-24 w-full">
+          {/* As barras verticais saíram: os fios do fundo já dão o movimento, e
+              as duas leituras juntas embolavam. Fica a floração rente à borda
+              de cima do painel, que é o que faz a luz parecer escapar de trás
+              dele. */}
+          <span
             aria-hidden
-            className="pointer-events-none absolute -inset-4 opacity-30 blur-[32px]"
+            className="pointer-events-none absolute inset-x-[18%] bottom-full h-[220px] translate-y-[90px]"
             style={{
               background:
-                'linear-gradient(45deg, rgba(189,157,255,0.2) 0%, rgba(52,181,250,0.2) 100%)',
+                'radial-gradient(ellipse at 50% 100%, rgba(167,139,250,0.42) 0%, rgba(124,58,237,0.16) 38%, rgba(124,58,237,0) 70%)',
             }}
           />
-          <div className={cn(
-            'relative rounded-2xl p-4 backdrop-blur-md',
-            'border border-landing-line/30 bg-landing-glass/40',
-            'shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]'
-          )}>
-            <img
-              src={painel}
-              alt={t('landing.hero.dashboardAlt')}
-              className="aspect-square w-full rounded-xl border border-landing-line/10 object-cover"
-            />
-            <CartaoInsight t={t} />
-          </div>
+          <PainelAuditoria t={t} />
         </div>
       </div>
     </section>

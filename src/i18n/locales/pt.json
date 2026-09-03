@@ -132,127 +132,163 @@
   },
   "landing": {
     "nav": {
-      "solutions": "Solutions",
-      "pricing": "Pricing",
-      "cases": "Case Studies",
-      "api": "API",
-      "login": "Sign In",
-      "cta": "Sign Up"
+      "solutions": "Como funciona",
+      "pricing": "Planos",
+      "login": "Entrar",
+      "cta": "Criar conta"
     },
     "hero": {
-      "label": "The Neural Architect",
-      "h1Line1": "Pare de queimar",
-      "h1Line2": "verba com",
-      "h1Highlight1": "métricas de",
-      "h1Highlight2": "vaidade.",
-      "subtitle": "Auditoria definitiva via IA que separa bots de humanos com APIs oficiais. Decisões baseadas em dados reais, não em curtidas fantasmas.",
-      "ctaPrimary": "Agendar Demonstração",
-      "ctaSecondary": "Ver Documentação",
-      "dashboardAlt": "Painel da Lumina com a análise de um criador",
-      "card": {
-        "label": "Detecção Crítica",
-        "title": "Bot-Farm Detectada",
-        "metric": "Probabilidade AI",
-        "value": "87.4%"
-      }
+      "h1": "Todo número aqui diz de onde veio.",
+      "subtitle": "Auditoria de marketing de influência para agências. Quando a plataforma não entrega o dado, o Lumina deixa o campo vazio em vez de preencher com estimativa.",
+      "ctaPrimary": "Criar conta",
+      "ctaSecondary": "Ver como funciona",
+      "painel": {
+        "titulo": "Auditoria de @anapsouza",
+        "periodo": "últimos 30 dias",
+        "engajamento": "Engajamento",
+        "sentimento": "Sentimento da audiência",
+        "bots": "Probabilidade de bots",
+        "organico": "Alcance orgânico",
+        "organicoMotivo": "Nenhuma plataforma separa alcance orgânico de pago sem programa comercial. O campo fica vazio.",
+        "legenda": "Três valores medidos, um não. A diferença aparece na tela, não numa nota de rodapé."
+      },
+      "badge": "Auditoria com procedência do dado"
     },
     "logos": {
-      "label": "Authorized Official Partner Integrations"
+      "label": "Integrações pelas APIs oficiais das plataformas"
     },
     "comparativo": {
-      "title": "Métricas sem auditoria são prejuízo oculto",
-      "subtitle": "Sua equipe gasta 40h semanais em planilhas que não detectam a verdade. Veja a diferença:",
+      "title": "O que a planilha não consegue provar",
+      "subtitle": "A diferença entre um número reportado e um número coletado.",
       "chaos": {
-        "title": "O Caos Manual",
+        "title": "Relatório enviado pelo criador",
         "items": [
-          "Print-screens falsificáveis de influenciadores.",
-          "Auditoria baseada em \"feeling\" e volume de likes.",
-          "Falta de tracking oficial de conversão e ROI."
+          "Captura de tela, que ninguém tem como conferir.",
+          "Alcance informado por quem está sendo avaliado.",
+          "Sem histórico: cada campanha recomeça do zero."
         ],
-        "metricLabel": "Perda Estimada",
-        "metricValue": "42% ROI Desperdiçado"
+        "metricLabel": "Verificável",
+        "metricValue": "Não"
       },
       "lumina": {
-        "title": "Inteligência Lumina",
+        "title": "Coleta pelo Lumina",
         "items": [
-          "Conexão direta via API oficial (Dados 100% reais).",
-          "Análise de sentimento e NLP em tempo real.",
-          "Dashboard unificado de ROI transacional."
+          "Leitura pela API oficial, com o token que o criador autorizou.",
+          "Comentários analisados um a um, com o resultado guardado.",
+          "Cada número traz a data em que foi coletado."
         ],
-        "metricLabel": "Ganho em Eficiência",
-        "metricValue": "12x Mais Insights"
+        "metricLabel": "Verificável",
+        "metricValue": "Sim, com origem"
       }
     },
     "pilares": {
-      "title": "Arquitetura Neural em 3 Pilares",
-      "subtitle": "Tecnologia proprietária desenvolvida para o mercado enterprise de influência.",
+      "title": "Três decisões de engenharia",
+      "subtitle": "Cada uma com o limite que ela tem, escrito aqui e repetido na tela.",
       "items": [
         {
-          "title": "Official API Integration",
-          "desc": "Eliminamos o \"scraping\" instável. Conectamos diretamente aos servidores da Meta e Google para extrair métricas de primeira mão, garantindo segurança e veracidade."
+          "title": "Coleta pela API oficial",
+          "desc": "Sem scraping. A leitura usa o token que o próprio criador autorizou nas plataformas. Quando a API recusa o dado, o campo fica vazio — não recebe estimativa no lugar."
         },
         {
-          "title": "Qualitative AI Analysis",
-          "desc": "Nossa IA processa scripts e comentários usando NLP (Natural Language Processing) para detectar se o engajamento é genuíno ou gerado por bots de engajamento."
+          "title": "Análise de linguagem com Gemini",
+          "desc": "Legendas e comentários passam pelo modelo do Google para estimar sentimento e probabilidade de automação. É estimativa, e a tela apresenta como estimativa."
         },
         {
-          "title": "Real ROI Dashboards",
-          "desc": "Visualize o impacto direto em vendas. Atribuímos conversões a influenciadores específicos através de links rastreáveis e integração com seu e-commerce."
+          "title": "Indicadores financeiros como proxy",
+          "desc": "ROI e CAC não são medidos: o sistema não enxerga o seu caixa. São proxies calculados sobre alcance e custo informado, e o produto declara isso onde os exibe."
         }
       ],
       "chips": [
-        "INSTAGRAM",
-        "TIKTOK"
+        "Instagram",
+        "TikTok"
       ],
-      "nlpLabel": "NLP SCORE",
-      "nlpValue": "94% Genuíno",
+      "nlpLabel": "Exemplo de saída do modelo",
+      "nlpValue": "12% de automação",
       "roiAlt": "Visualização de atribuição de conversão por criador"
     },
     "plans": {
-      "title": "Investimento com Inteligência",
-      "subtitle": "Escolha o plano ideal para a escala da sua operação.",
+      "title": "Planos",
+      "subtitle": "A diferença entre os planos é o volume. Tudo o que o produto faz está nos dois.",
       "agency": {
-        "badge": "Popular",
-        "name": "Plano Agência",
-        "price": "R$ 2.490",
+        "badge": "Mais usado",
+        "name": "Agência",
+        "price": "R$ 1.297",
         "period": "/mês",
-        "cta": "Começar Agora",
+        "cta": "Criar conta",
         "features": [
-          "Até 50 Influenciadores/mês",
-          "Auditoria NLP em tempo real",
-          "Dashboards compartilháveis",
-          "Suporte 24h via Slack"
+          "Até 50 criadores",
+          "500 análises por mês"
         ]
       },
       "enterprise": {
-        "name": "Plano Enterprise",
-        "price": "Sob Consulta",
-        "cta": "Falar com Especialista",
+        "name": "Enterprise",
+        "price": "Sob consulta",
+        "period": "",
+        "cta": "Entrar em contato",
         "features": [
-          "Influenciadores ilimitados",
-          "Acesso total via API (Webhooks)",
-          "Custom NLP Training",
-          "Dedicated Account Manager"
+          "Até 500 criadores",
+          "5.000 análises por mês"
+        ]
+      },
+      "shared": {
+        "title": "Nos dois planos",
+        "items": [
+          "Coleta pela API oficial das plataformas conectadas",
+          "Análise de legendas, comentários e vídeo pelo modelo",
+          "Benchmarking entre campanhas",
+          "Relatório em PDF",
+          "Equipe com três papéis: administrador, membro e leitura",
+          "Exclusão dos dados a qualquer momento"
         ]
       }
     },
     "footer": {
-      "tagline": "A plataforma líder em auditoria neural para campanhas de influência de alto desempenho.",
-      "product": "Product",
-      "company": "Company",
-      "copyright": "© 2026 Lumina Influence AI. Neural Architect Systems.",
-      "backToTop": "↑ Voltar ao topo",
+      "tagline": "Auditoria de marketing de influência para agências.",
+      "product": "Produto",
+      "company": "Empresa",
+      "copyright": "© 2026 Lumina Influence AI.",
+      "backToTop": "Voltar ao topo",
       "links": {
-        "features": "Features",
-        "apiDocs": "API Docs",
-        "solutions": "Solutions",
-        "privacy": "Privacy Policy",
-        "terms": "Terms of Service",
+        "features": "Como funciona",
+        "solutions": "Planos",
+        "privacy": "Política de Privacidade",
+        "terms": "Termos de Uso",
         "deletion": "Exclusão de dados",
-        "contact": "Contact"
+        "contact": "Contato"
       },
       "ctaQuestion": "Pronto para auditar sua próxima campanha?",
-      "ctaLink": "Comece sua auditoria grátis hoje →"
+      "ctaLink": "Criar conta"
+    },
+    "faq": {
+      "title": "Perguntas que a gente prefere responder antes",
+      "subtitle": "Os limites do produto, ditos aqui e repetidos dentro dele.",
+      "items": [
+        {
+          "q": "De onde vêm os números?",
+          "a": "Das APIs oficiais do Instagram, do TikTok e do YouTube, lidas com o token que o próprio criador autoriza. Nada é raspado de página, e nada é estimado quando a API não entrega."
+        },
+        {
+          "q": "Por que alguns campos aparecem vazios?",
+          "a": "Porque a plataforma não forneceu aquele dado. Preencher com estimativa faria o vazio virar número, e um número que ninguém mediu é pior que a ausência dele. A divisão entre alcance orgânico e pago é o caso mais comum: nenhuma plataforma a concede sem programa comercial."
+        },
+        {
+          "q": "O ROI é calculado a partir das minhas vendas?",
+          "a": "Não. O sistema não enxerga o seu caixa. ROI e CAC são proxies calculados sobre alcance e custo informado, e a interface identifica os dois como proxies onde os exibe."
+        },
+        {
+          "q": "A probabilidade de bots é uma certeza?",
+          "a": "Não, é uma estimativa do modelo de linguagem sobre padrões de comentário. Serve para orientar uma conferência humana, não para substituir uma."
+        },
+        {
+          "q": "Meus dados treinam algum modelo?",
+          "a": "Não. A análise roda no tier pago da API do Gemini, onde o conteúdo enviado não é usado para melhorar produtos. O sistema verifica essa configuração no boot e a publica no próprio healthcheck."
+        },
+        {
+          "q": "Como apago tudo?",
+          "a": "Pela própria interface, a qualquer momento: uma conta social, um criador ou a conta inteira. Cada caminho declara o que leva junto antes de pedir a confirmação, que é digitada."
+        }
+      ],
+      "selo": "Perguntas frequentes"
     }
   },
   "configuracoes": {

@@ -2,108 +2,112 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import checkAgencia from '../../assets/landing/check-agency.svg'
-import checkEnterprise from '../../assets/landing/check-enterprise.svg'
+import { MOLDURA, MIOLO, MIOLO_COM_AURA, PILULA, PILULA_PRIMARIA, TEXTO_PILULA, TITULO_SECAO } from './estilos.js'
 
-function Features({ itens, icone, tom }) {
+const EMAIL_CONTATO = import.meta.env.VITE_CONTACT_EMAIL || 'contato@k13.com.br'
+
+/**
+ * Planos.
+ *
+ * Os cartões trazem **só** o que difere entre os dois — o volume —, e o que o
+ * produto entrega vive numa lista compartilhada embaixo. Listar sob o
+ * Enterprise algo que os dois planos têm seria exclusividade inventada, e era
+ * o que acontecia: "Suporte 24h via Slack", "Acesso total via API (Webhooks)",
+ * "Custom NLP Training" e "Dedicated Account Manager" não existem no produto.
+ *
+ * O preço do plano Agência é o mesmo que está no banco. A página anunciava
+ * R$ 2.490 enquanto o sistema cobrava R$ 1.297 — a página de vendas
+ * contradizia o produto que ela vende.
+ */
+function Cartao({ plano, destaque, children }) {
   return (
-    <ul className="flex flex-col gap-4">
-      {itens.map((texto) => (
-        <li key={texto} className={cn('flex items-center gap-3 text-sm leading-5', tom)}>
-          <img src={icone} alt="" aria-hidden className="size-[15px] shrink-0" />
-          {texto}
-        </li>
-      ))}
-    </ul>
+    <div className={cn(MOLDURA, destaque && 'shadow-glow-card-forte')}>
+    <div className={cn('flex h-full flex-col gap-6 p-7 sm:p-8', destaque ? MIOLO_COM_AURA : MIOLO)}>
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="font-display text-lg font-semibold text-landing-text">{plano.name}</h3>
+        {plano.badge && (
+          <span className="rounded border border-landing-measured/40 px-2 py-0.5 text-xs text-landing-measured">
+            {plano.badge}
+          </span>
+        )}
+      </div>
+
+      <p className="flex items-baseline gap-1.5">
+        <span className="font-display text-4xl font-semibold tracking-[-0.02em] text-landing-text">
+          {plano.price}
+        </span>
+        {plano.period && <span className="text-sm text-landing-muted">{plano.period}</span>}
+      </p>
+
+      <ul className="flex flex-col gap-3">
+        {plano.features.map((f) => (
+          <li key={f} className="text-[15px] leading-relaxed text-landing-muted">
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-auto pt-2">{children}</div>
+    </div>
+    </div>
   )
 }
 
 export default function PlansSection() {
   const { t } = useTranslation()
-  const agency     = t('landing.plans.agency',     { returnObjects: true })
+  const agency = t('landing.plans.agency', { returnObjects: true })
   const enterprise = t('landing.plans.enterprise', { returnObjects: true })
+  const shared = t('landing.plans.shared', { returnObjects: true })
+
+  const acao = 'w-full px-6 py-3 font-display text-sm font-semibold'
 
   return (
-    <section id="plans" className="mx-auto w-full max-w-[1280px] px-8 py-24">
-      <div className="flex flex-col items-center gap-16">
-        <div data-reveal className="flex flex-col items-center gap-4 text-center">
-          <h2 className="font-display text-3xl font-extrabold leading-10 text-landing-text lg:text-4xl">
+    <section id="plans" className="bg-wash-secao-suave mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8">
+      <div className="flex flex-col gap-12">
+        <div className="flex max-w-[46ch] flex-col gap-4">
+          <h2 className={TITULO_SECAO}>
             {t('landing.plans.title')}
           </h2>
-          <p className="max-w-[576px] text-base leading-6 text-landing-muted">
+          <p className="text-lg leading-relaxed text-landing-muted">
             {t('landing.plans.subtitle')}
           </p>
         </div>
 
-        <div className="grid w-full max-w-[896px] gap-8 lg:grid-cols-2">
-          {/* Agência — moldura em gradiente, como no design */}
-          <div
-            data-reveal
-            style={{ '--delay': '100ms', backgroundImage: 'linear-gradient(134deg, #BD9DFF 0%, #34B5FA 100%)' }}
-            className="rounded-3xl p-1 drop-shadow-[0_0_20px_rgba(189,157,255,0.2)]"
-          >
-            <div className="flex h-full flex-col rounded-[22.4px] bg-landing-card p-10">
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="font-display text-2xl font-bold leading-8 text-landing-text">
-                  {agency.name}
-                </h3>
-                <span className={cn(
-                  'shrink-0 rounded-full bg-landing-violet/20 px-3 py-1',
-                  'text-[10px] font-semibold uppercase leading-[15px] tracking-[1px] text-landing-violet'
-                )}>
-                  {agency.badge}
-                </span>
-              </div>
-
-              <p className="mt-4 flex items-baseline gap-1">
-                <span className="text-4xl font-semibold leading-10 text-landing-text">{agency.price}</span>
-                <span className="text-base leading-6 text-landing-muted">{agency.period}</span>
-              </p>
-
-              <div className="mt-8">
-                <Features itens={agency.features} icone={checkAgencia} tom="text-landing-text" />
-              </div>
-
-              <Link
-                to="/cadastro"
-                className={cn(
-                  'mt-10 block rounded-xl bg-landing-violet py-4 text-center',
-                  'text-base font-semibold text-landing-ink transition-opacity hover:opacity-90'
-                )}
-              >
-                {agency.cta}
-              </Link>
-            </div>
-          </div>
-
-          {/* Enterprise */}
-          <div
-            data-reveal
-            style={{ '--delay': '200ms' }}
-            className="flex flex-col rounded-3xl border border-landing-line/20 bg-landing-surface p-10"
-          >
-            <h3 className="font-display text-2xl font-bold leading-8 text-landing-text">
-              {enterprise.name}
-            </h3>
-            <p className="mt-4 text-4xl font-semibold leading-10 text-landing-muted">
-              {enterprise.price}
-            </p>
-
-            <div className="mt-8">
-              <Features itens={enterprise.features} icone={checkEnterprise} tom="text-landing-muted" />
-            </div>
-
+        <div className="grid items-stretch gap-6 md:grid-cols-2">
+          <Cartao plano={agency} destaque>
             <Link
               to="/cadastro"
+              className={cn(acao, PILULA_PRIMARIA, TEXTO_PILULA)}
+            >
+              {agency.cta}
+            </Link>
+          </Cartao>
+
+          <Cartao plano={enterprise}>
+            <a
+              href={`mailto:${EMAIL_CONTATO}`}
               className={cn(
-                'mt-10 block rounded-xl border border-landing-line/30 bg-landing-elevated py-4',
-                'text-center text-base font-semibold text-landing-text transition-colors',
-                'hover:border-landing-line/50'
+                acao, PILULA, TEXTO_PILULA
               )}
             >
               {enterprise.cta}
-            </Link>
-          </div>
+            </a>
+          </Cartao>
+        </div>
+
+        <div className={MOLDURA}>
+        <div className={cn(MIOLO, 'p-7 sm:p-8')}>
+          <h3 className="font-display text-base font-semibold text-landing-text">
+            {shared.title}
+          </h3>
+          <ul className="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+            {shared.items.map((item) => (
+              <li key={item} className="text-[15px] leading-relaxed text-landing-muted">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
         </div>
       </div>
     </section>

@@ -1,102 +1,100 @@
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import iconeCaos from '../../assets/landing/chaos-icon.svg'
-import balaCaos from '../../assets/landing/chaos-bullet.svg'
-import ornamentoCaos from '../../assets/landing/chaos-ornament.svg'
-import iconeOrdem from '../../assets/landing/order-icon.svg'
-import balaOrdem from '../../assets/landing/order-bullet.svg'
-import ornamentoOrdem from '../../assets/landing/order-ornament.svg'
+import { MOLDURA, MIOLO, MIOLO_COM_AURA, PILULA, TEXTO_PILULA, TITULO_SECAO } from './estilos.js'
 
-function Cartao({ dados, variante }) {
-  const caos = variante === 'caos'
-  const cor = caos ? 'text-landing-danger' : 'text-landing-violet'
-
+/**
+ * A comparação entre o que o criador reporta e o que o Lumina coleta.
+ *
+ * Os dois lados usam a mesma linguagem visual do herói: o que não é
+ * verificável aparece em contorno tracejado, o que é verificável aparece com
+ * cor cheia. A comparação é lida antes do texto ser lido.
+ *
+ * O texto anterior afirmava "40h semanais em planilhas", "42% ROI
+ * desperdiçado", "12x mais insights" e "dados 100% reais" — quatro números que
+ * ninguém mediu, numa página sobre não apresentar número que ninguém mediu.
+ */
+function Coluna({ titulo, itens, metricaRotulo, metricaValor, verificavel }) {
   return (
-    <div className={cn(
-      'relative flex flex-col gap-6 overflow-hidden rounded-2xl p-8',
-      caos
-        ? 'border border-landing-line/10 bg-landing-surface'
-        : cn(
-            'border border-landing-violet/20 bg-landing-card',
-            'shadow-[0_25px_50px_-12px_rgba(189,157,255,0.05)]'
-          )
-    )}>
-      <img
-        src={caos ? ornamentoCaos : ornamentoOrdem}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute right-0 top-0 size-32"
-      />
+    <div className={cn('rounded-2xl p-px', verificavel ? `${MOLDURA} shadow-glow-card` : '')}>
+    {/* As duas colunas assentam em vidro — sem isso a não verificada flutua na
+        página. O que continua separando as duas é a moldura: a verificada tem
+        borda em degradê, aura violeta e brilho; a outra tem traço pontilhado e
+        nenhuma luz. A ausência segue lida como ausência, agora sobre uma
+        superfície. */}
+    <div
+      className={cn(
+        'flex h-full flex-col gap-6 p-7 sm:p-8',
+        verificavel
+          ? MIOLO_COM_AURA
+          : `${MIOLO} border border-dashed border-landing-unmeasured`
+      )}
+    >
+      <h3 className="font-display text-xl font-semibold text-landing-text">{titulo}</h3>
 
-      <h3 className={cn('relative flex items-center gap-2 text-xl font-semibold leading-7', cor)}>
-        <img
-          src={caos ? iconeCaos : iconeOrdem}
-          alt=""
-          aria-hidden
-          className={caos ? 'size-3.5 shrink-0' : 'size-5 shrink-0'}
-        />
-        {dados.title}
-      </h3>
-
-      <ul className="relative flex flex-col gap-4">
-        {dados.items.map((item, i) => (
-          <li
-            key={i}
-            className={cn(
-              'flex items-start gap-3 text-sm leading-5',
-              caos ? 'text-landing-muted' : 'text-landing-text'
-            )}
-          >
-            <img
-              src={caos ? balaCaos : balaOrdem}
-              alt=""
+      <ul className="flex flex-col gap-4">
+        {itens.map((item) => (
+          <li key={item} className="grid grid-cols-[auto_1fr] gap-3 text-[15px] leading-relaxed">
+            <span
               aria-hidden
-              className={caos ? 'mt-0.5 size-2.5 shrink-0' : 'mt-0.5 h-[10.5px] w-[11px] shrink-0'}
+              className={cn(
+                'mt-2 h-px w-4 shrink-0',
+                verificavel ? 'bg-landing-measured' : 'bg-landing-unmeasured'
+              )}
             />
-            {item}
+            <span className="text-landing-muted">{item}</span>
           </li>
         ))}
       </ul>
 
-      <div className="relative flex flex-col gap-2 border-t border-landing-line/10 pt-10">
-        <span className={cn('text-[10px] font-semibold uppercase leading-[15px] tracking-[1px]',
-          caos ? 'text-landing-danger' : 'text-landing-blue')}>
-          {dados.metricLabel}
-        </span>
-        <span className={cn('text-3xl font-semibold leading-9',
-          caos ? 'text-landing-danger' : 'text-landing-blue')}>
-          {dados.metricValue}
+      <div className="mt-auto flex items-baseline justify-between gap-4 border-t border-landing-line/25 pt-5">
+        <span className="text-sm text-landing-muted">{metricaRotulo}</span>
+        <span
+          className={cn(
+            'font-display text-base font-semibold',
+            verificavel ? 'text-landing-measured' : 'text-landing-muted'
+          )}
+        >
+          {metricaValor}
         </span>
       </div>
+    </div>
     </div>
   )
 }
 
 export default function ComparativoSection() {
   const { t } = useTranslation()
-  const chaos  = t('landing.comparativo.chaos',  { returnObjects: true })
+  const chaos = t('landing.comparativo.chaos', { returnObjects: true })
   const lumina = t('landing.comparativo.lumina', { returnObjects: true })
 
   return (
-    <section id="features" className="mx-auto w-full max-w-[1280px] px-8 py-24">
-      <div className="flex flex-col gap-16">
-        <div data-reveal className="flex flex-col items-center gap-4 text-center">
-          <h2 className="font-display text-3xl font-extrabold leading-tight text-landing-text lg:text-5xl lg:leading-[48px]">
+    <section id="features" className="bg-wash-secao-suave mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8">
+      <div className="flex flex-col gap-12">
+        <div className="flex max-w-[46ch] flex-col gap-4">
+          <h2 className={TITULO_SECAO}>
             {t('landing.comparativo.title')}
           </h2>
-          <p className="max-w-[672px] text-base leading-6 text-landing-muted">
+          <p className="text-lg leading-relaxed text-landing-muted">
             {t('landing.comparativo.subtitle')}
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div data-reveal style={{ '--delay': '100ms' }}>
-            <Cartao dados={chaos} variante="caos" />
-          </div>
-          <div data-reveal style={{ '--delay': '200ms' }}>
-            <Cartao dados={lumina} variante="ordem" />
-          </div>
+        <div className="grid items-stretch gap-6 md:grid-cols-2">
+          <Coluna
+            titulo={chaos.title}
+            itens={chaos.items}
+            metricaRotulo={chaos.metricLabel}
+            metricaValor={chaos.metricValue}
+            verificavel={false}
+          />
+          <Coluna
+            titulo={lumina.title}
+            itens={lumina.items}
+            metricaRotulo={lumina.metricLabel}
+            metricaValor={lumina.metricValue}
+            verificavel
+          />
         </div>
       </div>
     </section>

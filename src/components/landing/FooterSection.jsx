@@ -5,7 +5,10 @@ import { cn } from '../../lib/cn.js'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'
 import { EMAIL_CONTATO } from '../../lib/contato.js'
 
-const PRODUTO = ['features', 'apiDocs', 'solutions']
+// `apiDocs` saiu: o rótulo dizia "Documentação da API" e o destino era a
+// âncora da seção de recursos. Não há documentação pública da API — o Swagger
+// serve a equipe, não o visitante.
+const PRODUTO = ['features', 'solutions']
 const EMPRESA = ['privacy', 'terms', 'deletion', 'contact']
 
 // Âncora começando com '#' rola na própria landing; o resto é rota da
@@ -13,7 +16,7 @@ const EMPRESA = ['privacy', 'terms', 'deletion', 'contact']
 // Privacidade, termos e exclusão apontavam para '#' — um link que não leva a
 // lugar nenhum é reprovação certa no App Review da Meta, que abre cada um.
 const DESTINOS = {
-  features: '#features', apiDocs: '#features', solutions: '#features',
+  features: '#features', solutions: '#plans',
   privacy: '/privacidade', terms: '/termos', deletion: '/exclusao-de-dados',
   contact: `mailto:${EMAIL_CONTATO}`,
 }
@@ -21,7 +24,7 @@ const DESTINOS = {
 // O texto de 12px deixa o alvo com 15px de altura; o padding vertical leva a
 // 27px sem mexer no ritmo da coluna.
 const ESTILO_LINK = cn(
-  'inline-block py-1.5 text-xs leading-4 text-landing-muted',
+  'inline-block py-1.5 text-sm leading-5 text-landing-muted',
   'transition-colors hover:text-landing-text'
 )
 
@@ -35,7 +38,7 @@ function LinkDoRodape({ destino, children }) {
 function Coluna({ titulo, chaves, t }) {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-base font-semibold leading-6 text-white">{titulo}</h2>
+      <h2 className="font-display text-sm font-semibold text-landing-text">{titulo}</h2>
       <ul className="flex flex-col gap-4">
         {chaves.map((chave) => (
           <li key={chave}>
@@ -53,8 +56,11 @@ export default function FooterSection() {
   const { t } = useTranslation()
 
   return (
-    <footer className="border-t border-landing-line/15 bg-landing-bg pb-16 pt-16">
-      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-16 px-8">
+    <footer className={cn(
+      'relative bg-landing-bg pb-16 pt-16',
+      "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-hairline-fade before:content-['']"
+    )}>
+      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-16 px-6 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-4">
           <div className="flex flex-col gap-4 lg:col-span-2">
             <LuminaWordmark markClassName="w-[26px]" />

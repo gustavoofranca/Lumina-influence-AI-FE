@@ -132,127 +132,163 @@
   },
   "landing": {
     "nav": {
-      "solutions": "Solutions",
-      "pricing": "Pricing",
-      "cases": "Case Studies",
-      "api": "API",
-      "login": "Sign In",
-      "cta": "Sign Up"
+      "solutions": "How it works",
+      "pricing": "Plans",
+      "login": "Sign in",
+      "cta": "Create account"
     },
     "hero": {
-      "label": "The Neural Architect",
-      "h1Line1": "Stop burning",
-      "h1Line2": "budget on",
-      "h1Highlight1": "vanity",
-      "h1Highlight2": "metrics.",
-      "subtitle": "Definitive AI audit that separates bots from humans through official APIs. Decisions based on real data, not ghost likes.",
-      "ctaPrimary": "Book a Demo",
-      "ctaSecondary": "View Documentation",
-      "dashboardAlt": "Lumina dashboard showing a creator analysis",
-      "card": {
-        "label": "Critical Detection",
-        "title": "Bot Farm Detected",
-        "metric": "AI Probability",
-        "value": "87.4%"
-      }
+      "h1": "Every number here says where it came from.",
+      "subtitle": "Influencer marketing audits for agencies. When the platform does not provide the data, Lumina leaves the field empty instead of filling it with an estimate.",
+      "ctaPrimary": "Create account",
+      "ctaSecondary": "See how it works",
+      "painel": {
+        "titulo": "Audit of @anapsouza",
+        "periodo": "last 30 days",
+        "engajamento": "Engagement",
+        "sentimento": "Audience sentiment",
+        "bots": "Bot probability",
+        "organico": "Organic reach",
+        "organicoMotivo": "No platform separates organic from paid reach without a commercial programme. The field stays empty.",
+        "legenda": "Three values measured, one not. The difference shows on screen, not in a footnote."
+      },
+      "badge": "Audits with data provenance"
     },
     "logos": {
-      "label": "Authorized Official Partner Integrations"
+      "label": "Built on the platforms’ official APIs"
     },
     "comparativo": {
-      "title": "Metrics without auditing are hidden losses",
-      "subtitle": "Your team spends 40h a week on spreadsheets that never catch the truth. See the difference:",
+      "title": "What a spreadsheet cannot prove",
+      "subtitle": "The difference between a reported number and a collected one.",
       "chaos": {
-        "title": "Manual Chaos",
+        "title": "Report sent by the creator",
         "items": [
-          "Screenshots from influencers that anyone can fake.",
-          "Auditing based on \"feeling\" and like counts.",
-          "No official tracking of conversion and ROI."
+          "A screenshot, which nobody can verify.",
+          "Reach reported by the person being evaluated.",
+          "No history: every campaign starts from scratch."
         ],
-        "metricLabel": "Estimated Loss",
-        "metricValue": "42% ROI Wasted"
+        "metricLabel": "Verifiable",
+        "metricValue": "No"
       },
       "lumina": {
-        "title": "Lumina Intelligence",
+        "title": "Collected by Lumina",
         "items": [
-          "Direct connection through official APIs (100% real data).",
-          "Sentiment and NLP analysis in real time.",
-          "Unified dashboard for transactional ROI."
+          "Read through the official API, with the token the creator authorised.",
+          "Comments analysed one by one, with the result stored.",
+          "Every number carries the date it was collected."
         ],
-        "metricLabel": "Efficiency Gain",
-        "metricValue": "12x More Insights"
+        "metricLabel": "Verifiable",
+        "metricValue": "Yes, with provenance"
       }
     },
     "pilares": {
-      "title": "Arquitetura Neural em 3 Pilares",
-      "subtitle": "Proprietary technology built for the enterprise influence market.",
+      "title": "Three engineering decisions",
+      "subtitle": "Each with its limit, written here and repeated on screen.",
       "items": [
         {
-          "title": "Official API Integration",
-          "desc": "We drop unstable scraping. We connect straight to Meta and Google servers to pull first-hand metrics, keeping the data secure and verifiable."
+          "title": "Collection through the official API",
+          "desc": "No scraping. Reads use the token the creator authorised on the platforms. When the API withholds a value, the field stays empty — it does not get an estimate instead."
         },
         {
-          "title": "Qualitative AI Analysis",
-          "desc": "Our AI processes scripts and comments with NLP (Natural Language Processing) to tell whether engagement is genuine or produced by engagement bots."
+          "title": "Language analysis with Gemini",
+          "desc": "Captions and comments go through Google’s model to estimate sentiment and the probability of automation. It is an estimate, and the interface presents it as one."
         },
         {
-          "title": "Real ROI Dashboards",
-          "desc": "See the direct impact on sales. We attribute conversions to specific creators through trackable links and integration with your e-commerce."
+          "title": "Financial indicators as proxies",
+          "desc": "ROI and CAC are not measured: the system cannot see your books. They are proxies computed over reach and reported cost, and the product says so where it shows them."
         }
       ],
       "chips": [
-        "INSTAGRAM",
-        "TIKTOK"
+        "Instagram",
+        "TikTok"
       ],
-      "nlpLabel": "NLP SCORE",
-      "nlpValue": "94% Genuine",
-      "roiAlt": "Conversion attribution per creator"
+      "nlpLabel": "Sample model output",
+      "nlpValue": "12% automation",
+      "roiAlt": "Conversion attribution by creator"
     },
     "plans": {
-      "title": "Invest with Intelligence",
-      "subtitle": "Pick the plan that fits the scale of your operation.",
+      "title": "Plans",
+      "subtitle": "Volume is the only difference. Everything the product does is in both.",
       "agency": {
-        "badge": "Popular",
-        "name": "Agency Plan",
-        "price": "R$ 2.490",
-        "period": "/mo",
-        "cta": "Get Started",
+        "badge": "Most used",
+        "name": "Agency",
+        "price": "R$ 1,297",
+        "period": "/month",
+        "cta": "Create account",
         "features": [
-          "Up to 50 influencers/month",
-          "Real-time NLP auditing",
-          "Shareable dashboards",
-          "24h support on Slack"
+          "Up to 50 creators",
+          "500 analyses per month"
         ]
       },
       "enterprise": {
-        "name": "Enterprise Plan",
-        "price": "Contact Us",
-        "cta": "Talk to a Specialist",
+        "name": "Enterprise",
+        "price": "On request",
+        "period": "",
+        "cta": "Get in touch",
         "features": [
-          "Unlimited influencers",
-          "Full API access (Webhooks)",
-          "Custom NLP Training",
-          "Dedicated Account Manager"
+          "Up to 500 creators",
+          "5,000 analyses per month"
+        ]
+      },
+      "shared": {
+        "title": "In both plans",
+        "items": [
+          "Collection through the connected platforms’ official APIs",
+          "Model analysis of captions, comments and video",
+          "Cross-campaign benchmarking",
+          "PDF report",
+          "Team with three roles: admin, member and viewer",
+          "Delete your data at any time"
         ]
       }
     },
     "footer": {
-      "tagline": "The leading neural auditing platform for high-performance influence campaigns.",
+      "tagline": "Influencer marketing audits for agencies.",
       "product": "Product",
       "company": "Company",
-      "copyright": "© 2026 Lumina Influence AI. Neural Architect Systems.",
-      "backToTop": "↑ Back to top",
+      "copyright": "© 2026 Lumina Influence AI.",
+      "backToTop": "Back to top",
       "links": {
-        "features": "Features",
-        "apiDocs": "API Docs",
-        "solutions": "Solutions",
+        "features": "How it works",
+        "solutions": "Plans",
         "privacy": "Privacy Policy",
-        "terms": "Terms of Service",
-        "deletion": "Data Deletion",
+        "terms": "Terms of Use",
+        "deletion": "Data deletion",
         "contact": "Contact"
       },
       "ctaQuestion": "Ready to audit your next campaign?",
-      "ctaLink": "Start your free audit today →"
+      "ctaLink": "Create account"
+    },
+    "faq": {
+      "title": "Questions we would rather answer up front",
+      "subtitle": "The product’s limits, stated here and repeated inside it.",
+      "items": [
+        {
+          "q": "Where do the numbers come from?",
+          "a": "From the official Instagram, TikTok and YouTube APIs, read with the token the creator authorises. Nothing is scraped, and nothing is estimated when the API withholds it."
+        },
+        {
+          "q": "Why are some fields empty?",
+          "a": "Because the platform did not provide that value. Filling it with an estimate would turn absence into a number, and a number nobody measured is worse than no number. Organic versus paid reach is the common case: no platform grants it without a commercial programme."
+        },
+        {
+          "q": "Is ROI calculated from my sales?",
+          "a": "No. The system cannot see your books. ROI and CAC are proxies computed over reach and reported cost, and the interface labels both as proxies wherever it shows them."
+        },
+        {
+          "q": "Is the bot probability a certainty?",
+          "a": "No, it is a language model’s estimate over comment patterns. It exists to direct a human check, not to replace one."
+        },
+        {
+          "q": "Does my data train any model?",
+          "a": "No. Analysis runs on the paid tier of the Gemini API, where submitted content is not used to improve products. The system verifies this setting at boot and publishes it on its own healthcheck."
+        },
+        {
+          "q": "How do I delete everything?",
+          "a": "From the interface, at any time: one social account, one creator, or the whole account. Each path states what it takes with it before asking for confirmation, which is typed."
+        }
+      ],
+      "selo": "FAQ"
     }
   },
   "configuracoes": {
