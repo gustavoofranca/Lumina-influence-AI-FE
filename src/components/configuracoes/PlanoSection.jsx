@@ -8,7 +8,7 @@ import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { useApi } from '../../hooks/useApi.js'
-import { getAgency, getAgencyUsage } from '../../services/agency.js'
+import { getAgency, getAgencyUsage, listPlans } from '../../services/agency.js'
 
 const UNLIMITED = '∞'
 
@@ -59,6 +59,13 @@ export default function PlanoSection() {
     [agencia?.id],
     { enabled: Boolean(agencia?.id) }
   )
+  // `listPlans` existia em services/agency.js desde a B4 e nenhuma tela a
+  // importava: a seção mostrava o plano atual e o consumo, e o usuário não
+  // tinha como saber o que os outros planos ofereciam. A troca continua sem
+  // acontecer aqui — não há cobrança integrada, e o botão segue desabilitado
+  // com o aviso ao lado. Mostrar a comparação é informação; habilitar o botão
+  // seria prometer um pagamento que não existe.
+  const { data: planos, error: plansError } = useApi(listPlans, [])
 
   if (agencyLoading) return <Skeleton className="h-96" rounded="rounded-3xl" />
 
@@ -66,7 +73,7 @@ export default function PlanoSection() {
 
   return (
     <div className="flex flex-col gap-6">
-      <ApiErrorBanner error={agencyError || usageError} onRetry={recarregarAgencia} />
+      <ApiErrorBanner error={agencyError || usageError || plansError} onRetry={recarregarAgencia} />
 
       <Card glass className={cn(
         'relative overflow-hidden border-2 border-primary-500/50',
@@ -131,6 +138,66 @@ export default function PlanoSection() {
           )}
         </div>
       </Card>
+
+      {planos?.length > 1 && (
+        <Card glass className="flex flex-col gap-5">
+          <div>
+            <CardLabel>{t('configuracoes.plano.compare.label')}</CardLabel>
+            <CardTitle className="mt-1.5">{t('configuracoes.plano.compare.title')}</CardTitle>
+            <p className="mt-1 text-sm text-text-secondary">
+              {t('configuracoes.plano.compare.subtitle')}
+            </p>
+          </div>
+
+          {/*
+            Sem preço aqui, de propósito: `price_brl_cents` é 0 tanto no Free,
+            que é gratuito, quanto no Enterprise, que não tem valor definido —
+            a coluna é `nullable=False, default=0` e não distingue as duas
+            coisas. Desenhar "R$ 0" no Enterprise afirmaria um preço que
+            ninguém estabeleceu (ADR-003). O que diferencia os planos de fato
+            são os limites, e esses estão medidos. O preço do plano vigente
+            continua no cartão acima, vindo do plano real da agência.
+          */}
+          <div className="grid gap-4 lg:grid-cols-3">
+            {planos.map((p) => {
+              const atual = p.id === plano?.id
+              return (
+                <div
+                  key={p.id}
+                  className={cn(
+                    'flex flex-col gap-3 rounded-2xl border p-4',
+                    atual
+                      ? 'border-primary-500/60 bg-primary-600/10'
+                      : 'border-hairline/60 bg-bg-surface/40'
+                  )}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-display font-bold text-text-primary">{p.name}</span>
+                    {atual && (
+                      <span className="text-label text-accent">
+                        {t('configuracoes.plano.compare.current')}
+                      </span>
+                    )}
+                  </div>
+                  <ul className="flex flex-col gap-1.5">
+                    <li className="text-sm text-text-secondary">
+                      {t('configuracoes.plano.features.influencers', { count: p.maxInfluencers })}
+                    </li>
+                    <li className="text-sm text-text-secondary">
+                      {t('configuracoes.plano.features.analyses', { count: p.maxAnalysesPerMonth })}
+                    </li>
+                    <li className="text-sm text-text-muted">
+                      {p.allowBenchmarking
+                        ? t('configuracoes.plano.features.benchmarking')
+                        : t('configuracoes.plano.compare.noBenchmarking')}
+                    </li>
+                  </ul>
+                </div>
+              )
+            })}
+          </div>
+        </Card>
+      )}
 
       <Card glass className="flex flex-col gap-5">
         <div>

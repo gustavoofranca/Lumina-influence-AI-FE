@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
-import { api, getAccessToken, setAccessToken, setOnUnauthorized } from '../lib/api.js'
+import { api, getAccessToken, setTokens, limparTokens, setOnUnauthorized } from '../lib/api.js'
 import { devLogin as devLoginApi, getMe } from '../services/auth.js'
 
 const AuthContext = createContext(null)
@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)   // true até resolver o token inicial
 
   const clearSession = useCallback(() => {
-    setAccessToken(null)
+    limparTokens()
     setUser(null)
     setAgency(null)
   }, [])
@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
 
   // Aplica um par de tokens + carrega o /me
   const applyTokens = useCallback(async (tokens) => {
-    setAccessToken(tokens.access_token)
+    setTokens(tokens)
     const me = await getMe()
     setUser(me.user)
     setAgency(me.agency)
@@ -33,15 +33,15 @@ export function AuthProvider({ children }) {
   // Login de dev (sem OAuth)
   const devLogin = useCallback(async (email) => {
     const data = await devLoginApi(email)
-    setAccessToken(data.tokens.access_token)
+    setTokens(data.tokens)
     setUser(data.user)
     setAgency(data.agency)
     return data
   }, [])
 
   // Captura tokens vindos do callback OAuth (#access_token=...&refresh_token=...)
-  const loginWithTokens = useCallback(async (accessToken) => {
-    await applyTokens({ access_token: accessToken })
+  const loginWithTokens = useCallback(async (accessToken, refreshToken) => {
+    await applyTokens({ access_token: accessToken, refresh_token: refreshToken })
   }, [applyTokens])
 
   /** Recarrega /me — usado após editar o próprio perfil. */

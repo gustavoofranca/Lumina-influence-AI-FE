@@ -323,7 +323,10 @@
         "name": "Name",
         "send": "Send invitation",
         "sending": "Sending..."
-      }
+      },
+      "roleLabel": "Role: {{nome}} — click to change",
+      "roleSaving": "Saving…",
+      "lastAdmin": "The agency would be left without an administrator. Promote someone else to admin before changing this role."
     },
     "plano": {
       "title": "Plan and billing",
@@ -346,6 +349,13 @@
       },
       "actions": {
         "upgrade": "Upgrade to Enterprise"
+      },
+      "compare": {
+        "label": "Plans",
+        "title": "Available plans",
+        "subtitle": "What each plan allows. Switching plans is not done here yet.",
+        "current": "Current",
+        "noBenchmarking": "No benchmarking"
       }
     },
     "preferencias": {

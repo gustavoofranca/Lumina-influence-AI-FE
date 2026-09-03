@@ -14,13 +14,9 @@ import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { ROLE_KEYS } from '../../lib/constants.js'
 import { useApi } from '../../hooks/useApi.js'
-import { listMembers, inviteMember, removeMember } from '../../services/team.js'
-
-const ROLE_VARIANT = {
-  admin:  'organic',
-  member: 'paid',
-  viewer: 'neutral',
-}
+import { useAuth } from '../../context/AuthContext.jsx'
+import PapelDoMembro from './PapelDoMembro.jsx'
+import { listMembers, inviteMember, removeMember, updateMemberRole } from '../../services/team.js'
 
 const DEFAULT_ROLE = 'member'
 
@@ -136,9 +132,36 @@ export default function EquipeSection() {
   const { t, i18n } = useTranslation()
   const [modalOpen, setModalOpen] = useState(false)
   const [removingId, setRemovingId] = useState(null)
+  const [savingRoleId, setSavingRoleId] = useState(null)
   const [actionError, setActionError] = useState(null)
+  const { user: usuarioAtual } = useAuth()
+  const souAdmin = usuarioAtual?.role === 'admin'
 
   const { data: membros, loading, error, refetch } = useApi(listMembers, [])
+
+  /**
+   * Troca o papel e recarrega: o valor exibido tem que vir do que foi gravado,
+   * não do que foi clicado. O back-end recusa a troca que deixaria a agência
+   * sem administrador, e essa recusa precisa aparecer na tela.
+   */
+  const onChangeRole = async (id, papel) => {
+    setSavingRoleId(id)
+    setActionError(null)
+    try {
+      await updateMemberRole(id, papel)
+      await refetch()
+    } catch (err) {
+      // A recusa do último administrador tem texto próprio: a mensagem do
+      // back-end vem em português e esta tela existe nos dois idiomas.
+      setActionError(
+        err.code === 'last_admin_role_change'
+          ? { code: err.code, message: t('configuracoes.equipe.lastAdmin') }
+          : err
+      )
+    } finally {
+      setSavingRoleId(null)
+    }
+  }
 
   const onRemove = async (id) => {
     setRemovingId(id)
@@ -206,9 +229,12 @@ export default function EquipeSection() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant={ROLE_VARIANT[m.role]} uppercase={false}>
-                        {t(`configuracoes.equipe.roles.${m.role}`, m.role)}
-                      </Badge>
+                      <PapelDoMembro
+                        valor={m.role}
+                        editavel={souAdmin}
+                        salvando={savingRoleId === m.id}
+                        onChange={(papel) => onChangeRole(m.id, papel)}
+                      />
                     </td>
                     <td className="px-4 py-3 text-sm tabular-nums text-text-secondary">
                       {formatDate(m.joinedAt, i18n.language)}

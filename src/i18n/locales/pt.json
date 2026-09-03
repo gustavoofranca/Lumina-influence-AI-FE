@@ -323,7 +323,10 @@
         "name": "Nome",
         "send": "Enviar convite",
         "sending": "Enviando..."
-      }
+      },
+      "roleLabel": "Papel de {{nome}} — clique para alterar",
+      "roleSaving": "Salvando…",
+      "lastAdmin": "A agência ficaria sem administrador. Promova outra pessoa a admin antes de mudar este papel."
     },
     "plano": {
       "title": "Plano e cobrança",
@@ -346,6 +349,13 @@
       },
       "actions": {
         "upgrade": "Upgrade para Enterprise"
+      },
+      "compare": {
+        "label": "Planos",
+        "title": "Planos disponíveis",
+        "subtitle": "O que cada plano permite. A mudança de plano ainda não é feita por aqui.",
+        "current": "Atual",
+        "noBenchmarking": "Sem benchmarking"
       }
     },
     "preferencias": {

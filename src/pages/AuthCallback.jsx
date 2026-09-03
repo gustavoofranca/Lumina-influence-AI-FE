@@ -19,6 +19,9 @@ export default function AuthCallback() {
   useEffect(() => {
     const frag = new URLSearchParams(window.location.hash.replace(/^#/, ''))
     const accessToken = frag.get('access_token')
+    // O back-end manda o par completo no fragmento. Ignorar o refresh fazia a
+    // sessao do login por Google expirar em 1 hora sem chance de renovar.
+    const refreshToken = frag.get('refresh_token')
     if (!accessToken) {
       setError('Token ausente no retorno do login.')
       return
@@ -28,7 +31,7 @@ export default function AuthCallback() {
     const agenciaNova = frag.get('new_agency') === '1'
     // Limpa o fragmento da URL (não deixa o token no histórico).
     window.history.replaceState(null, '', '/auth/callback')
-    loginWithTokens(accessToken)
+    loginWithTokens(accessToken, refreshToken)
       .then(() => navigate(agenciaNova ? '/primeiro-acesso' : '/app/dashboard',
                            { replace: true }))
       .catch((e) => setError(e.message || t('auth.callback.error')))
