@@ -101,8 +101,8 @@ export default function HeaderSection() {
         }}
       />
       <div className="relative mx-auto flex h-20 w-full max-w-[1280px] items-center justify-between gap-6 px-8">
-        <Link to="/" className="shrink-0" aria-label="Lumina Influence AI">
-          <LuminaWordmark markClassName="w-[26px]" />
+        <Link to="/" className="shrink-0" aria-label="Lumina AI">
+          <LuminaWordmark />
         </Link>
 
         {/* Fora do fluxo, para centralizar na TELA e não na sobra.

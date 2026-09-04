@@ -63,7 +63,7 @@ export default function FooterSection() {
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-16 px-6 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-4">
           <div className="flex flex-col gap-4 lg:col-span-2">
-            <LuminaWordmark markClassName="w-[26px]" />
+            <LuminaWordmark />
             <p className="max-w-[320px] text-sm leading-[22.75px] text-landing-muted">
               {t('landing.footer.tagline')}
             </p>

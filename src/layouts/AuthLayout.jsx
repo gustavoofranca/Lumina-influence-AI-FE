@@ -24,8 +24,8 @@ export default function AuthLayout({ children }) {
 
       {/* Language switcher + logo no topo */}
       <div className="relative mb-8 flex w-full max-w-md items-center justify-between">
-        <Link to="/" aria-label="Lumina Influence AI">
-          <LuminaWordmark markClassName="w-9" />
+        <Link to="/" aria-label="Lumina AI">
+          <LuminaWordmark tamanho="text-[1.6rem]" />
         </Link>
         <LanguageSwitcher />
       </div>

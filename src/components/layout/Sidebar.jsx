@@ -77,7 +77,7 @@ export default function Sidebar({ open, onClose }) {
         {/* Header da sidebar. A marca fica sozinha na linha: dividir os 216px
             com o nome da agência truncava os dois. */}
         <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-primary/10 px-5">
-          <LuminaWordmark markClassName="w-8" className="shrink-0" />
+          <LuminaWordmark className="shrink-0" tamanho="text-[1.2rem]" />
           {/* Botão fechar (mobile) */}
           <button
             type="button"

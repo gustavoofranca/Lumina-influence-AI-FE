@@ -30,8 +30,8 @@ export default function PaginaLegal({ base }) {
     <div className="min-h-screen bg-landing-bg font-sans text-landing-text">
       <header className="border-b border-landing-line/15">
         <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-4 px-8 py-5">
-          <Link to="/" className="flex items-center gap-3" aria-label="Lumina Influence AI">
-            <LuminaWordmark markClassName="w-[26px]" />
+          <Link to="/" className="flex items-center gap-3" aria-label="Lumina AI">
+            <LuminaWordmark />
           </Link>
           <LanguageSwitcher />
         </div>
