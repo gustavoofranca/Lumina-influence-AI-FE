@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import { MOLDURA, MIOLO, MIOLO_COM_AURA, PILULA, TEXTO_PILULA, TITULO_SECAO } from './estilos.js'
+import CartaoDeVidro from './CartaoDeVidro.jsx'
+import { TITULO_SECAO, WASH_SECAO_SUAVE } from './estilos.js'
 
 /**
  * A comparação entre o que o criador reporta e o que o Lumina coleta.
@@ -15,20 +16,19 @@ import { MOLDURA, MIOLO, MIOLO_COM_AURA, PILULA, TEXTO_PILULA, TITULO_SECAO } fr
  * ninguém mediu, numa página sobre não apresentar número que ninguém mediu.
  */
 function Coluna({ titulo, itens, metricaRotulo, metricaValor, verificavel }) {
+  // As duas colunas assentam em vidro — sem isso a não verificada flutua na
+  // página. O que continua separando as duas é a moldura: a verificada tem
+  // borda em degradê, aura violeta e brilho; a outra tem traço pontilhado e
+  // nenhuma luz. A ausência segue lida como ausência, agora sobre uma
+  // superfície.
   return (
-    <div className={cn('rounded-2xl p-px', verificavel ? `${MOLDURA} shadow-glow-card` : '')}>
-    {/* As duas colunas assentam em vidro — sem isso a não verificada flutua na
-        página. O que continua separando as duas é a moldura: a verificada tem
-        borda em degradê, aura violeta e brilho; a outra tem traço pontilhado e
-        nenhuma luz. A ausência segue lida como ausência, agora sobre uma
-        superfície. */}
-    <div
+    <CartaoDeVidro
+      aura={verificavel}
+      moldura={verificavel}
       className={cn(
-        'flex h-full flex-col gap-6 p-7 sm:p-8',
-        verificavel
-          ? MIOLO_COM_AURA
-          : `${MIOLO} border border-dashed border-landing-unmeasured`
+        verificavel ? 'shadow-glow-card' : 'border border-dashed border-landing-unmeasured'
       )}
+      interno="gap-6 !p-7 sm:!p-8"
     >
       <h3 className="font-display text-xl font-semibold text-landing-text">{titulo}</h3>
 
@@ -58,8 +58,7 @@ function Coluna({ titulo, itens, metricaRotulo, metricaValor, verificavel }) {
           {metricaValor}
         </span>
       </div>
-    </div>
-    </div>
+    </CartaoDeVidro>
   )
 }
 
@@ -69,7 +68,7 @@ export default function ComparativoSection() {
   const lumina = t('landing.comparativo.lumina', { returnObjects: true })
 
   return (
-    <section id="features" className="bg-wash-secao-suave mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8">
+    <section id="features" className={cn(WASH_SECAO_SUAVE, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
       <div className="flex flex-col gap-12">
         <div className="flex max-w-[46ch] flex-col gap-4">
           <h2 className={TITULO_SECAO}>

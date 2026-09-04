@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import { MOLDURA, MIOLO, MIOLO_COM_AURA, PILULA, TEXTO_PILULA, TITULO_SECAO } from './estilos.js'
+import CartaoDeVidro from './CartaoDeVidro.jsx'
+import { TITULO_SECAO } from './estilos.js'
 
 /**
  * As três decisões de engenharia, cada uma com o limite que ela tem.
@@ -53,6 +54,8 @@ export default function PilaresSection() {
 
   return (
     <section className={cn(
+      // Seção de largura cheia: o lavado é recortado pela janela, não por uma
+      // caixa mais estreita, então aqui ele não deixa aresta.
       'relative bg-wash-secao py-24',
       "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-hairline-fade before:content-['']",
       "after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-hairline-fade after:content-['']"
@@ -69,8 +72,12 @@ export default function PilaresSection() {
 
         <div className="grid gap-10 md:grid-cols-3 md:gap-8">
           {items.map((item, i) => (
-            <article key={item.title} className={cn(MOLDURA, 'shadow-glow-card')}>
-            <div className={cn(MIOLO, 'flex h-full flex-col p-6 sm:p-7')}>
+            <CartaoDeVidro
+              as="article"
+              key={item.title}
+              className="shadow-glow-card"
+              interno="!p-6 sm:!p-7"
+            >
               <h3 className="font-display text-lg font-semibold text-landing-text">
                 {item.title}
               </h3>
@@ -79,8 +86,7 @@ export default function PilaresSection() {
               </p>
               {i === 0 && <Chips itens={chips} />}
               {i === 1 && <ExemploDeSaida t={t} />}
-            </div>
-            </article>
+            </CartaoDeVidro>
           ))}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Menu, X } from 'lucide-react'
+import { CloseCircle, HamburgerMenu } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx'
@@ -79,19 +79,37 @@ export default function HeaderSection() {
   }, [aberto])
 
   return (
-    <header className={cn(
-      'fixed inset-x-0 top-0 z-50 backdrop-blur-[12px]',
-      'bg-landing-bg/80',
-      // Régua que some nas duas pontas, como no arquivo: borda cheia bate na
-      // beirada da janela e fecha a barra como uma caixa.
-      'after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-hairline-fade after:content-[\'\']'
-    )}>
-      <div className="mx-auto flex h-20 w-full max-w-[1280px] items-center justify-between gap-6 px-8">
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* A barra se dissolve em vez de terminar numa aresta.
+          Medido: com fundo chapado e régua de 1px, a página era cortada em duas
+          na altura de 80px — o fundo saltava de `rgb(9,3,30)` para
+          `rgb(18,7,44)`, o dobro da luminância, porque a barra escurecia tudo
+          atrás dela e parava de repente. A régua, por cima, marcava a linha:
+          `rgb(61,53,78)`, dezenove vezes mais clara que a vizinhança.
+          Agora tinta e desfoque desaparecem juntos na base, então não existe
+          altura onde o tom mude de um pixel para o outro.
+          Camada separada do conteúdo porque a máscara vale para o elemento
+          inteiro: aplicada no `header`, ela apagaria o menu junto. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 backdrop-blur-[12px]"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(8,2,26,0.92) 0%, rgba(8,2,26,0.72) 45%, rgba(8,2,26,0) 100%)',
+          maskImage: 'linear-gradient(180deg, #000 0%, #000 52%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(180deg, #000 0%, #000 52%, transparent 100%)',
+        }}
+      />
+      <div className="relative mx-auto flex h-20 w-full max-w-[1280px] items-center justify-between gap-6 px-8">
         <Link to="/" className="shrink-0" aria-label="Lumina Influence AI">
           <LuminaWordmark markClassName="w-[26px]" />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        {/* Fora do fluxo, para centralizar na TELA e não na sobra.
+            Com `justify-between` e três grupos, o do meio ocupa o espaço
+            que sobra entre a logo (estreita) e o bloco de ações (largo) —
+            e o centro dessa sobra não é o centro da janela. */}
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
           {NAV.map(({ key, anchor, secao: alvo }) => {
             const ativo = alvo === secao
             return (
@@ -123,9 +141,9 @@ export default function HeaderSection() {
             aria-label={t(aberto ? 'common.a11y.closeMenu' : 'common.a11y.openMenu')}
             className="rounded-lg p-1.5 text-landing-muted transition-colors hover:text-landing-text lg:hidden"
           >
-            {aberto ? <X size={20} /> : <Menu size={20} />}
+            {aberto ? <CloseCircle size={20} /> : <HamburgerMenu size={20} />}
           </button>
-          <LanguageSwitcher />
+          <LanguageSwitcher variant="vidro" />
           <Link
             to="/login"
             className={cn(

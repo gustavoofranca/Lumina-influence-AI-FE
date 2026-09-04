@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
-import { X } from 'lucide-react'
+import { CloseCircle } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 import IconButton from './IconButton.jsx'
@@ -132,7 +132,7 @@ export default function Modal({
               <span />
             )}
             {showCloseButton ? (
-              <IconButton icon={X} variant="ghost" size="sm" label={t('common.a11y.close')} onClick={onClose} />
+              <IconButton icon={CloseCircle} variant="ghost" size="sm" label={t('common.a11y.close')} onClick={onClose} />
             ) : null}
           </div>
         )}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'iconsax-reactjs'
 
 import FooterSection from '../landing/FooterSection.jsx'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'

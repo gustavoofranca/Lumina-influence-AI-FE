@@ -1,4 +1,4 @@
-import { AlertTriangle, RotateCw } from 'lucide-react'
+import { ArrowRotateRight, Danger } from 'iconsax-reactjs'
 import { useTranslation } from 'react-i18next'
 
 import Button from './Button.jsx'
@@ -22,13 +22,13 @@ export default function ApiErrorBanner({ error, onRetry, retrying = false, class
       role="alert"
       className={`flex flex-wrap items-start gap-3 rounded-xl border border-tertiary-500/30 bg-tertiary-500/10 px-4 py-3 ${className}`}
     >
-      <AlertTriangle size={18} className="mt-0.5 shrink-0 text-tint-rose" />
+      <Danger size={18} className="mt-0.5 shrink-0 text-tint-rose" />
       <p className="min-w-0 flex-1 text-sm text-tint-rose">{msg}{hint}</p>
       {onRetry && (
         <Button
           variant="outlined"
           size="sm"
-          leftIcon={RotateCw}
+          leftIcon={ArrowRotateRight}
           loading={retrying}
           onClick={onRetry}
         >

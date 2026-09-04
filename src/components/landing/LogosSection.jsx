@@ -1,20 +1,30 @@
 import { useTranslation } from 'react-i18next'
+import { siGoogle, siInstagram, siTiktok, siYoutube } from 'simple-icons'
 
 import { cn } from '../../lib/cn.js'
-import instagram from '../../assets/landing/meta.png'
-import google from '../../assets/landing/google.png'
-import tiktok from '../../assets/landing/tiktok.png'
-import youtube from '../../assets/landing/netflix.png'
 
-// As camadas do arquivo de design estão nomeadas como "Meta" e "Netflix", mas a
-// arte exportada é a do Instagram e a do YouTube — que são, junto com TikTok e
-// Google, as plataformas que o produto de fato integra. O nome aqui segue a
-// arte, não o rótulo da camada.
+/**
+ * As quatro plataformas que o produto de fato integra.
+ *
+ * Os desenhos vêm do `simple-icons`, que publica a marca oficial de cada
+ * plataforma — antes eram PNGs exportados do arquivo de design, e em tamanho
+ * pequeno eles ficavam moles. Vetor resolve isso e ainda acompanha mudança de
+ * marca por atualização de pacote.
+ *
+ * **Monocromático por decisão, não por limitação.** O pacote traz a cor oficial
+ * em `hex` e ela é ignorada: quatro logos coloridos numa faixa disputam a
+ * atenção com o herói logo acima. O `path` é pintado com `currentColor`, então
+ * o realce do ponteiro é só um degrau de luminosidade.
+ *
+ * Sobre marca registrada: exibir o logo para dizer "integra com" é uso
+ * nominativo, e é por isso que a página não afirma parceria, autorização nem
+ * endosso em lugar nenhum — foi uma das frases que saíram daqui.
+ */
 const PLATAFORMAS = [
-  { nome: 'Instagram', src: instagram },
-  { nome: 'Google',    src: google },
-  { nome: 'TikTok',    src: tiktok },
-  { nome: 'YouTube',   src: youtube },
+  { nome: 'Instagram', icone: siInstagram },
+  { nome: 'Google',    icone: siGoogle },
+  { nome: 'TikTok',    icone: siTiktok },
+  { nome: 'YouTube',   icone: siYoutube },
 ]
 
 // Quatro marcas não enchem a faixa: a trilha repete o conjunto até sobrar
@@ -55,8 +65,12 @@ export default function LogosSection() {
           {t('landing.logos.label')}
         </p>
 
+        {/* `overflow-hidden` recorta o desfile na horizontal, mas recorta a
+            vertical junto — e o ícone que sobe no hover saía pela borda de
+            cima. Como o recorte acontece na borda do padding, a folga vertical
+            resolve; a margem negativa devolve o espaçamento do layout. */}
         <div
-          className="group relative min-w-0 flex-1 overflow-hidden"
+          className="group relative -my-3 min-w-0 flex-1 overflow-hidden py-3"
           style={{
             maskImage:
               'linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%)',
@@ -72,30 +86,36 @@ export default function LogosSection() {
             )}
           >
             {[0, 1].map((copia) =>
-              CONJUNTO.map(({ nome, src }, i) => (
-                <li
-                  key={`${copia}-${nome}-${i}`}
-                  aria-hidden={copia === 1 || i >= PLATAFORMAS.length}
-                  className={cn(
-                    // Monocromático em repouso, cor de volta no ponteiro: a
-                    // faixa para de competir com o herói e ainda assim cada
-                    // marca se identifica quando alguém repara nela.
-                    'size-8 shrink-0 grayscale opacity-55 hover:grayscale-0',
-                    // Sobe e cresce um pouco ao receber o ponteiro. `will-change`
-                    // evita o tremor de reamostragem que aparece em transform
-                    // sobre imagem pequena.
-                    'transition-[transform,opacity,filter] duration-300 ease-out will-change-transform',
-                    'hover:-translate-y-1.5 hover:scale-110 hover:opacity-100',
-                    'motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100'
-                  )}
-                >
-                  <img
-                    src={src}
-                    alt={copia === 0 && i < PLATAFORMAS.length ? nome : ''}
-                    className="size-full object-contain"
-                  />
-                </li>
-              ))
+              CONJUNTO.map(({ nome, icone }, i) => {
+                const real = copia === 0 && i < PLATAFORMAS.length
+                return (
+                  <li
+                    key={`${copia}-${nome}-${i}`}
+                    aria-hidden={!real}
+                    className={cn(
+                      // Apagado em repouso, aceso no ponteiro: a faixa para de
+                      // competir com o herói e ainda assim cada marca se
+                      // identifica quando alguém repara nela.
+                      'shrink-0 text-white/55 hover:text-white',
+                      // Sobe e cresce um pouco ao receber o ponteiro.
+                      'transition-[transform,color] duration-300 ease-out will-change-transform',
+                      'hover:-translate-y-1.5 hover:scale-110',
+                      'motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100'
+                    )}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="size-8"
+                      fill="currentColor"
+                      role={real ? 'img' : 'presentation'}
+                      aria-label={real ? nome : undefined}
+                    >
+                      {real && <title>{nome}</title>}
+                      <path d={icone.path} />
+                    </svg>
+                  </li>
+                )
+              })
             )}
           </ul>
         </div>

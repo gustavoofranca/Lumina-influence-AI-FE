@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react'
+import { Refresh2 } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 
@@ -74,7 +74,7 @@ export default function Button({
       {...rest}
     >
       {loading ? (
-        <Loader2 size={iconSize} className="animate-spin" />
+        <Refresh2 size={iconSize} className="animate-spin" />
       ) : LeftIcon ? (
         <LeftIcon size={iconSize} />
       ) : null}

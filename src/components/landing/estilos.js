@@ -16,10 +16,21 @@
  * mesmo em um elemento só, mas quebra quando o miolo precisa de
  * `backdrop-filter` — que é o caso aqui.
  */
-export const MOLDURA = 'rounded-2xl bg-moldura-cartao p-px'
+// `relative` porque o `AnelDeRefracao` se posiciona contra esta caixa.
+export const MOLDURA = 'relative rounded-2xl bg-moldura-cartao p-px'
 
-/** Miolo do cartão. Entra como filho direto de `MOLDURA`. */
-export const MIOLO = 'rounded-[15px] bg-landing-surface/85 backdrop-blur-xl'
+/**
+ * Miolo do cartão.
+ *
+ * A tinta era `/85` — 85% de opacidade, ou seja, painel sólido com um
+ * `backdrop-blur` que não tinha o que borrar. É por isso que o vidro não
+ * aparecia: o efeito depende de o fundo atravessar.
+ *
+ * `/40` deixa o campo de estrelas passar e ainda dá base suficiente para o
+ * texto. Zero seria vidro de verdade, mas o corpo do cartão é texto corrido
+ * sobre um fundo animado, e aí a leitura é que paga.
+ */
+export const MIOLO = 'rounded-[15px] bg-landing-surface/40 backdrop-blur-2xl'
 
 /** Miolo com a aura violeta descendo do topo, para o cartão em destaque. */
 export const MIOLO_COM_AURA = `${MIOLO} bg-[radial-gradient(120%_100%_at_50%_0%,rgba(133,102,255,0.14)_0%,rgba(133,102,255,0)_60%)]`
@@ -68,6 +79,35 @@ export const TITULO_SECAO = [
   'font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.02em] sm:text-[40px]',
   'bg-gradient-to-b from-white from-[22.5%] to-white/70 bg-clip-text text-transparent',
 ].join(' ')
+
+/**
+ * Lavado radial de seção, sem aresta.
+ *
+ * O lavado é um radial largo (150% da caixa) e as seções têm largura máxima de
+ * 1180px — então o degradê **era recortado** pela borda do container e deixava
+ * duas arestas verticais e uma horizontal bem visíveis, um retângulo desenhado
+ * no fundo. Trocar por um radial estreito o bastante para morrer dentro da
+ * caixa apagaria o efeito, que depende de ser largo e quase imperceptível.
+ *
+ * A saída é pintar o lavado numa camada própria que transborda a caixa e
+ * apagá-la nas bordas por máscara: `intersect` entre uma horizontal, que mata
+ * as duas laterais, e uma vertical, que suaviza o encontro com a seção de
+ * cima. O conteúdo não é mascarado junto porque a camada é irmã dele.
+ */
+export const WASH_SECAO = [
+  // `isolate` + `before:-z-10`: pseudo-elemento posicionado pinta acima dos
+  // filhos em fluxo, então sem isto o lavado cobriria o texto da seção. O
+  // `isolate` prende o z negativo dentro da própria seção.
+  'relative isolate',
+  "before:pointer-events-none before:absolute before:-z-10 before:inset-y-0 before:-inset-x-[12%] before:content-['']",
+  'before:bg-wash-secao',
+  'before:[mask-image:linear-gradient(90deg,transparent_0%,#000_14%,#000_86%,transparent_100%),linear-gradient(180deg,transparent_0%,#000_9%)]',
+  'before:[mask-composite:intersect]',
+  'before:[-webkit-mask-composite:source-in]',
+].join(' ')
+
+/** Mesmo tratamento, na intensidade mais baixa. */
+export const WASH_SECAO_SUAVE = WASH_SECAO.replace('before:bg-wash-secao', 'before:bg-wash-secao-suave')
 
 /** Régua que some nas duas pontas, em vez de bater na borda da seção. */
 export const HAIRLINE = 'h-px w-full bg-hairline-fade'

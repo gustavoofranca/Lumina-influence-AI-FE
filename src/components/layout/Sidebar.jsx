@@ -1,15 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import {
-  LayoutDashboard,
-  Users,
-  Target,
-  Bot,
-  FileText,
-  Settings,
-  Plus,
-  X,
-} from 'lucide-react'
+import { Add, Category, CloseCircle, Cpu, DocumentText, Profile2User, Radar, Setting2 } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 import Button from '../ui/Button.jsx'
@@ -17,15 +8,15 @@ import { useAuth } from '../../context/AuthContext.jsx'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'
 
 const NAV_ITEMS = [
-  { key: 'dashboard',       icon: LayoutDashboard, path: '/app/dashboard' },
-  { key: 'influenciadores', icon: Users,            path: '/app/influenciadores' },
-  { key: 'campanhas',       icon: Target,           path: '/app/campanhas' },
-  { key: 'diagnostico',     icon: Bot,              path: '/app/diagnostico' },
-  { key: 'relatorios',      icon: FileText,         path: '/app/relatorios' },
+  { key: 'dashboard',       icon: Category, path: '/app/dashboard' },
+  { key: 'influenciadores', icon: Profile2User,            path: '/app/influenciadores' },
+  { key: 'campanhas',       icon: Radar,           path: '/app/campanhas' },
+  { key: 'diagnostico',     icon: Cpu,              path: '/app/diagnostico' },
+  { key: 'relatorios',      icon: DocumentText,         path: '/app/relatorios' },
 ]
 
 const SECONDARY_ITEMS = [
-  { key: 'configuracoes', icon: Settings,   path: '/app/configuracoes' },
+  { key: 'configuracoes', icon: Setting2,   path: '/app/configuracoes' },
 ]
 
 function NavItem({ item, t, onClick }) {
@@ -94,7 +85,7 @@ export default function Sidebar({ open, onClose }) {
             className="rounded-lg p-1 text-text-muted hover:bg-bg-surface hover:text-text-primary lg:hidden"
             aria-label={t('common.a11y.closeMenu')}
           >
-            <X size={16} />
+            <CloseCircle size={16} />
           </button>
         </div>
 
@@ -136,7 +127,7 @@ export default function Sidebar({ open, onClose }) {
         {/* Rodapé — botão Nova Campanha */}
         <div className="shrink-0 border-t border-primary/10 p-4">
           <NavLink to="/app/campanhas/nova">
-            <Button variant="primary" fullWidth leftIcon={Plus}>
+            <Button variant="primary" fullWidth leftIcon={Add}>
               {t('app.sidebar.newCampaign')}
             </Button>
           </NavLink>

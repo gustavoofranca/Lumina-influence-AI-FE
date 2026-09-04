@@ -1,6 +1,6 @@
 import { forwardRef, useId } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Search as SearchIcon, X } from 'lucide-react'
+import { CloseCircle, SearchNormal1 as SearchIcon } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 
@@ -87,7 +87,7 @@ const Search = forwardRef(function Search(
             aria-label={t('common.a11y.clear')}
             className="shrink-0 rounded-md p-1.5 text-text-muted transition-colors hover:bg-bg-surface hover:text-text-primary"
           >
-            <X size={14} />
+            <CloseCircle size={14} />
           </button>
         ) : null}
       </div>

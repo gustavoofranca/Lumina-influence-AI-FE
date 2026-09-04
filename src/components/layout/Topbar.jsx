@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ChevronDown, User, Settings, LogOut, Menu } from 'lucide-react'
+import { ArrowDown2, HamburgerMenu, Logout, Setting2, User } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 import Search from '../ui/Search.jsx'
@@ -35,7 +35,7 @@ function AvatarDropdown({ user, onLogout }) {
 
   const MENU_ITEMS = [
     { label: t('app.topbar.profile'),  icon: User,     to: '/app/configuracoes/perfil' },
-    { label: t('app.topbar.settings'), icon: Settings, to: '/app/configuracoes' },
+    { label: t('app.topbar.settings'), icon: Setting2, to: '/app/configuracoes' },
   ]
 
   return (
@@ -56,7 +56,7 @@ function AvatarDropdown({ user, onLogout }) {
         <span className="hidden max-w-[120px] truncate text-sm font-medium lg:block">
           {user?.name || 'Usuário'}
         </span>
-        <ChevronDown
+        <ArrowDown2
           size={14}
           className={cn('shrink-0 text-text-muted transition-transform duration-150', open && 'rotate-180')}
         />
@@ -97,7 +97,7 @@ function AvatarDropdown({ user, onLogout }) {
                 onClick={() => { setOpen(false); onLogout() }}
                 className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-tint-rose transition-colors hover:bg-tertiary-500/10 hover:text-tint-rose"
               >
-                <LogOut size={15} />
+                <Logout size={15} />
                 {t('app.topbar.logout')}
               </button>
             </li>
@@ -123,7 +123,7 @@ export default function Topbar({ onMenuClick }) {
     <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-4 border-b border-primary/10 bg-bg-base/90 px-4 backdrop-blur-md lg:px-6">
       {/* Botão menu (mobile) */}
       <IconButton
-        icon={Menu}
+        icon={HamburgerMenu}
         label={t('common.a11y.openMenu')}
         variant="ghost"
         size="md"

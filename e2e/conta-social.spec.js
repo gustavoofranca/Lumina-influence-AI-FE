@@ -61,10 +61,31 @@ test('conta sem token aparece como não coletando, não como conectada', async (
 test('conta com token oferece desconectar', async ({ page, request }) => {
   const criador = await influenciadorComConta(request)
   await entrarComoAdmin(page)
+
+  // Mesmo registro do teste acima, com o sinal invertido. O par é o teste: os
+  // dois casos partem do MESMO payload e diferem só em `connected`, então o que
+  // fica provado é que a tela lê o campo — e não a existência do registro, que
+  // é exatamente o defeito de 27/08.
+  //
+  // Este caso era montado sobre o seed, procurando no banco uma conta com
+  // token. Só que `seed_data.py` cria toda SocialAccount sem
+  // `access_token_encrypted`, de propósito: nenhuma delas passou por OAuth.
+  // Não havia conta conectada para achar, e o teste vinha passando sobre
+  // resíduo de estado deixado por conexão manual — verde que dependia de um
+  // banco específico, não do comportamento.
+  await page.route(new RegExp(`/influencers/${criador.id}(\\?|$)`), async (rota) => {
+    const resposta = await rota.fetch()
+    const corpo = await resposta.json()
+    corpo.data.social_accounts = corpo.data.social_accounts.map((c, i) => ({
+      ...c,
+      connected: i === 0,
+    }))
+    await rota.fulfill({ response: resposta, json: corpo })
+  })
+
   await page.goto(`/app/influenciadores/${criador.id}`)
   await page.getByRole('tab', { name: 'Visão Geral' }).click()
 
-  // O criador do seed tem uma conta com token e outra sem — o que interessa
-  // aqui é que a conectada ofereça a ação de desconectar.
-  await expect(page.getByRole('button', { name: 'Desconectar' }).first()).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Desconectar' })).toHaveCount(1)
+  await expect(page.getByRole('button', { name: 'Desconectar' })).toBeVisible()
 })

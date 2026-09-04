@@ -157,6 +157,24 @@
     "logos": {
       "label": "Integrações pelas APIs oficiais das plataformas"
     },
+    "prova": {
+      "selo": "O produto rodando",
+      "title": "Não é maquete. É a tela.",
+      "subtitle": "As duas capturas abaixo saíram do sistema em execução, com o banco de demonstração. Nenhuma foi retocada.",
+      "passos": [
+        {
+          "rotulo": "Painel da agência",
+          "title": "O campo vazio aparece vazio",
+          "desc": "ROI e CAC estão em branco porque o sistema não enxerga o seu caixa. Onde outras ferramentas estimam, o Lumina deixa o traço — e é isso que você vê na captura, não uma promessa sobre o que ele faria."
+        },
+        {
+          "rotulo": "Ficha do criador",
+          "title": "Cada número traz a data e a origem",
+          "desc": "Alcance, engajamento e probabilidade de bot vêm da API oficial, com o token que o criador autorizou. A tela mostra quando cada valor foi coletado e qual conta o entregou."
+        }
+      ],
+      "legenda": "Capturas do ambiente de demonstração, {{data}}."
+    },
     "comparativo": {
       "title": "O que a planilha não consegue provar",
       "subtitle": "A diferença entre um número reportado e um número coletado.",
@@ -205,6 +223,32 @@
       "nlpLabel": "Exemplo de saída do modelo",
       "nlpValue": "12% de automação",
       "roiAlt": "Visualização de atribuição de conversão por criador"
+    },
+    "numeros": {
+      "selo": "Verificável",
+      "title": "O que sustenta isso",
+      "itens": [
+        {
+          "valor": "440",
+          "rotulo": "testes automatizados",
+          "nota": "back-end e ponta a ponta"
+        },
+        {
+          "valor": "4",
+          "rotulo": "APIs oficiais",
+          "nota": "Instagram, TikTok, YouTube, Google"
+        },
+        {
+          "valor": "0",
+          "rotulo": "dados por scraping",
+          "nota": "toda leitura passa por OAuth"
+        },
+        {
+          "valor": "3",
+          "rotulo": "caminhos de exclusão",
+          "nota": "conta, criador e titular"
+        }
+      ]
     },
     "plans": {
       "title": "Planos",

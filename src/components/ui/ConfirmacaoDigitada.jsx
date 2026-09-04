@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Trash2 } from 'lucide-react'
+import { Trash } from 'iconsax-reactjs'
 
 import Modal from './Modal.jsx'
 import Button from './Button.jsx'
@@ -74,7 +74,7 @@ export default function ConfirmacaoDigitada({
           </Button>
           <Button
             variant="primary"
-            leftIcon={Trash2}
+            leftIcon={Trash}
             loading={executando}
             disabled={!confere}
             onClick={confirmar}

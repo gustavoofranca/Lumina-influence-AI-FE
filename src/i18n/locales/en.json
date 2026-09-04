@@ -157,6 +157,24 @@
     "logos": {
       "label": "Built on the platforms’ official APIs"
     },
+    "prova": {
+      "selo": "The product, running",
+      "title": "Not a mock-up. The actual screen.",
+      "subtitle": "Both captures below came out of the running system, against the demo database. Neither was retouched.",
+      "passos": [
+        {
+          "rotulo": "Agency dashboard",
+          "title": "An empty field looks empty",
+          "desc": "ROI and CAC are blank because the system cannot see your books. Where other tools estimate, Lumina leaves the dash — and that is what you see in the capture, not a promise about what it would do."
+        },
+        {
+          "rotulo": "Creator profile",
+          "title": "Every number carries its date and its source",
+          "desc": "Reach, engagement and bot probability come from the official API, with the token the creator authorised. The screen shows when each value was collected and which account delivered it."
+        }
+      ],
+      "legenda": "Captures from the demo environment, {{data}}."
+    },
     "comparativo": {
       "title": "What a spreadsheet cannot prove",
       "subtitle": "The difference between a reported number and a collected one.",
@@ -205,6 +223,32 @@
       "nlpLabel": "Sample model output",
       "nlpValue": "12% automation",
       "roiAlt": "Conversion attribution by creator"
+    },
+    "numeros": {
+      "selo": "Verifiable",
+      "title": "What holds this up",
+      "itens": [
+        {
+          "valor": "440",
+          "rotulo": "automated tests",
+          "nota": "back-end and end-to-end"
+        },
+        {
+          "valor": "4",
+          "rotulo": "official APIs",
+          "nota": "Instagram, TikTok, YouTube, Google"
+        },
+        {
+          "valor": "0",
+          "rotulo": "scraped data points",
+          "nota": "every read goes through OAuth"
+        },
+        {
+          "valor": "3",
+          "rotulo": "deletion paths",
+          "nota": "account, creator and data subject"
+        }
+      ]
     },
     "plans": {
       "title": "Plans",

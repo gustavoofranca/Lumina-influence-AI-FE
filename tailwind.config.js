@@ -124,6 +124,11 @@ export default {
         // mais usado de SaaS — é o que fazia a página parecer template.
         display: ['"Bricolage Grotesque"', '"Plus Jakarta Sans"', 'sans-serif'],
         sans:    ['Inter', 'sans-serif'],
+        // Só a marca. Baloo 2 é pesada, de terminais arredondados e contador
+        // fechado — o desenho que o Gustavo pediu como referência. Fica numa
+        // família própria de propósito: se ela vazar para texto corrido, a
+        // página inteira muda de tom.
+        marca:   ['"Baloo 2"', '"Bricolage Grotesque"', 'sans-serif'],
       },
       borderRadius: {
         '2xl': '16px',
@@ -157,20 +162,10 @@ export default {
           'radial-gradient(150% 55% at 50% 0%, rgba(133,102,255,0.08) 0%, rgba(133,102,255,0) 100%)',
         'wash-secao-suave':
           'radial-gradient(180% 60% at 50% 0%, rgba(133,102,255,0.04) 0%, rgba(133,102,255,0) 100%)',
-        'barra-luz':
-          'linear-gradient(180deg, rgba(183,164,251,0) 0%, rgba(183,164,251,0.85) 60%, rgba(133,98,255,0) 100%)',
         'gradient-brand': 'linear-gradient(135deg, #7C3AED 0%, #0EA5E9 100%)',
         'gradient-danger': 'linear-gradient(135deg, #F43F5E 0%, #BE123C 100%)',
       },
       keyframes: {
-        // Segmento luminoso descendo a trilha. Sai bem acima e termina bem
-        // abaixo para que a entrada e a saída aconteçam fora da vista.
-        feixe: {
-          '0%':   { transform: 'translate3d(0, -30vh, 0)', opacity: '0' },
-          '12%':  { opacity: '1' },
-          '88%':  { opacity: '1' },
-          '100%': { transform: 'translate3d(0, 115vh, 0)', opacity: '0' },
-        },
         // Deriva das auras do fundo da landing. Percurso longo e lento: a
         // intenção é dar profundidade, não chamar atenção.
         'aura-lenta': {
@@ -180,21 +175,6 @@ export default {
         'aura-lenta-2': {
           '0%, 100%': { transform: 'translate3d(0, 0, 0) scale(1.08)' },
           '50%':      { transform: 'translate3d(-5vw, 6vh, 0) scale(1)' },
-        },
-        // Raio da malha: brilha e recua no próprio tempo.
-        'malha-pulsa': {
-          '0%, 100%': { opacity: '0.35' },
-          '50%':      { opacity: '1' },
-        },
-        // Arcos concêntricos respirando muito de leve em torno da origem.
-        'malha-respira': {
-          '0%, 100%': { transform: 'scale(1)',    opacity: '0.55' },
-          '50%':      { transform: 'scale(1.04)', opacity: '1' },
-        },
-        // Barra de luz deslizando dentro da faixa recortada.
-        'barra-desce': {
-          '0%':   { transform: 'translate3d(0, -100%, 0)' },
-          '100%': { transform: 'translate3d(0, 220%, 0)' },
         },
         // Volta completa do gradiente cônico que forma a borda viva.
         'girar-brilho': {
@@ -222,12 +202,8 @@ export default {
         },
       },
       animation: {
-        feixe: 'feixe 8s linear infinite',
         'aura-lenta':   'aura-lenta 34s ease-in-out infinite',
         'aura-lenta-2': 'aura-lenta-2 46s ease-in-out infinite',
-        'malha-pulsa':   'malha-pulsa 7s ease-in-out infinite',
-        'malha-respira': 'malha-respira 12s ease-in-out infinite',
-        'barra-desce': 'barra-desce 9s linear infinite',
         'girar-brilho': 'girar-brilho 4s linear infinite',
         desfilar: 'desfilar 32s linear infinite',
         'pulse-dot': 'pulse-dot 1.6s ease-in-out infinite',

@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import { MOLDURA, MIOLO, MIOLO_COM_AURA, PILULA, PILULA_PRIMARIA, TEXTO_PILULA, TITULO_SECAO } from './estilos.js'
+import CartaoDeVidro from './CartaoDeVidro.jsx'
+import { PILULA, PILULA_PRIMARIA, TEXTO_PILULA, TITULO_SECAO, WASH_SECAO_SUAVE } from './estilos.js'
 
 const EMAIL_CONTATO = import.meta.env.VITE_CONTACT_EMAIL || 'contato@k13.com.br'
 
@@ -21,8 +22,11 @@ const EMAIL_CONTATO = import.meta.env.VITE_CONTACT_EMAIL || 'contato@k13.com.br'
  */
 function Cartao({ plano, destaque, children }) {
   return (
-    <div className={cn(MOLDURA, destaque && 'shadow-glow-card-forte')}>
-    <div className={cn('flex h-full flex-col gap-6 p-7 sm:p-8', destaque ? MIOLO_COM_AURA : MIOLO)}>
+    <CartaoDeVidro
+      aura={destaque}
+      className={cn(destaque && 'shadow-glow-card-forte')}
+      interno="gap-6 !p-7 sm:!p-8"
+    >
       <div className="flex items-center justify-between gap-3">
         <h3 className="font-display text-lg font-semibold text-landing-text">{plano.name}</h3>
         {plano.badge && (
@@ -48,8 +52,7 @@ function Cartao({ plano, destaque, children }) {
       </ul>
 
       <div className="mt-auto pt-2">{children}</div>
-    </div>
-    </div>
+    </CartaoDeVidro>
   )
 }
 
@@ -62,7 +65,7 @@ export default function PlansSection() {
   const acao = 'w-full px-6 py-3 font-display text-sm font-semibold'
 
   return (
-    <section id="plans" className="bg-wash-secao-suave mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8">
+    <section id="plans" className={cn(WASH_SECAO_SUAVE, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
       <div className="flex flex-col gap-12">
         <div className="flex max-w-[46ch] flex-col gap-4">
           <h2 className={TITULO_SECAO}>
@@ -95,8 +98,7 @@ export default function PlansSection() {
           </Cartao>
         </div>
 
-        <div className={MOLDURA}>
-        <div className={cn(MIOLO, 'p-7 sm:p-8')}>
+        <CartaoDeVidro interno="!p-7 sm:!p-8">
           <h3 className="font-display text-base font-semibold text-landing-text">
             {shared.title}
           </h3>
@@ -107,8 +109,7 @@ export default function PlansSection() {
               </li>
             ))}
           </ul>
-        </div>
-        </div>
+        </CartaoDeVidro>
       </div>
     </section>
   )

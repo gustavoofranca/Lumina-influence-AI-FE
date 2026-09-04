@@ -1,9 +1,10 @@
 import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Plus } from 'lucide-react'
+import { Add } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
-import { MIOLO, MOLDURA, PILULA, TEXTO_PILULA, TITULO_SECAO } from './estilos.js'
+import CartaoDeVidro from './CartaoDeVidro.jsx'
+import { PILULA, TEXTO_PILULA, TITULO_SECAO, WASH_SECAO } from './estilos.js'
 
 /**
  * Perguntas frequentes — e, aqui, o lugar onde os limites do produto ficam por
@@ -37,7 +38,7 @@ function Pergunta({ pergunta, resposta, aberta, aoAlternar, ultima }) {
           )}
         >
           <span>{pergunta}</span>
-          <Plus
+          <Add
             size={20}
             aria-hidden
             className={cn(
@@ -66,7 +67,7 @@ export default function FaqSection() {
   const [abertaEm, setAbertaEm] = useState(0)
 
   return (
-    <section className="bg-wash-secao mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8">
+    <section className={cn(WASH_SECAO, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div className="flex flex-col gap-4 lg:sticky lg:top-28 lg:self-start">
           <span className={cn(PILULA, TEXTO_PILULA, 'w-fit px-3.5 py-1 text-sm font-medium')}>
@@ -80,8 +81,7 @@ export default function FaqSection() {
           </p>
         </div>
 
-        <div className={MOLDURA}>
-        <div className={cn(MIOLO, 'px-6 sm:px-8')}>
+        <CartaoDeVidro interno="!px-6 !py-0 sm:!px-8">
           {items.map((item, i) => (
             <Pergunta
               key={item.q}
@@ -92,8 +92,7 @@ export default function FaqSection() {
               ultima={i === items.length - 1}
             />
           ))}
-        </div>
-        </div>
+        </CartaoDeVidro>
       </div>
     </section>
   )

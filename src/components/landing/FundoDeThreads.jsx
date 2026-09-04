@@ -49,12 +49,25 @@ export default function FundoDeThreads({ className }) {
       aria-hidden
       className={cn('pointer-events-none absolute inset-0', className)}
       style={{
-        // Transparente no centro, cheio nas bordas: os fios emolduram o herói
-        // em vez de passarem por cima do que precisa ser lido.
-        maskImage:
+        // Duas máscaras cruzadas, e o cruzamento é o ponto: `intersect` só deixa
+        // pintar onde as duas são opacas.
+        //
+        // A radial abre um vazio no miolo — é onde a manchete vive. A linear
+        // apaga a faixa de cima: a barra tem 80px e os fios mais íngremes
+        // cruzavam justo ali, e um fio quase reto colado na navbar lê como
+        // linha vertical de grade, não como fundo. O apagamento vai até 430px
+        // porque os fios dos cantos são os mais retos de todos, e a 340px
+        // ainda restava traço visível nas duas pontas.
+        maskImage: [
           'radial-gradient(58% 46% at 50% 42%, transparent 0%, rgba(0,0,0,0.45) 55%, #000 100%)',
-        WebkitMaskImage:
+          'linear-gradient(180deg, transparent 0px, transparent 210px, #000 430px)',
+        ].join(', '),
+        maskComposite: 'intersect',
+        WebkitMaskImage: [
           'radial-gradient(58% 46% at 50% 42%, transparent 0%, rgba(0,0,0,0.45) 55%, #000 100%)',
+          'linear-gradient(180deg, transparent 0px, transparent 210px, #000 430px)',
+        ].join(', '),
+        WebkitMaskComposite: 'source-in',
       }}
     >
       <WebThreads

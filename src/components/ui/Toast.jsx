@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
-import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react'
+import { CloseCircle, InfoCircle, TickCircle, Warning2 } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 
 const TYPE_STYLES = {
-  success: { icon: CheckCircle2, ring: 'ring-emerald-500/40',  bg: 'bg-emerald-500/15',  iconColor: 'text-positive' },
-  warning: { icon: AlertCircle,  ring: 'ring-amber-500/40',    bg: 'bg-amber-500/15',    iconColor: 'text-caution' },
-  error:   { icon: AlertCircle,  ring: 'ring-tertiary-500/40', bg: 'bg-tertiary-500/15', iconColor: 'text-tint-rose' },
-  info:    { icon: Info,         ring: 'ring-primary-500/40',  bg: 'bg-primary-600/15',  iconColor: 'text-accent' },
+  success: { icon: TickCircle, ring: 'ring-emerald-500/40',  bg: 'bg-emerald-500/15',  iconColor: 'text-positive' },
+  warning: { icon: Warning2,  ring: 'ring-amber-500/40',    bg: 'bg-amber-500/15',    iconColor: 'text-caution' },
+  error:   { icon: Warning2,  ring: 'ring-tertiary-500/40', bg: 'bg-tertiary-500/15', iconColor: 'text-tint-rose' },
+  info:    { icon: InfoCircle,         ring: 'ring-primary-500/40',  bg: 'bg-primary-600/15',  iconColor: 'text-accent' },
 }
 
 /**
@@ -78,7 +78,7 @@ export default function Toast({
           aria-label={t('common.a11y.close')}
           className="shrink-0 rounded-md p-1.5 text-text-muted transition-colors hover:bg-bg-elevated hover:text-text-primary"
         >
-          <X size={14} />
+          <CloseCircle size={14} />
         </button>
       </div>
       </div>

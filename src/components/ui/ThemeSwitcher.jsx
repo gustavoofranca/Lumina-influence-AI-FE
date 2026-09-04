@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Moon, Sun } from 'lucide-react'
+import { Moon, Sun1 } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 import { useTheme } from '../../context/ThemeContext.jsx'
@@ -28,7 +28,7 @@ export default function ThemeSwitcher({ className = '' }) {
         className
       )}
     >
-      {claro ? <Moon size={18} /> : <Sun size={18} />}
+      {claro ? <Moon size={18} /> : <Sun1 size={18} />}
     </button>
   )
 }

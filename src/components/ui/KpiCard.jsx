@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
+import { TrendDown, TrendUp } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
 import Card from './Card.jsx'
@@ -44,7 +44,7 @@ export default function KpiCard({
       ? 'text-tint-rose bg-tertiary-500/10'
       : 'text-text-secondary bg-bg-elevated/40'
 
-  const ChangeIcon = resolvedType === 'negative' ? ArrowDownRight : ArrowUpRight
+  const ChangeIcon = resolvedType === 'negative' ? TrendDown : TrendUp
   const formattedChange =
     typeof change === 'number'
       ? `${change > 0 ? '+' : ''}${change.toFixed(1)}%`

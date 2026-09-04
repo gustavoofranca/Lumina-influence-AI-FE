@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
-import MalhaDeLuz from './MalhaDeLuz.jsx'
 import FundoDeThreads from './FundoDeThreads.jsx'
 import { PILULA, TEXTO_PILULA } from './estilos.js'
 import BotaoBrilhante from './BotaoBrilhante.jsx'
@@ -96,14 +95,32 @@ export default function HeroSection() {
 
   return (
     <section className="relative overflow-hidden pb-24 pt-32 sm:pt-36">
-      {/* Os fios entram abaixo da malha e acima do campo de estrelas, que é
-          `fixed` na camada 0 da página. */}
+      {/* Os fios ficam acima do campo de estrelas, que é `fixed` na camada 0
+          da página, e abaixo de todo o conteúdo do herói. */}
       <FundoDeThreads />
-      {/* Arte do topo: o mesmo leque da faixa, girado meia volta para abrir
-          para baixo a partir de um ponto acima da dobra. No arquivo de
-          referência isto é um PNG pintado; aqui é gerado, para acompanhar os
-          tokens de cor em vez de envelhecer como binário. */}
-      <MalhaDeLuz className="inset-x-[-10%] top-[-220px] h-[560px] rotate-180 opacity-[0.55]" />
+      {/* O leque de raios saiu daqui: as linhas quase verticais logo abaixo da
+          navbar liam como grade, e os fios do fundo já sustentam o movimento
+          nessa faixa. Fica só a luz difusa que separa o topo da barra — sem
+          geometria, para não competir com a manchete. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-[-12%] top-0 h-[760px]"
+        style={{
+          // O foco fica DENTRO da caixa e o degradê chega a zero antes da borda.
+          //
+          // Antes era `at 50% 100%`: o ponto mais claro do gradiente caía
+          // exatamente na aresta de baixo do próprio elemento, e a seção tem
+          // `overflow-hidden`. O brilho era cortado no auge — uma linha reta
+          // atravessando a tela por trás da manchete, no lugar mais visível da
+          // página.
+          //
+          // Aqui o centro fica a 30% da altura (~228px, atrás do texto) e o raio
+          // vertical é 42% (~319px), então o degradê morre em ~547px, dentro dos
+          // 760px da caixa. Não existe borda onde ele ainda esteja aceso.
+          background:
+            'radial-gradient(ellipse 55% 42% at 50% 30%, rgba(167,139,250,0.26) 0%, rgba(139,92,246,0.13) 38%, rgba(124,58,237,0.05) 66%, rgba(124,58,237,0) 100%)',
+        }}
+      />
 
       <div className="relative mx-auto flex w-full max-w-[1180px] flex-col items-center px-6 sm:px-8">
         <span
@@ -143,10 +160,6 @@ export default function HeroSection() {
           </a>
         </div>
 
-        {/* A malha é irmã do painel e ancorada no topo dele: `bottom-full`
-            põe a origem exatamente na borda de cima do cartão, e o desenho
-            transborda a largura do container para os raios não terminarem
-            visivelmente na margem. */}
         <div className="relative mt-24 w-full">
           {/* As barras verticais saíram: os fios do fundo já dão o movimento, e
               as duas leituras juntas embolavam. Fica a floração rente à borda
@@ -154,10 +167,13 @@ export default function HeroSection() {
               dele. */}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-x-[18%] bottom-full h-[220px] translate-y-[90px]"
+            className="pointer-events-none absolute inset-x-[14%] bottom-full h-[300px] translate-y-[140px]"
             style={{
+              // Mesmo cuidado do brilho do topo: foco dentro da caixa. Aqui ele
+              // vinha escondido atrás do painel por sorte, e o painel deixou de
+              // ser opaco quando virou vidro.
               background:
-                'radial-gradient(ellipse at 50% 100%, rgba(167,139,250,0.42) 0%, rgba(124,58,237,0.16) 38%, rgba(124,58,237,0) 70%)',
+                'radial-gradient(ellipse 60% 46% at 50% 62%, rgba(167,139,250,0.40) 0%, rgba(124,58,237,0.15) 40%, rgba(124,58,237,0) 100%)',
             }}
           />
           <PainelAuditoria t={t} />
