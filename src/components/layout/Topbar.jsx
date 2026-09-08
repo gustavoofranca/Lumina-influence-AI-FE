@@ -65,7 +65,7 @@ function AvatarDropdown({ user, onLogout }) {
       {open && (
         <div className={cn(
           'absolute right-0 top-full mt-2 w-52 animate-fade-in',
-          'rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft'
+          'casca rounded-superficie border shadow-2'
         )}>
           {/* Info do usuário */}
           <div className="border-b border-hairline/60 px-4 py-3">
@@ -120,7 +120,7 @@ export default function Topbar({ onMenuClick }) {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-4 border-b border-primary/10 bg-bg-base/90 px-4 backdrop-blur-md lg:px-6">
+    <header className="casca sticky top-0 z-20 flex h-16 shrink-0 items-center gap-4 border-b px-4 lg:px-6">
       {/* Botão menu (mobile) */}
       <IconButton
         icon={HamburgerMenu}

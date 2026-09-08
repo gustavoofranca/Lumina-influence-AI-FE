@@ -1,8 +1,11 @@
-import { useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Global } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
+// A variante `vidro` existe só na landing, e o vidro dela tem de ser o MESMO
+// dos botões do herói — foi o que o Gustavo pediu ao comparar os dois. Importar
+// a receita é o que impede que elas divirjam com o tempo.
+import { PILULA } from '../landing/estilos.js'
 
 const LANGS = [
   { code: 'pt', label: 'PT' },
@@ -32,40 +35,6 @@ const LAMINA = [
 ].join(',')
 
 /**
- * Ruído deslocado: é o que dá o aspecto líquido ao vidro.
- *
- * `feTurbulence` gera a textura, `feDisplacementMap` empurra cada pixel da
- * camada pintada usando os canais R e B desse ruído, e os dois desfoques
- * suavizam as duas pontas. O `id` é derivado do `useId` porque um documento com
- * dois seletores teria dois `<filter>` com o mesmo nome, e `url(#…)` resolve
- * sempre para o primeiro — os dois passariam a compartilhar uma semente.
- *
- * Os dois-pontos que o React põe no `useId` (`:r1:`) são inválidos dentro de
- * `url(#…)` sem escape, então saem do identificador.
- */
-function FiltroDeVidro({ id }) {
-  return (
-    <svg aria-hidden className="pointer-events-none absolute size-0">
-      <defs>
-        <filter id={id} x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="ruido" />
-          <feGaussianBlur in="ruido" stdDeviation="2" result="ruidoSuave" />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="ruidoSuave"
-            scale="30"
-            xChannelSelector="R"
-            yChannelSelector="B"
-            result="deslocado"
-          />
-          <feGaussianBlur in="deslocado" stdDeviation="2" />
-        </filter>
-      </defs>
-    </svg>
-  )
-}
-
-/**
  * LanguageSwitcher — toggle pt/en integrado ao react-i18next.
  *
  * variant:
@@ -75,7 +44,6 @@ function FiltroDeVidro({ id }) {
  */
 export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
   const { i18n, t } = useTranslation()
-  const idBruto = useId()
   const current = i18n.language?.startsWith('pt') ? 'pt' : 'en'
 
   const setLang = (code) => {
@@ -84,9 +52,6 @@ export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
   }
 
   if (variant === 'vidro') {
-    // `useId` devolve algo como `:r1:`; os dois-pontos quebram `url(#…)`.
-    const idFiltro = `vidro-idioma-${idBruto.replace(/:/g, '')}`
-
     return (
       <div
         role="group"
@@ -95,10 +60,14 @@ export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
         style={{ '--lamina': LAMINA }}
         className={cn(
           'relative isolate inline-grid h-9 grid-cols-2 items-center rounded-full p-0.5',
-          // A trilha é um sulco, não uma caixa: sombra escura na aresta de cima
-          // e um fio de luz embaixo. Contorno cheio fecharia o controle como
-          // caixa e brigaria com as pílulas de vidro ao lado na barra.
-          'bg-white/[0.03] shadow-[inset_0_1px_1px_rgba(0,0,0,0.45),inset_0_-1px_0_rgba(255,255,255,0.05)]',
+          // O mesmo vidro dos botões do herói, e pelo mesmo motivo: nada de
+          // tinta própria, o fundo atravessa borrado e o que desenha a peça são
+          // as arestas acesas. A versão anterior pintava um degradê e o amassava
+          // com `feTurbulence` + `feDisplacementMap` — o que dava manchas
+          // escuras, porque o deslocamento puxa pixels de FORA da região do
+          // filtro, e fora dela só existe preto transparente. Sem o filtro, o
+          // defeito não tem como voltar.
+          PILULA,
           // O cursor é um pseudo-elemento só, que desliza. Dois nós trocando de
           // classe piscariam na troca em vez de percorrer o caminho.
           "after:pointer-events-none after:absolute after:inset-y-0.5 after:left-0.5 after:content-['']",
@@ -106,6 +75,9 @@ export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
           // Tailwind não sabe se o valor é sombra ou cor de sombra, resolve
           // como cor e o utilitário sai vazio. A dica de tipo desfaz o empate.
           'after:w-[calc(50%-0.125rem)] after:rounded-full after:shadow-[shadow:var(--lamina)]',
+          // A lâmina borra um pouco mais que a trilha: é o que faz ela ler como
+          // peça sobreposta, e não como uma mancha clara dentro do mesmo vidro.
+          'after:backdrop-blur-[2px]',
           'after:transition-transform after:duration-300',
           'after:[transition-timing-function:cubic-bezier(0.16,1,0.3,1)]',
           'motion-reduce:after:transition-none',
@@ -113,29 +85,22 @@ export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
           className
         )}
       >
-        {/* A camada líquida precisa de tinta para o deslocamento ter o que
-            empurrar: filtro sobre superfície transparente não produz pixel
-            nenhum. Daí o degradê fraco por baixo — é ele que a turbulência
-            amassa. */}
-        <span
-          aria-hidden
-          className="absolute inset-0 -z-10 overflow-hidden rounded-full"
-          style={{
-            filter: `url(#${idFiltro})`,
-            background:
-              'linear-gradient(115deg, rgba(189,157,255,0.18) 0%, rgba(52,181,250,0.10) 45%, rgba(189,157,255,0.16) 100%)',
-          }}
-        />
-        <FiltroDeVidro id={idFiltro} />
-
         {LANGS.map((lang) => {
           const active = lang.code === current
+          const outro = LANGS.find((l) => l.code !== lang.code).code
           return (
             <button
               key={lang.code}
               type="button"
-              onClick={() => setLang(lang.code)}
+              // Clicar no idioma que já está ativo troca para o outro. Com duas
+              // opções isso equivale a "qualquer clique alterna", que é o
+              // comportamento esperado de um interruptor — e é o que a variante
+              // de ícone já fazia. O rótulo acessível continua sendo "PT"/"EN",
+              // igual ao visível: um `aria-label` descrevendo a ação diria algo
+              // que não está escrito no botão.
+              onClick={() => setLang(active ? outro : lang.code)}
               aria-pressed={active}
+              title={`${t('common.language')}: ${current.toUpperCase()} → ${(active ? outro : lang.code).toUpperCase()}`}
               className={cn(
                 // `z-10` põe o rótulo acima do cursor: sem isto o pseudo-elemento
                 // pinta depois dos filhos e cobre o texto que ele deveria realçar.

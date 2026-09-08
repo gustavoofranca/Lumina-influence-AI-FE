@@ -1,6 +1,10 @@
 import { Refresh2 } from 'iconsax-reactjs'
 
 import { cn } from '../../lib/cn.js'
+// As telas de entrada usam o material da landing. Importar a receita é o que
+// impede o botão do login de divergir do botão do herói com o tempo — foi
+// exatamente assim que o seletor de idioma tinha divergido.
+import { PILULA, PILULA_PRIMARIA } from '../landing/estilos.js'
 
 /**
  * Button — 4 variantes oficiais (Figma):
@@ -8,6 +12,7 @@ import { cn } from '../../lib/cn.js'
  * - secondary: bg-bg-surface (acoes secundarias)
  * - inverted : bg branco + texto escuro (CTAs em fundo escuro destacado)
  * - outlined : transparente + borda primary + texto primary
+ * - vidro / vidro-primaria : a pilula de vidro da landing (telas de entrada)
  */
 const VARIANTS = {
   primary: cn(
@@ -30,6 +35,12 @@ const VARIANTS = {
     'hover:bg-primary-600/10 hover:text-accent-strong hover:ring-primary-400',
     'active:bg-primary-600/20'
   ),
+  // Pílula de vidro da landing, para as telas de entrada. É variante e não
+  // `className` de propósito: sobrescrevendo por fora, o `hover:bg-primary-500`
+  // da variante `primary` continuaria vivo e o botão viraria violeta sólido no
+  // hover — a classe de hover não é anulada por uma classe de fundo sem hover.
+  vidro: cn(PILULA, 'text-white'),
+  'vidro-primaria': cn(PILULA_PRIMARIA, 'text-white'),
 }
 
 const SIZES = {

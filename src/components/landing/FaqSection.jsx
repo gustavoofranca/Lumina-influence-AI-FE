@@ -53,7 +53,7 @@ function Pergunta({ pergunta, resposta, aberta, aoAlternar, ultima }) {
       <div
         id={id}
         hidden={!aberta}
-        className="max-w-[76ch] pb-7 text-[15px] leading-relaxed text-landing-muted"
+        className="max-w-[58ch] pb-7 text-[15px] leading-relaxed text-landing-muted"
       >
         {resposta}
       </div>

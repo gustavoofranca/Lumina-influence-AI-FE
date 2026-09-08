@@ -140,7 +140,12 @@ export default function HeroSection() {
           {t('landing.hero.h1')}
         </h1>
 
-        <p className="mt-6 max-w-[62ch] text-center text-lg leading-relaxed text-landing-muted">
+        {/* 48ch, e não 62: a unidade `ch` é a largura do algarismo zero, que
+            numa fonte proporcional é mais larga que a média das letras. A 62ch
+            a linha media 80 caracteres reais — acima do teto de 75 para corpo e
+            muito acima do alvo de 40 a 60 para subtítulo. O valor abaixo foi
+            escolhido medindo a linha renderizada, não convertendo no papel. */}
+        <p className="mt-6 max-w-[48ch] text-center text-lg leading-relaxed text-landing-muted">
           {t('landing.hero.subtitle')}
         </p>
 

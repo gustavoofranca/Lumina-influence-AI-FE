@@ -68,7 +68,10 @@ export default function Sidebar({ open, onClose }) {
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-40 flex w-64 flex-col',
-          'border-r border-primary/10 bg-bg-base',
+          // `casca`: material de navegação. No escuro é vidro sobre a página;
+          // no claro, superfície sólida com fio. A troca está nas variáveis do
+          // tema, não aqui.
+          'casca border-r',
           'transition-transform duration-300 ease-in-out',
           open ? 'translate-x-0' : '-translate-x-full',
           'lg:translate-x-0' // sempre visível em desktop
@@ -76,7 +79,7 @@ export default function Sidebar({ open, onClose }) {
       >
         {/* Header da sidebar. A marca fica sozinha na linha: dividir os 216px
             com o nome da agência truncava os dois. */}
-        <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-primary/10 px-5">
+        <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--casca-borda)] px-5">
           <LuminaWordmark className="shrink-0" tamanho="text-[1.2rem]" />
           {/* Botão fechar (mobile) */}
           <button
@@ -91,7 +94,7 @@ export default function Sidebar({ open, onClose }) {
 
         {/* Em qual conta você está. Era "ENTERPRISE V2.4", versão inventada. */}
         {agency?.name && (
-          <div className="shrink-0 border-b border-primary/10 px-5 py-2.5">
+          <div className="shrink-0 border-b border-[color:var(--casca-borda)] px-5 py-2.5">
             <span
               className="block truncate text-label"
               title={agency.name}
@@ -125,7 +128,7 @@ export default function Sidebar({ open, onClose }) {
         </nav>
 
         {/* Rodapé — botão Nova Campanha */}
-        <div className="shrink-0 border-t border-primary/10 p-4">
+        <div className="shrink-0 border-t border-[color:var(--casca-borda)] p-4">
           <NavLink to="/app/campanhas/nova">
             <Button variant="primary" fullWidth leftIcon={Add}>
               {t('app.sidebar.newCampaign')}

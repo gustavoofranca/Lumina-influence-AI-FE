@@ -18,6 +18,8 @@ const Input = forwardRef(function Input(
     id: idProp,
     className = '',
     containerClassName = '',
+    /** `padrao` usa a superfície do app; `vidro` usa a da landing. */
+    variant = 'padrao',
     fullWidth = true,
     ...rest
   },
@@ -31,16 +33,28 @@ const Input = forwardRef(function Input(
   return (
     <div className={cn(fullWidth && 'w-full', containerClassName)}>
       {label ? (
-        <label htmlFor={id} className="mb-1.5 block text-label">
+        <label htmlFor={id} className={cn('mb-1.5 block text-label', variant === 'vidro' && '!text-landing-muted')}>
           {label}
         </label>
       ) : null}
 
       <div
         className={cn(
-          'group flex items-center gap-2 rounded-xl bg-bg-input px-3.5',
-          'ring-1 ring-inset ring-hairline transition-all duration-200',
-          'focus-within:ring-2 focus-within:ring-primary-500 focus-within:shadow-glow-soft',
+          'group flex items-center gap-2 rounded-xl px-3.5',
+          'transition-all duration-200',
+          // A caixa é a única coisa que muda entre as variantes. O campo em si,
+          // o rótulo e o erro continuam iguais — trocar o material não pode
+          // trocar o comportamento.
+          variant === 'vidro'
+            ? cn(
+                'bg-transparent backdrop-blur-[4px] ring-1 ring-inset ring-white/10',
+                'focus-within:ring-2 focus-within:ring-landing-violet/70',
+                'focus-within:shadow-[0_0_18px_rgba(124,58,237,0.35)]'
+              )
+            : cn(
+                'bg-bg-input ring-1 ring-inset ring-hairline',
+                'focus-within:ring-2 focus-within:ring-primary-500 focus-within:shadow-glow-soft'
+              ),
           error && 'ring-tertiary-500/70 focus-within:ring-tertiary-500',
           rest.disabled && 'opacity-60'
         )}
@@ -49,8 +63,9 @@ const Input = forwardRef(function Input(
           <LeftIcon
             size={16}
             className={cn(
-              'shrink-0 text-text-muted transition-colors',
-              'group-focus-within:text-accent'
+              'shrink-0 transition-colors',
+              variant === 'vidro' ? 'text-landing-muted group-focus-within:text-landing-violet'
+                                  : 'text-text-muted group-focus-within:text-accent'
             )}
           />
         ) : null}
@@ -62,8 +77,9 @@ const Input = forwardRef(function Input(
           aria-invalid={!!error}
           aria-describedby={cn(errorId, helpId) || undefined}
           className={cn(
-            'h-11 w-full bg-transparent py-2 text-sm text-text-primary',
-            'placeholder:text-text-muted focus:outline-none',
+            'h-11 w-full bg-transparent py-2 text-sm focus:outline-none',
+            variant === 'vidro' ? 'text-landing-text placeholder:text-landing-muted'
+                                : 'text-text-primary placeholder:text-text-muted',
             className
           )}
           {...rest}

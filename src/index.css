@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /*
+   * Quebra de linha: título procura equilíbrio, corpo procura não deixar órfã.
+   *
+   * São problemas diferentes e as duas propriedades não se substituem.
+   * `balance` iguala o comprimento das linhas — o que pode perfeitamente
+   * manter a palavra solitária no fim, porque não é isso que ele resolve.
+   * `pretty` ataca exatamente a última linha, puxando uma palavra da anterior
+   * quando sobra uma sozinha.
+   *
+   * `balance` fica só nos títulos: o Chromium calcula até cerca de seis linhas
+   * e o cálculo custa. Num parágrafo longo ele não surte efeito e ainda cobra
+   * o preço.
+   *
+   * `pretty` não existe no Firefox. Lá o texto cai no comportamento padrão, sem
+   * quebrar layout — é melhoria progressiva, não dependência.
+   */
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+
+  p, li, blockquote {
+    text-wrap: pretty;
+  }
+}
+
 /* ===========================================================
    Lumina Influence AI — design tokens (CSS variables)
    Replicam a paleta oficial do produto para uso fora do Tailwind
@@ -115,6 +141,40 @@
   /* Rótulo de eixo: precisa passar em contraste nos dois temas, e o SVG usa
      `fill`, que a varredura de contraste por `color` não enxerga. */
   --chart-text:    #94A3B8;
+
+  /* ══════════════════════════════════════════════════════════════════════
+   * MATERIAL E ELEVAÇÃO
+   *
+   * Duas superfícies, e a distinção é a ideia inteira:
+   *
+   *   CASCA    — o que navega: barra lateral, barra do topo, popover, modal.
+   *              Pode ser translúcida, porque atrás dela há atmosfera.
+   *   CONTEÚDO — o que informa: cartão de dado, tabela, gráfico, KPI.
+   *              É chapada, sempre. Translucidez atrás de número é ruído em
+   *              cima da informação, e foi medido: sobre fundo escuro sem
+   *              detalhe a refração muda menos de 1% dos pixels; sobre um
+   *              gráfico ela deixa de ser invisível e passa a atrapalhar.
+   *
+   * É o que o Finder faz: a barra lateral é translúcida, a lista de arquivos
+   * não.
+   *
+   * ELEVAÇÃO não é brilho. Hoje `shadow-glow-soft` aparece 32 vezes fazendo o
+   * papel de sombra — um halo violeta que diz "importante", não "acima". As
+   * três sombras abaixo dizem altura; o brilho fica reservado para foco e
+   * seleção, que é o que ele sabe dizer.
+   * ══════════════════════════════════════════════════════════════════════ */
+
+  /* No escuro, sombra quase não lê: o que separa uma camada da outra é a
+     superfície ficar mais clara e um fio de luz na aresta de cima. */
+  --casca-fundo:      rgba(23, 16, 46, 0.72);
+  --casca-borda:      rgba(255, 255, 255, 0.08);
+  --casca-realce:     rgba(255, 255, 255, 0.06);
+  --casca-desfoque:   14px;
+
+  --sombra-1: 0 1px 2px rgba(0,0,0,0.28), 0 0 0 0.5px rgba(0,0,0,0.30);
+  --sombra-2: 0 4px 14px -4px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(0,0,0,0.35);
+  --sombra-3: 0 24px 60px -20px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(0,0,0,0.4);
+
 }
 
 /* ===========================================================
@@ -177,6 +237,20 @@
   --success: #16A34A;
   --warning: #B45309;
   --danger:  var(--tertiary-600);
+
+  /* No claro a casca NÃO é vidro. Translucidez sobre fundo claro clareia o que
+     está atrás em vez de escurecer, e o contraste do texto da navegação cai
+     junto — é o oposto do que o vidro faz no escuro. Aqui a casca é sólida com
+     um fio, e a profundidade vem da sombra, que no claro lê de verdade. */
+  --casca-fundo:    #FFFFFF;
+  --casca-borda:    var(--neutral-200);
+  --casca-realce:   rgba(255, 255, 255, 0);
+  --casca-desfoque: 0px;
+
+  --sombra-1: 0 1px 2px rgba(16,24,40,0.06), 0 0 0 0.5px rgba(16,24,40,0.06);
+  --sombra-2: 0 6px 16px -6px rgba(16,24,40,0.12), 0 0 0 0.5px rgba(16,24,40,0.08);
+  --sombra-3: 0 24px 48px -16px rgba(16,24,40,0.18), 0 0 0 0.5px rgba(16,24,40,0.10);
+
 }
 
 /* ===========================================================
@@ -213,6 +287,52 @@ body {
    Camada de utilitários do design system
    =========================================================== */
 @layer components {
+  /*
+   * A casca: o que navega. Barra lateral, barra do topo, popover, modal.
+   *
+   * No escuro é vidro — desfoque do que passa atrás, tinta baixa e um fio de
+   * luz na aresta de cima, que é o que dá a impressão de a peça estar acima da
+   * página em vez de pintada nela. No claro as mesmas variáveis entregam
+   * superfície sólida e desfoque zero, porque vidro sobre fundo claro clareia
+   * o que está atrás e derruba o contraste do texto de navegação.
+   *
+   * A troca inteira mora nas variáveis: este seletor é um só nos dois temas.
+   */
+  .casca {
+    background-color: var(--casca-fundo);
+    backdrop-filter: blur(var(--casca-desfoque));
+    -webkit-backdrop-filter: blur(var(--casca-desfoque));
+    border-color: var(--casca-borda);
+    box-shadow: inset 0 1px 0 0 var(--casca-realce);
+  }
+
+  /*
+   * A superfície de conteúdo: o que informa. Cartão de dado, tabela, gráfico.
+   *
+   * Chapada, sempre, e é a regra que sustenta o resto: número precisa de fundo
+   * quieto. A profundidade vem da sombra e do fio, não de translucidez.
+   */
+  .superficie {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--sombra-1);
+  }
+
+  /*
+   * Números que empilham em coluna.
+   *
+   * Sem largura tabular, o "1" é mais estreito que o "8" e a coluna de valores
+   * balança de linha em linha — o olho perde a vírgula decimal, que é
+   * justamente o ponto de referência para comparar. Vale em KPI, tabela, eixo
+   * de gráfico e qualquer contagem.
+   *
+   * `slashed-zero` separa o zero da letra O em rótulo de identificador.
+   */
+  .numerico {
+    font-variant-numeric: tabular-nums slashed-zero;
+    font-feature-settings: 'tnum' 1, 'zero' 1;
+  }
+
   /* Tipografia */
   .text-display {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -292,6 +412,37 @@ body {
 [data-reveal].is-visible {
   opacity: 1;
   transform: none;
+}
+
+/* Variante do rodapé: entra de cima e sai do desfoque, em vez de subir.
+   Vem depois da regra base de propósito — as duas têm a mesma especificidade,
+   então quem ganha é a última. Mover este bloco para cima desliga a variante
+   sem erro nenhum, e é por isso que a ordem está escrita aqui. */
+[data-reveal='desfoque'] {
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(-8px);
+  transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease;
+  transition-delay: var(--delay, 0ms);
+}
+[data-reveal='desfoque'].is-visible {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* Quem pediu menos movimento recebe o conteúdo, não a entrada dele.
+   O observador continua marcando `is-visible`; o que sai é a transição — sem
+   isto, o elemento ficaria parado em `opacity: 0` para sempre se a transição
+   fosse desligada por fora. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal='desfoque'] {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ===== Float animation (Hero alert card) ===== */

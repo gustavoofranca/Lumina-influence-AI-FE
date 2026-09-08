@@ -133,8 +133,30 @@ export default {
       borderRadius: {
         '2xl': '16px',
         '3xl': '20px',
+        /*
+         * Escala de raio com trabalho definido, em vez de seis degraus por
+         * hábito. Medido antes: `rounded-xl` 70 vezes, `2xl` 59, `full` 58,
+         * `lg` 24, `md` 20, `3xl` 5, mais sete valores avulsos — nenhuma
+         * regra dizia qual usar onde.
+         *
+         * Três degraus, e o nome diz o papel:
+         *   controle  — o que se clica: botão, campo, chip, item de menu
+         *   superficie — o que contém: cartão, painel, popover
+         *   janela    — o que se sobrepõe à tela inteira: modal, gaveta
+         *
+         * Pílula continua sendo `rounded-full`: é forma, não degrau.
+         */
+        controle:   '10px',
+        superficie: '14px',
+        janela:     '20px',
       },
       boxShadow: {
+        // Elevação de verdade, ligada à variável do tema: no escuro quase não
+        // aparece e quem separa as camadas é a superfície mais clara; no claro
+        // ela carrega o peso. Uma escala só, com três alturas.
+        1: 'var(--sombra-1)',
+        2: 'var(--sombra-2)',
+        3: 'var(--sombra-3)',
         // Brilho roxo dos cartões da landing: um halo externo largo e difuso
         // mais um realce interno na borda superior, que dá a impressão de luz
         // vinda de cima em vez de sombra colorida colada atrás.

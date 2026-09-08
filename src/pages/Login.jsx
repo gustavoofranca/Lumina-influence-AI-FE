@@ -9,10 +9,8 @@ import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { googleLoginUrl } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
-import { useDarkOnly } from '../hooks/useDarkOnly.js'
 
 export default function Login() {
-  useDarkOnly()
   const { t } = useTranslation()
   const { devLogin } = useAuth()
   const navigate = useNavigate()
@@ -57,14 +55,21 @@ export default function Login() {
   return (
     <AuthLayout>
       <div className="mb-8 text-center">
-        <h1 className="font-display text-3xl font-bold text-text-primary">
+        {/* O mesmo degradê descendente das manchetes da landing: branco em cima,
+            apagando para baixo. É o que liga a tela ao lugar de onde o visitante
+            veio. */}
+        <h1 className={cn(
+          'font-display text-3xl font-semibold tracking-[-0.02em]',
+          'bg-gradient-to-b from-white from-[22.5%] to-white/70 bg-clip-text text-transparent'
+        )}>
           {t('auth.login.title')}
         </h1>
-        <p className="mt-2 text-sm text-text-secondary">{t('auth.login.subtitle')}</p>
+        <p className="mt-2 text-sm text-landing-muted">{t('auth.login.subtitle')}</p>
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
         <Input
+          variant="vidro"
           label={t('auth.login.email')}
           type="email"
           placeholder={t('auth.login.emailPlaceholder')}
@@ -82,7 +87,7 @@ export default function Login() {
 
         <Button
           type="submit"
-          variant="primary"
+          variant="vidro-primaria"
           fullWidth
           size="lg"
           loading={loading}
@@ -92,14 +97,14 @@ export default function Login() {
 
         <Button
           type="button"
-          variant="outlined"
+          variant="vidro"
           fullWidth
           size="lg"
           onClick={handleGoogle}
         >
           {t('auth.login.google')}
         </Button>
-        <p className="text-center text-[11px] text-text-muted">
+        <p className="text-center text-[11px] text-landing-muted">
           <Trans
             i18nKey="auth.login.devHint"
             values={{ acao: t('auth.login.submit') }}
@@ -108,9 +113,9 @@ export default function Login() {
         </p>
       </form>
 
-      <p className={cn('mt-6 text-center text-sm text-text-secondary')}>
+      <p className={cn('mt-6 text-center text-sm text-landing-muted')}>
         {t('auth.login.noAccount')}{' '}
-        <Link to="/cadastro" className="font-semibold text-accent hover:text-accent-strong">
+        <Link to="/cadastro" className="font-semibold text-landing-violet transition-opacity hover:opacity-80">
           {t('auth.login.createAccount')}
         </Link>
       </p>
