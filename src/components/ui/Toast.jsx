@@ -60,7 +60,7 @@ export default function Toast({
       <div className="animate-fade-in">
       <div className={cn(
         'flex items-start gap-3 rounded-2xl border border-primary/20 bg-bg-surface/95 p-4 backdrop-blur-md',
-        'shadow-glow-soft ring-1 ring-inset',
+        'shadow-2 ring-1 ring-inset',
         style.ring
       )}>
         <span className={cn('mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg', style.bg, style.iconColor)}>

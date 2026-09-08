@@ -43,7 +43,7 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('relatorios.wizard.step1.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step1.subtitle')}</p>
@@ -83,7 +83,7 @@ function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, err
                   <span className="text-label">
                     {c.brand}
                   </span>
-                  <h3 className="mt-1 truncate font-display text-base font-bold text-text-primary">
+                  <h3 className="tipo-bloco mt-1 truncate text-text-primary">
                     {c.name}
                   </h3>
                 </div>
@@ -118,7 +118,7 @@ function Step2PeriodoInfluenciadores({
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('relatorios.wizard.step2.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step2.subtitle')}</p>
@@ -214,7 +214,7 @@ function Step3Secoes({ selected, onToggle, error, t }) {
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('relatorios.wizard.step3.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step3.subtitle')}</p>
@@ -276,7 +276,7 @@ function Step4Preview({ documento, loading, apiError, onExport, exporting, t }) 
     <div className="flex flex-col gap-5">
       <Card glass className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-display text-xl font-bold text-text-primary">
+          <h2 className="tipo-secao text-text-primary">
             {t('relatorios.wizard.step4.title')}
           </h2>
           <p className="mt-1 text-sm text-text-secondary">{t('relatorios.wizard.step4.subtitle')}</p>

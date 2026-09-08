@@ -50,7 +50,7 @@ function CampaignDropdown({ options, value, onChange, label }) {
           role="listbox"
           className={cn(
             'absolute right-0 top-full z-30 mt-2 max-h-72 w-full min-w-[260px] overflow-y-auto p-1.5',
-            'animate-fade-in rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft'
+            'animate-fade-in rounded-superficie border border-[color:var(--border-subtle)] bg-bg-surface shadow-2'
           )}
         >
           {options.map((opt) => {

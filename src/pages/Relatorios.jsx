@@ -37,7 +37,7 @@ function RelatorioRow({ relatorio, onPreview, onDownload, t, locale }) {
       </span>
 
       <div className="min-w-0 flex-1">
-        <h2 className="truncate font-display text-base font-bold text-text-primary">
+        <h2 className="tipo-secao truncate text-text-primary">
           {relatorio.name}
         </h2>
         <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">

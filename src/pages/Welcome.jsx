@@ -72,7 +72,7 @@ export default function Welcome() {
             className={cn(
               'group inline-flex items-center gap-2 rounded-2xl border border-primary/20 bg-bg-surface/60 px-4 py-2',
               'text-sm font-medium text-text-primary backdrop-blur-md transition-all duration-200',
-              'hover:border-primary/40 hover:bg-bg-elevated hover:shadow-glow-soft'
+              'hover:border-primary/40 hover:bg-bg-elevated hover:shadow-2'
             )}
             aria-label={t('welcome.switchLanguage')}
           >
@@ -115,7 +115,7 @@ export default function Welcome() {
               className={cn(
                 'group inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary-600/10 px-3 py-1',
                 'text-xs font-semibold text-accent-strong transition-all duration-200',
-                'hover:border-primary/60 hover:bg-primary-600/20 hover:shadow-glow-soft'
+                'hover:border-primary/60 hover:bg-primary-600/20 hover:shadow-2'
               )}
             >
               {t('ds.title')}

@@ -48,7 +48,7 @@ function EmptyState() {
       <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
         <SearchX size={20} />
       </span>
-      <h3 className="font-display text-lg font-semibold text-text-primary">
+      <h3 className="tipo-bloco text-text-primary">
         {t('influenciadores.empty.title')}
       </h3>
       <p className="max-w-sm text-sm text-text-secondary">

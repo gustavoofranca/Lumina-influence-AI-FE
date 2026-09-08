@@ -84,7 +84,7 @@ export default function Campanha() {
         <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-bg-surface text-text-muted">
           <Megaphone size={22} />
         </span>
-        <h2 className="font-display text-xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('campanhas.list.empty.title')}
         </h2>
         <Link to="/app/campanhas">

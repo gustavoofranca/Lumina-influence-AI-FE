@@ -27,7 +27,7 @@ function Step1Detalhes({ data, errors, onChange, t }) {
   return (
     <Card glass className="flex flex-col gap-5">
       <div>
-        <h2 className="font-display text-xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('campanhas.wizard.step1.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('campanhas.wizard.step1.subtitle')}</p>
@@ -141,7 +141,7 @@ function Step2Influenciadores({ influenciadores, loading, apiError, selected, on
     <Card glass className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="font-display text-xl font-bold text-text-primary">
+          <h2 className="tipo-secao text-text-primary">
             {t('campanhas.wizard.step2.title')}
           </h2>
           <p className="mt-1 text-sm text-text-secondary">{t('campanhas.wizard.step2.subtitle')}</p>
@@ -196,7 +196,7 @@ function Step3Review({ data, selectedInfs, t, locale }) {
   return (
     <Card glass className="flex flex-col gap-6">
       <div>
-        <h2 className="font-display text-xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('campanhas.wizard.step3.title')}
         </h2>
         <p className="mt-1 text-sm text-text-secondary">{t('campanhas.wizard.step3.subtitle')}</p>
@@ -210,7 +210,7 @@ function Step3Review({ data, selectedInfs, t, locale }) {
           </span>
           <div>
             <CardLabel>{data.brand || '—'}</CardLabel>
-            <h3 className="mt-0.5 font-display text-lg font-bold text-text-primary">
+            <h3 className="tipo-bloco mt-0.5 text-text-primary">
               {data.name || '—'}
             </h3>
           </div>
@@ -379,7 +379,7 @@ export default function NovaCampanha() {
         <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/15 text-positive ring-1 ring-inset ring-emerald-500/30">
           <Check size={28} />
         </span>
-        <h2 className="font-display text-2xl font-bold text-text-primary">
+        <h2 className="tipo-secao text-text-primary">
           {t('campanhas.wizard.step3.createdSuccess')}
         </h2>
         <p className="text-sm text-text-secondary">{created.name}</p>

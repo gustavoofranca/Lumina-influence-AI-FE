@@ -67,7 +67,7 @@ function PlataformaCard({ platform, dados, t, locale }) {
             <Icon size={22} />
           </span>
           <div>
-            <h3 className="font-display text-base font-bold text-text-primary">{meta.name}</h3>
+            <h3 className="tipo-bloco text-text-primary">{meta.name}</h3>
             {conectada && (
               <p className="text-xs text-text-muted">
                 {t('configuracoes.integracoes.accounts', { count: dados.accounts })}

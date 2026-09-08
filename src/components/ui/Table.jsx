@@ -11,9 +11,13 @@ import { useTranslation } from 'react-i18next'
  *   getRowKey?(row, index) -> string
  *   emptyState?: ReactNode
  */
+// Coluna alinhada à direita é, por convenção da tabela, coluna de número — é
+// para isso que se alinha à direita. Ela ganha largura tabular junto: sem ela,
+// o "1" é mais estreito que o "8", a vírgula decimal deixa de ficar na mesma
+// coluna, e comparar dois valores passa a exigir esforço.
 const ALIGN = {
   left:   'text-left',
-  right:  'text-right',
+  right:  'text-right numerico',
   center: 'text-center',
 }
 

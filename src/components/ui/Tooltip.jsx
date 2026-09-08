@@ -40,7 +40,7 @@ export default function Tooltip({
         className={cn(
           'pointer-events-none absolute z-50 whitespace-nowrap rounded-md',
           'bg-bg-base/95 px-2 py-1 text-xs font-medium text-text-primary',
-          'border border-primary/20 shadow-glow-soft backdrop-blur',
+          'border border-[color:var(--border-subtle)] shadow-2 backdrop-blur',
           'transition-opacity duration-150',
           open ? 'opacity-100' : 'opacity-0',
           POSITIONS[position],

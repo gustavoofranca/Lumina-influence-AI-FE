@@ -64,7 +64,7 @@ export default function CampanhaCard({ campanha }) {
         // inteira, e num celular ele empurra a página.
         'group block min-w-0 rounded-2xl border border-primary/10 bg-bg-surface/60 p-5 backdrop-blur-md',
         'transition-all duration-200',
-        'hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-glow-soft'
+        'hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-2'
       )}
     >
       {/* Header: marca + status */}
@@ -76,7 +76,7 @@ export default function CampanhaCard({ campanha }) {
           <span className="block truncate text-label">
             {c.brand}
           </span>
-          <h2 className="mt-1 truncate font-display text-lg font-bold text-text-primary group-hover:text-accent-strong">
+          <h2 className="tipo-secao mt-1 truncate text-text-primary group-hover:text-accent-strong">
             {c.name}
           </h2>
         </div>

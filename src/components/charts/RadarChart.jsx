@@ -22,7 +22,7 @@ const COLORS = ['#7C3AED', '#0EA5E9', '#22C55E', '#F43F5E']
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-xl border border-primary/20 bg-bg-base/95 px-3 py-2 shadow-glow-soft backdrop-blur">
+    <div className="rounded-controle border border-[color:var(--border-subtle)] bg-bg-base/95 px-3 py-2 shadow-2 backdrop-blur">
       <p className="mb-1.5 text-xs font-semibold uppercase tracking-label text-text-muted">{label}</p>
       <div className="space-y-1">
         {payload.map((entry) => (

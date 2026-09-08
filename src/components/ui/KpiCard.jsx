@@ -55,7 +55,7 @@ export default function KpiCard({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <span className="text-label">{label}</span>
-          <div className="mt-2 font-display text-3xl font-bold leading-none text-text-primary">
+          <div className="numerico mt-2 font-display text-3xl font-bold leading-none text-text-primary">
             {value}
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function KpiCard({
       {(change !== undefined || hint) && (
         <div className="flex flex-wrap items-center gap-2 text-xs">
           {change !== undefined ? (
-            <span className={cn('inline-flex items-center gap-1 rounded-full px-2 py-1 font-semibold', changeColor)}>
+            <span className={cn('numerico inline-flex items-center gap-1 rounded-full px-2 py-1 font-semibold', changeColor)}>
               <ChangeIcon size={12} />
               {formattedChange}
             </span>

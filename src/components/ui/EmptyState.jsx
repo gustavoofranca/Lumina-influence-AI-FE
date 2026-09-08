@@ -27,7 +27,7 @@ export default function EmptyState({
           <Icon size={20} />
         </span>
       )}
-      <h3 className="font-display text-base font-semibold text-text-primary">{title}</h3>
+      <h3 className="tipo-bloco text-text-primary">{title}</h3>
       {description && (
         <p className="max-w-sm text-sm text-text-secondary">{description}</p>
       )}

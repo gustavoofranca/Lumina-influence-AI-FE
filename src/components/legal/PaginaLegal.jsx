@@ -59,7 +59,7 @@ export default function PaginaLegal({ base }) {
         <div className="mt-12 flex flex-col gap-10">
           {lista.map((secao, i) => (
             <section key={secao.h ?? i} className="flex flex-col gap-3">
-              <h2 className="font-display text-lg font-semibold text-white">{secao.h}</h2>
+              <h2 className="tipo-secao text-white">{secao.h}</h2>
               {String(secao.p).split('\n').map((paragrafo, j) => (
                 <p key={j} className="text-sm leading-relaxed text-landing-muted">
                   {paragrafo.replaceAll('{{email}}', EMAIL_CONTATO)}

@@ -118,14 +118,14 @@ export default function Modal({
         tabIndex={-1}
         className={cn(
           'relative w-full animate-fade-in outline-none',
-          'rounded-2xl border border-primary/15 bg-bg-surface shadow-glow-soft',
+          'rounded-janela border border-[color:var(--border-subtle)] bg-bg-surface shadow-3',
           SIZES[size]
         )}
       >
         {(title || showCloseButton) && (
           <div className="flex items-center justify-between gap-3 border-b border-hairline/60 px-6 py-4">
             {title ? (
-              <h2 id="modal-title" className="font-display text-lg font-bold text-text-primary">
+              <h2 id="modal-title" className="tipo-secao text-text-primary">
                 {title}
               </h2>
             ) : (

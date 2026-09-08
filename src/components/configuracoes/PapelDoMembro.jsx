@@ -77,7 +77,7 @@ export default function PapelDoMembro({ valor, onChange, editavel, salvando = fa
       {aberto && (
         <ul
           role="listbox"
-          className="absolute left-0 top-full z-30 mt-2 min-w-[180px] rounded-2xl border border-primary/15 bg-bg-surface p-1.5 shadow-glow-soft"
+          className="absolute left-0 top-full z-30 mt-2 min-w-[180px] rounded-superficie border border-[color:var(--border-subtle)] bg-bg-surface p-1.5 shadow-2"
         >
           {ROLE_KEYS.map((opcao) => (
             <li key={opcao}>

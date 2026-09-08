@@ -48,7 +48,7 @@ function ParticipantCard({ participant, t, onRemover }) {
       className={cn(
         'group flex flex-col gap-4 rounded-2xl border border-hairline/60 bg-bg-base/40 p-5',
         'transition-all duration-200',
-        'hover:-translate-y-0.5 hover:border-primary/30 hover:bg-bg-surface/60 hover:shadow-glow-soft'
+        'hover:-translate-y-0.5 hover:border-primary/30 hover:bg-bg-surface/60 hover:shadow-2'
       )}
     >
       <div className="flex items-start justify-between gap-3">

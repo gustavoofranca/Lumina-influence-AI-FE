@@ -25,11 +25,11 @@ export default function Card({
   return (
     <Tag
       className={cn(
-        'rounded-2xl',
+        'rounded-superficie',
         glass
           ? 'card-glass'
           : 'bg-bg-surface border border-primary/10',
-        hoverable && 'transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-glow-soft',
+        hoverable && 'transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-2',
         PADDING[padding],
         className
       )}

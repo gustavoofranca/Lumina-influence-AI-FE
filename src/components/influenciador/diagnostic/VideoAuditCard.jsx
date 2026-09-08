@@ -37,7 +37,7 @@ function ReelThumbnail({ duration, scanLabel }) {
         <span className={cn(
           'inline-flex h-14 w-14 items-center justify-center rounded-full',
           'bg-white/15 text-white backdrop-blur-md ring-1 ring-white/20',
-          'shadow-glow-soft'
+          'shadow-1'
         )}>
           <Play size={22} className="ml-0.5 fill-current" />
         </span>

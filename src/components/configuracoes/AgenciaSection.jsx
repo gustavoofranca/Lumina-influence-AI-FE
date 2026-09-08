@@ -63,7 +63,7 @@ export default function AgenciaSection({ onSave }) {
         <ApiErrorBanner error={error || saveError} onRetry={refetch} />
 
         <div className="flex items-center gap-4 rounded-2xl border border-primary/15 bg-primary-600/5 p-4">
-          <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-soft">
+          <span className="inline-flex h-14 w-14 items-center justify-center rounded-superficie bg-gradient-brand text-white">
             <Sparkles size={22} />
           </span>
           <div className="min-w-0">
