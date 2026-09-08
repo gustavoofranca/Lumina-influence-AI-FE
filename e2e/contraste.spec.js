@@ -121,9 +121,14 @@ for (const tema of ['dark', 'light']) {
       // Pelo botão da interface, nunca por script: o efeito do React reaplica o
       // estado por cima e a medição sai contaminada.
       await page.getByRole('button', { name: /tema claro|light theme/i }).click()
+      // O tema mora em `data-theme` no <html>, nao numa classe `dark` — o
+      // modulo `lib/theme.js` faz `setAttribute('data-theme', ...)`. A guarda
+      // anterior perguntava pela classe, que **nunca** existe, e por isso
+      // passava qualquer que fosse o tema. Guarda que nao pode falhar nao
+      // guarda nada, que e o defeito que este arquivo alerta em comentario.
       await expect.poll(() =>
-        page.evaluate(() => document.documentElement.classList.contains('dark'))
-      ).toBe(false)
+        page.evaluate(() => document.documentElement.getAttribute('data-theme'))
+      ).toBe('light')
     }
 
     const reprovados = []
