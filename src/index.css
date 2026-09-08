@@ -175,6 +175,14 @@
   --sombra-2: 0 4px 14px -4px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(0,0,0,0.35);
   --sombra-3: 0 24px 60px -20px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(0,0,0,0.4);
 
+  /* Cor do indicador de foco. Não é `--primary`, e a razão é medida: o
+     contorno violeta sobre o botão primário `bg-primary-600` dá 1,00:1 — é a
+     MESMA cor. Navegando um formulário pelo teclado, não dava para ver qual
+     botão estava focado. Sobre cartão no escuro dava 2,98:1, abaixo do mínimo.
+     Este valor foi escolhido testando cada candidato contra todas as
+     superfícies do tema; o pior caso dele é 4,10:1. */
+  --foco: #DDD6FE;
+
 }
 
 /* ===========================================================
@@ -251,6 +259,10 @@
   --sombra-2: 0 6px 16px -6px rgba(16,24,40,0.12), 0 0 0 0.5px rgba(16,24,40,0.08);
   --sombra-3: 0 24px 48px -16px rgba(16,24,40,0.18), 0 0 0 0.5px rgba(16,24,40,0.10);
 
+  /* No claro nenhum tom de violeta serve: contra o botão primário o melhor
+     deles dá 1,58:1. Tinta escura resolve, com pior caso de 3,13:1. */
+  --foco: #0F172A;
+
 }
 
 /* ===========================================================
@@ -287,6 +299,47 @@ body {
    Camada de utilitários do design system
    =========================================================== */
 @layer components {
+  /*
+   * ESCALA DE TIPO — quatro degraus, cada um com um nível de leitura.
+   *
+   * A escala não foi inventada: ela ratifica o que já domina o código e
+   * conserta o que destoa. Medido antes de escrever:
+   *
+   *   h1 — `3xl` em 13 de 18. Já era consistente; os que fogem são contexto
+   *        legítimo (folha A4 do PDF, o "404" decorativo, o herói do
+   *        onboarding). Ficam como estão.
+   *   h2 — `xl` em 7, mas também `2xl`, `lg` e `base`. Dentro do app, o mesmo
+   *        nível semântico aparecia com dois degraus de diferença. É o
+   *        problema real.
+   *   h3 — `lg`, `base`, `xl` e `2xl`.
+   *
+   * Quem lê uma tela varre os títulos antes de mergulhar no corpo. Se o mesmo
+   * nível muda de tamanho de tela em tela, essa varredura para de funcionar:
+   * o tamanho deixa de significar profundidade.
+   */
+  .tipo-tela {
+    font-family: theme('fontFamily.display');
+    font-size: 1.875rem;   /* 30px */
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .tipo-secao {
+    font-family: theme('fontFamily.display');
+    font-size: 1.25rem;    /* 20px */
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .tipo-bloco {
+    font-family: theme('fontFamily.display');
+    font-size: 0.9375rem;  /* 15px */
+    line-height: 1.4;
+    font-weight: 600;
+  }
+  .tipo-corpo  { font-size: 0.875rem; line-height: 1.55; }  /* 14px */
+  .tipo-apoio  { font-size: 0.8125rem; line-height: 1.5; }  /* 13px */
+
   /*
    * A casca: o que navega. Barra lateral, barra do topo, popover, modal.
    *
@@ -395,9 +448,19 @@ body {
   }
 }
 
-/* Foco visível, acessível, no tom da marca */
+/*
+ * Foco visível — WCAG 2.2 SC 2.4.11 pede 3:1 contra as cores adjacentes.
+ *
+ * Era `var(--primary)`, e falhava em dois lugares: 2,98:1 sobre cartão no
+ * escuro e 1,00:1 sobre o botão primário, onde o contorno tinha exatamente a
+ * cor do botão e sumia. Agora a cor vem do tema e foi escolhida medindo contra
+ * cada superfície.
+ *
+ * `outline` e não `box-shadow`: sombra no foco substituiria a elevação do
+ * cartão enquanto ele estivesse focado, e a peça pareceria afundar.
+ */
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--foco);
   outline-offset: 2px;
   border-radius: 6px;
 }
