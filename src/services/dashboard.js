@@ -29,8 +29,19 @@ function adaptFeatured(f) {
     influencerId: f.influencer_id,
     influencerName: f.influencer_name,
     analysisId: (f.analysis_id || '').slice(0, 8),
-    transcript: f.transcript || '—',
-    brandCoherence: Math.round(f.brand_coherence || 0),
+    transcript: f.transcript || null,
+    // A miniatura real do post analisado. O back-end sempre mandou; o
+    // adaptador é que a descartava, e a tela desenhava um retângulo com
+    // degradê e um botão de play que não tocava nada. Numa ferramenta que
+    // audita conteúdo, exibir um vídeo inventado no lugar do que foi analisado
+    // é o defeito mais caro possível — é a única imagem da tela, e ela era
+    // ficção.
+    thumbnailUrl: f.thumbnail_url || null,
+    platform: f.platform || null,
+    // `?? null` e não `|| 0`: com `|| 0`, uma análise sem coerência medida
+    // virava "0%" na barra — uma afirmação sobre alguém que não foi medido, e
+    // o oposto do que a página pública promete.
+    brandCoherence: f.brand_coherence == null ? null : Math.round(f.brand_coherence),
     // O valor vem do back-end: o rótulo traz um {{valor}} e não um número
     // escrito à mão, que seria o mesmo para todos os criadores.
     pills: (f.pills || []).map((p) => ({

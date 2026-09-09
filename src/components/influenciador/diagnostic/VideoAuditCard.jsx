@@ -61,7 +61,7 @@ export default function VideoAuditCard() {
   const { t } = useTranslation()
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('influenciador.videoAudit.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('influenciador.videoAudit.title')}</CardTitle>

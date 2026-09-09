@@ -53,7 +53,9 @@ export default function PilaresSection() {
   const chips = t('landing.pilares.chips', { returnObjects: true })
 
   return (
-    <section className={cn(
+    // `data-sem-diferir`: os três cartões têm brilho que passa da borda da
+    // seção, e adiar o desenho recorta esse brilho. Ver `index.css`.
+    <section data-sem-diferir className={cn(
       // Seção de largura cheia: o lavado é recortado pela janela, não por uma
       // caixa mais estreita, então aqui ele não deixa aresta.
       'relative bg-wash-secao py-24',
@@ -70,7 +72,14 @@ export default function PilaresSection() {
           </p>
         </div>
 
-        <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+        {/* Três colunas só a partir de `xl`.
+            Em `md` elas cabiam na tela e não cabiam na leitura: medido a
+            768px, cada cartão ficava com 154px de texto — 16 a 18 caracteres
+            por linha, contra os 35 a 50 que um cartão estreito pede. O corpo
+            de 155 caracteres virava dez linhas de duas ou três palavras.
+            Todas as outras grades de três colunas da página já esperavam
+            `lg`; esta era a exceção. */}
+        <div className="grid gap-10 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
           {items.map((item, i) => (
             <CartaoDeVidro
               as="article"

@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Plus, Megaphone } from 'lucide-react'
 
-import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
 import Search from '../components/ui/Search.jsx'
 import Tabs from '../components/ui/Tabs.jsx'
@@ -13,14 +12,13 @@ import Toast from '../components/ui/Toast.jsx'
 import Skeleton from '../components/ui/Skeleton.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import { useApi } from '../hooks/useApi.js'
+import { useAvisoDaNavegacao } from '../hooks/useAvisoDaNavegacao.js'
 import { listCampaigns } from '../services/campaigns.js'
 
 const STATUS_FILTER = ['all', 'active', 'planning', 'paused', 'completed']
 
 export default function Campanhas() {
   const { t } = useTranslation()
-  const location = useLocation()
-  const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
@@ -48,17 +46,13 @@ export default function Campanhas() {
   // A exclusão acontece na tela da campanha, que deixa de existir. O aviso
   // viaja no state da navegação e é consumido aqui — sem ele a ação mais
   // destrutiva da tela termina numa lista silenciosa.
-  const [excluida, setExcluida] = useState(location.state?.excluida || null)
-  useEffect(() => {
-    if (!location.state?.excluida) return
-    navigate(location.pathname, { replace: true, state: null })
-  }, [location.state, location.pathname, navigate])
+  const [excluida, dispensarExcluida] = useAvisoDaNavegacao('excluida')
 
   return (
     <div className="flex flex-col gap-6">
       <Toast
         open={Boolean(excluida)}
-        onClose={() => setExcluida(null)}
+        onClose={dispensarExcluida}
         type="success"
         message={t('campanha.excluir.done', { nome: excluida })}
       />

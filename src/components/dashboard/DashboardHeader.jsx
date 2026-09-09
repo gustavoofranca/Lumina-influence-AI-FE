@@ -96,7 +96,10 @@ export default function DashboardHeader({
       <div className="flex flex-col gap-3">
         <span className="text-label">{t('dashboard.label')}</span>
         <div className="flex items-center gap-3">
-          <h1 className="font-display text-3xl font-bold text-text-primary lg:text-4xl">
+          {/* `lg:text-4xl` fica: o valor de um KPI também é `tipo-tela`, e em
+              desktop — onde a dashboard é usada — o título precisa dominar os
+              quatro números que vêm logo abaixo. */}
+          <h1 className="tipo-tela text-text-primary lg:text-4xl">
             {t('dashboard.title')}
           </h1>
           <StatusIndicator label={t('dashboard.liveSync')} color="success" />

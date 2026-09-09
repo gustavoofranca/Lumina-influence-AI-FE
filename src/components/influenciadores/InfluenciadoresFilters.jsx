@@ -47,7 +47,7 @@ export default function InfluenciadoresFilters({
   ]
 
   return (
-    <div className="card-glass flex flex-col gap-5 rounded-2xl p-5">
+    <div className="superficie flex flex-col gap-5 rounded-2xl p-5">
       {/* Linha 1: Search + clear */}
       <div className="flex items-center gap-3">
         <div className="flex-1 max-w-lg">

@@ -109,7 +109,7 @@ export default function SentimentHeatmap({ clusters, keywords, timeline, loading
   ]
 
   return (
-    <Card glass className="flex flex-col gap-6">
+    <Card className="flex flex-col gap-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <CardLabel>{t('influenciador.sentiment.title')}</CardLabel>

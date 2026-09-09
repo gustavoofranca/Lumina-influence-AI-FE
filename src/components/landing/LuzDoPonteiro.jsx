@@ -1,3 +1,7 @@
+import { useRef } from 'react'
+
+import { useElementoDaLuz } from '../../hooks/useLuzDoPonteiro.js'
+
 /**
  * A luz violeta que acompanha o ponteiro, atrás de tudo.
  *
@@ -33,8 +37,16 @@
  * ponteiro sai da janela. Sem isso a luz fica esquecida na última posição.
  */
 export default function LuzDoPonteiro() {
+  // Este elemento é quem recebe as variáveis do laço. Antes elas iam na raiz,
+  // onde eram herdadas por todo o documento e punham a árvore inteira no
+  // recálculo de estilo a cada quadro — para alimentar as duas camadas aqui
+  // dentro. Ver a nota em `escrever`, no hook.
+  const alvo = useRef(null)
+  useElementoDaLuz(alvo)
+
   return (
     <div
+      ref={alvo}
       aria-hidden
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
       style={{ opacity: 'var(--luz-forca, 0)' }}

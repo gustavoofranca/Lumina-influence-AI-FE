@@ -73,7 +73,7 @@ export default function TranscriptHighlight({ transcript, loading = false, nomeD
   }
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <CardLabel>{t('influenciador.transcript.title')}</CardLabel>

@@ -8,14 +8,26 @@ const PADDING = {
 }
 
 /**
- * Card — container base do design system.
- * - Padrao: bg-bg-surface, border subtle
- * - glass=true: glassmorphism (translucido + blur + border violeta sutil)
- * - hoverable=true: micro-elevacao em hover
+ * Card — a superfície de conteúdo do produto.
+ *
+ * Chapada, sempre. Havia uma prop `glass` que ligava translucidez com
+ * `backdrop-filter`, e ela saiu: o cartão carrega número, tabela e gráfico, e
+ * número precisa de fundo quieto. Vidro atrás de dado não é profundidade, é
+ * ruído sobre o valor — e cobra caro, porque cada camada translúcida vira uma
+ * camada de composição que o navegador refaz quando o gráfico redesenha.
+ *
+ * A translucidez continua existindo, no lugar onde ela informa: a **casca** —
+ * barra lateral, barra superior, menus e modais. É a mesma divisão que o macOS
+ * faz, e pelo mesmo motivo: a lateral do Finder é translúcida, a lista de
+ * arquivos não.
+ *
+ * A profundidade aqui vem da sombra e do fio, que é o que `.superficie` traz.
+ *
+ * `hoverable` é só para cartão que leva a algum lugar. Em cartão de leitura ele
+ * promete um clique que não existe.
  */
 export default function Card({
   children,
-  glass = false,
   hoverable = false,
   padding = 'md',
   as: Tag = 'div',
@@ -25,10 +37,7 @@ export default function Card({
   return (
     <Tag
       className={cn(
-        'rounded-superficie',
-        glass
-          ? 'card-glass'
-          : 'bg-bg-surface border border-primary/10',
+        'superficie rounded-superficie',
         hoverable && 'transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-2',
         PADDING[padding],
         className
@@ -52,7 +61,7 @@ export function CardHeader({ children, className = '' }) {
  */
 export function CardTitle({ children, className = '', as: Tag = 'h2' }) {
   return (
-    <Tag className={cn('font-display text-xl font-bold text-text-primary', className)}>
+    <Tag className={cn('tipo-secao text-text-primary', className)}>
       {children}
     </Tag>
   )

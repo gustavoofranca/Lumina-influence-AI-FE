@@ -117,7 +117,7 @@ export default function BenchmarkTable({ rows, loading = false }) {
   ]
 
   return (
-    <Card glass padding="md" className="flex flex-col gap-5">
+    <Card padding="md" className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('campanhas.detail.benchmark.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('campanhas.detail.benchmark.title')}</CardTitle>

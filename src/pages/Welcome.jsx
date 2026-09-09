@@ -13,7 +13,7 @@ const PALETTE = [
 
 function ColorCard({ swatchClass, glowClass, ringClass, hex, label, description }) {
   return (
-    <div className="card-glass rounded-2xl p-5 transition-transform duration-200 hover:-translate-y-0.5">
+    <div className="superficie rounded-superficie p-5 transition-transform duration-200 hover:-translate-y-0.5">
       <div className={cn('h-24 w-full rounded-xl ring-1', swatchClass, glowClass, ringClass)} />
       <div className="mt-4 flex items-center justify-between">
         <span className="text-label">{label}</span>
@@ -155,7 +155,7 @@ export default function Welcome() {
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {/* Display: Plus Jakarta Sans */}
-            <div className="card-glass rounded-2xl p-8">
+            <div className="superficie rounded-superficie p-8">
               <span className="text-label">Display · Plus Jakarta Sans</span>
               <div className="mt-4 flex items-baseline gap-4">
                 <span className="font-display text-8xl font-extrabold leading-none tracking-display-tight text-gradient-brand">
@@ -171,7 +171,7 @@ export default function Welcome() {
             </div>
 
             {/* Body: Inter */}
-            <div className="card-glass rounded-2xl p-8">
+            <div className="superficie rounded-superficie p-8">
               <span className="text-label">Body · Inter</span>
               <div className="mt-4">
                 <span className="font-sans text-7xl font-bold leading-none text-text-primary">

@@ -35,7 +35,7 @@ export default function HistoricoTab({ data, loading = false }) {
 
   if (loading) {
     return (
-      <Card glass>
+      <Card>
         <CardLabel>{t('influenciador.history.title')}</CardLabel>
         <Skeleton className="mt-4 h-48" rounded="rounded-xl" />
       </Card>
@@ -44,7 +44,7 @@ export default function HistoricoTab({ data, loading = false }) {
 
   if (!data?.length) {
     return (
-      <Card glass>
+      <Card>
         <CardLabel>{t('influenciador.history.title')}</CardLabel>
         <EmptyState icon={FileSearch} title={t('influenciador.history.empty')} />
       </Card>
@@ -52,7 +52,7 @@ export default function HistoricoTab({ data, loading = false }) {
   }
 
   return (
-    <Card glass>
+    <Card>
       <div className="mb-6">
         <CardLabel>{t('influenciador.history.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('influenciador.history.title')}</CardTitle>

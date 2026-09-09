@@ -52,7 +52,7 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
 
       {/* Crescimento + integridade resumida */}
       <section className="grid gap-6 lg:grid-cols-3">
-        <Card glass className="lg:col-span-2">
+        <Card className="lg:col-span-2">
           <CardLabel>{t('dashboard.growth.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('dashboard.growth.title')}</CardTitle>
           <p className="mt-1 text-sm text-text-secondary">{t('dashboard.growth.subtitle')}</p>
@@ -65,7 +65,7 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
           </div>
         </Card>
 
-        <Card glass className="flex flex-col gap-5">
+        <Card className="flex flex-col gap-5">
           <div>
             <CardLabel>{t('influenciador.kpis.brandCoherence')}</CardLabel>
             <CardTitle className="mt-1.5">{t('influenciador.kpis.brandCoherence')}</CardTitle>

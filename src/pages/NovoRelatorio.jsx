@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
-  ArrowLeft, ArrowRight, Calendar, Check, Download, FileText,
+  ArrowLeft, ArrowRight, Calendar, Check, Download,
   TrendingUp, BarChart3, Brain, Lightbulb, ChartLine, Megaphone, Users,
 } from 'lucide-react'
 
@@ -41,7 +41,7 @@ const LOADING_CARDS = 4
 
 function Step1Campanha({ campanhas, loading, apiError, campaignId, onSelect, error, t, locale }) {
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <h2 className="tipo-secao text-text-primary">
           {t('relatorios.wizard.step1.title')}
@@ -116,7 +116,7 @@ function Step2PeriodoInfluenciadores({
   error, t,
 }) {
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <h2 className="tipo-secao text-text-primary">
           {t('relatorios.wizard.step2.title')}
@@ -212,7 +212,7 @@ function Step2PeriodoInfluenciadores({
 // =============================================================================
 function Step3Secoes({ selected, onToggle, error, t }) {
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <h2 className="tipo-secao text-text-primary">
           {t('relatorios.wizard.step3.title')}
@@ -274,7 +274,7 @@ function Step3Secoes({ selected, onToggle, error, t }) {
 function Step4Preview({ documento, loading, apiError, onExport, exporting, t }) {
   return (
     <div className="flex flex-col gap-5">
-      <Card glass className="flex flex-wrap items-center justify-between gap-3">
+      <Card className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="tipo-secao text-text-primary">
             {t('relatorios.wizard.step4.title')}

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useId, useRef } from 'react'
 import { GlassCard } from 'react-glass-ui'
 
 import { cn } from '../../lib/cn.js'
@@ -53,18 +53,53 @@ export default function CartaoDeVidro({
   aura = false,
   moldura = true,
   borrao = 4,
-  distorcao = 40,
+  /**
+   * Mapa de deslocamento, desligado por padrão.
+   *
+   * Zero não é um meio-termo: a biblioteca faz `distortion && …` para decidir
+   * se monta o `<svg>` do filtro, então em 0 o pipeline inteiro deixa de
+   * existir — e com ele o `filter: url(#…)` que o navegador teria de recompor
+   * em **doze** cartões a cada quadro, enquanto uma luz se move atrás deles.
+   *
+   * O que se perde já estava medido e escrito acima: neste fundo escuro a
+   * distorção altera menos de 1% dos pixels do cartão, porque quase não há
+   * detalhe atrás para refratar. O que faz o vidro ler aqui é a borda acesa,
+   * que continua.
+   *
+   * O que se ganha, medido com o processador a um quarto da velocidade, que é
+   * a máquina de quem visita e não a de quem desenvolve: 17,6 para 24,9
+   * quadros por segundo, e o pior quadro caindo de 91ms para 55ms. Junto com
+   * o `content-visibility` das seções, 31,6.
+   *
+   * Continua sendo prop: um cartão sobre imagem, um dia, terá o que refratar.
+   */
+  distorcao = 0,
   children,
   ...resto
 }) {
   const involucro = useRef(null)
   useCartaoIluminado(involucro)
 
+  // Sem este `id` a página inteira fica em branco fora de HTTPS.
+  //
+  // A biblioteca faz `cardProps.id ?? crypto.randomUUID()` para nomear o filtro
+  // SVG. `crypto.randomUUID` só existe em **contexto seguro**: HTTPS ou
+  // `localhost`. Aberta pelo IP da máquina na rede — que é como se mostra a
+  // landing num celular ou num projetor —, a chamada lança, o erro sobe pela
+  // árvore na renderização e leva a página junto. Passar o `id` faz o `??`
+  // parar antes de chegar na chamada.
+  //
+  // Os dois-pontos de `useId` (`:r1:`) precisam sair: o valor entra em
+  // `url(#…-filter)`, e ali `:` inicia uma pseudoclasse. O prefixo garante que
+  // o identificador comece por letra, como manda a gramática de seletor.
+  const id = `vidro-${useId().replace(/:/g, '')}`
+
   // `GlassCard` sempre renderiza uma `div`. Quando o chamador pede outra tag —
   // `article` nos pilares —, ela envolve o cartão por fora: perder a semântica
   // para ganhar um efeito visual seria uma troca ruim, e invisível no build.
   const cartao = (
     <GlassCard
+      id={id}
       blur={borrao}
       distortion={distorcao}
       flexibility={0}
@@ -126,6 +161,17 @@ export default function CartaoDeVidro({
   return (
     <Tag
       ref={involucro}
+      // Marca lida por uma regra em `index.css`.
+      //
+      // Com `distorcao` em 0 a biblioteca não monta o `<svg>` do filtro, mas
+      // continua cravando `filter: url(#…-filter)` **inline** na camada de
+      // vidro — uma referência a um filtro que não existe. O Chrome a trata
+      // como `none` e o cartão aparece normalmente, então nada denuncia o
+      // problema na tela; o que fica é a camada de composição, que é
+      // justamente o que se queria eliminar. Estilo inline vence classe, daí
+      // a regra precisar de `!important`, e daí ela precisar deste marcador
+      // para não apagar o efeito de um cartão que peça distorção de verdade.
+      data-sem-distorcao={distorcao === 0 ? '' : undefined}
       className={cn('relative flex h-full', className)}
       style={{ borderRadius: RAIO }}
     >

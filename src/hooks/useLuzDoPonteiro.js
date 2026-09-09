@@ -73,6 +73,9 @@ let rodando = false
 let quadro = 0
 let medidasVelhas = true
 
+/** Elemento que recebe `--luz-x` / `--luz-y` / `--luz-forca`. Ver `escrever`. */
+let elementoDaLuz = null
+
 function medir() {
   for (const registro of cartoes.values()) {
     registro.caixa = registro.el.getBoundingClientRect()
@@ -80,10 +83,22 @@ function medir() {
 }
 
 function escrever() {
-  const raiz = document.documentElement
-  raiz.style.setProperty('--luz-x', `${x.toFixed(1)}px`)
-  raiz.style.setProperty('--luz-y', `${y.toFixed(1)}px`)
-  raiz.style.setProperty('--luz-forca', forca.toFixed(3))
+  // A posição da luz vai no elemento da luz, e não no `<html>`.
+  //
+  // Uma propriedade personalizada escrita na raiz é herdada por **todo** o
+  // documento, e reescrevê-la a cada quadro põe a árvore inteira na conta do
+  // recálculo de estilo. Quem lê `--luz-x`, `--luz-y` e `--luz-forca` são as
+  // duas camadas de gradiente dentro de `LuzDoPonteiro`, e mais nada: no trace
+  // da rolagem, `UpdateLayoutTree` era o segundo maior custo depois da
+  // composição.
+  //
+  // A raiz continua sendo o alvo enquanto o componente não se registrou —
+  // é o que mantém a luz funcionando durante o primeiro quadro e em qualquer
+  // página que use o laço sem montar o componente.
+  const alvo = elementoDaLuz ?? document.documentElement
+  alvo.style.setProperty('--luz-x', `${x.toFixed(1)}px`)
+  alvo.style.setProperty('--luz-y', `${y.toFixed(1)}px`)
+  alvo.style.setProperty('--luz-forca', forca.toFixed(3))
 
   for (const registro of cartoes.values()) {
     const { el, caixa } = registro
@@ -218,6 +233,24 @@ export function useLuzDoPonteiro() {
     ligar()
     return desligar
   }, [])
+}
+
+/**
+ * Registra o elemento que desenha a luz — quem recebe `--luz-x` / `--luz-y` /
+ * `--luz-forca`. Ver a nota em `escrever` sobre por que não é a raiz.
+ *
+ * @param {import('react').RefObject<HTMLElement>} ref elemento da luz
+ */
+export function useElementoDaLuz(ref) {
+  useEffect(() => {
+    if (!ref.current || !luzPermitida()) return undefined
+    elementoDaLuz = ref.current
+    return () => {
+      // Só solta se ainda for este: em uma troca de página o próximo já
+      // assumiu, e limpar aqui apagaria o alvo de quem está entrando.
+      if (elementoDaLuz === ref.current) elementoDaLuz = null
+    }
+  }, [ref])
 }
 
 /**

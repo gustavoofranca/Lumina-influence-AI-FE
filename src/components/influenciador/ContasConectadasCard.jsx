@@ -48,6 +48,10 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
     setOcupada(platform)
     try {
       const url = await getConnectUrl(influenciador.id, platform)
+      // Saida deliberada da aplicacao: o consentimento de OAuth acontece no
+      // dominio do provedor, entao a navegacao tem que ser do documento e nao
+      // do roteador. Dentro de manipulador de evento, como manda o React.
+      // eslint-disable-next-line react-hooks/immutability
       window.location.href = url
     } catch (err) {
       if (err.code === 'platform_not_configured') {
@@ -133,7 +137,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
       ocupada={Boolean(ocupada)}
       onConfirmar={desconectar}
     />
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <CardLabel>{t('influenciador.conexoes.label')}</CardLabel>

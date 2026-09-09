@@ -11,7 +11,7 @@ export default function NeuralConfidenceCard({ data, loading = false }) {
 
   if (loading) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('influenciador.neuralConfidence.title')}</CardLabel>
         <Skeleton className="h-32" rounded="rounded-xl" />
       </Card>
@@ -20,7 +20,7 @@ export default function NeuralConfidenceCard({ data, loading = false }) {
 
   if (!data?.length) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('influenciador.neuralConfidence.title')}</CardLabel>
         <EmptyState icon={BrainCircuit} title={t('influenciador.neuralConfidence.empty')} />
       </Card>
@@ -28,7 +28,7 @@ export default function NeuralConfidenceCard({ data, loading = false }) {
   }
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('influenciador.neuralConfidence.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('influenciador.neuralConfidence.title')}</CardTitle>

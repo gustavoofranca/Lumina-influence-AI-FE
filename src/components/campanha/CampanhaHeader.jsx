@@ -41,7 +41,7 @@ export default function CampanhaHeader({ campanha, metrics, onEdit, onExcluir })
 
   return (
     <header className={cn(
-      'card-glass relative overflow-hidden rounded-3xl p-6 lg:p-8'
+      'superficie relative overflow-hidden rounded-3xl p-6 lg:p-8'
     )}>
       <div
         aria-hidden

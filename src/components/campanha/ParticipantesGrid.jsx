@@ -115,7 +115,7 @@ export default function ParticipantesGrid({
   const { t } = useTranslation()
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <CardLabel>{t('campanhas.detail.participants.title')}</CardLabel>

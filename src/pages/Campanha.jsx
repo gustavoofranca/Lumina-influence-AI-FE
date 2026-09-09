@@ -162,11 +162,16 @@ export default function Campanha() {
         palavra={campanha?.name}
         rotuloConfirmar={t('campanha.excluir.confirm')}
         onConfirmar={async () => {
+          // O nome é lido **antes** do `await`. Depois dele a campanha já não
+          // existe: uma busca em voo volta 404, o estado da tela vira `null` e
+          // o aviso viajaria `undefined` — a lista abriria um toast vazio, e a
+          // exclusão terminaria em silêncio.
+          const nomeExcluida = campanha?.name
           await excluirCampanha(id)
           // `replace`: voltar pelo histórico cairia na página de uma campanha
           // que não existe mais, e a tela de "não encontrada" pareceria defeito.
           navigate('/app/campanhas', {
-            replace: true, state: { excluida: campanha?.name },
+            replace: true, state: { excluida: nomeExcluida },
           })
         }}
       />

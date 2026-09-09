@@ -10,12 +10,6 @@ import StatusDoCriador from './StatusDoCriador.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
 
-const STATUS_VARIANT = {
-  active:     'success',
-  monitoring: 'warning',
-  risk:       'danger',
-}
-
 function formatDate(iso, locale) {
   // Sem data, `new Date(null)` cairia na epoch e exibiria 31/12/1969.
   if (!iso) return null
@@ -43,7 +37,7 @@ export default function InfluenciadorHeader({
 
   return (
     <header className={cn(
-      'card-glass relative overflow-hidden rounded-3xl p-6',
+      'superficie relative overflow-hidden rounded-3xl p-6',
       'lg:p-8'
     )}>
       {/* Glow decorativo */}

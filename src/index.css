@@ -516,3 +516,52 @@ body {
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
+
+/* ===========================================================
+   Só desenhar o que está à vista
+   =========================================================== */
+
+/* A landing tem nove seções, e o navegador compunha as nove a cada quadro —
+   inclusive as sete que estão fora da tela, com os cartões de vidro delas.
+   `content-visibility: auto` deixa o navegador pular a renderização do que
+   não está à vista e retomá-la quando chega perto.
+
+   Medido com o processador a um quarto da velocidade: junto com o mapa de
+   deslocamento desligado, 17,6 → 31,6 quadros por segundo, e o pior quadro de
+   91ms para 56ms.
+
+   A primeira seção fica de fora: ela está na dobra, é o que a pessoa vê antes
+   de rolar, e adiar o que já está à vista só adiaria a primeira pintura.
+
+   `contain-intrinsic-size: auto <altura>` é o que impede a barra de rolagem de
+   pular: sem uma altura presumida, cada seção pulada valeria zero e o
+   documento encolheria. O `auto` manda o navegador guardar a altura real
+   depois da primeira vez que a seção for desenhada, então o palpite de 900px
+   só vale até ela aparecer uma vez.
+
+   Escopado à landing de propósito. As telas do app têm tabela e gráfico que
+   medem a si mesmos ao montar, e adiar isso renderia número errado.
+
+   `data-sem-diferir` é a saída, e existe por um motivo concreto: adiar o
+   desenho de uma seção **recorta o que passa da borda dela**. `content-
+   visibility: auto` implica `contain: paint`, e o brilho dos cartões é uma
+   sombra externa que se estende para fora da caixa — no cartão em destaque
+   dos planos, 64px de alcance contra 32px de folga até a borda. O resultado
+   é a luz terminando numa linha reta, que foi como o defeito apareceu.
+
+   Não é uma escolha por seção: é uma consequência de haver sombra maior que
+   a folga. Um teste em `e2e/desempenho-visual.spec.js` mede isso em toda
+   seção diferida, para que uma sombra nova em seção diferida reprove antes
+   de virar uma linha reta na tela. */
+main[data-secoes-diferidas] > section:not(:first-of-type):not([data-sem-diferir]) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* O `filter` que a biblioteca de vidro crava mesmo sem ter o que filtrar.
+   Ver a nota em `CartaoDeVidro`: com a distorção desligada o `<svg>` do filtro
+   não é criado, mas o `filter: url(#…)` continua no estilo inline, apontando
+   para nada — e uma camada de composição por cartão continua sendo paga. */
+[data-sem-distorcao] .glass-ui-distortion-layer {
+  filter: none !important;
+}

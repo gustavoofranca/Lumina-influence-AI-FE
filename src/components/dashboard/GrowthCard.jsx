@@ -24,12 +24,12 @@ export default function GrowthCard({ data, loading = false }) {
   ]
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <CardLabel>{t('dashboard.label')}</CardLabel>
           <CardTitle className="mt-1.5">{t('dashboard.growth.title')}</CardTitle>
-          <p className="mt-1 text-sm text-text-secondary">{t('dashboard.growth.subtitle')}</p>
+          <p className="tipo-corpo mt-1 text-text-secondary">{t('dashboard.growth.subtitle')}</p>
         </div>
         <div className="hidden flex-col items-end gap-2 sm:flex">
           <LegendItem color="#7C3AED" label={t('dashboard.growth.organic')} />

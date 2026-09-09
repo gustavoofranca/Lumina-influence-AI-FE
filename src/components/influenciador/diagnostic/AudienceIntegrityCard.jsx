@@ -19,7 +19,7 @@ export default function AudienceIntegrityCard({ data, loading = false }) {
 
   if (loading) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('influenciador.audience.title')}</CardLabel>
         <Skeleton className="h-52" rounded="rounded-2xl" />
       </Card>
@@ -28,7 +28,7 @@ export default function AudienceIntegrityCard({ data, loading = false }) {
 
   if (!data) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('influenciador.audience.title')}</CardLabel>
         <EmptyState icon={ShieldCheck} title={t('influenciador.audience.empty')} />
       </Card>
@@ -50,7 +50,7 @@ export default function AudienceIntegrityCard({ data, loading = false }) {
   const parcial = linhas.length < ROWS.length
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('influenciador.audience.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('influenciador.audience.title')}</CardTitle>

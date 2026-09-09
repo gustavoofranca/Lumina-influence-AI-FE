@@ -71,7 +71,7 @@ export default function NetworkDensityCard({ data, loading = false }) {
 
   if (loading) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
         <Skeleton className="h-16 w-40" rounded="rounded-xl" />
         <Skeleton className="h-48" rounded="rounded-2xl" />
@@ -81,7 +81,7 @@ export default function NetworkDensityCard({ data, loading = false }) {
 
   if (!data) {
     return (
-      <Card glass>
+      <Card>
         <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
         <EmptyState icon={Network} title={t('dashboard.networkDensity.empty')} />
       </Card>
@@ -91,18 +91,23 @@ export default function NetworkDensityCard({ data, loading = false }) {
   const { value, total, connected } = data
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
+        {/* Era 60px com o degradê da marca. Duas coisas erradas de uma vez:
+            ficava maior que o título da própria tela, invertendo a hierarquia,
+            e gastava a cor de destaque num número que ninguém clica. O degradê
+            é a assinatura da marca — usá-lo como enfeite de valor esvazia o
+            lugar onde ele significa alguma coisa. */}
         <div className="mt-3 flex items-end gap-2">
-          <span className="font-display text-6xl font-extrabold leading-none text-gradient-brand tabular-nums">
+          <span className="numerico font-display text-4xl font-bold leading-none text-text-primary">
             {value}
           </span>
-          <span className="mb-1 font-display text-xl font-bold text-text-muted">
+          <span className="numerico mb-1 tipo-secao text-text-muted">
             /100
           </span>
         </div>
-        <p className={cn('mt-2 text-sm text-text-secondary')}>
+        <p className={cn('tipo-corpo mt-2 text-text-secondary')}>
           {t('dashboard.networkDensity.subtitle', { connected, total })}
         </p>
       </div>

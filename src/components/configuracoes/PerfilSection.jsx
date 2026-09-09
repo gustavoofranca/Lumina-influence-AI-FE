@@ -56,7 +56,7 @@ export default function PerfilSection({ onSave }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6">
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <div>
           <CardLabel>{t('configuracoes.perfil.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('configuracoes.perfil.title')}</CardTitle>

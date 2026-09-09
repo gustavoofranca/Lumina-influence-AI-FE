@@ -34,7 +34,7 @@ export default function KpiGrid({ data, loading = false }) {
 
   if (!data?.length) {
     return (
-      <Card glass>
+      <Card>
         <EmptyState compact icon={TrendingUp} title={t('dashboard.empty')} />
       </Card>
     )

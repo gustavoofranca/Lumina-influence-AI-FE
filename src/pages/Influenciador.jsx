@@ -219,13 +219,13 @@ export default function Influenciador() {
         open={modalExcluir}
         onClose={() => setModalExcluir(false)}
         influenciador={influenciador}
-        onExcluido={() => {
+        onExcluido={(nomeExcluido) => {
           // `replace` de propósito: voltar pelo histórico cairia na página de um
           // criador que não existe mais, e a tela de "não encontrado" pareceria
           // defeito em vez de consequência.
           navigate('/app/influenciadores', {
             replace: true,
-            state: { excluido: influenciador?.name },
+            state: { excluido: nomeExcluido },
           })
         }}
       />

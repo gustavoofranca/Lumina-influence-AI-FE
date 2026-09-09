@@ -21,25 +21,46 @@ const STATUS_VARIANT = {
   risk:       'danger',
 }
 
+/**
+ * A nota de ressonância, com a barra que a situa numa faixa.
+ *
+ * A cor aqui diz qualidade, e só isso. Antes eram quatro tons, e um deles era
+ * o `accent` — a mesma cor de botão, link e item selecionado. Numa tabela de
+ * seis linhas isso punha seis marcas da cor de ação em valores que ninguém
+ * clica, e a cor deixava de significar "aqui se age".
+ *
+ * Três faixas, não quatro: verde, atenção e risco é o que uma pessoa distingue
+ * de relance numa coluna. O quarto degrau existia como gradação estética e
+ * cobrava uma decisão de leitura que não levava a lugar nenhum.
+ *
+ * A barra perdeu o degradê da marca pelo mesmo motivo — ela mede, então herda a
+ * cor da faixa. O degradê é a assinatura, não uma régua.
+ */
+const FAIXA = [
+  { minimo: 85, barra: 'bg-positive',  texto: 'text-positive' },
+  { minimo: 55, barra: 'bg-caution',   texto: 'text-text-primary' },
+  { minimo: 0,  barra: 'bg-tint-rose', texto: 'text-tint-rose' },
+]
+
 function ScoreCell({ value }) {
   if (value == null) {
-    return <div className="text-right tabular-nums text-text-muted">—</div>
+    // Sem medição não há barra: uma barra vazia lê como zero medido, e zero é
+    // uma afirmação. O travessão diz o que aconteceu — não foi medido.
+    return <div className="numerico text-right text-text-muted">—</div>
   }
-  const tone =
-    value >= 85 ? 'text-positive'
-    : value >= 70 ? 'text-accent'
-    : value >= 55 ? 'text-caution'
-    : 'text-tint-rose'
+  const faixa = FAIXA.find((f) => value >= f.minimo)
 
   return (
     <div className="flex items-center justify-end gap-3">
       <div className="h-1 w-16 overflow-hidden rounded-full bg-bg-elevated/60">
         <div
-          className="h-full rounded-full bg-gradient-brand"
+          className={cn('h-full rounded-full', faixa.barra)}
           style={{ width: `${value}%` }}
         />
       </div>
-      <span className={cn('font-display text-sm font-bold tabular-nums', tone)}>{value}</span>
+      <span className={cn('numerico font-display text-sm font-bold', faixa.texto)}>
+        {value}
+      </span>
     </div>
   )
 }
@@ -58,7 +79,7 @@ export default function TopNetworksTable({ data, loading = false }) {
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
             <div className="truncate font-semibold text-text-primary">{row.name}</div>
-            <div className="truncate text-xs text-text-muted">
+            <div className="numerico truncate tipo-apoio text-text-muted">
               {row.handle} · {formatFollowers(row.followers)}
             </div>
           </div>
@@ -101,11 +122,11 @@ export default function TopNetworksTable({ data, loading = false }) {
   ]
 
   return (
-    <Card glass padding="md" className="flex flex-col gap-5">
+    <Card padding="md" className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('dashboard.label')}</CardLabel>
         <CardTitle className="mt-1.5">{t('dashboard.topNetworks.title')}</CardTitle>
-        <p className="mt-1 text-sm text-text-secondary">
+        <p className="tipo-corpo mt-1 text-text-secondary">
           {t('dashboard.topNetworks.subtitle')}
         </p>
       </div>

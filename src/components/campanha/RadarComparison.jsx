@@ -25,7 +25,7 @@ export default function RadarComparison({ radar, loading = false }) {
     .map((e, i) => ({ ...e, color: RADAR_COLORS[i] }))
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('campanhas.detail.radar.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('campanhas.detail.radar.title')}</CardTitle>

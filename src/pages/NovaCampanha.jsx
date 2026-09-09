@@ -25,7 +25,7 @@ import { formatFollowers, formatBudget, formatDateRange, formatPct } from '../li
 // =============================================================================
 function Step1Detalhes({ data, errors, onChange, t }) {
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <h2 className="tipo-secao text-text-primary">
           {t('campanhas.wizard.step1.title')}
@@ -138,7 +138,7 @@ function Step2Influenciadores({ influenciadores, loading, apiError, selected, on
   }, [influenciadores, search])
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="tipo-secao text-text-primary">
@@ -194,7 +194,7 @@ function Step3Review({ data, selectedInfs, t, locale }) {
   const perCreator   = selectedInfs.length > 0 ? Math.round(budget / selectedInfs.length) : 0
 
   return (
-    <Card glass className="flex flex-col gap-6">
+    <Card className="flex flex-col gap-6">
       <div>
         <h2 className="tipo-secao text-text-primary">
           {t('campanhas.wizard.step3.title')}

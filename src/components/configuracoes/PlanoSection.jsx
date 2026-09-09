@@ -75,7 +75,7 @@ export default function PlanoSection() {
     <div className="flex flex-col gap-6">
       <ApiErrorBanner error={agencyError || usageError || plansError} onRetry={recarregarAgencia} />
 
-      <Card glass className={cn(
+      <Card className={cn(
         'relative overflow-hidden border-2 border-primary-500/50',
         'shadow-glow-primary'
       )}>
@@ -140,7 +140,7 @@ export default function PlanoSection() {
       </Card>
 
       {planos?.length > 1 && (
-        <Card glass className="flex flex-col gap-5">
+        <Card className="flex flex-col gap-5">
           <div>
             <CardLabel>{t('configuracoes.plano.compare.label')}</CardLabel>
             <CardTitle className="mt-1.5">{t('configuracoes.plano.compare.title')}</CardTitle>
@@ -186,7 +186,12 @@ export default function PlanoSection() {
                     <li className="text-sm text-text-secondary">
                       {t('configuracoes.plano.features.analyses', { count: p.maxAnalysesPerMonth })}
                     </li>
-                    <li className="text-sm text-text-muted">
+                    {/* `text-text-secondary` como os dois irmaos acima, e nao
+                        `text-text-muted`: a bateria de 08/09 mediu 4,39:1 no
+                        tema escuro, abaixo dos 4,5 que o WCAG AA exige para
+                        texto pequeno. A linha e o terceiro item da mesma lista
+                        de caracteristicas, nao uma nota rebaixada. */}
+                    <li className="text-sm text-text-secondary">
                       {p.allowBenchmarking
                         ? t('configuracoes.plano.features.benchmarking')
                         : t('configuracoes.plano.compare.noBenchmarking')}
@@ -199,7 +204,7 @@ export default function PlanoSection() {
         </Card>
       )}
 
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <div>
           <CardLabel>{t('configuracoes.plano.usage.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('configuracoes.plano.usage.title')}</CardTitle>

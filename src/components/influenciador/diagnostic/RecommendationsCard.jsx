@@ -153,7 +153,7 @@ export default function RecommendationsCard({
 
   if (loading) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('influenciador.recommendations.title')}</CardLabel>
         <Skeleton className="h-40" rounded="rounded-xl" />
       </Card>
@@ -162,7 +162,7 @@ export default function RecommendationsCard({
 
   if (!data?.length) {
     return (
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <CardLabel>{t('influenciador.recommendations.title')}</CardLabel>
         <EmptyState icon={Lightbulb} title={t('influenciador.recommendations.empty')} />
       </Card>
@@ -170,7 +170,7 @@ export default function RecommendationsCard({
   }
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('influenciador.recommendations.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('influenciador.recommendations.title')}</CardTitle>

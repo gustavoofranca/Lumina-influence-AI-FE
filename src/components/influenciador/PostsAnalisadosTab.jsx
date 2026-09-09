@@ -87,7 +87,7 @@ export default function PostsAnalisadosTab({ data, loading = false }) {
   ]
 
   return (
-    <Card glass padding="md">
+    <Card padding="md">
       <div className="mb-4">
         <CardLabel>{t('influenciador.posts.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('influenciador.posts.title')}</CardTitle>

@@ -173,7 +173,7 @@ export default function DesignSystem() {
             title={t('ds.sections.buttons')}
             description={t('ds.sections.buttonsDesc')}
           >
-            <Card glass>
+            <Card>
               <ShowcaseRow>
                 <Button variant="primary"  leftIcon={Plus}>Primary</Button>
                 <Button variant="secondary">Secondary</Button>
@@ -220,7 +220,7 @@ export default function DesignSystem() {
             title={t('ds.sections.iconButtons')}
             description={t('ds.sections.iconButtonsDesc')}
           >
-            <Card glass>
+            <Card>
               <ShowcaseRow>
                 <IconButton icon={Bell}        variant="primary"   label="Notificacoes" badge={3} />
                 <IconButton icon={CircleHelp}  variant="secondary" label="Ajuda" />
@@ -256,7 +256,7 @@ export default function DesignSystem() {
             title={t('ds.sections.inputs')}
             description={t('ds.sections.inputsDesc')}
           >
-            <Card glass>
+            <Card>
               <div className="grid gap-5 md:grid-cols-2">
                 <Input label={t('common.email')}    placeholder="voce@agencia.com" leftIcon={Mail} />
                 <Input
@@ -281,7 +281,7 @@ export default function DesignSystem() {
             title={t('ds.sections.search')}
             description={t('ds.sections.searchDesc')}
           >
-            <Card glass>
+            <Card>
               <div className="grid gap-4 md:grid-cols-2">
                 <Search
                   placeholder={t('ds.searchPlaceholder')}
@@ -306,24 +306,29 @@ export default function DesignSystem() {
           >
             <div className="grid gap-4 md:grid-cols-3">
               <Card>
-                <CardLabel>default</CardLabel>
-                <CardTitle className="mt-2">Card padrão</CardTitle>
+                <CardLabel>superfície</CardLabel>
+                <CardTitle className="mt-2">O que informa</CardTitle>
                 <p className="mt-3 text-sm text-text-secondary">
-                  Background sólido (neutral-800) e borda violeta sutil.
+                  Chapada, sempre. Cartão de dado, tabela e gráfico. Número
+                  precisa de fundo quieto: a profundidade vem da sombra e do
+                  fio, não de translucidez.
                 </p>
               </Card>
-              <Card glass>
-                <CardLabel>glass</CardLabel>
-                <CardTitle className="mt-2">Glassmorphism</CardTitle>
+              <div className="casca rounded-superficie border p-6">
+                <CardLabel>casca</CardLabel>
+                <CardTitle className="mt-2">O que navega</CardTitle>
                 <p className="mt-3 text-sm text-text-secondary">
-                  Translúcido com blur e borda violeta a 10%.
+                  Translúcida no tema escuro, sólida no claro. Barra lateral,
+                  barra superior, menu e modal — o que emoldura, não o que
+                  informa.
                 </p>
-              </Card>
-              <Card glass hoverable>
-                <CardLabel>glass + hoverable</CardLabel>
-                <CardTitle className="mt-2">Hover micro-elevação</CardTitle>
+              </div>
+              <Card hoverable>
+                <CardLabel>superfície + hoverable</CardLabel>
+                <CardTitle className="mt-2">Leva a algum lugar</CardTitle>
                 <p className="mt-3 text-sm text-text-secondary">
-                  Passe o mouse para ver glow e lift.
+                  Só em cartão que é link. Em cartão de leitura, o hover promete
+                  um clique que não existe.
                 </p>
               </Card>
             </div>
@@ -374,7 +379,7 @@ export default function DesignSystem() {
             title={t('ds.sections.badges')}
             description={t('ds.sections.badgesDesc')}
           >
-            <Card glass>
+            <Card>
               <ShowcaseRow>
                 <Badge variant="organic">organic</Badge>
                 <Badge variant="paid">paid</Badge>
@@ -401,7 +406,7 @@ export default function DesignSystem() {
             title={t('ds.sections.avatars')}
             description={t('ds.sections.avatarsDesc')}
           >
-            <Card glass>
+            <Card>
               <div className="flex flex-wrap items-end gap-6">
                 <div className="flex flex-col items-center gap-2">
                   <Avatar size="sm" name="Marina Costa" />
@@ -433,7 +438,7 @@ export default function DesignSystem() {
             title={`${t('ds.sections.modal')} · ${t('ds.sections.tooltip')}`}
             description={`${t('ds.sections.modalDesc')} ${t('ds.sections.tooltipDesc')}`}
           >
-            <Card glass>
+            <Card>
               <ShowcaseRow>
                 <Button variant="primary" leftIcon={Plus} onClick={() => setModalOpen(true)}>
                   {t('ds.openModal')}
@@ -476,7 +481,7 @@ export default function DesignSystem() {
             title={t('ds.sections.tabs')}
             description={t('ds.sections.tabsDesc')}
           >
-            <Card glass>
+            <Card>
               <CardLabel>underline</CardLabel>
               <div className="mt-3">
                 <Tabs items={tabsItems} value={tabUnderline} onChange={setTabUnderline} />
@@ -496,7 +501,7 @@ export default function DesignSystem() {
             title={t('ds.sections.table')}
             description={t('ds.sections.tableDesc')}
           >
-            <Card glass padding="none">
+            <Card padding="none">
               <Table
                 columns={TABLE_COLUMNS(t)}
                 data={TABLE_DATA}
@@ -513,13 +518,13 @@ export default function DesignSystem() {
             description={t('ds.sections.skeletonDesc')}
           >
             <div className="grid gap-4 md:grid-cols-2">
-              <Card glass>
+              <Card>
                 <Skeleton className="h-32 w-full" rounded="rounded-xl" />
                 <div className="mt-4">
                   <SkeletonText lines={3} />
                 </div>
               </Card>
-              <Card glass>
+              <Card>
                 <div className="flex items-center gap-4">
                   <Skeleton className="h-12 w-12" rounded="rounded-full" />
                   <div className="flex-1">
@@ -542,7 +547,7 @@ export default function DesignSystem() {
             title={t('ds.sections.status')}
             description={t('ds.sections.statusDesc')}
           >
-            <Card glass>
+            <Card>
               <ShowcaseRow className="gap-6">
                 <StatusIndicator label={t('status.systemActive')} color="success" />
                 <StatusIndicator label={t('status.liveSync')}     color="info" />
@@ -563,7 +568,7 @@ export default function DesignSystem() {
             title={t('ds.sections.progress')}
             description={t('ds.sections.progressDesc')}
           >
-            <Card glass>
+            <Card>
               <div className="space-y-5">
                 <ProgressBar label="BRAND COHERENCE SCORE" value={92} showValue />
                 <ProgressBar label="BOT PROBABILITY"        value={68} showValue variant="danger" />

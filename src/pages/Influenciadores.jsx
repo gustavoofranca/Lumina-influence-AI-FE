@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Plus } from 'lucide-react'
 
@@ -10,6 +10,7 @@ import AdicionarInfluenciadorModal from '../components/influenciadores/Adicionar
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import Toast from '../components/ui/Toast.jsx'
 import { useApi } from '../hooks/useApi.js'
+import { useAvisoDaNavegacao } from '../hooks/useAvisoDaNavegacao.js'
 import { createInfluencer, listInfluencers } from '../services/influencers.js'
 
 const PAGE_SIZE = 8
@@ -53,19 +54,12 @@ export default function Influenciadores() {
   // A busca do topo navega para cá com ?q=<termo>; semear o filtro é o que
   // torna aquele atalho um atalho, e não só uma mudança de tela.
   const [searchParams] = useSearchParams()
-  const location = useLocation()
-  const navigate = useNavigate()
 
   // A exclusão acontece na tela do criador, que deixa de existir. O aviso de
   // que deu certo viaja no state da navegação e é consumido aqui — sem ele, a
   // ação mais destrutiva do produto termina numa lista silenciosa, e quem
   // clicou fica sem saber se apagou.
-  const [excluido, setExcluido] = useState(location.state?.excluido || null)
-  useEffect(() => {
-    if (!location.state?.excluido) return
-    // Limpa o state para que um F5 não repita o aviso de algo já feito.
-    navigate(location.pathname, { replace: true, state: null })
-  }, [location.state, location.pathname, navigate])
+  const [excluido, dispensarExcluido] = useAvisoDaNavegacao('excluido')
   const [search,    setSearch]    = useState(searchParams.get('q') || '')
   const [platforms, setPlatforms] = useState(new Set())
   const [statuses,  setStatuses]  = useState(new Set())
@@ -125,7 +119,7 @@ export default function Influenciadores() {
 
       <Toast
         open={Boolean(excluido)}
-        onClose={() => setExcluido(null)}
+        onClose={dispensarExcluido}
         type="success"
         message={t('influenciador.excluir.done', { nome: excluido })}
       />

@@ -25,7 +25,6 @@ export default function KpiCard({
   progressVariant = 'primary',
   hint,               // texto curto auxiliar
   className = '',
-  glass = true,
 }) {
   const resolvedType =
     changeType ||
@@ -51,17 +50,26 @@ export default function KpiCard({
       : change
 
   return (
-    <Card glass={glass} hoverable className={cn('flex flex-col gap-4', className)}>
+    <Card className={cn('flex flex-col gap-4', className)}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <span className="text-label">{label}</span>
-          <div className="numerico mt-2 font-display text-3xl font-bold leading-none text-text-primary">
+          {/* O valor é o que a pessoa veio ver: `tipo-tela` é o degrau mais
+              alto da escala, e aqui ele não compete com nada — o rótulo acima
+              é apoio e o cartão não tem título. */}
+          <div className="numerico tipo-tela mt-2 text-text-primary">
             {value}
           </div>
         </div>
 
+        {/* O ícone é decoração, e por isso perde o realce.
+            Ele tinha fundo violeta, anel violeta e a cor de destaque — o mesmo
+            tratamento dos controles que aceitam clique. Numa tela com quatro
+            KPIs, isso punha quatro alvos falsos no campo de visão e gastava a
+            cor que deveria significar "aqui se age". Em cinza ele continua
+            distinguindo os cartões de relance, que é a única função que tem. */}
         {Icon ? (
-          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600/15 text-accent ring-1 ring-inset ring-primary-500/20">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-controle bg-bg-elevated text-text-muted">
             <Icon size={18} />
           </span>
         ) : null}
@@ -76,7 +84,7 @@ export default function KpiCard({
             </span>
           ) : null}
           {hint ? (
-            <span className="text-text-muted">
+            <span className="tipo-apoio text-text-muted">
               {changeSuffix || hint}
             </span>
           ) : null}

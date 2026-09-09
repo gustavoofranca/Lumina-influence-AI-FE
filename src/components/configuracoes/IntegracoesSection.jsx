@@ -103,7 +103,7 @@ export default function IntegracoesSection() {
   const porPlataforma = new Map((conexoes || []).map((c) => [c.platform, c]))
 
   return (
-    <Card glass className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5">
       <div>
         <CardLabel>{t('configuracoes.integracoes.title')}</CardLabel>
         <CardTitle className="mt-1.5">{t('configuracoes.integracoes.title')}</CardTitle>

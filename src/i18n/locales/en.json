@@ -226,7 +226,7 @@
     },
     "numeros": {
       "selo": "Verifiable",
-      "title": "What holds this up",
+      "title": "The same rigor applies to the product.",
       "itens": [
         {
           "valor": "440",
@@ -1036,7 +1036,10 @@
       },
       "coherenceLabel": "BRAND COHERENCE SCORE",
       "viewAnalysis": "View full analysis",
-      "empty": "No AI analysis available yet."
+      "empty": "No AI analysis available yet.",
+      "thumbnailAlt": "Thumbnail of the analyzed video from {{nome}}",
+      "transcriptEmpty": "This post has no transcript — the analysis covered the other signals.",
+      "coherenceEmpty": "not measured"
     },
     "topNetworks": {
       "title": "Top Performing Networks",

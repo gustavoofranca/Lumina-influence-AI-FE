@@ -8,34 +8,6 @@
  */
 
 /**
- * Moldura de 1px em degradê. Vai no elemento externo; o miolo entra dentro.
- *
- * `border-image` não convive com `border-radius`, então a borda é desenhada
- * como fundo: o pai carrega o degradê e um filho recuado 1px carrega a cor
- * sólida. A alternativa com `background-clip: padding-box, border-box` faz o
- * mesmo em um elemento só, mas quebra quando o miolo precisa de
- * `backdrop-filter` — que é o caso aqui.
- */
-// `relative` porque o `AnelDeRefracao` se posiciona contra esta caixa.
-export const MOLDURA = 'relative rounded-2xl bg-moldura-cartao p-px'
-
-/**
- * Miolo do cartão.
- *
- * A tinta era `/85` — 85% de opacidade, ou seja, painel sólido com um
- * `backdrop-blur` que não tinha o que borrar. É por isso que o vidro não
- * aparecia: o efeito depende de o fundo atravessar.
- *
- * `/40` deixa o campo de estrelas passar e ainda dá base suficiente para o
- * texto. Zero seria vidro de verdade, mas o corpo do cartão é texto corrido
- * sobre um fundo animado, e aí a leitura é que paga.
- */
-export const MIOLO = 'rounded-[15px] bg-landing-surface/40 backdrop-blur-2xl'
-
-/** Miolo com a aura violeta descendo do topo, para o cartão em destaque. */
-export const MIOLO_COM_AURA = `${MIOLO} bg-[radial-gradient(120%_100%_at_50%_0%,rgba(133,102,255,0.14)_0%,rgba(133,102,255,0)_60%)]`
-
-/**
  * Pílula de vidro: fundo transparente, luz só nas arestas.
  *
  * A pilha de sombras internas vem da técnica do `LiquidButton`, com uma

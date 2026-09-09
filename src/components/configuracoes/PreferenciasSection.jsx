@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Globe, Clock, Moon, Info } from 'lucide-react'
 
@@ -45,13 +45,18 @@ function SessionOnlyNote({ children }) {
 }
 
 function NotificationToggleRow({ value, onChange, label, desc }) {
+  // O rotulo ja esta na tela, ao lado do interruptor. Apontar o nome para ele
+  // — em vez de repetir o texto num aria-label — faz o que o leitor de tela
+  // fala ser exatamente o que a pessoa ve.
+  const idRotulo = useId()
+
   return (
     <div className="flex items-start justify-between gap-4 rounded-xl bg-bg-base/40 p-4 ring-1 ring-inset ring-hairline">
       <div>
-        <p className="text-sm font-semibold text-text-primary">{label}</p>
+        <p id={idRotulo} className="text-sm font-semibold text-text-primary">{label}</p>
         <p className="mt-1 text-xs leading-relaxed text-text-secondary">{desc}</p>
       </div>
-      <Switch checked={value} onChange={onChange} />
+      <Switch checked={value} onChange={onChange} ariaLabelledBy={idRotulo} />
     </div>
   )
 }
@@ -71,7 +76,7 @@ export default function PreferenciasSection() {
   return (
     <div className="flex flex-col gap-6">
       {/* Geral: idioma + tema + fuso */}
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <div>
           <CardLabel>{t('configuracoes.preferencias.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('configuracoes.preferencias.title')}</CardTitle>
@@ -129,7 +134,7 @@ export default function PreferenciasSection() {
       </Card>
 
       {/* Notificações */}
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <div>
           <CardLabel>{t('configuracoes.preferencias.notifications.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('configuracoes.preferencias.notifications.title')}</CardTitle>

@@ -68,7 +68,9 @@ export default function ComparativoSection() {
   const lumina = t('landing.comparativo.lumina', { returnObjects: true })
 
   return (
-    <section id="features" className={cn(WASH_SECAO_SUAVE, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
+    // `data-sem-diferir`: os cartões daqui têm brilho que passa da borda da
+    // seção, e adiar o desenho recorta esse brilho. Ver `index.css`.
+    <section id="features" data-sem-diferir className={cn(WASH_SECAO_SUAVE, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
       <div className="flex flex-col gap-12">
         <div className="flex max-w-[46ch] flex-col gap-4">
           <h2 className={TITULO_SECAO}>

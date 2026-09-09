@@ -118,7 +118,7 @@ export default function Relatorios() {
       </div>
 
       {/* Lista */}
-      <Card glass padding="md">
+      <Card padding="md">
         {error ? null : loading ? (
           <div className="space-y-3">
             {Array.from({ length: 4 }, (_, i) => (

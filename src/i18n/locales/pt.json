@@ -4,7 +4,7 @@
     "title": "Página não encontrada",
     "subtitle": "A rota solicitada não está conectada à malha neural deste produto. Verifique a URL ou volte para o painel principal.",
     "backHome": "Voltar ao início",
-    "goDashboard": "Abrir dashboard"
+    "goDashboard": "Abrir a visão geral"
   },
   "common": {
     "themeLight": "Mudar para o tema claro",
@@ -62,10 +62,10 @@
     }
   },
   "status": {
-    "systemActive": "SYSTEM ACTIVE",
-    "operational": "SYSTEM STATUS: OPERATIONAL",
-    "liveSync": "LIVE SYNC",
-    "neuralCore": "NEURAL CORE ONLINE"
+    "systemActive": "SISTEMA ATIVO",
+    "operational": "STATUS DO SISTEMA: OPERACIONAL",
+    "liveSync": "SINCRONIZAÇÃO AO VIVO",
+    "neuralCore": "NÚCLEO NEURAL ONLINE"
   },
   "ds": {
     "title": "Sistema de Design",
@@ -226,7 +226,7 @@
     },
     "numeros": {
       "selo": "Verificável",
-      "title": "O que sustenta isso",
+      "title": "O rigor vale para o produto também.",
       "itens": [
         {
           "valor": "440",
@@ -511,7 +511,7 @@
       "creator": "CRIADOR",
       "platforms": "PLATAFORMAS",
       "lastAnalysis": "ÚLTIMA ANÁLISE",
-      "safety": "SAFETY",
+      "safety": "SEGURANÇA",
       "bot": "BOT",
       "coherence": "COERÊNCIA"
     },
@@ -592,8 +592,8 @@
         }
       },
       "step4": {
-        "label": "Preview",
-        "title": "Preview do relatório",
+        "label": "Prévia",
+        "title": "Prévia do relatório",
         "subtitle": "Revise o conteúdo antes de exportar."
       },
       "errors": {
@@ -760,11 +760,11 @@
   },
   "influenciador": {
     "header": {
-      "deepAnalysis": "DEEP ANALYSIS",
-      "sessionId": "Session ID",
+      "deepAnalysis": "ANÁLISE PROFUNDA",
+      "sessionId": "ID da sessão",
       "lastAnalysis": "Última análise em",
       "quotaExceeded": "Cota diária do Gemini esgotada. O free tier permite 20 análises por dia, por projeto e por modelo — esperar não resolve, só o dia seguinte.",
-      "rerun": "Re-run Diagnosis",
+      "rerun": "Refazer diagnóstico",
       "followersLabel": "seguidores",
       "statusLabel": "Status do criador",
       "statusSaving": "Salvando…",
@@ -778,41 +778,41 @@
     },
     "kpis": {
       "empty": "Indicadores de diagnóstico indisponíveis — rode uma análise.",
-      "brandCoherence": "Brand Coherence",
-      "sentimentIndex": "Sentiment Index",
-      "safetyRating": "Safety Rating",
-      "botProbability": "Bot Probability"
+      "brandCoherence": "Coerência com a marca",
+      "sentimentIndex": "Índice de sentimento",
+      "safetyRating": "Nota de segurança",
+      "botProbability": "Probabilidade de bot"
     },
     "sentiment": {
       "timelineEmpty": "Série temporal de sentimento ainda não disponível na API.",
-      "title": "Sentiment Heatmap",
+      "title": "Mapa de calor do sentimento",
       "subtitle": "Distribuição emocional dos comentários",
       "tab24h": "24H",
       "tab7d": "7D",
-      "clustersTitle": "Core Sentiment Clusters",
-      "keywordsTitle": "Keyword Cloud Focus",
+      "clustersTitle": "Principais grupos de sentimento",
+      "keywordsTitle": "Foco da nuvem de palavras",
       "clusters": {
-        "technical": "Technical Enthusiasm",
-        "purchase": "Purchase Intent",
-        "neutral": "Neutral Curiosity",
-        "skepticism": "Value Skepticism"
+        "technical": "Entusiasmo técnico",
+        "purchase": "Intenção de compra",
+        "neutral": "Curiosidade neutra",
+        "skepticism": "Ceticismo sobre o valor"
       }
     },
     "audience": {
       "empty": "Integridade de audiência indisponível — rode uma análise.",
-      "title": "Audience Integrity",
+      "title": "Integridade do público",
       "subtitle": "Composição da audiência por autenticidade",
       "organic": "Audiência orgânica",
-      "verifiedHumans": "Verified Humans",
-      "suspicious": "Suspicious Accounts",
-      "bots": "Confirmed Bots",
+      "verifiedHumans": "Pessoas verificadas",
+      "suspicious": "Contas suspeitas",
+      "bots": "Bots confirmados",
       "partial": "Esta análise não mediu a faixa suspeita — ela passou a ser medida em setembro de 2026. Rode uma nova análise para obter a composição completa."
     },
     "videoAudit": {
-      "title": "Video Component Audit",
+      "title": "Auditoria dos elementos do vídeo",
       "subtitle": "Análise frame-a-frame do reel mais recente",
       "duration": "00:42",
-      "aiScan": "AI SCAN"
+      "aiScan": "VARREDURA DE IA"
     },
     "conexoes": {
       "label": "CONTAS CONECTADAS",
@@ -839,19 +839,19 @@
     },
     "neuralConfidence": {
       "empty": "Confiança neural indisponível — rode uma análise.",
-      "title": "Neural Confidence",
+      "title": "Confiança do modelo",
       "subtitle": "Confiança do modelo por dimensão",
-      "scriptAccuracy": "Script Accuracy",
-      "toneMatching": "Tone Matching",
-      "demographicSync": "Demographic Sync"
+      "scriptAccuracy": "Fidelidade ao roteiro",
+      "toneMatching": "Aderência ao tom",
+      "demographicSync": "Aderência ao público-alvo"
     },
     "transcript": {
       "analyzedAt": "Transcrita na análise de {{data}}.",
       "emptyHint": "A transcrição só existe em análises multimodais, que leem o áudio do vídeo.",
       "empty": "Nenhuma transcrição disponível para este criador.",
-      "title": "AI Transcript Highlight",
+      "title": "Destaque da transcrição",
       "subtitle": "Trechos-chave detectados pelo modelo",
-      "export": "Export Text"
+      "export": "Exportar texto"
     },
     "recommendations": {
       "empty": "Nenhuma recomendação gerada ainda.",
@@ -999,9 +999,9 @@
     }
   },
   "dashboard": {
-    "label": "OVERVIEW",
-    "title": "Network Resonance",
-    "liveSync": "LIVE SYNC",
+    "label": "VISÃO GERAL",
+    "title": "Ressonância da rede",
+    "liveSync": "SINCRONIZAÇÃO AO VIVO",
     "empty": "KPIs indisponíveis no momento.",
     "filters": {
       "period": "Período",
@@ -1015,11 +1015,11 @@
       "roi": "ROI Total",
       "engagement": "Engajamento Real",
       "cac": "CAC Médio",
-      "cacOptimal": "Optimal range",
+      "cacOptimal": "Faixa ideal",
       "active": "Influenciadores Ativos"
     },
     "growth": {
-      "title": "Growth Trajectory",
+      "title": "Trajetória de crescimento",
       "subtitle": "Alcance orgânico vs tráfego pago",
       "organic": "Alcance Orgânico",
       "paid": "Tráfego Pago",
@@ -1027,24 +1027,27 @@
     },
     "diagnostic": {
       "label": "DIAGNÓSTICO EM DESTAQUE",
-      "analysisId": "Analysis ID",
-      "transcriptLabel": "IA TRANSCRIPTION",
+      "analysisId": "ID da análise",
+      "transcriptLabel": "TRANSCRIÇÃO POR IA",
       "pills": {
         "retention": "{{valor}} de retenção",
         "sentiment": "{{valor}} de sentimento positivo",
         "botAlert": "Alerta de bot: {{valor}}"
       },
-      "coherenceLabel": "BRAND COHERENCE SCORE",
+      "coherenceLabel": "NOTA DE COERÊNCIA COM A MARCA",
       "viewAnalysis": "Ver análise completa",
-      "empty": "Nenhuma análise de IA disponível ainda."
+      "empty": "Nenhuma análise de IA disponível ainda.",
+      "thumbnailAlt": "Miniatura do vídeo analisado de {{nome}}",
+      "transcriptEmpty": "Este post não tem transcrição — a análise cobriu os demais sinais.",
+      "coherenceEmpty": "não medida"
     },
     "topNetworks": {
-      "title": "Top Performing Networks",
+      "title": "Redes com melhor desempenho",
       "subtitle": "Por score de ressonância no período",
       "columns": {
         "creator": "Influenciador",
-        "score": "Resonance Score",
-        "viralPotential": "Viral Potential",
+        "score": "Nota de ressonância",
+        "viralPotential": "Potencial viral",
         "status": "Status"
       },
       "viralHigh": "Alto",
@@ -1056,7 +1059,7 @@
       "empty": "Nenhum influenciador com atividade no período."
     },
     "networkDensity": {
-      "label": "NETWORK DENSITY",
+      "label": "DENSIDADE DA REDE",
       "subtitle": "{{connected}} de {{total}} criadores conectados",
       "empty": "Densidade indisponível — conecte uma conta social."
     }
@@ -1078,7 +1081,7 @@
     },
     "topbar": {
       "searchPlaceholder": "Analisar criador...",
-      "upgrade": "Upgrade",
+      "upgrade": "Fazer upgrade",
       "profile": "Meu perfil",
       "settings": "Configurações",
       "logout": "Sair"

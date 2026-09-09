@@ -65,7 +65,9 @@ export default function PlansSection() {
   const acao = 'w-full px-6 py-3 font-display text-sm font-semibold'
 
   return (
-    <section id="plans" className={cn(WASH_SECAO_SUAVE, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
+    // `data-sem-diferir`: o brilho do cartão em destaque alcança 64px e a
+    // folga até a borda é de 32px. Ver `index.css`.
+    <section id="plans" data-sem-diferir className={cn(WASH_SECAO_SUAVE, "mx-auto w-full max-w-[1180px] px-6 py-24 sm:px-8")}>
       <div className="flex flex-col gap-12">
         <div className="flex max-w-[46ch] flex-col gap-4">
           <h2 className={TITULO_SECAO}>

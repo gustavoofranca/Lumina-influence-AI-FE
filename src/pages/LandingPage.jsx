@@ -41,7 +41,7 @@ export default function LandingPage() {
       <HeaderSection />
       {/* Um marco de conteúdo: sem ele o leitor de tela não tem como pular a
           navegação e cair no miolo da página. */}
-      <main>
+      <main data-secoes-diferidas>
       {/* A ordem é o argumento: o que é (herói) → mostre funcionando (prova) →
           por que confiar (comparativo, pilares, números) → quanto custa. A
           página não tinha o segundo passo: falava do sistema sem nunca

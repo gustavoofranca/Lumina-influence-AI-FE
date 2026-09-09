@@ -178,7 +178,7 @@ export default function EquipeSection() {
 
   return (
     <>
-      <Card glass className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <CardLabel>{t('configuracoes.equipe.title')}</CardLabel>
