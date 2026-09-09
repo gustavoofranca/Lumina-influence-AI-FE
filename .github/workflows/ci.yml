@@ -1,0 +1,63 @@
+# Integração contínua do front-end.
+#
+# Existe porque a auditoria de 08/09/2026 apontou que este repositório não
+# tinha verificação nenhuma no servidor: os 80 testes de ponta a ponta rodavam
+# só na máquina do desenvolvedor.
+#
+# ---------------------------------------------------------------------------
+# O que este workflow NÃO faz, e por quê — leia antes de confiar nele
+# ---------------------------------------------------------------------------
+#
+# 1. NÃO roda os testes de ponta a ponta. Eles precisam da pilha inteira de pé:
+#    a API, e por trás dela o banco gerenciado. Pôr essa credencial no runner é
+#    decisão de quem administra o repositório, não algo que se configura de
+#    passagem. Enquanto não houver, a suíte continua sendo responsabilidade de
+#    quem faz o push.
+#
+# 2. NÃO reprova por lint, ainda. A primeira execução do ESLint (09/09/2026)
+#    deixou 16 erros de pé, todos de disciplina de hooks — 12
+#    `set-state-in-effect`, 2 `immutability`, 1 `refs` e 1 `use-memo`. São
+#    achados legítimos, e corrigi-los mexe na estrutura de doze componentes.
+#    Ligar o portão antes disso deixaria a verificação vermelha de forma
+#    permanente, e verificação sempre vermelha é ignorada tão rápido quanto
+#    verificação que nunca reprova.
+#
+#    O passo roda mesmo assim, com `continue-on-error`, para que a contagem
+#    fique visível a cada push e não volte a crescer no escuro. **Quando os 16
+#    forem resolvidos, remova o `continue-on-error`** — é isso que transforma
+#    este passo em portão.
+#
+# O que ele faz de verdade é reprovar quando a aplicação não compila, que é o
+# defeito que já apareceu neste projeto: import faltando e variável fora de
+# escopo derrubam a tela inteira, passam pelo teste de unidade e só aparecem
+# quando alguém abre o navegador.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Portão de verdade: build quebrado reprova o workflow.
+      - name: Build
+        run: npm run build
+
+      # Ainda não é portão — ver a nota 2 no topo do arquivo.
+      - name: Lint (contagem visível, sem reprovar)
+        run: npm run lint
+        continue-on-error: true
