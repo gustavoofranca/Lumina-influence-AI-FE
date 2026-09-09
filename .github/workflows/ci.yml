@@ -61,3 +61,117 @@ jobs:
       - name: Lint (contagem visível, sem reprovar)
         run: npm run lint
         continue-on-error: true
+
+  # ---------------------------------------------------------------------------
+  # Testes de ponta a ponta
+  # ---------------------------------------------------------------------------
+  #
+  # Nenhum segredo é usado aqui, e isso é decisão e não acaso. A suíte roda
+  # contra um PostgreSQL efêmero do runner, semeado do zero a cada execução.
+  # Apontá-la para o banco gerenciado seria pior de duas formas: exigiria a
+  # credencial no CI e deixaria os testes escrevendo no mesmo banco de onde sai
+  # a demonstração.
+  #
+  # A `FERNET_KEY` é gerada aqui mesmo, a cada execução, e morre com o runner.
+  # A `JWT_SECRET` usa o padrão de desenvolvimento do `config.py`. A chave do
+  # Gemini não entra: nenhum teste desta suíte dispara análise, e o seed não faz
+  # chamada de rede.
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: lumina
+          POSTGRES_PASSWORD: lumina
+          POSTGRES_DB: lumina_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U lumina -d lumina_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      DATABASE_URL: postgresql://lumina:lumina@localhost:5432/lumina_ci
+      FLASK_APP: wsgi.py
+      FLASK_ENV: dev
+      LUMINA_DISABLE_SCHEDULER: '1'
+      # Explícito, e não pelo padrão do `config.py`. O CORS do back-end libera
+      # exatamente esta origem; se o front subir em outra, toda requisição
+      # autenticada é bloqueada e a aplicação cai para a tela de login — o
+      # sintoma não menciona CORS em lugar nenhum, e parece falha de sessão.
+      # Aconteceu no ensaio local desta configuração, em 09/09.
+      FRONTEND_ORIGIN: http://localhost:5173
+    steps:
+      - uses: actions/checkout@v4
+
+      # A suíte vive aqui, mas fala com a API do outro repositório. Os dois são
+      # públicos, então o checkout cruzado dispensa token.
+      - uses: actions/checkout@v4
+        with:
+          repository: gustavoofranca/Lumina-Influence-AI-BE
+          path: backend
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Instalar dependências do back-end
+        run: pip install -r backend/requirements.txt
+
+      - name: Migrar e semear o banco efêmero
+        working-directory: backend
+        run: |
+          echo "FERNET_KEY=$(python -c 'from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())')" >> "$GITHUB_ENV"
+          flask db upgrade
+          flask seed run
+
+      - name: Subir a API
+        working-directory: backend
+        run: |
+          nohup flask run --host=0.0.0.0 --port=5000 > /tmp/api.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:5000/api/v1/health > /dev/null; then
+              echo "API respondeu na tentativa $i"; exit 0
+            fi
+            sleep 2
+          done
+          echo "API não subiu em 60 s"; cat /tmp/api.log; exit 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Construir e servir o front
+        run: |
+          npm ci
+          npm run build
+          nohup npx vite preview --port 5173 > /tmp/front.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -sf http://localhost:5173/ > /dev/null; then
+              echo "Front respondeu na tentativa $i"; exit 0
+            fi
+            sleep 2
+          done
+          echo "Front não subiu em 40 s"; cat /tmp/front.log; exit 1
+
+      - name: Testes de ponta a ponta
+        working-directory: e2e
+        env:
+          LUMINA_URL: http://localhost:5173
+          LUMINA_API: http://localhost:5000/api/v1
+        run: |
+          npm ci
+          npx playwright install --with-deps chrome
+          npm test
+
+      # O relatório é o que torna uma falha diagnosticável sem reproduzir
+      # localmente: traço e captura de tela ficam anexados à execução.
+      - name: Guardar o relatório quando falhar
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-e2e
+          path: e2e/relatorio
+          retention-days: 7
