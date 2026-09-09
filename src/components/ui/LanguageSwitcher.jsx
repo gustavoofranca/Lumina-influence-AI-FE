@@ -48,6 +48,11 @@ export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
 
   const setLang = (code) => {
     i18n.changeLanguage(code)
+    // O `lang` do <html> e o que faz o leitor de tela trocar de voz e o que o
+    // navegador usa para hifenizacao. Nao ha outro lugar onde isso possa
+    // morar, e a escrita acontece dentro de um manipulador de evento, que e
+    // exatamente onde efeito colateral e permitido.
+    // eslint-disable-next-line react-hooks/immutability
     document.documentElement.lang = code === 'pt' ? 'pt-BR' : 'en'
   }
 
