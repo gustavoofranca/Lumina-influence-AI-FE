@@ -79,4 +79,41 @@ test.describe('exclusão de criador', () => {
     })
     expect(depois.status()).toBe(404)
   })
+
+  /**
+   * O mesmo caminho, com a corrida que fazia o teste acima falhar uma vez a
+   * cada tantas execuções da suíte inteira.
+   *
+   * O aviso na lista vinha do nome do criador **relido depois do `DELETE`**.
+   * Nesse ponto o criador já não existe: qualquer busca pelo detalhe volta
+   * 404, o estado da tela vira `null` e o nome chega `undefined`. A lista
+   * abria um toast vazio — a exclusão terminava em silêncio, que é o defeito
+   * que o teste acima existe para impedir.
+   *
+   * Isolado ele nunca reproduzia, porque a janela entre o `DELETE` e a busca
+   * em voo é de milissegundos e só abre quando a API está sob carga. Forçar o
+   * 404 a partir do clique transforma essa janela em certeza: se o nome voltar
+   * a ser lido tarde, este teste falha sempre, e não uma vez por hora.
+   */
+  test('o aviso sobrevive ao criador deixar de existir durante a exclusão', async ({ page }) => {
+    const { id, nome } = await criarDescartavel(page.request, token)
+    await page.goto(`/app/influenciadores/${id}`)
+
+    await page.getByRole('button', { name: 'Excluir criador' }).click()
+    await page.getByLabel(`Digite ${nome} para confirmar`).fill(nome)
+
+    // Só as buscas: o `DELETE` tem que passar de verdade, senão o teste mede
+    // um erro de rede em vez do comportamento.
+    await page.route(new RegExp(`/influencers/${id}(\\?|$)`), async (rota) => {
+      if (rota.request().method() !== 'GET') return rota.fallback()
+      await rota.fulfill({ status: 404, contentType: 'application/json', body: '{}' })
+    })
+
+    await page.getByRole('button', { name: 'Excluir definitivamente' }).click()
+
+    await expect(page).toHaveURL(/\/app\/influenciadores$/)
+    await expect(page.getByText(nome, { exact: false })).toBeVisible()
+
+    await page.unrouteAll({ behavior: 'ignoreErrors' })
+  })
 })

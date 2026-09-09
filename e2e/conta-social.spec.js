@@ -88,4 +88,10 @@ test('conta com token oferece desconectar', async ({ page, request }) => {
 
   await expect(page.getByRole('button', { name: 'Desconectar' })).toHaveCount(1)
   await expect(page.getByRole('button', { name: 'Desconectar' })).toBeVisible()
+
+  // O interceptador vale até o fim do teste, e a tela continua buscando dados
+  // enquanto o Playwright a desmonta: o `rota.fetch()` de uma requisição que
+  // chega depois estoura `route.fetch: Test ended`. O teste passa e a linha
+  // vermelha fica no log, onde ela concorre com erro de verdade — que é o dano.
+  await page.unrouteAll({ behavior: 'ignoreErrors' })
 })
