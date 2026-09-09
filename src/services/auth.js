@@ -18,11 +18,6 @@ export async function getMe() {
   return res.data // { user, agency }
 }
 
-export async function refresh(refreshToken) {
-  const res = await api.post('/auth/refresh', undefined, { auth: false })
-  return res.data
-}
-
 /**
  * O que a exclusão da própria conta levaria junto.
  *

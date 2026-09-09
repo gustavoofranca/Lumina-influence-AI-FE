@@ -23,7 +23,7 @@ export const formatFollowers = (n) => {
 }
 
 /** Abrevia valor em reais: 1500000 → "R$ 1.5M", 12000 → "R$ 12k". */
-export function formatBudget(value, locale = 'pt') {
+export function formatBudget(value) {
   if (value >= 1_000_000) return `R$ ${(value / 1_000_000).toFixed(1)}M`
   if (value >= 1_000)     return `R$ ${(value / 1_000).toFixed(0)}k`
   return `R$ ${value}`

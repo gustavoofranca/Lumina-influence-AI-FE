@@ -24,7 +24,7 @@ export default function DonutChart({
       <ResponsiveContainer width={size} height={size}>
         <PieChart>
           <defs>
-            {data.map((d, i) => (
+            {data.map((d) => (
               <linearGradient key={d.key} id={`${baseId}-${d.key}`} x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%"   stopColor={d.color} stopOpacity={0.95} />
                 <stop offset="100%" stopColor={d.color} stopOpacity={0.7} />

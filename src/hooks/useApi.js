@@ -31,7 +31,6 @@ export function useApi(fetcher, deps = [], { enabled = true } = {}) {
   useEffect(() => {
     if (!enabled) { setLoading(false); return }
     run()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [run, enabled])
 
   return { data, loading, error, refetch: run }
