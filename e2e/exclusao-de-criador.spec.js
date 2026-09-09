@@ -70,8 +70,15 @@ test.describe('exclusão de criador', () => {
 
     // Volta para a lista e diz o que aconteceu: a ação mais destrutiva do
     // produto não pode terminar numa tela silenciosa.
+    //
+    // A busca é dentro do aviso, e não no documento inteiro. Procurar o nome
+    // na página toda casava também com o título e o texto do modal da tela de
+    // detalhe, que ainda está montada no instante em que a URL já mudou — o
+    // teste reprovava por violação de modo estrito, e não por defeito. Foi o
+    // primeiro CI de ponta a ponta que expôs a corrida, porque lá a máquina é
+    // mais lenta e a janela entre a troca de URL e a troca de DOM abre.
     await expect(page).toHaveURL(/\/app\/influenciadores$/)
-    await expect(page.getByText(nome, { exact: false })).toBeVisible()
+    await expect(page.getByRole('status').filter({ hasText: nome })).toBeVisible()
 
     // E apagou mesmo — não só sumiu da tela.
     const depois = await page.request.get(`${API}/influencers/${id}`, {
@@ -112,7 +119,7 @@ test.describe('exclusão de criador', () => {
     await page.getByRole('button', { name: 'Excluir definitivamente' }).click()
 
     await expect(page).toHaveURL(/\/app\/influenciadores$/)
-    await expect(page.getByText(nome, { exact: false })).toBeVisible()
+    await expect(page.getByRole('status').filter({ hasText: nome })).toBeVisible()
 
     await page.unrouteAll({ behavior: 'ignoreErrors' })
   })

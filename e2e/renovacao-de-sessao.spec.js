@@ -52,8 +52,17 @@ test('o 401 depois da hora renova a sessão em vez de derrubar o usuário', asyn
   // Não foi para o login, e a lista chegou depois da renovação.
   await expect(page).toHaveURL(/\/app\/influenciadores/)
   await expect(page.locator('main')).toContainText(/\w/)
-  expect(jaNegou).toBe(true)
-  expect(renovacoes).toBe(1)
+
+  // Espera pelo contador, e não confere o contador uma vez.
+  //
+  // A tela pode terminar de desenhar antes de a renovação fechar: a lista já
+  // tem conteúdo do primeiro desenho, e o 401 chega depois. Numa máquina
+  // rápida a renovação cabia na janela entre uma asserção e outra e o teste
+  // passava; no CI ela não cabia, e o traço mostrava o `Continue request` da
+  // renovação acontecendo **depois** do corpo do teste. Conferir contador de
+  // efeito assíncrono com `expect` simples é apostar na velocidade da máquina.
+  await expect.poll(() => jaNegou, { timeout: 15_000 }).toBe(true)
+  await expect.poll(() => renovacoes, { timeout: 15_000 }).toBe(1)
   // O cabeçalho leva o refresh token, não o access token — é o que o
   // `require_refresh` exige, e era o erro da implementação anterior.
   expect(cabecalhoDaRenovacao).toMatch(/^Bearer .+/)
