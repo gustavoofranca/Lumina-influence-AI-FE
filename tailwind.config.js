@@ -92,11 +92,12 @@ export default {
         danger:  'var(--danger)',
         info:    'var(--info)',
         // ===== Paleta da landing =====
-        // A página pública é sempre escura e segue o arquivo de design, cuja
-        // paleta é próxima da do app mas não igual (fundo mais azulado, violeta
-        // mais claro). Fica em escopo próprio de propósito: mexer nos tokens do
-        // app arrastaria junto o tema claro e as medições de contraste das 22
-        // rotas internas.
+        // A página pública é sempre escura e segue o arquivo de design. Desde
+        // a repaginação da área autenticada, os semânticos do app (`bg.*`,
+        // `text.*` em index.css) usam estes mesmos valores no tema escuro — o
+        // escopo `landing.*` continua existindo porque a landing não segue o
+        // tema, e o app segue. Exceção medida: o texto apagado do app não é
+        // `unmeasured`, que reprova em contraste como texto de leitura.
         landing: {
           bg:       '#08021A',
           surface:  '#0E0524',

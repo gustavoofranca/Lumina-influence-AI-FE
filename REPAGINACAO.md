@@ -191,13 +191,34 @@ Armadilhas já pagas, registradas para não se repetirem:
 
 ## 7. Estado
 
-- [ ] Etapa 1 · Fundo e tokens
+- [x] Etapa 1 · Fundo e tokens — 14/09
 - [ ] Etapa 2 · Materiais no `Card`
 - [ ] Etapa 3 · Grade do painel e KPIs
 - [ ] Etapa 4 · Componentes do painel
 - [ ] Etapa 5 · Demais telas — adiada para depois da defesa
 
-**Pendências fora deste plano que continuam abertas:** 16 commits locais não
-empurrados (1 no front, 15 no back-end) e o CI vermelho até subirem; 11 erros de
-lint do tipo `set-state-in-effect`; Onda 4 da auditoria (ARQ-01 e funções
-grandes).
+### Registro da Etapa 1 (14/09)
+
+**Desvio da tabela 3.1, medido:** os dois tons de texto apagado reprovam em
+contraste. `#5A6480` dá 2,97:1 sobre o cartão escuro e `#7A7396` dá 3,94:1 sobre
+o elevado claro. Viraram `#8E96B0` (pior caso 4,76:1) e `#6B6488` (pior caso
+4,90:1), mesmo matiz. `landing.unmeasured` continua existindo para o papel de
+"não medido" — só não serve para texto que precisa ser lido.
+
+**Auroras paradas, sem `filter: blur`.** Três gradientes radiais numa camada
+fixa só (`.fundo-app`, variável `--fundo-aurora`, `none` no claro). Na landing
+elas derivam; aqui a lateral é vidro, e fundo em movimento sob vidro refaz o
+desfoque a cada quadro.
+
+**Verificado:** build limpo; valores computados lidos no navegador nos dois
+temas (casca `rgba(27,16,51,.66)` + `blur(16px)` no escuro, `#FFF` + `blur(0)`
+no claro, fundo sem aurora no claro); zero erro de console no painel; suíte
+78 aprovados e 2 pulados, igual à linha de base.
+
+**Achado fora do escopo, não corrigido:** no tema claro o nome "Lumina" some da
+barra lateral — `LuminaWordmark.jsx` pinta as letras com `text-white` fixo.
+Anterior a esta etapa.
+
+**Pendências fora deste plano que continuam abertas:** 11 erros e 5 avisos de
+lint (disciplina de hooks, medido em 10/09); Onda 4 da auditoria (ARQ-01 e
+funções grandes). Os commits locais citados em 09/09 já foram publicados.

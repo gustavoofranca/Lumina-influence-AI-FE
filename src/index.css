@@ -85,18 +85,24 @@
   --neutral-900: #0F172A;
   --neutral-950: #020617;
 
-  /* Semânticos */
-  --bg-base:      var(--neutral-900);
-  --bg-surface:   var(--neutral-800);
-  --bg-elevated:  var(--neutral-700);
-  --bg-input:     #0a1020;
+  /* Semânticos — a paleta da landing, não uma aproximação dela. Os
+     cinza-azulados (neutral-800/900) saíram do fundo e do texto: eram o que
+     fazia a área autenticada parecer outro produto ao sair da página pública.
+     Os valores são os de `landing.*` em tailwind.config.js. */
+  --bg-base:      #08021A;
+  --bg-surface:   #0F1930;
+  --bg-elevated:  #1F2B49;
+  --bg-input:     #0B1226;
 
-  --text-primary:   var(--neutral-100);
-  --text-secondary: var(--neutral-400);
-  /* Não é o neutral-500: aquele continua servindo de fundo e borda. Este é
-     o mínimo que atinge contraste AA sobre a base e sobre os cards. */
-  --text-muted:     #8593A8;
-  --text-label:     var(--neutral-400);
+  --text-primary:   #DEE5FF;
+  --text-secondary: #A3AAC4;
+  /* Não é o `landing.unmeasured` (#5A6480): medido, ele dá 2,97:1 sobre o
+     cartão e 2,38:1 sobre o elevado. Aquele tom continua sendo o papel de "o
+     sistema não sabe", onde apagado é a mensagem; texto de apoio precisa ser
+     lido. Este é o mesmo matiz, clareado até passar em AA em todas as
+     superfícies — pior caso 4,76:1, sobre o elevado. */
+  --text-muted:     #8E96B0;
+  --text-label:     #A3AAC4;
 
   --border-subtle:  rgba(124, 58, 237, 0.10);
   --border-default: rgba(124, 58, 237, 0.20);
@@ -113,12 +119,12 @@
   /* Os mesmos semânticos em canais RGB. O Tailwind precisa deste formato para
      resolver bg-bg-surface/60 — com hex, a opacidade é silenciosamente
      ignorada e o card perde a translucidez. */
-  --bg-base-rgb:      15 23 42;
-  --bg-surface-rgb:   30 41 59;
-  --bg-elevated-rgb:  51 65 85;
-  --text-primary-rgb:   241 245 249;
-  --text-secondary-rgb: 148 163 184;
-  --text-muted-rgb:     133 147 168;
+  --bg-base-rgb:      8 2 26;
+  --bg-surface-rgb:   15 25 48;
+  --bg-elevated-rgb:  31 43 73;
+  --text-primary-rgb:   222 229 255;
+  --text-secondary-rgb: 163 170 196;
+  --text-muted-rgb:     142 150 176;
   --hairline-rgb:      124 58 237;
 
   /* Texto colorido sobre a superfície do tema. No escuro são os tons claros;
@@ -132,10 +138,10 @@
   --tint-rose:     var(--tertiary-300);
 
   /* Superfície de vidro e trilhos: no escuro, translúcido sobre o fundo. */
-  --glass-bg:      rgba(30, 41, 59, 0.60);
-  --track:         var(--neutral-700);
-  --scrollbar-track: var(--neutral-900);
-  --scrollbar-thumb: var(--neutral-700);
+  --glass-bg:      rgba(15, 25, 48, 0.60);
+  --track:         var(--bg-elevated);
+  --scrollbar-track: var(--bg-base);
+  --scrollbar-thumb: var(--bg-elevated);
   --shadow-card:   none;
   --chart-grid:    rgba(148, 163, 184, 0.18);
   /* Rótulo de eixo: precisa passar em contraste nos dois temas, e o SVG usa
@@ -166,10 +172,13 @@
 
   /* No escuro, sombra quase não lê: o que separa uma camada da outra é a
      superfície ficar mais clara e um fio de luz na aresta de cima. */
-  --casca-fundo:      rgba(23, 16, 46, 0.72);
+  /* `landing.glass` a 66%: o suficiente para as auroras do fundo passarem
+     pela barra lateral, pouco o bastante para o texto de navegação não
+     depender do que está atrás. */
+  --casca-fundo:      rgba(27, 16, 51, 0.66);
   --casca-borda:      rgba(255, 255, 255, 0.08);
   --casca-realce:     rgba(255, 255, 255, 0.06);
-  --casca-desfoque:   14px;
+  --casca-desfoque:   16px;
 
   --sombra-1: 0 1px 2px rgba(0,0,0,0.28), 0 0 0 0.5px rgba(0,0,0,0.30);
   --sombra-2: 0 4px 14px -4px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(0,0,0,0.35);
@@ -183,6 +192,18 @@
      superfícies do tema; o pior caso dele é 4,10:1. */
   --foco: #DDD6FE;
 
+  /* Fundo da área autenticada: as auroras da landing, paradas. Na landing
+     elas derivam; aqui não, por dois motivos. A barra lateral é vidro, e vidro
+     sobre fundo que se move refaz o desfoque a cada quadro — é a mesma conta
+     que deixou o Opera lento em 08/09. E numa tela de trabalho, movimento no
+     canto do olho compete com o dado. Também não há `filter: blur`: o
+     gradiente radial já é macio, e os dois `blur(100px)` decorativos da
+     landing foram a maior fatia de custo medida lá. */
+  --fundo-aurora:
+    radial-gradient(60vmax 45vmax at 8% -6%, rgba(124, 58, 237, 0.16) 0%, rgba(124, 58, 237, 0) 70%),
+    radial-gradient(50vmax 40vmax at 100% 38%, rgba(52, 181, 250, 0.08) 0%, rgba(52, 181, 250, 0) 70%),
+    radial-gradient(55vmax 40vmax at 35% 108%, rgba(189, 157, 255, 0.07) 0%, rgba(189, 157, 255, 0) 70%);
+
 }
 
 /* ===========================================================
@@ -192,18 +213,18 @@
    impede o claro de parecer outro produto.
    =========================================================== */
 :root[data-theme="light"] {
-  --bg-base:     #F6F7FB;  /* branco levemente frio, puxado do slate da marca */
+  --bg-base:     #F7F6FC;  /* papel com um fio do violeta da landing */
   --bg-surface:  #FFFFFF;
-  --bg-elevated: #EEF1F8;
+  --bg-elevated: #F2F0FA;
   --bg-input:    #FFFFFF;
 
-  --text-primary:   var(--neutral-900);  /* o fundo do escuro, virado tinta */
-  --text-secondary: var(--neutral-600);  /* 8,3:1 sobre a base */
-  /* Não é o neutral-500: medido, ele dá 4,45:1 sobre a base e reprova em AA
-     por pouco. Este dá 5,06 na base e 5,41 no card — o espelho exato do que o
-     tema escuro já precisou fazer com o #8593A8. */
-  --text-muted:     #5D6B80;
-  --text-label:     #5D6B80;
+  --text-primary:   #160B33;  /* o fundo do escuro, virado tinta — 17,3:1 */
+  --text-secondary: #4B4468;  /* 8,4:1 sobre a base */
+  /* Não é o #7A7396 que a paleta sugeria: medido, ele dá 4,14:1 sobre a base
+     e 3,94:1 sobre o elevado. Este é o mesmo matiz um passo abaixo — 5,14 na
+     base, 5,52 no card, 4,90 no elevado. */
+  --text-muted:     #6B6488;
+  --text-label:     #6B6488;
 
   --border-subtle:  var(--neutral-200);
   --border-default: var(--neutral-300);
@@ -213,12 +234,12 @@
   --glow-soft:    0 4px 16px rgba(124, 58, 237, 0.10);
   --shadow-card:  0 1px 2px rgba(15, 23, 42, 0.04);
 
-  --bg-base-rgb:      246 247 251;
+  --bg-base-rgb:      247 246 252;
   --bg-surface-rgb:   255 255 255;
-  --bg-elevated-rgb:  238 241 248;
-  --text-primary-rgb:   15 23 42;
-  --text-secondary-rgb: 71 85 105;
-  --text-muted-rgb:     93 107 128;
+  --bg-elevated-rgb:  242 240 250;
+  --text-primary-rgb:   22 11 51;
+  --text-secondary-rgb: 75 68 104;
+  --text-muted-rgb:     107 100 136;
   --hairline-rgb:      203 213 225;
 
   --accent:        var(--primary-700);  /* 7,0:1 sobre a base */
@@ -262,6 +283,10 @@
   /* No claro nenhum tom de violeta serve: contra o botão primário o melhor
      deles dá 1,58:1. Tinta escura resolve, com pior caso de 3,13:1. */
   --foco: #0F172A;
+
+  /* Sem aurora no claro: luz colorida sobre papel vira mancha, não
+     profundidade. */
+  --fundo-aurora: none;
 
 }
 
@@ -357,6 +382,15 @@ body {
     -webkit-backdrop-filter: blur(var(--casca-desfoque));
     border-color: var(--casca-borda);
     box-shadow: inset 0 1px 0 0 var(--casca-realce);
+  }
+
+  /*
+   * O fundo da área autenticada. Camada fixa atrás de tudo, uma pintura só —
+   * a troca entre os temas mora em `--fundo-aurora`.
+   */
+  .fundo-app {
+    background-color: var(--bg-base);
+    background-image: var(--fundo-aurora);
   }
 
   /*
