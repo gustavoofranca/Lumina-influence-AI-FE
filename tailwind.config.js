@@ -77,6 +77,9 @@ export default {
           strong:  'var(--accent-strong)',
           soft:    'var(--accent-soft)',
         },
+        // O que foi medido e o que o sistema não sabe. Ver index.css.
+        medido:       'var(--medido)',
+        'nao-medido': 'var(--nao-medido)',
         positive: 'var(--positive)',
         caution:  'var(--caution)',
         // Azul e coral usados como texto sobre a superfície do tema.

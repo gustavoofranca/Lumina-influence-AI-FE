@@ -31,7 +31,7 @@ export default function Dashboard() {
     .map((c) => (c.value === 'all' ? { ...c, name: t('dashboard.filters.allCampaigns') } : c))
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <DashboardHeader
         period={period}
         onPeriodChange={setPeriod}
@@ -45,22 +45,22 @@ export default function Dashboard() {
 
       <KpiGrid data={overview?.kpis} loading={loading} />
 
-      {/* Linha 1: Growth (2 cols) + Diagnostico em destaque (1 col) */}
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div className="min-w-0 lg:col-span-2">
-          <GrowthCard data={overview?.growth} loading={loading} />
-        </div>
-        <div>
-          <DiagnosticHighlightCard data={overview?.featured} loading={loading} />
-        </div>
-      </section>
+      {/* Duas colunas contínuas, e não duas linhas. Em linhas, cada uma se
+          alinhava pelo cartão mais alto e o mais baixo deixava buraco — 151px
+          sob o gráfico numa, 197px sob a densidade na outra, 22% da página
+          (medido a 1440px). Em colunas cada lado flui na própria altura e
+          nada precisa se alinhar com nada.
 
-      {/* Linha 2: Top Networks (2 cols) + Network Density (1 col) */}
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div className="min-w-0 lg:col-span-2">
+          No celular a ordem é a do código: gráfico, tabela, destaque,
+          densidade. Reordenar só visualmente separaria o que se vê do que o
+          leitor de tela lê. */}
+      <section className="grid gap-4 lg:grid-cols-3">
+        <div className="flex min-w-0 flex-col gap-4 lg:col-span-2">
+          <GrowthCard data={overview?.growth} loading={loading} />
           <TopNetworksTable data={overview?.topNetworks} loading={loading} />
         </div>
-        <div>
+        <div className="flex min-w-0 flex-col gap-4">
+          <DiagnosticHighlightCard data={overview?.featured} loading={loading} />
           {erroDensity ? (
             <ApiErrorBanner error={erroDensity} onRetry={recarregarDensity} />
           ) : (

@@ -193,7 +193,7 @@ Armadilhas já pagas, registradas para não se repetirem:
 
 - [x] Etapa 1 · Fundo e tokens — 14/09
 - [x] Etapa 2 · Materiais no `Card` — 14/09
-- [ ] Etapa 3 · Grade do painel e KPIs
+- [x] Etapa 3 · Grade do painel e KPIs — 14/09
 - [ ] Etapa 4 · Componentes do painel
 - [ ] Etapa 5 · Demais telas — adiada para depois da defesa
 
@@ -244,6 +244,35 @@ usa `.superficie` — os cartões dela são próprios e ficam para a Etapa 5.
 **Achado fora do escopo, não corrigido:** em Equipe, o menu de papel do último
 membro abre cortado pelo `overflow-hidden` da tabela. Conferido contra o código
 anterior a esta etapa: já era assim.
+
+### Registro da Etapa 3 (14/09)
+
+**Vazio medido: 348px → 39px** (script da seção 6, 1440×1000, nos dois temas).
+Partida conferida antes de mexer: 151px sob o gráfico e 197px sob a
+densidade — os 347px de 09/09. A página caiu de 1556px para 1306px. A 390px
+não há estouro de largura.
+
+**KPIs viraram faixa única** em `<dl>`, sem ícone decorativo, com o valor em
+`medido` ou `nao-medido`. A variação perdeu o verde e o rosa: a direção vem da
+seta e do sinal. A faixa mora no `KpiGrid` e **não** no `KpiCard`, que segue
+servindo as abas do criador (Etapa 5).
+
+**Tokens novos `--medido` e `--nao-medido`**, porque `landing.measured` dá
+2,23:1 sobre branco. No claro são `#6D28D9` (7,10:1) e `#7A7396` (4,14:1). O
+apagado só é usado em texto de 24px, onde o mínimo é 3:1 — no escuro dá 3,23:1.
+
+**O adaptador passou a dizer se o KPI foi medido** (`measured`), em vez de a
+tela deduzir pelo travessão.
+
+**No celular a ordem é a do código** — gráfico, tabela, destaque, densidade.
+Antes o destaque vinha em segundo. Reordenar só no visual separaria o que se vê
+do que o leitor de tela lê.
+
+**Não feito aqui:** o espaçamento interno de 18px do cartão (3.4) — muda o
+`Card`, que todas as telas usam; entra na Etapa 4 pelos componentes do painel.
+
+**Verificado:** build limpo; lint sem aviso nos arquivos tocados; zero erro de
+console; suíte 78 aprovados e 2 pulados.
 
 **Pendências fora deste plano que continuam abertas:** 11 erros e 5 avisos de
 lint (disciplina de hooks, medido em 10/09); Onda 4 da auditoria (ARQ-01 e

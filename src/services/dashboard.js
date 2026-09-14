@@ -15,11 +15,14 @@ function fmtBrlFromCents(cents) {
 function adaptKpis(k) {
   return [
     { key: 'roi', value: k.roi.value_pct != null ? `${k.roi.value_pct}%` : '—',
+      measured: k.roi.value_pct != null,
       change: k.roi.change ?? undefined, changeType: k.roi.change_type },
     { key: 'engagement', value: k.engagement_rate.value_pct != null ? `${k.engagement_rate.value_pct}%` : '—',
+      measured: k.engagement_rate.value_pct != null,
       change: k.engagement_rate.change ?? undefined, changeType: k.engagement_rate.change_type },
-    { key: 'cac', value: fmtBrlFromCents(k.cac.value_brl_cents), change: undefined, hint: k.cac.hint },
-    { key: 'active', value: String(k.active_influencers.value), change: undefined },
+    { key: 'cac', value: fmtBrlFromCents(k.cac.value_brl_cents),
+      measured: k.cac.value_brl_cents != null, change: undefined, hint: k.cac.hint },
+    { key: 'active', value: String(k.active_influencers.value), measured: true, change: undefined },
   ]
 }
 
