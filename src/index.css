@@ -206,6 +206,8 @@
      mínimo de 3:1 para 24px, abaixo dos 4,5:1 de texto corrido. */
   --medido:           #BD9DFF;
   --nao-medido:       #5A6480;
+  /* A segunda série de gráfico, e só ela. */
+  --serie-2:          #34B5FA;
 
   --sombra-1: 0 1px 2px rgba(0,0,0,0.28), 0 0 0 0.5px rgba(0,0,0,0.30);
   --sombra-2: 0 4px 14px -4px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(0,0,0,0.35);
@@ -311,6 +313,8 @@
      7,10:1; o apagado dá 4,14:1 na base, texto grande. */
   --medido:         #6D28D9;
   --nao-medido:     #7A7396;
+  /* O azul da landing dá 2,4:1 sobre branco; linha de gráfico pede 3:1. */
+  --serie-2:        #0284C7;
 
   --sombra-1: 0 1px 2px rgba(16,24,40,0.06), 0 0 0 0.5px rgba(16,24,40,0.06);
   --sombra-2: 0 6px 16px -6px rgba(16,24,40,0.12), 0 0 0 0.5px rgba(16,24,40,0.08);

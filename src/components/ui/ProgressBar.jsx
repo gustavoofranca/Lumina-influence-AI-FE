@@ -8,6 +8,8 @@ const VARIANTS = {
   success: 'bg-gradient-to-r from-emerald-500 to-emerald-300',
   warning: 'bg-gradient-to-r from-amber-500 to-amber-300',
   neutral: 'bg-gradient-to-r from-neutral-500 to-neutral-300',
+  // Cor chapada de valor medido, sem degradê: a barra mede, não assina.
+  medido:  'bg-medido',
 }
 
 const HEIGHTS = {

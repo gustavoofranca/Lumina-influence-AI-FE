@@ -31,7 +31,7 @@ import Skeleton from '../ui/Skeleton.jsx'
  */
 const FUNDO_SEM_MINIATURA = [
   'radial-gradient(circle at 30% 20%, rgba(124,58,237,0.28) 0%, transparent 55%)',
-  'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
+  'linear-gradient(135deg, var(--bg-elevated) 0%, var(--poco) 100%)',
 ].join(', ')
 
 function ReelThumbnail({ src, alt }) {
@@ -86,7 +86,7 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
 
   if (loading) {
     return (
-      <Card className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5 p-[18px]">
         <CardLabel>{t('dashboard.diagnostic.label')}</CardLabel>
         <Skeleton className="h-12" rounded="rounded-xl" />
         <Skeleton className="h-40" rounded="rounded-2xl" />
@@ -97,7 +97,7 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
 
   if (!data) {
     return (
-      <Card>
+      <Card className="p-[18px]">
         <CardLabel>{t('dashboard.diagnostic.label')}</CardLabel>
         <EmptyState icon={Sparkles} title={t('dashboard.diagnostic.empty')} />
       </Card>
@@ -107,7 +107,7 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
   const name = data.influencerName
 
   return (
-    <Card className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5 p-[18px]">
       {/* Header */}
       <div>
         <CardLabel>{t('dashboard.diagnostic.label')}</CardLabel>
@@ -145,10 +145,18 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
         )}
       </div>
 
-      {/* Pills */}
+      {/* Pills. A API manda `success` ou `danger`. Só o alerta de bot é risco
+          e fica rosa; o resto é valor medido e sai na cor de medido, sem o
+          verde que dizia "bom" por cima do número. */}
       <div className="flex flex-wrap gap-2">
         {data.pills.map((pill) => (
-          <Badge key={pill.key} variant={pill.variant} size="sm" uppercase={false}>
+          <Badge
+            key={pill.key}
+            variant={pill.variant === 'danger' ? 'danger' : 'neutral'}
+            className={pill.variant === 'danger' ? undefined : 'text-medido'}
+            size="sm"
+            uppercase={false}
+          >
             {t(`dashboard.diagnostic.pills.${pill.key}`, {
               valor: pill.valuePct == null ? '—' : `${pill.valuePct}%`,
             })}
@@ -167,13 +175,17 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
             </span>
           </div>
         ) : (
-          <ProgressBar
-            label={t('dashboard.diagnostic.coherenceLabel')}
-            value={data.brandCoherence}
-            showValue
-            variant="primary"
-            size="md"
-          />
+          /* No poço, e em cor chapada: o degradê violeta-azul era a
+             assinatura da marca usada como régua. */
+          <div className="poco rounded-controle p-3">
+            <ProgressBar
+              label={t('dashboard.diagnostic.coherenceLabel')}
+              value={data.brandCoherence}
+              showValue
+              variant="medido"
+              size="md"
+            />
+          </div>
         )}
       </div>
 

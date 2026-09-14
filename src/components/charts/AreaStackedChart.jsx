@@ -17,6 +17,8 @@ import {
  *   series:  Array<{ key, label, color }> (em ordem de empilhamento)
  *   height:  number (default 280)
  *   formatValue: (v) => string
+ *   yMax:    teto do eixo Y (default 'auto'). `'dataMax'` termina a escala no
+ *            maior valor empilhado, em vez de arredondar para cima.
  */
 const COLOR_FALLBACK = ['#7C3AED', '#0EA5E9', '#F43F5E']
 
@@ -24,6 +26,30 @@ const formatNumber = (n) => {
   if (Math.abs(n) >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
   if (Math.abs(n) >= 1_000)     return `${(n / 1_000).toFixed(0)}k`
   return new Intl.NumberFormat('pt-BR').format(n)
+}
+
+/**
+ * Rótulos do eixo Y quando a escala termina no maior valor.
+ *
+ * Com o teto em `dataMax`, o Recharts escolhe marcas que incluem o próprio teto
+ * — sai `0, 150k, 439k`, com o último intervalo duas vezes maior que o primeiro
+ * e a grade mentindo sobre a proporção. Aqui o passo é redondo (1, 2, 2,5 ou 5
+ * vezes uma potência de dez) e as marcas param antes do teto: a caixa termina
+ * no valor real, os rótulos continuam equidistantes.
+ */
+function marcasAteOTeto(data, series) {
+  const teto = Math.max(0, ...data.map((ponto) =>
+    series.reduce((soma, s) => soma + (Number(ponto[s.key]) || 0), 0)))
+  if (teto === 0) return undefined
+
+  const bruto = teto / 5
+  const potencia = 10 ** Math.floor(Math.log10(bruto))
+  const fator = [1, 2, 2.5, 5, 10].find((f) => bruto / potencia <= f)
+  const passo = fator * potencia
+
+  const marcas = []
+  for (let v = 0; v <= teto; v += passo) marcas.push(v)
+  return marcas
 }
 
 function CustomTooltip({ active, payload, label, formatValue }) {
@@ -54,8 +80,10 @@ export default function AreaStackedChart({
   series = [],
   height = 280,
   formatValue = formatNumber,
+  yMax = 'auto',
 }) {
   const baseId = useId()
+  const marcas = yMax === 'dataMax' ? marcasAteOTeto(data, series) : undefined
 
   return (
     <ResponsiveContainer width="100%" height={height}>
@@ -82,6 +110,8 @@ export default function AreaStackedChart({
           tickLine={false}
         />
         <YAxis
+          domain={[0, yMax]}
+          ticks={marcas}
           stroke="var(--chart-text)"
           tick={{ fill: 'var(--chart-text)', fontSize: 11 }}
           tickFormatter={formatValue}

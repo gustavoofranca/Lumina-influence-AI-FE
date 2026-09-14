@@ -25,7 +25,7 @@ function NodeMapPreview() {
   ]
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-primary/15 bg-bg-base/60 aspect-[4/3]">
+    <div className="poco relative overflow-hidden rounded-xl border border-primary/15 aspect-[4/3]">
       {/* Glow radial atrás */}
       <div
         aria-hidden
@@ -71,7 +71,7 @@ export default function NetworkDensityCard({ data, loading = false }) {
 
   if (loading) {
     return (
-      <Card className="flex flex-col gap-5">
+      <Card className="flex flex-col gap-5 p-[18px]">
         <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
         <Skeleton className="h-16 w-40" rounded="rounded-xl" />
         <Skeleton className="h-48" rounded="rounded-2xl" />
@@ -81,7 +81,7 @@ export default function NetworkDensityCard({ data, loading = false }) {
 
   if (!data) {
     return (
-      <Card>
+      <Card className="p-[18px]">
         <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
         <EmptyState icon={Network} title={t('dashboard.networkDensity.empty')} />
       </Card>
@@ -91,7 +91,7 @@ export default function NetworkDensityCard({ data, loading = false }) {
   const { value, total, connected } = data
 
   return (
-    <Card className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5 p-[18px]">
       <div>
         <CardLabel>{t('dashboard.networkDensity.label')}</CardLabel>
         {/* Era 60px com o degradê da marca. Duas coisas erradas de uma vez:

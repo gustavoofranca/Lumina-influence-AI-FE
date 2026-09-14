@@ -102,7 +102,8 @@ export default function DashboardHeader({
           <h1 className="tipo-tela text-text-primary lg:text-4xl">
             {t('dashboard.title')}
           </h1>
-          <StatusIndicator label={t('dashboard.liveSync')} color="success" />
+          {/* Violeta e não verde: o painel usa duas cores, e verde não é uma delas. */}
+          <StatusIndicator label={t('dashboard.liveSync')} color="primary" />
         </div>
       </div>
 

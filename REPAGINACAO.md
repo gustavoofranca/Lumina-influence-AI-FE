@@ -194,7 +194,7 @@ Armadilhas já pagas, registradas para não se repetirem:
 - [x] Etapa 1 · Fundo e tokens — 14/09
 - [x] Etapa 2 · Materiais no `Card` — 14/09
 - [x] Etapa 3 · Grade do painel e KPIs — 14/09
-- [ ] Etapa 4 · Componentes do painel
+- [x] Etapa 4 · Componentes do painel — 14/09, com dois pontos abertos (ver registro)
 - [ ] Etapa 5 · Demais telas — adiada para depois da defesa
 
 ### Registro da Etapa 1 (14/09)
@@ -273,6 +273,38 @@ do que o leitor de tela lê.
 
 **Verificado:** build limpo; lint sem aviso nos arquivos tocados; zero erro de
 console; suíte 78 aprovados e 2 pulados.
+
+### Registro da Etapa 4 (14/09)
+
+**Feito:** poço sob o gráfico, o corpo da tabela, a barra de coerência e o mapa
+de densidade; potencial viral em três pontos que acendem, com o rótulo ao lado;
+nota de ressonância em barra `medido` sem faixas de cor; status ativo e
+monitorar neutros, só risco em rosa; pílulas do destaque em `medido`, alerta de
+bot em rosa; "Sincronização ao vivo" em violeta; 18px internos nos cartões do
+painel. Token novo `--serie-2` (`#34B5FA` / `#0284C7` no claro, onde o azul da
+landing dá 2,4:1).
+
+**Escala:** termina no maior valor empilhado (439k contra 438.956 na API), com
+marcas de passo redondo — `dataMax` sozinho gerava `0, 150k, 439k`, intervalos
+desiguais. É a prop `yMax` do `AreaStackedChart`; a aba do criador não passa a
+prop e segue igual.
+
+**Varredura pelo que o navegador pinta**, não pelo código: todo `color`,
+fundo, borda, `fill` e `stroke` em `main`, nos dois temas, classificado por
+matiz. Sobra verde em um lugar só — ver abaixo.
+
+**Aberto 1 · Datas no eixo do tempo — depende de decisão.** O `S1/S2/S3` vem
+pronto de `metric_service.growth_trajectory` no back-end. Além do rótulo, há
+dois defeitos ali: semana sem post não vira ponto (o eixo não é uniforme no
+tempo) e no período de 90 dias o mês sai em inglês (`%b`). Trocar por data
+exige mudar a resposta da API, que o PDF também consome.
+
+**Aberto 2 · Avatar verde.** A cor do avatar é sorteada pelo nome, numa paleta
+com verde e âmbar, dentro de `ui/Avatar.jsx` — usado em 21 lugares. Não é cor
+de qualidade, é identidade; trocar a paleta muda todas as telas.
+
+**Verificado:** build limpo; lint sem aviso nos arquivos tocados; vazio do
+painel em 16px; zero erro de console; suíte 78 aprovados e 2 pulados.
 
 **Pendências fora deste plano que continuam abertas:** 11 erros e 5 avisos de
 lint (disciplina de hooks, medido em 10/09); Onda 4 da auditoria (ARQ-01 e

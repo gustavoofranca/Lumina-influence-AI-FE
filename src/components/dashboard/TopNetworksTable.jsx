@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Flame, Activity, Snowflake } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
@@ -9,38 +8,26 @@ import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
 import { formatFollowers } from '../../lib/format.js'
 
-const VIRAL_CONFIG = {
-  high:   { icon: Flame,     color: 'text-tint-rose' },
-  medium: { icon: Activity,  color: 'text-caution' },
-  low:    { icon: Snowflake, color: 'text-tint-sky' },
-}
+// Potencial viral em forma, não em matiz: quantos pontos acendem. Quem não
+// distingue cor continua lendo, e o rótulo vai ao lado.
+const PONTOS_ACESOS = { low: 1, medium: 2, high: 3 }
 
+// Rosa é reservado para risco, e só. Ativo e monitorar são estados, não
+// alertas: ficam neutros e o texto diz qual é.
 const STATUS_VARIANT = {
-  active:     'success',
-  monitoring: 'warning',
+  active:     'neutral',
+  monitoring: 'neutral',
   risk:       'danger',
 }
 
 /**
- * A nota de ressonância, com a barra que a situa numa faixa.
+ * A nota de ressonância, com a barra que a situa.
  *
- * A cor aqui diz qualidade, e só isso. Antes eram quatro tons, e um deles era
- * o `accent` — a mesma cor de botão, link e item selecionado. Numa tabela de
- * seis linhas isso punha seis marcas da cor de ação em valores que ninguém
- * clica, e a cor deixava de significar "aqui se age".
- *
- * Três faixas, não quatro: verde, atenção e risco é o que uma pessoa distingue
- * de relance numa coluna. O quarto degrau existia como gradação estética e
- * cobrava uma decisão de leitura que não levava a lugar nenhum.
- *
- * A barra perdeu o degradê da marca pelo mesmo motivo — ela mede, então herda a
- * cor da faixa. O degradê é a assinatura, não uma régua.
+ * Eram três faixas de cor — verde, âmbar e rosa — para dizer qualidade. Saíram:
+ * o painel usa duas cores, a de medido e a de não medido, e rosa é só risco.
+ * O comprimento da barra e o número já situam o valor; a cor dizia a mesma coisa
+ * pela terceira vez e gastava o rosa numa nota baixa que não é alerta.
  */
-const FAIXA = [
-  { minimo: 85, barra: 'bg-positive',  texto: 'text-positive' },
-  { minimo: 55, barra: 'bg-caution',   texto: 'text-text-primary' },
-  { minimo: 0,  barra: 'bg-tint-rose', texto: 'text-tint-rose' },
-]
 
 function ScoreCell({ value }) {
   if (value == null) {
@@ -48,19 +35,31 @@ function ScoreCell({ value }) {
     // uma afirmação. O travessão diz o que aconteceu — não foi medido.
     return <div className="numerico text-right text-text-muted">—</div>
   }
-  const faixa = FAIXA.find((f) => value >= f.minimo)
-
   return (
     <div className="flex items-center justify-end gap-3">
-      <div className="h-1 w-16 overflow-hidden rounded-full bg-bg-elevated/60">
-        <div
-          className={cn('h-full rounded-full', faixa.barra)}
-          style={{ width: `${value}%` }}
-        />
+      <div className="h-1 w-16 overflow-hidden rounded-full bg-[color:var(--track)]">
+        <div className="h-full rounded-full bg-medido" style={{ width: `${value}%` }} />
       </div>
-      <span className={cn('numerico font-display text-sm font-bold', faixa.texto)}>
+      <span className="numerico font-display text-sm font-bold text-text-primary">
         {value}
       </span>
+    </div>
+  )
+}
+
+function PotencialViral({ nivel, rotulo }) {
+  const acesos = PONTOS_ACESOS[nivel]
+  return (
+    <div className="inline-flex items-center gap-2 text-xs font-semibold text-text-secondary">
+      <span aria-hidden className="inline-flex gap-1">
+        {[1, 2, 3].map((n) => (
+          <span
+            key={n}
+            className={cn('h-1.5 w-1.5 rounded-full', n <= acesos ? 'bg-medido' : 'bg-[color:var(--track)]')}
+          />
+        ))}
+      </span>
+      {rotulo}
     </div>
   )
 }
@@ -98,14 +97,12 @@ export default function TopNetworksTable({ data, loading = false }) {
       render: (row) => {
         // A faixa deriva da ressonância. Sem ressonância medida o back-end
         // manda null, e antes o adaptador inventava "medium" aqui.
-        const cfg = VIRAL_CONFIG[row.viralPotential]
-        if (!cfg) return <span className="text-text-muted">—</span>
-        const Icon = cfg.icon
+        if (!PONTOS_ACESOS[row.viralPotential]) return <span className="text-text-muted">—</span>
         return (
-          <div className={cn('inline-flex items-center gap-1.5 text-xs font-semibold', cfg.color)}>
-            <Icon size={13} />
-            {t(`dashboard.topNetworks.viral${row.viralPotential.charAt(0).toUpperCase() + row.viralPotential.slice(1)}`)}
-          </div>
+          <PotencialViral
+            nivel={row.viralPotential}
+            rotulo={t(`dashboard.topNetworks.viral${row.viralPotential.charAt(0).toUpperCase() + row.viralPotential.slice(1)}`)}
+          />
         )
       },
     },
@@ -122,7 +119,7 @@ export default function TopNetworksTable({ data, loading = false }) {
   ]
 
   return (
-    <Card padding="md" className="flex flex-col gap-5">
+    <Card className="flex flex-col gap-5 p-[18px]">
       <div>
         <CardLabel>{t('dashboard.label')}</CardLabel>
         <CardTitle className="mt-1.5">{t('dashboard.topNetworks.title')}</CardTitle>
@@ -137,7 +134,8 @@ export default function TopNetworksTable({ data, loading = false }) {
         onRowClick={(row) => navigate(`/app/influenciadores/${row.id}`)}
         getRowKey={(row) => row.id}
         emptyState={loading ? t('common.loading') : t('dashboard.topNetworks.empty')}
-        className="!border-0"
+        // O corpo da tabela é poço: número não fica sobre o vidro do cartão.
+        className="poco !border-0"
       />
     </Card>
   )
