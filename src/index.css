@@ -180,6 +180,26 @@
   --casca-realce:     rgba(255, 255, 255, 0.06);
   --casca-desfoque:   16px;
 
+  /* VIDRO — a moldura do conteúdo. Mais transparente que a casca porque o que
+     passa atrás do cartão é só a aurora, sem texto para competir. O número
+     não fica sobre ele: fica no poço.
+
+     Translúcido, mas sem desfoque, e a razão é medida (14/09, painel a
+     1440px). Atrás do cartão só há gradiente liso, e desfocar gradiente liso
+     não muda nada: com e sem `blur(16px)` a tela difere em 0,34% dos pixels,
+     contra 0,22% entre duas capturas idênticas. O custo aparece — no trace,
+     Paint +23% e Layerize +15% rolando a página e redesenhando o gráfico —
+     e o `backdrop-filter` ainda cria contexto de empilhamento, que prende
+     atrás do cartão seguinte qualquer menu que passe da borda. A casca
+     continua desfocando: atrás dela passa conteúdo com detalhe. Se um dia o
+     cartão tiver detalhe atrás, é aqui que o desfoque volta. */
+  --vidro-fundo:      rgba(15, 25, 48, 0.52);
+  --vidro-filtro:     none;
+
+  /* POÇO — onde mora o dado: área de gráfico, corpo de tabela, barra. Chapado,
+     sem transparência nenhuma, para o valor nunca depender do que está atrás. */
+  --poco:             #0B1226;
+
   --sombra-1: 0 1px 2px rgba(0,0,0,0.28), 0 0 0 0.5px rgba(0,0,0,0.30);
   --sombra-2: 0 4px 14px -4px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(0,0,0,0.35);
   --sombra-3: 0 24px 60px -20px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(0,0,0,0.4);
@@ -275,6 +295,11 @@
   --casca-borda:    var(--neutral-200);
   --casca-realce:   rgba(255, 255, 255, 0);
   --casca-desfoque: 0px;
+
+  /* No claro o cartão é sólido, pelo mesmo motivo da casca. */
+  --vidro-fundo:    #FFFFFF;
+  --vidro-filtro:   none;
+  --poco:           #F2F0FA;
 
   --sombra-1: 0 1px 2px rgba(16,24,40,0.06), 0 0 0 0.5px rgba(16,24,40,0.06);
   --sombra-2: 0 6px 16px -6px rgba(16,24,40,0.12), 0 0 0 0.5px rgba(16,24,40,0.08);
@@ -394,15 +419,29 @@ body {
   }
 
   /*
-   * A superfície de conteúdo: o que informa. Cartão de dado, tabela, gráfico.
+   * A superfície de conteúdo: a moldura do que informa.
    *
-   * Chapada, sempre, e é a regra que sustenta o resto: número precisa de fundo
-   * quieto. A profundidade vem da sombra e do fio, não de translucidez.
+   * No escuro é vidro — a aurora do fundo passa por ela, com o mesmo fio de
+   * luz na aresta de cima que a casca usa. Translúcida, sem desfoque: ver
+   * `--vidro-filtro`. O dado não mora aqui: gráfico,
+   * corpo de tabela e barra ficam num `.poco` chapado dentro dela. Vidro na
+   * moldura, fundo quieto sob o número. No claro, sólido.
    */
   .superficie {
-    background-color: var(--bg-surface);
+    background-color: var(--vidro-fundo);
+    backdrop-filter: var(--vidro-filtro);
+    -webkit-backdrop-filter: var(--vidro-filtro);
     border: 1px solid var(--border-subtle);
-    box-shadow: var(--sombra-1);
+    box-shadow: var(--sombra-1), inset 0 1px 0 0 var(--casca-realce);
+  }
+  /* Se `--vidro-filtro` voltar a desfocar: `backdrop-filter` cria contexto de
+     empilhamento, e um menu que passe da borda do cartão fica atrás do cartão
+     seguinte, seja qual for o z-index dele. Aí o menu precisa ir por portal,
+     como o Modal. */
+
+  /* O miolo chapado de um cartão de vidro. Ver `.superficie`. */
+  .poco {
+    background-color: var(--poco);
   }
 
   /*

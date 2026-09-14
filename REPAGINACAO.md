@@ -192,7 +192,7 @@ Armadilhas já pagas, registradas para não se repetirem:
 ## 7. Estado
 
 - [x] Etapa 1 · Fundo e tokens — 14/09
-- [ ] Etapa 2 · Materiais no `Card`
+- [x] Etapa 2 · Materiais no `Card` — 14/09
 - [ ] Etapa 3 · Grade do painel e KPIs
 - [ ] Etapa 4 · Componentes do painel
 - [ ] Etapa 5 · Demais telas — adiada para depois da defesa
@@ -218,6 +218,32 @@ no claro, fundo sem aurora no claro); zero erro de console no painel; suíte
 **Achado fora do escopo, não corrigido:** no tema claro o nome "Lumina" some da
 barra lateral — `LuminaWordmark.jsx` pinta as letras com `text-white` fixo.
 Anterior a esta etapa.
+
+### Registro da Etapa 2 (14/09)
+
+**Desvio da tabela 3.1, medido: o cartão é translúcido, sem desfoque.** Com e
+sem `blur(16px)` o painel difere em 0,34% dos pixels, contra 0,22% entre duas
+capturas idênticas — atrás do cartão só há gradiente liso, e desfocar
+gradiente liso não muda nada. No trace (3 rodadas por variante, intercaladas,
+aquecimento descartado, rolagem + troca de período), o desfoque somava Paint
++23%, Layerize +15% e Commit +11%. E `backdrop-filter` cria contexto de
+empilhamento, o que prenderia atrás do cartão seguinte qualquer menu que
+passasse da borda. A casca continua desfocando. Voltar o desfoque é trocar
+`--vidro-filtro`.
+
+Isso resolve o risco de desempenho da seção 5 para o cartão: sem
+`backdrop-filter`, ele não abre camada de composição.
+
+**Nasceu `.poco`** (`#0B1226` / `#F2F0FA`), ainda sem uso — entra nos
+componentes do painel na Etapa 4.
+
+**Verificado:** build limpo; material lido no navegador em cinco telas, todas
+herdando sem edição própria; suíte 78 aprovados e 2 pulados. Campanhas não
+usa `.superficie` — os cartões dela são próprios e ficam para a Etapa 5.
+
+**Achado fora do escopo, não corrigido:** em Equipe, o menu de papel do último
+membro abre cortado pelo `overflow-hidden` da tabela. Conferido contra o código
+anterior a esta etapa: já era assim.
 
 **Pendências fora deste plano que continuam abertas:** 11 erros e 5 avisos de
 lint (disciplina de hooks, medido em 10/09); Onda 4 da auditoria (ARQ-01 e

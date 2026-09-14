@@ -8,20 +8,17 @@ const PADDING = {
 }
 
 /**
- * Card — a superfície de conteúdo do produto.
+ * Card — a moldura de conteúdo do produto.
  *
- * Chapada, sempre. Havia uma prop `glass` que ligava translucidez com
- * `backdrop-filter`, e ela saiu: o cartão carrega número, tabela e gráfico, e
- * número precisa de fundo quieto. Vidro atrás de dado não é profundidade, é
- * ruído sobre o valor — e cobra caro, porque cada camada translúcida vira uma
- * camada de composição que o navegador refaz quando o gráfico redesenha.
+ * No escuro é vidro: a aurora do fundo passa pela moldura. O número não. Todo
+ * bloco que carrega dado — área de gráfico, corpo de tabela, barra — fica num
+ * poço chapado dentro do cartão (`.poco`), porque número precisa de fundo
+ * quieto e vidro atrás de valor é ruído sobre ele.
  *
- * A translucidez continua existindo, no lugar onde ela informa: a **casca** —
- * barra lateral, barra superior, menus e modais. É a mesma divisão que o macOS
- * faz, e pelo mesmo motivo: a lateral do Finder é translúcida, a lista de
- * arquivos não.
- *
- * A profundidade aqui vem da sombra e do fio, que é o que `.superficie` traz.
+ * É a divisão que o macOS faz, empurrada um passo para dentro: a lateral do
+ * Finder é translúcida, a lista de arquivos não. Aqui a moldura do cartão é
+ * translúcida, o miolo onde se lê não. No tema claro nada disso é vidro — as
+ * variáveis entregam superfície sólida, e o seletor é o mesmo.
  *
  * `hoverable` é só para cartão que leva a algum lugar. Em cartão de leitura ele
  * promete um clique que não existe.
