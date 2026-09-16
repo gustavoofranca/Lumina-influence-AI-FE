@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Building2, Calendar, Wallet, Check, Sparkles, Me
 import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
 import Input from '../components/ui/Input.jsx'
+import DateInput from '../components/ui/DateInput.jsx'
 import Search from '../components/ui/Search.jsx'
 import Avatar from '../components/ui/Avatar.jsx'
 import Card, { CardLabel } from '../components/ui/Card.jsx'
@@ -51,17 +52,15 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           onChange={(e) => onChange('brand', e.target.value)}
           error={errors.brand}
         />
-        <Input
+        <DateInput
           label={t('campanhas.wizard.step1.startDate')}
-          type="date"
           leftIcon={Calendar}
           value={data.startDate}
           onChange={(e) => onChange('startDate', e.target.value)}
           error={errors.startDate}
         />
-        <Input
+        <DateInput
           label={t('campanhas.wizard.step1.endDate')}
-          type="date"
           leftIcon={Calendar}
           value={data.endDate}
           onChange={(e) => onChange('endDate', e.target.value)}

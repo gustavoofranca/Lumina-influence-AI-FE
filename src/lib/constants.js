@@ -22,4 +22,4 @@ export const TIMEZONES = [
 export const ROLE_KEYS = ['admin', 'member', 'viewer']
 
 /** Seções que um relatório pode incluir. Espelha as seções aceitas pelo back-end. */
-export const SECTION_KEYS = ['kpis', 'growth', 'benchmark', 'diagnostic', 'recommendations']
+export const SECTION_KEYS = ['kpis', 'growth', 'benchmark', 'diagnostic', 'video', 'recommendations']

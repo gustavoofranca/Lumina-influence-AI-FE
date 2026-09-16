@@ -3,12 +3,12 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Calendar, Check, Download,
-  TrendingUp, BarChart3, Brain, Lightbulb, ChartLine, Megaphone, Users,
+  TrendingUp, BarChart3, Brain, Lightbulb, ChartLine, Megaphone, Users, Clapperboard,
 } from 'lucide-react'
 
 import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
-import Input from '../components/ui/Input.jsx'
+import DateInput from '../components/ui/DateInput.jsx'
 import Avatar from '../components/ui/Avatar.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import Card, {  } from '../components/ui/Card.jsx'
@@ -29,6 +29,7 @@ const SECTION_ICONS = {
   growth:          ChartLine,
   benchmark:       TrendingUp,
   diagnostic:      Brain,
+  video:           Clapperboard,
   recommendations: Lightbulb,
 }
 
@@ -125,16 +126,14 @@ function Step2PeriodoInfluenciadores({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Input
+        <DateInput
           label={t('relatorios.wizard.step2.startDate')}
-          type="date"
           leftIcon={Calendar}
           value={period.start}
           onChange={(e) => onPeriodChange({ ...period, start: e.target.value })}
         />
-        <Input
+        <DateInput
           label={t('relatorios.wizard.step2.endDate')}
-          type="date"
           leftIcon={Calendar}
           value={period.end}
           onChange={(e) => onPeriodChange({ ...period, end: e.target.value })}

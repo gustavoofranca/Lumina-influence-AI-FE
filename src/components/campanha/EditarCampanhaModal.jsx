@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn.js'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
+import DateInput from '../ui/DateInput.jsx'
 import Button from '../ui/Button.jsx'
 
 const STATUSES = ['planning', 'active', 'completed', 'paused']
@@ -78,15 +79,13 @@ export default function EditarCampanhaModal({
         />
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Input
+          <DateInput
             label={t('campanhas.editModal.start')}
-            type="date"
             value={campos.startDate ?? ''}
             onChange={set('startDate')}
           />
-          <Input
+          <DateInput
             label={t('campanhas.editModal.end')}
-            type="date"
             value={campos.endDate ?? ''}
             onChange={set('endDate')}
           />

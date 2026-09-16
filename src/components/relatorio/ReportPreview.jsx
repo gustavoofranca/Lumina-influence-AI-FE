@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
@@ -16,7 +17,7 @@ import LuminaMark from '../ui/LuminaMark.jsx'
 /* Página (A4 clara)                                                          */
 /* -------------------------------------------------------------------------- */
 
-function Page({ pageNumber, totalPages, children, t, brand }) {
+function Page({ pageNumber, totalPages, children, t, brand, contentRef }) {
   return (
     <div className={cn(
       'relative mx-auto bg-white text-neutral-900',
@@ -33,7 +34,7 @@ function Page({ pageNumber, totalPages, children, t, brand }) {
         <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{brand}</span>
       </div>
 
-      <div className="flex-1 overflow-hidden px-10 py-7">{children}</div>
+      <div ref={contentRef} className="flex-1 overflow-hidden px-10 py-7">{children}</div>
 
       <div className="flex items-center justify-between border-t border-neutral-200 px-10 py-3 text-[10px] text-neutral-600">
         <span>{t('relatorios.preview.footerNote')}</span>
@@ -106,7 +107,15 @@ function ExecutiveSummary({ doc, t }) {
       <p className="mt-3 text-sm leading-relaxed text-neutral-700">
         {/* Sem post no período não há médias a resumir — o PDF já mostrava
             estado vazio aqui, e a prévia mostrava a frase com os números. */}
-        {s.has_data
+        {s.has_data && s.avg_organic_pct == null
+          ? t('relatorios.preview.summaryTextNoSplit', {
+              creators: s.influencer_count,
+              brand: doc.campaign.brand_name,
+              sentiment: s.avg_sentiment_pct_fmt,
+              reach: s.total_reach_fmt,
+              posts: s.posts_count,
+            })
+          : s.has_data
           ? t('relatorios.preview.summaryText', {
               creators: s.influencer_count,
               brand: doc.campaign.brand_name,
@@ -145,6 +154,17 @@ function KpisSection({ doc, t }) {
                 {kpi.change > 0 ? '+' : ''}{kpi.change}%
               </span>
             )}
+          </div>
+        ))}
+        {/* Segunda linha, igual ao PDF: engajamento bruto e custo por mil. */}
+        {doc.summary?.has_data && (doc.kpis_detalhe || []).map((kpi) => (
+          <div key={kpi.label} className="rounded-lg bg-neutral-50 p-3 ring-1 ring-inset ring-neutral-200">
+            <span className="block text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
+              {kpi.label}
+            </span>
+            <span className="mt-1.5 block font-display text-xl font-extrabold tabular-nums text-neutral-900">
+              {kpi.value}
+            </span>
           </div>
         ))}
       </div>
@@ -223,6 +243,41 @@ function BenchmarkSection({ doc, t }) {
           </tbody>
         </table>
       )}
+      {(doc.posts_tabela || []).length > 0 && (
+        <>
+          <h3 className="mt-5 text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-600">
+            {t('relatorios.preview.postsTitle')}
+          </h3>
+          <table className="mt-2 w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-neutral-300">
+                <th className={TH}>{t('relatorios.preview.postsCols.date')}</th>
+                <th className={TH}>{t('relatorios.preview.postsCols.creator')}</th>
+                <th className={TH}>{t('relatorios.preview.postsCols.post')}</th>
+                <th className={cn(TH, 'text-right')}>{t('relatorios.preview.postsCols.reach')}</th>
+                <th className={cn(TH, 'text-right')}>{t('relatorios.preview.postsCols.likes')}</th>
+                <th className={cn(TH, 'text-right')}>{t('relatorios.preview.postsCols.comments')}</th>
+                <th className={cn(TH, 'text-right')}>{t('relatorios.preview.postsCols.shares')}</th>
+                <th className={cn(TH, 'text-right')}>{t('relatorios.preview.postsCols.saves')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doc.posts_tabela.map((p, i) => (
+                <tr key={`${p.data}-${i}`} className="border-b border-neutral-100">
+                  <td className={cn(TD, 'whitespace-nowrap')}>{p.data}</td>
+                  <td className={TD}>{p.criador}</td>
+                  <td className="py-2.5 pr-3 text-neutral-500">{p.legenda}</td>
+                  <td className={cn(TD, 'text-right')}>{p.alcance}</td>
+                  <td className={cn(TD, 'text-right')}>{p.curtidas}</td>
+                  <td className={cn(TD, 'text-right')}>{p.comentarios}</td>
+                  <td className={cn(TD, 'text-right')}>{p.compartilhamentos}</td>
+                  <td className="py-2.5 text-right tabular-nums text-neutral-700">{p.salvos}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </section>
   )
 }
@@ -246,6 +301,72 @@ function DiagnosticSection({ doc, t }) {
                 </span>
               </div>
               <p className="mt-2 text-xs leading-relaxed text-neutral-600">{d.note}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  )
+}
+
+/**
+ * Análise de vídeo — o que o modelo ouviu, não só o que concluiu.
+ *
+ * A transcrição é a única parte do documento em que dá para conferir o trabalho
+ * do modelo contra o vídeo: sem ela, as notas de roteiro e coerência precisam
+ * ser aceitas no escuro. Por isso ela vem como citação, e não como afirmação do
+ * sistema — é fala de outra pessoa, transcrita.
+ */
+function VideoSection({ doc, t }) {
+  const videos = doc.video || []
+  return (
+    <section>
+      <SectionTitle>{t('relatorios.preview.videoTitle')}</SectionTitle>
+      {videos.length === 0 ? (
+        <EmptySection>
+          {/* "Sem vídeo" afirmaria algo sobre o conteúdo do criador. O que
+              falta é a análise multimodal, e é isso que a tela diz. */}
+          {t('relatorios.preview.noVideoAnalysis')}
+        </EmptySection>
+      ) : (
+        <div className="mt-4 space-y-3">
+          {videos.map((v, i) => (
+            <div
+              key={`${v.display_name}-${i}`}
+              className="rounded-lg bg-neutral-50 p-3 ring-1 ring-inset ring-neutral-200"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-semibold text-neutral-900">
+                  {v.display_name}
+                  {v.caption && (
+                    <span className="text-xs text-neutral-500"> — {v.caption}</span>
+                  )}
+                </span>
+                <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-violet-600">
+                  {t('relatorios.preview.scriptScore')} {v.script_score_fmt}
+                </span>
+              </div>
+
+              <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                {t('relatorios.preview.transcriptLabel')}
+              </p>
+              <blockquote className="mt-1 border-l-2 border-violet-500 pl-3 text-xs italic leading-relaxed text-neutral-700">
+                “{v.transcript}
+                {v.transcript_truncated ? '…' : ''}”
+              </blockquote>
+
+              {v.key_phrases?.length > 0 && (
+                <p className="mt-2 text-xs text-neutral-600">
+                  <span className="font-semibold">
+                    {t('relatorios.preview.keyPhrases')}:
+                  </span>{' '}
+                  {v.key_phrases.join(' · ')}
+                </p>
+              )}
+
+              <p className="mt-1 text-[10px] text-neutral-400">
+                {v.sentiment_label} · {v.analyzed_at} · {v.model_version}
+              </p>
             </div>
           ))}
         </div>
@@ -280,45 +401,102 @@ const SECTION_COMPONENTS = {
   growth:          GrowthSection,
   benchmark:       BenchmarkSection,
   diagnostic:      DiagnosticSection,
+  video:           VideoSection,
   recommendations: RecommendationsSection,
 }
 
-// Duas seções por página A4, como no PDF.
-const SECTIONS_PER_PAGE = 2
+// Espaço entre blocos na folha, em px — o `gap-7` da renderização.
+const GAP_ENTRE_BLOCOS = 28
+
+/**
+ * Distribui os blocos em folhas A4 pela altura real de cada um.
+ *
+ * Eram duas seções fixas por folha, com a capa sozinha na primeira: seção
+ * curta (KPIs, trajetória) deixava a folha quase vazia, enquanto o PDF corre
+ * em fluxo e sai com bem menos páginas. Aqui os blocos são medidos numa folha
+ * invisível do mesmo tamanho e empilhados enquanto couberem. Bloco maior que
+ * a folha fica sozinho numa.
+ */
+function empacotar(alturas, disponivel) {
+  const paginas = []
+  let atual = []
+  let usado = 0
+  alturas.forEach((h, idx) => {
+    const somado = atual.length ? usado + GAP_ENTRE_BLOCOS + h : h
+    if (atual.length && somado > disponivel) {
+      paginas.push(atual)
+      atual = [idx]
+      usado = h
+    } else {
+      atual.push(idx)
+      usado = somado
+    }
+  })
+  if (atual.length) paginas.push(atual)
+  return paginas
+}
 
 /* -------------------------------------------------------------------------- */
 /* ReportPreview                                                              */
 /* -------------------------------------------------------------------------- */
 
 export default function ReportPreview({ document: doc }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const conteudoMedidor = useRef(null)
+  const [paginas, setPaginas] = useState(null)
+
+  const sections = doc?.sections || []
+  const blocos = doc ? [
+    { key: 'cover', node: <Cover doc={doc} t={t} /> },
+    { key: 'summary', node: <ExecutiveSummary doc={doc} t={t} /> },
+    ...sections
+      .filter((key) => SECTION_COMPONENTS[key])
+      .map((key) => {
+        const Section = SECTION_COMPONENTS[key]
+        return { key, node: <Section doc={doc} t={t} /> }
+      }),
+  ] : []
+
+  useLayoutEffect(() => {
+    const conteudo = conteudoMedidor.current
+    if (!conteudo) return undefined
+    const medir = () => {
+      const estilo = getComputedStyle(conteudo)
+      const disponivel = conteudo.clientHeight
+        - parseFloat(estilo.paddingTop) - parseFloat(estilo.paddingBottom)
+      const alturas = [...conteudo.querySelectorAll('[data-bloco]')]
+        .map((el) => el.getBoundingClientRect().height)
+      setPaginas(empacotar(alturas, disponivel))
+    }
+    // O observador dispara ao começar a observar e de novo quando a folha muda
+    // de largura com a janela — a altura dos blocos acompanha.
+    const obs = new ResizeObserver(medir)
+    obs.observe(conteudo)
+    return () => obs.disconnect()
+    // Trocar de idioma muda o comprimento dos textos, e com ele a paginação.
+  }, [doc, i18n.language])
 
   if (!doc) return null
 
-  const sections = doc.sections || []
-  const pageGroups = []
-  for (let i = 0; i < sections.length; i += SECTIONS_PER_PAGE) {
-    pageGroups.push(sections.slice(i, i + SECTIONS_PER_PAGE))
-  }
-  const totalPages = 1 + pageGroups.length
   const brand = doc.campaign.brand_name
+  // Até a primeira medida, uma folha por bloco: nunca esconde conteúdo.
+  const grupos = paginas && paginas.flat().length === blocos.length
+    ? paginas
+    : blocos.map((_, i) => [i])
 
   return (
-    <div className="space-y-6">
-      <Page pageNumber={1} totalPages={totalPages} brand={brand} t={t}>
-        <div className="flex h-full flex-col gap-8">
-          <Cover doc={doc} t={t} />
-          <ExecutiveSummary doc={doc} t={t} />
-        </div>
-      </Page>
+    <div className="relative space-y-6">
+      {/* Folha invisível, do mesmo tamanho das reais, só para medir. */}
+      <div aria-hidden="true" className="pointer-events-none invisible absolute inset-x-0 top-0 -z-10 h-0 overflow-visible">
+        <Page pageNumber={0} totalPages={0} brand={brand} t={t} contentRef={conteudoMedidor}>
+          {blocos.map((b) => <div key={b.key} data-bloco>{b.node}</div>)}
+        </Page>
+      </div>
 
-      {pageGroups.map((group, idx) => (
-        <Page key={idx} pageNumber={idx + 2} totalPages={totalPages} brand={brand} t={t}>
-          <div className="flex h-full flex-col gap-7">
-            {group.map((key) => {
-              const Section = SECTION_COMPONENTS[key]
-              return Section ? <div key={key}><Section doc={doc} t={t} /></div> : null
-            })}
+      {grupos.map((grupo, idx) => (
+        <Page key={idx} pageNumber={idx + 1} totalPages={grupos.length} brand={brand} t={t}>
+          <div className="flex flex-col gap-7">
+            {grupo.map((i) => <div key={blocos[i].key}>{blocos[i].node}</div>)}
           </div>
         </Page>
       ))}
