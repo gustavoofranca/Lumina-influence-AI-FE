@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowDown2, HamburgerMenu, Logout, Setting2, User } from 'iconsax-reactjs'
+import { MOSTRAR_BOTAO_UPGRADE } from '../../lib/apresentacao.js'
 
 import { cn } from '../../lib/cn.js'
 import Search from '../ui/Search.jsx'
@@ -150,11 +151,13 @@ export default function Topbar({ onMenuClick }) {
 
       {/* Direita */}
       <div className="ml-auto flex items-center gap-1.5">
-        <Link to="/app/configuracoes/plano" className="hidden sm:block">
-          <Button variant="outlined" size="sm">
-            {t('app.topbar.upgrade')}
-          </Button>
-        </Link>
+        {MOSTRAR_BOTAO_UPGRADE && (
+          <Link to="/app/configuracoes/plano" className="hidden sm:block">
+            <Button variant="outlined" size="sm">
+              {t('app.topbar.upgrade')}
+            </Button>
+          </Link>
+        )}
 
         <LanguageSwitcher variant="icon" />
 

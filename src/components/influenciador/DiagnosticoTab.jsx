@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Sparkles, Heart, ShieldCheck, Bot } from 'lucide-react'
+import { MOSTRAR_AUDITORIA_DE_VIDEO_DECORATIVA, MOSTRAR_INTEGRIDADE_DO_PUBLICO } from '../../lib/apresentacao.js'
 
 import KpiCard from '../ui/KpiCard.jsx'
 import SentimentHeatmap        from './diagnostic/SentimentHeatmap.jsx'
@@ -61,26 +62,28 @@ export default function DiagnosticoTab({
       </div>
 
       {/* Linha: Sentiment Heatmap (2 cols) + Audience (1 col) */}
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      <section className={`grid gap-6 ${MOSTRAR_INTEGRIDADE_DO_PUBLICO ? 'lg:grid-cols-3' : ''}`}>
+        <div className={MOSTRAR_INTEGRIDADE_DO_PUBLICO ? 'lg:col-span-2' : ''}>
           <SentimentHeatmap
             clusters={adaptSentimentClusters(analysis?.sentiment_clusters)}
             keywords={adaptKeywords(analysis?.keywords)}
             loading={loading}
           />
         </div>
+        {MOSTRAR_INTEGRIDADE_DO_PUBLICO && (
         <div>
           <AudienceIntegrityCard
             data={adaptAudienceIntegrity(analysis?.audience_integrity)}
             loading={loading}
           />
         </div>
+        )}
       </section>
 
       {/* Linha: Video Audit (1 col) + Neural Confidence (2 cols) */}
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div><VideoAuditCard /></div>
-        <div className="lg:col-span-2">
+      <section className={`grid gap-6 ${MOSTRAR_AUDITORIA_DE_VIDEO_DECORATIVA ? 'lg:grid-cols-3' : ''}`}>
+        {MOSTRAR_AUDITORIA_DE_VIDEO_DECORATIVA && <div><VideoAuditCard /></div>}
+        <div className={MOSTRAR_AUDITORIA_DE_VIDEO_DECORATIVA ? 'lg:col-span-2' : ''}>
           <NeuralConfidenceCard
             data={adaptNeuralConfidence(analysis?.neural_confidence)}
             loading={loading}

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { TrendingUp } from 'lucide-react'
 import { TrendDown, TrendUp } from 'iconsax-reactjs'
+import { MOSTRAR_KPI_FINANCEIRO_SEM_MEDICAO } from '../../lib/apresentacao.js'
 
 import { cn } from '../../lib/cn.js'
 import Card from '../ui/Card.jsx'
@@ -34,7 +35,12 @@ export default function KpiGrid({ data, loading = false }) {
     return <Skeleton className="h-[5.5rem]" rounded="rounded-superficie" />
   }
 
-  if (!data?.length) {
+  // Financeiro sem medição sai da faixa; com medição, fica.
+  const visiveis = (data || []).filter(
+    (k) => MOSTRAR_KPI_FINANCEIRO_SEM_MEDICAO || k.measured || !['roi', 'cac'].includes(k.key)
+  )
+
+  if (!visiveis.length) {
     return (
       <Card>
         <EmptyState compact icon={TrendingUp} title={t('dashboard.empty')} />
@@ -43,8 +49,12 @@ export default function KpiGrid({ data, loading = false }) {
   }
 
   return (
-    <Card as="dl" padding="none" className="grid grid-cols-2 xl:grid-cols-4">
-      {data.slice(0, KPI_SLOTS).map((kpi, i) => (
+    <Card
+      as="dl"
+      padding="none"
+      className={cn('grid grid-cols-2', visiveis.length >= 4 && 'xl:grid-cols-4')}
+    >
+      {visiveis.slice(0, KPI_SLOTS).map((kpi, i) => (
         <Indicador
           key={kpi.key}
           label={t(`dashboard.kpis.${kpi.key}`)}

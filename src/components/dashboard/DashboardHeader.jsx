@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, Check } from 'lucide-react'
+import { MOSTRAR_SELO_AO_VIVO } from '../../lib/apresentacao.js'
 
 import { cn } from '../../lib/cn.js'
 import StatusIndicator from '../ui/StatusIndicator.jsx'
@@ -103,7 +104,9 @@ export default function DashboardHeader({
             {t('dashboard.title')}
           </h1>
           {/* Violeta e não verde: o painel usa duas cores, e verde não é uma delas. */}
-          <StatusIndicator label={t('dashboard.liveSync')} color="primary" />
+          {MOSTRAR_SELO_AO_VIVO && (
+            <StatusIndicator label={t('dashboard.liveSync')} color="primary" />
+          )}
         </div>
       </div>
 

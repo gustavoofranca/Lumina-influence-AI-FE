@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Activity } from 'lucide-react'
+import { MOSTRAR_SERIE_TEMPORAL_DE_SENTIMENTO } from '../../../lib/apresentacao.js'
 
 import { cn } from '../../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../../ui/Card.jsx'
@@ -124,9 +125,9 @@ export default function SentimentHeatmap({ clusters, keywords, timeline, loading
         <Skeleton className="h-40" rounded="rounded-xl" />
       ) : data ? (
         <HeatmapBars data={data} />
-      ) : (
+      ) : MOSTRAR_SERIE_TEMPORAL_DE_SENTIMENTO ? (
         <EmptyState compact icon={Activity} title={t('influenciador.sentiment.timelineEmpty')} />
-      )}
+      ) : null}
 
       {/* Clusters + keywords lado a lado */}
       <div className="grid gap-6 md:grid-cols-2">
