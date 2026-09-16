@@ -10,6 +10,8 @@
     "themeLight": "Mudar para o tema claro",
     "themeDark": "Mudar para o tema escuro",
     "noRecords": "Nenhum registro",
+    "invalidDate": "Data inválida — confira o dia e o mês.",
+    "openCalendar": "Abrir calendário",
     "a11y": {
       "loading": "Carregando",
       "close": "Fechar",
@@ -580,7 +582,7 @@
         "subtitle": "Escolha o que incluir no documento exportado.",
         "sections": {
           "kpis": "KPIs principais",
-          "kpisDesc": "ROI, engajamento, CAC e contagem de criadores ativos",
+          "kpisDesc": "Criadores, alcance total, engajamento e sentimento médios",
           "growth": "Gráfico de crescimento",
           "growthDesc": "Alcance orgânico vs tráfego pago no período selecionado",
           "benchmark": "Tabela de benchmarking",
@@ -588,7 +590,9 @@
           "diagnostic": "Diagnóstico IA",
           "diagnosticDesc": "Análise qualitativa, sentimento e detecção de bots",
           "recommendations": "Recomendações da IA",
-          "recommendationsDesc": "Ações sugeridas para os próximos ciclos"
+          "recommendationsDesc": "Ações sugeridas para os próximos ciclos",
+          "video": "Análise de vídeo",
+          "videoDesc": "Transcrição e leitura do roteiro feitas pela IA sobre os vídeos do período"
         }
       },
       "step4": {
@@ -620,7 +624,24 @@
       "growthPeriod": "Período",
       "noPosts": "Nenhum post da campanha no período selecionado.",
       "noAnalysis": "Nenhuma análise de IA registrada para os criadores desta campanha.",
-      "footerNote": "Documento gerado por Lumina Influence AI · Confidencial"
+      "footerNote": "Documento gerado por Lumina Influence AI · Confidencial",
+      "videoTitle": "Análise de vídeo",
+      "noVideoAnalysis": "Nenhuma análise com vídeo registrada no período. A transcrição só existe para posts analisados em modo multimodal.",
+      "transcriptLabel": "Transcrição gerada pelo modelo",
+      "scriptScore": "Roteiro",
+      "keyPhrases": "Trechos destacados",
+      "postsTitle": "Posts auditados",
+      "postsCols": {
+        "date": "Data",
+        "creator": "Criador",
+        "post": "Post",
+        "reach": "Alcance",
+        "likes": "Curt.",
+        "comments": "Coment.",
+        "shares": "Compart.",
+        "saves": "Salvos"
+      },
+      "summaryTextNoSplit": "Esta auditoria cobre {{creators}} criadores da campanha {{brand}}. O índice de sentimento ficou em {{sentiment}}. Alcance total auditado: {{reach}} em {{posts}} posts. A divisão entre alcance orgânico e pago não é informada pela API da plataforma e não foi medida."
     }
   },
   "campanhas": {
@@ -768,7 +789,8 @@
       "followersLabel": "seguidores",
       "statusLabel": "Status do criador",
       "statusSaving": "Salvando…",
-      "statusSaved": "Status alterado para {{status}}."
+      "statusSaved": "Status alterado para {{status}}.",
+      "followersSumLabel": "seguidores somados"
     },
     "tabs": {
       "overview": "Visão Geral",
@@ -835,7 +857,9 @@
         "token_revoked": "{{rede}}: a autorização foi revogada na plataforma. Reconecte a conta.",
         "rate_limited": "{{rede}}: a plataforma limitou as requisições. Tente mais tarde.",
         "nothing": "Nenhuma conta vinculada para sincronizar."
-      }
+      },
+      "demoBadge": "demonstração",
+      "demoHint": "conectada a um provedor local — os números não vieram da plataforma"
     },
     "neuralConfidence": {
       "empty": "Confiança neural indisponível — rode uma análise.",
@@ -877,21 +901,28 @@
         "followers": "Seguidores",
         "engagement": "Engajamento",
         "organicReach": "Alcance orgânico",
-        "paidReach": "Tráfego pago"
+        "paidReach": "Tráfego pago",
+        "followersSum": "Seguidores somados"
       }
     },
     "posts": {
       "empty": "Nenhum post analisado para este criador.",
       "title": "Posts Analisados",
-      "subtitle": "Conteúdos auditados nos últimos 30 dias.",
+      "subtitle": "Publicações coletadas, das mais recentes às mais antigas.",
       "columns": {
         "post": "Post",
         "platform": "Plataforma",
         "date": "Data",
         "reach": "Alcance",
         "sentiment": "Sentimento",
-        "botRisk": "Risco de bot"
-      }
+        "botRisk": "Risco de bot",
+        "comments": "Comentários"
+      },
+      "analyze": "Analisar com IA",
+      "reanalyze": "Reanalisar",
+      "analyzing": "Analisando…",
+      "analyzed": "Análise concluída. Veja o resultado na aba Diagnóstico IA.",
+      "analyzeHint": "Envia o post e seus comentários ao Gemini. Leva cerca de 30 segundos e consome uma chamada da cota."
     },
     "history": {
       "empty": "Nenhuma análise no histórico deste criador.",
@@ -939,6 +970,56 @@
       "bio": "Bio",
       "save": "Salvar",
       "saved": "Dados do criador atualizados."
+    },
+    "video": {
+      "label": "ANALISAR VÍDEO",
+      "title": "Analisar vídeo",
+      "subtitle": "Envie um arquivo e a IA transcreve a fala, lê o roteiro e mede a coerência com a marca.",
+      "choose": "Escolher arquivo de vídeo",
+      "hint": "MP4, MOV ou WEBM, até 50 MB",
+      "remove": "Remover arquivo",
+      "caption": "Legenda da publicação",
+      "captionPlaceholder": "Ex.: Testei por duas semanas antes de falar #publi",
+      "campaign": "Campanha",
+      "noCampaign": "Nenhuma — analisar sem vincular",
+      "campaignHint": "Sem campanha, o vídeo é analisado mas não entra em nenhum relatório.",
+      "analyze": "Analisar vídeo",
+      "analyzing": "Analisando…",
+      "waitNote": "Enviando e analisando — leva de 30 a 90 segundos. Não feche a página.",
+      "tooLarge": "O arquivo tem {{size}} e o limite é {{max}} MB.",
+      "transcriptLabel": "Transcrição gerada pelo modelo",
+      "noTranscript": "O modelo não devolveu transcrição — o vídeo pode não ter fala.",
+      "doneNote": "A análise já está no histórico do criador e entra no relatório da campanha."
+    },
+    "bestTime": {
+      "label": "Quando publicar",
+      "title": "Melhor dia e horário para postar",
+      "subtitle": "Alcance mediano dos posts coletados, por dia da semana e período (horário de Brasília).",
+      "bestDay": "Melhor dia",
+      "bestPeriod": "Melhor período",
+      "above": "{{pct}}% acima da mediana geral",
+      "below": "{{pct}}% abaixo da mediana geral",
+      "base": "mediana {{median}} · {{n}} posts",
+      "footnote": "Base: {{n}} posts com alcance medido (mediana geral {{median}}). Dias e períodos com menos de {{min}} posts não concorrem. É o histórico da criadora, não garantia de alcance.",
+      "notEnough": "Poucos posts com alcance medido para comparar dias e horários (mínimo de {{min}} por grupo).",
+      "chartAria": "Alcance mediano por dia da semana",
+      "periods": {
+        "dawn": "Madrugada",
+        "morning": "Manhã",
+        "afternoon": "Tarde",
+        "night": "Noite"
+      }
+    },
+    "reachByPost": {
+      "label": "Desempenho",
+      "title": "Alcance por post",
+      "subtitle": "Alcance total de cada um dos {{n}} posts coletados, do mais antigo ao mais recente.",
+      "legendPost": "Post",
+      "legendCampaign": "Post de campanha",
+      "reach": "Alcance",
+      "empty": "Nenhum post com alcance medido.",
+      "excluded_one": "{{count}} post fora do gráfico: alcance não informado pela plataforma (collab ou vídeo enviado).",
+      "excluded_other": "{{count}} posts fora do gráfico: alcance não informado pela plataforma (collab ou vídeo enviado)."
     }
   },
   "influenciadores": {
@@ -1062,6 +1143,21 @@
       "label": "DENSIDADE DA REDE",
       "subtitle": "{{connected}} de {{total}} criadores conectados",
       "empty": "Densidade indisponível — conecte uma conta social."
+    },
+    "procedencia": {
+      "label": "PROCEDÊNCIA DO DADO",
+      "title": "De onde vêm estes números",
+      "subtitle": "O painel soma tudo. Aqui a origem fica separada.",
+      "empty": "Nenhuma conta social cadastrada.",
+      "detalhe": "{{contas}} conta · {{posts}} publicações",
+      "detalhe_other": "{{contas}} contas · {{posts}} publicações",
+      "ultimaColeta": "Última coleta real em {{data}}.",
+      "semColetaReal": "Nenhuma coleta real registrada até agora.",
+      "grupos": {
+        "real": "Coleta real da plataforma",
+        "demo": "Provedor de demonstração",
+        "sem_coleta": "Carga inicial, sem coleta ativa"
+      }
     }
   },
   "app": {

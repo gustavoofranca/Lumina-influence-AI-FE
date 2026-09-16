@@ -82,6 +82,17 @@ export async function getOverview({ period = '30d', campaignId } = {}) {
   }
 }
 
+/**
+ * Procedencia do dado: separa coleta real, demonstracao e carga inicial.
+ *
+ * O resto do painel soma; este endpoint e o unico que responde de onde cada
+ * numero veio. Sem ele, um KPI juntaria medicao e demonstracao em silencio.
+ */
+export async function getProcedencia() {
+  const res = await api.get('/dashboard/provenance')
+  return res.data
+}
+
 export async function getNetworkDensity() {
   const res = await api.get('/dashboard/network-density')
   return res.data // { value, total, connected }

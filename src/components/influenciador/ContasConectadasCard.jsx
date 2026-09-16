@@ -5,6 +5,7 @@ import { Link2, Unlink, Plug, RefreshCw } from 'lucide-react'
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Button from '../ui/Button.jsx'
+import Badge from '../ui/Badge.jsx'
 import DesconectarModal from './DesconectarModal.jsx'
 import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
@@ -182,8 +183,21 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
               </span>
 
               <div className="min-w-0 flex-1">
-                <span className="block text-sm font-semibold text-text-primary">
+                <span className="flex items-center gap-2 text-sm font-semibold text-text-primary">
                   {meta.name}
+                  {/* O provedor local fica no lugar das plataformas sem app
+                      aprovado. Sem este rótulo a tela exibiria métrica simulada
+                      com a mesma cara da coletada — dado inventado passando por
+                      medido, que é o defeito que o projeto inteiro combate. */}
+                  {conta?.connectionMode === 'demo' && (
+                    <Badge
+                      variant="warning"
+                      size="sm"
+                      title={t('influenciador.conexoes.demoHint')}
+                    >
+                      {t('influenciador.conexoes.demoBadge')}
+                    </Badge>
+                  )}
                 </span>
                 <span className="block truncate text-xs text-text-secondary">
                   {conta ? (

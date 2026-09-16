@@ -8,6 +8,7 @@ import Button from '../ui/Button.jsx'
 import Badge from '../ui/Badge.jsx'
 import StatusDoCriador from './StatusDoCriador.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
+import { ehSoma, detalharSoma } from '../../lib/seguidores.js'
 import { formatFollowers } from '../../lib/format.js'
 
 function formatDate(iso, locale) {
@@ -82,8 +83,16 @@ export default function InfluenciadorHeader({
               <span className="text-text-muted">·</span>
               <PlatformBadgeList platforms={inf.platforms} size={14} />
               <span className="text-text-muted">·</span>
-              <span>
-                {formatFollowers(inf.followers)} {t('influenciador.header.followersLabel')}
+              {/* "seguidores" sugere pessoas alcançáveis; com mais de uma
+                  conta o número é soma, e quem segue nas duas entra duas vezes.
+                  O título traz a conta que o total esconde. */}
+              <span title={ehSoma(inf.socialAccounts)
+                ? detalharSoma(inf.socialAccounts, formatFollowers)
+                : undefined}>
+                {formatFollowers(inf.followers)}{' '}
+                {t(ehSoma(inf.socialAccounts)
+                  ? 'influenciador.header.followersSumLabel'
+                  : 'influenciador.header.followersLabel')}
               </span>
               <span className="text-text-muted">·</span>
               <Badge variant="neutral" uppercase={false}>{inf.niche}</Badge>
