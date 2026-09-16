@@ -130,8 +130,15 @@ async function request(method, path, { body, params, auth = true, raw = false, j
     })
   }
 
+  // FormData e o caso do upload de video, o unico envio de arquivo do produto.
+  // O Content-Type dele precisa carregar o `boundary` que separa as partes, e
+  // quem sabe o boundary e o proprio navegador: declarar 'multipart/form-data'
+  // na mao produz um cabecalho sem boundary, e o servidor nao consegue separar
+  // os campos. Por isso aqui a regra e nao tocar no cabecalho.
+  const ehFormData = typeof FormData !== 'undefined' && body instanceof FormData
+
   const headers = {}
-  if (body !== undefined) headers['Content-Type'] = 'application/json'
+  if (body !== undefined && !ehFormData) headers['Content-Type'] = 'application/json'
   if (auth && _accessToken) headers['Authorization'] = `Bearer ${_accessToken}`
 
   let resp
@@ -139,7 +146,7 @@ async function request(method, path, { body, params, auth = true, raw = false, j
     resp = await fetch(url.toString(), {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body === undefined ? undefined : ehFormData ? body : JSON.stringify(body),
     })
   } catch (networkErr) {
     throw new ApiError('Falha de conexão com a API. O back-end está rodando?', {

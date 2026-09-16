@@ -1,5 +1,6 @@
 import { cn } from '../../lib/cn.js'
 import { useTranslation } from 'react-i18next'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 /**
  * Table — tabela leve para listagens internas.
@@ -10,6 +11,8 @@ import { useTranslation } from 'react-i18next'
  *   onRowClick?(row, index)
  *   getRowKey?(row, index) -> string
  *   emptyState?: ReactNode
+ *   sort?: { key, dir: 'asc' | 'desc' }     ordenação atual (quem chama ordena)
+ *   onSortChange?(key)                      clique num cabeçalho com `sortable`
  */
 // Coluna alinhada à direita é, por convenção da tabela, coluna de número — é
 // para isso que se alinha à direita. Ela ganha largura tabular junto: sem ela,
@@ -29,6 +32,8 @@ export default function Table({
   emptyState = null,
   className = '',
   dense = false,
+  sort = null,
+  onSortChange,
 }) {
   const { t } = useTranslation()
   const empty = data.length === 0
@@ -41,19 +46,45 @@ export default function Table({
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-bg-surface/60">
-              {columns.map((col) => (
-                <th
-                  key={col.key}
-                  scope="col"
-                  className={cn(
-                    'border-b border-hairline/60 px-4 py-3 text-[11px] font-semibold uppercase tracking-label text-text-label',
-                    ALIGN[col.align || 'left']
-                  )}
-                  style={col.width ? { width: col.width } : undefined}
-                >
-                  {col.header}
-                </th>
-              ))}
+              {columns.map((col) => {
+                const ordenavel = col.sortable && onSortChange
+                const ativa = ordenavel && sort?.key === col.key
+                const Seta = sort?.dir === 'asc' ? ArrowUp : ArrowDown
+                return (
+                  <th
+                    key={col.key}
+                    scope="col"
+                    // aria-sort só na coluna ativa: é o que o leitor de tela
+                    // anuncia ao entrar na célula.
+                    aria-sort={ativa ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}
+                    className={cn(
+                      'border-b border-hairline/60 px-4 py-3 text-[11px] font-semibold uppercase tracking-label text-text-label',
+                      ALIGN[col.align || 'left']
+                    )}
+                    style={col.width ? { width: col.width } : undefined}
+                  >
+                    {ordenavel ? (
+                      <button
+                        type="button"
+                        onClick={() => onSortChange(col.key)}
+                        className={cn(
+                          'inline-flex items-center gap-1 whitespace-nowrap uppercase tracking-label underline-offset-4 transition-colors hover:text-text-primary hover:underline',
+                          col.align === 'right' && 'flex-row-reverse',
+                          ativa && 'text-accent'
+                        )}
+                      >
+                        {col.header}
+                        {/* Seta só na coluna ativa: uma em cada cabeçalho
+                            somava quase cem pixels e empurrava a última coluna
+                            para fora do cartão. */}
+                        {ativa && <Seta size={12} aria-hidden="true" />}
+                      </button>
+                    ) : (
+                      col.header
+                    )}
+                  </th>
+                )
+              })}
             </tr>
           </thead>
 

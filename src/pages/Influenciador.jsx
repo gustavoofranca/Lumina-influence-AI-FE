@@ -10,6 +10,7 @@ import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { PLATFORM_META } from '../components/icons/PlatformIcons.jsx'
 import InfluenciadorHeader from '../components/influenciador/InfluenciadorHeader.jsx'
 import VisaoGeralTab        from '../components/influenciador/VisaoGeralTab.jsx'
+import { listCampaigns } from '../services/campaigns.js'
 import PostsAnalisadosTab   from '../components/influenciador/PostsAnalisadosTab.jsx'
 import DiagnosticoTab       from '../components/influenciador/DiagnosticoTab.jsx'
 import HistoricoTab         from '../components/influenciador/HistoricoTab.jsx'
@@ -73,11 +74,39 @@ export default function Influenciador() {
   const { data: analysis, loading: loadingAnalysis, error: erroAnalysis,
           refetch: recarregarAnalise } =
     useApi(() => getInfluencerAnalysis(id), [id])
+  // Campanhas da agência: alimentam o seletor do envio de vídeo. Sem campanha
+  // vinculada o vídeo é analisado e fica fora de qualquer relatório.
+  const { data: campanhas } = useApi(() => listCampaigns(), [])
   const { data: posts, loading: loadingPosts, error: erroPosts,
           refetch: recarregarPosts } =
     useApi(() => getInfluencerPosts(id), [id])
   const [reanalisando, setReanalisando] = useState(false)
   const [erroAnalise, setErroAnalise] = useState(null)
+  const [analisandoPostId, setAnalisandoPostId] = useState(null)
+
+  /** Analisa o post escolhido na aba de posts, e não só o mais recente. */
+  const analisarPost = async (post) => {
+    setErroAnalise(null)
+    setAnalisandoPostId(post.id)
+    try {
+      await analyzePost(post.id)
+      await Promise.all([
+        recarregarInfluenciador(),
+        recarregarAnalise(),
+        recarregarPosts(),
+        recarregarHistorico(),
+      ])
+      setAviso(t('influenciador.posts.analyzed'))
+    } catch (err) {
+      setErroAnalise(
+        err.code === 'gemini_quota_exceeded'
+          ? t('influenciador.header.quotaExceeded')
+          : err.message
+      )
+    } finally {
+      setAnalisandoPostId(null)
+    }
+  }
 
   const { data: historico, loading: loadingHistorico, error: erroHistorico,
           refetch: recarregarHistorico } =
@@ -118,7 +147,10 @@ export default function Influenciador() {
     }
   }
 
-  if (loading) {
+  // Só na primeira carga. Recarregar depois de uma ação (análise de vídeo,
+  // conexão de conta) trocava a página pelo spinner e desmontava o cartão que
+  // ainda mostrava o resultado.
+  if (loading && !influenciador) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
@@ -243,6 +275,8 @@ export default function Influenciador() {
               <VisaoGeralTab
                 influenciador={influenciador}
                 growth={analysis?.growth_trajectory}
+                campanhas={campanhas}
+                posts={posts || []}
                 onContasChange={async (mensagem) => {
                   await recarregarInfluenciador()
                   // Também recarrega os posts: purgar o histórico esvazia a aba,
@@ -252,7 +286,14 @@ export default function Influenciador() {
                 }}
               />
             )}
-            {tab === 'posts'     && <PostsAnalisadosTab data={posts} loading={loadingPosts} />}
+            {tab === 'posts'     && (
+              <PostsAnalisadosTab
+                data={posts}
+                loading={loadingPosts}
+                onAnalisar={analisarPost}
+                analisandoId={analisandoPostId}
+              />
+            )}
             {tab === 'diagnosis' && (
               <DiagnosticoTab
                 analysis={analysis}

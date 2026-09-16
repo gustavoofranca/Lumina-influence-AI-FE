@@ -8,10 +8,20 @@ import AreaStackedChart from '../charts/AreaStackedChart.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
 import ContasConectadasCard from './ContasConectadasCard.jsx'
+import AnalisarVideoCard from './AnalisarVideoCard.jsx'
+import AlcancePorPostCard from './AlcancePorPostCard.jsx'
+import MelhorHorarioCard from './MelhorHorarioCard.jsx'
+import { ehSoma, detalharSoma } from '../../lib/seguidores.js'
 import { formatFollowers, formatPct } from '../../lib/format.js'
 
-export default function VisaoGeralTab({ influenciador: inf, growth, onContasChange }) {
+import { MOSTRAR_INTEGRIDADE_RESUMIDA } from '../../lib/apresentacao.js'
+
+export default function VisaoGeralTab({ influenciador: inf, growth, campanhas = [], posts = [], onContasChange }) {
   const { t } = useTranslation()
+  // Sem divisão orgânico × pago medida (só coleta real, ADR-005), o gráfico
+  // de trajetória pintaria tudo de orgânico. Nesse caso entra o alcance por
+  // post, que só mostra o que foi medido.
+  const semDivisao = inf.organicReach == null && posts.length > 0
 
   const series = [
     { key: 'organic', label: t('dashboard.growth.organic'), color: '#7C3AED' },
@@ -23,9 +33,14 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
       {/* KPIs principais do influenciador */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard
-          label={t('influenciador.overview.metrics.followers')}
+          label={t(ehSoma(inf.socialAccounts)
+            ? 'influenciador.overview.metrics.followersSum'
+            : 'influenciador.overview.metrics.followers')}
           value={formatFollowers(inf.followers)}
           icon={Users}
+          hint={ehSoma(inf.socialAccounts)
+            ? detalharSoma(inf.socialAccounts, formatFollowers)
+            : undefined}
         />
         <KpiCard
           label={t('influenciador.overview.metrics.engagement')}
@@ -50,9 +65,25 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
 
       <ContasConectadasCard influenciador={inf} onChange={onContasChange} />
 
+      <AnalisarVideoCard
+        influenciador={inf}
+        campanhas={campanhas}
+        // Sem repassar a resposta: `onContasChange` recebe o texto do aviso, e
+        // a resposta da API como aviso era um objeto renderizado como texto —
+        // o React caía e a tela ficava só no fundo.
+        onAnalise={() => onContasChange()}
+      />
+
       {/* Crescimento + integridade resumida */}
-      <section className="grid gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
+      <section
+        className={`grid gap-6 ${MOSTRAR_INTEGRIDADE_RESUMIDA ? 'lg:grid-cols-3' : ''}`}
+      >
+        {semDivisao ? (
+          <div className={MOSTRAR_INTEGRIDADE_RESUMIDA ? 'lg:col-span-2' : ''}>
+            <AlcancePorPostCard posts={posts} />
+          </div>
+        ) : (
+        <Card className={MOSTRAR_INTEGRIDADE_RESUMIDA ? 'lg:col-span-2' : ''}>
           <CardLabel>{t('dashboard.growth.title')}</CardLabel>
           <CardTitle className="mt-1.5">{t('dashboard.growth.title')}</CardTitle>
           <p className="mt-1 text-sm text-text-secondary">{t('dashboard.growth.subtitle')}</p>
@@ -64,7 +95,9 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
             )}
           </div>
         </Card>
+        )}
 
+        {MOSTRAR_INTEGRIDADE_RESUMIDA && (
         <Card className="flex flex-col gap-5">
           <div>
             <CardLabel>{t('influenciador.kpis.brandCoherence')}</CardLabel>
@@ -83,7 +116,10 @@ export default function VisaoGeralTab({ influenciador: inf, growth, onContasChan
             </div>
           </div>
         </Card>
+        )}
       </section>
+
+      {posts.length > 0 && <MelhorHorarioCard posts={posts} />}
     </div>
   )
 }

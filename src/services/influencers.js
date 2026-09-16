@@ -79,6 +79,10 @@ export function adaptInfluencer(i) {
       // A conta sobrevive à desconexão para preservar os posts: existir não é
       // estar conectada, e só o back-end sabe se ainda há token.
       connected: sa.connected === true,
+      // 'real' | 'demo' | null. O provedor de demonstração fica no lugar das
+      // plataformas sem app aprovado, e a tela precisa dizer isso: métrica
+      // simulada exibida sem rótulo é número inventado passando por medido.
+      connectionMode: sa.connection_mode || null,
     })),
     followers: i.total_followers || 0,
     status: STATUS_MAP[i.status] || 'active',
@@ -181,6 +185,9 @@ export function adaptPost(p) {
     data: p.posted_at,
     plataforma: p.platform,
     alcance: p.reach_total,
+    views: p.views ?? null,
+    campanha: p.campaign_title ?? null,
+    comentarios: p.comments_count ?? null,
     sentimentScore: sent,
     botProbability: medidaArredondada(p.bot_probability),
   }
@@ -199,7 +206,31 @@ export async function analyzePost(postId) {
   return res.data
 }
 
-export async function getInfluencerPosts(id, limit = 20) {
+/**
+ * Envia um arquivo de video e recebe a analise multimodal dele.
+ *
+ * E o unico envio de arquivo do produto. O back-end guarda a midia, cria a
+ * publicacao e roda a analise com video — a que preenche a transcricao, que e
+ * a parte conferivel contra o material original.
+ *
+ * Cara como qualquer analise: sincrona, dezenas de segundos, e consome uma das
+ * 20 requisicoes diarias do free tier do Gemini. Some-se o tempo de subir o
+ * arquivo, que num video de 40MB nao e desprezivel.
+ *
+ * `campaignId` e opcional, mas e o que faz a publicacao entrar no relatorio
+ * daquela campanha: sem ela o video e analisado e fica fora do documento.
+ */
+export async function analisarVideoEnviado(influencerId, { arquivo, legenda, campaignId }) {
+  const form = new FormData()
+  form.append('video', arquivo)
+  if (legenda) form.append('caption', legenda)
+  if (campaignId) form.append('campaign_id', campaignId)
+
+  const res = await api.post(`/influencers/${influencerId}/video-analysis`, form)
+  return res.data
+}
+
+export async function getInfluencerPosts(id, limit = 500) {
   const res = await api.get(`/influencers/${id}/posts`, { params: { limit } })
   return res.data.map(adaptPost)
 }
