@@ -22,7 +22,7 @@ export default function Campanhas() {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
-  const { data: campaigns, loading, error, refetch} = useApi(listCampaigns, [])
+  const { data: campaigns, loading, error, refetch} = useApi(listCampaigns, [], { cacheKey: 'campaigns/list' })
   const all = campaigns || []
 
   const filtered = useMemo(() => {

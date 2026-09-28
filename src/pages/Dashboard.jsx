@@ -19,19 +19,20 @@ export default function Dashboard() {
   const [campaign, setCampaign] = useState('all')
 
   const { data: overview, loading, error, refetch} = useApi(
-    () => getOverview({ period, campaignId: campaign }), [period, campaign])
+    () => getOverview({ period, campaignId: campaign }), [period, campaign],
+    { cacheKey: 'dashboard/overview' })
   const { data: density, loading: loadingDensity, error: erroDensity,
-          refetch: recarregarDensity } = useApi(getNetworkDensity, [])
+          refetch: recarregarDensity } = useApi(getNetworkDensity, [], { cacheKey: 'dashboard/network-density' })
   // Procedencia: fica ao lado dos KPIs de propósito. É o cartão que diz o que
   // os outros números não dizem — quanto do que está na tela foi medido.
   const { data: procedencia, loading: loadingProcedencia,
           error: erroProcedencia, refetch: recarregarProcedencia } =
-    useApi(getProcedencia, [])
+    useApi(getProcedencia, [], { cacheKey: 'dashboard/provenance' })
   // Sem o erro na mão, a lista que falhou cai calada no rótulo "Todas as
   // campanhas" e o usuário filtra — ou deixa de filtrar — sobre um seletor que
   // não carregou.
   const { data: campaignOpts, error: erroCampanhas,
-          refetch: recarregarCampanhas } = useApi(getCampaignOptions, [])
+          refetch: recarregarCampanhas } = useApi(getCampaignOptions, [], { cacheKey: 'dashboard/campaign-options' })
 
   const campaignOptions = (campaignOpts || [{ value: 'all', name: t('dashboard.filters.allCampaigns') }])
     .map((c) => (c.value === 'all' ? { ...c, name: t('dashboard.filters.allCampaigns') } : c))

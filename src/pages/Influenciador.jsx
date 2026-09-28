@@ -70,16 +70,16 @@ export default function Influenciador() {
 
   const { data: influenciador, loading, error: erroCarregamento,
           refetch: recarregarInfluenciador } =
-    useApi(() => getInfluencer(id), [id])
+    useApi(() => getInfluencer(id), [id], { cacheKey: 'influencer/detail' })
   const { data: analysis, loading: loadingAnalysis, error: erroAnalysis,
           refetch: recarregarAnalise } =
-    useApi(() => getInfluencerAnalysis(id), [id])
+    useApi(() => getInfluencerAnalysis(id), [id], { cacheKey: 'influencer/analysis' })
   // Campanhas da agência: alimentam o seletor do envio de vídeo. Sem campanha
   // vinculada o vídeo é analisado e fica fora de qualquer relatório.
-  const { data: campanhas } = useApi(() => listCampaigns(), [])
+  const { data: campanhas } = useApi(() => listCampaigns(), [], { cacheKey: 'campaigns/list' })
   const { data: posts, loading: loadingPosts, error: erroPosts,
           refetch: recarregarPosts } =
-    useApi(() => getInfluencerPosts(id), [id])
+    useApi(() => getInfluencerPosts(id), [id], { cacheKey: 'influencer/posts' })
   const [reanalisando, setReanalisando] = useState(false)
   const [erroAnalise, setErroAnalise] = useState(null)
   const [analisandoPostId, setAnalisandoPostId] = useState(null)
@@ -110,7 +110,7 @@ export default function Influenciador() {
 
   const { data: historico, loading: loadingHistorico, error: erroHistorico,
           refetch: recarregarHistorico } =
-    useApi(() => getInfluencerAnalysisHistory(id), [id])
+    useApi(() => getInfluencerAnalysisHistory(id), [id], { cacheKey: 'influencer/history' })
 
   /**
    * Reanalisa o post mais recente do criador com o modelo real.

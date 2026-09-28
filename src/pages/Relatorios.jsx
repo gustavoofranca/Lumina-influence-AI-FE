@@ -71,7 +71,7 @@ export default function Relatorios() {
   const [search, setSearch] = useState('')
   const [toast, setToast] = useState(null)
 
-  const { data: reports, loading, error, refetch} = useApi(listReports, [])
+  const { data: reports, loading, error, refetch} = useApi(listReports, [], { cacheKey: 'reports/list' })
   const all = reports || []
 
   const filtered = useMemo(() => {

@@ -32,10 +32,10 @@ export default function Campanha() {
   }
   const { data: campanha, loading, error: erroCarregamento,
           refetch: recarregarCampanha } =
-    useApi(() => getCampaign(id), [id])
+    useApi(() => getCampaign(id), [id], { cacheKey: 'campaign/detail' })
   const { data: bench, loading: benchLoading, error: erroBench,
           refetch: recarregarBench } =
-    useApi(() => getCampaignBenchmarking(id), [id])
+    useApi(() => getCampaignBenchmarking(id), [id], { cacheKey: 'campaign/benchmarking' })
 
   const [editando, setEditando] = useState(false)
   const [salvando, setSalvando] = useState(false)

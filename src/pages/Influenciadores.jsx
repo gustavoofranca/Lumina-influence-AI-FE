@@ -87,7 +87,7 @@ export default function Influenciadores() {
 
   const hasFilters = !!search || platforms.size > 0 || statuses.size > 0 || range !== 'all'
 
-  const { data: influencers, loading, error, refetch } = useApi(() => listInfluencers(), [])
+  const { data: influencers, loading, error, refetch } = useApi(() => listInfluencers(), [], { cacheKey: 'influencers/enriched' })
 
   const filtered = useMemo(
     () => applyFilters(influencers || [], { search, platforms, statuses, range }),

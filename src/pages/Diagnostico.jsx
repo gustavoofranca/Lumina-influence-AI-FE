@@ -50,7 +50,7 @@ export default function Diagnostico() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
 
-  const { data, loading, error, refetch} = useApi(() => listInfluencers({ enriched: true }), [])
+  const { data, loading, error, refetch} = useApi(() => listInfluencers({ enriched: true }), [], { cacheKey: 'influencers/enriched' })
 
   const linhas = useMemo(
     () => [...(data || [])].sort(ordenarPorAnaliseRecente),

@@ -6,6 +6,8 @@
  * - Em 401, dispara um callback de "sessão expirada" (logout).
  */
 
+import { limparCacheDaApi } from './cacheDaApi.js'
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1'
 
 // ADR-001 (revisada em 26/08/2026): o access token vive em sessionStorage, nunca
@@ -102,10 +104,16 @@ async function renovarSessao() {
   return _renovacaoEmCurso
 }
 
-/** Descarta o par inteiro — usado no logout e quando a renovacao falha. */
+/**
+ * Descarta o par inteiro — usado no logout e quando a renovacao falha.
+ *
+ * Leva junto a memoria de respostas: e o ponto por onde toda sessao termina, e
+ * a proxima pode ser de outra pessoa, de outra agencia.
+ */
 export function limparTokens() {
   setAccessToken(null)
   setRefreshToken(null)
+  limparCacheDaApi()
 }
 
 export function setOnUnauthorized(fn) {
@@ -154,6 +162,11 @@ async function request(method, path, { body, params, auth = true, raw = false, j
       code: 'network_error',
     })
   }
+
+  // Escrita que deu certo apaga a memoria de respostas inteira: qualquer
+  // leitura guardada pode ter ficado velha. Antes do `return` do 204, que e o
+  // que o DELETE devolve.
+  if (resp.ok && method !== 'GET') limparCacheDaApi()
 
   if (resp.status === 204) return null
   if (raw) return resp
