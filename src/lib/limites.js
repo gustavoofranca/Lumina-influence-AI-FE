@@ -22,8 +22,7 @@ export const LIMITES = {
   nomeAgencia: 160,
   nomePessoa: 160,
   email: 254,
-  // Limite de legenda do próprio Instagram. A API recebe o mesmo teto na
-  // próxima fase da validação.
+  // Limite de legenda do próprio Instagram — `LIMITE_LEGENDA` na API.
   legendaVideo: 2200,
 }
 
