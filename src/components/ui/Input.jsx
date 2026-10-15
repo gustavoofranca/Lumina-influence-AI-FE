@@ -6,6 +6,10 @@ import { cn } from '../../lib/cn.js'
  * Input — campo de texto padrao da Lumina.
  * Estrutura: label uppercase (text-label) acima + caixa com bg-input e
  * focus ring violeta. leftIcon opcional (lupa, email, etc.).
+ *
+ * `contador` mostra "usados/limite" sob o campo quando há `maxLength` — para
+ * texto longo (bio, legenda), onde o limite não é óbvio de cabeça. Em campo
+ * curto o próprio `maxLength` basta e o contador só seria ruído.
  */
 const Input = forwardRef(function Input(
   {
@@ -21,6 +25,7 @@ const Input = forwardRef(function Input(
     /** `padrao` usa a superfície do app; `vidro` usa a da landing. */
     variant = 'padrao',
     fullWidth = true,
+    contador = false,
     ...rest
   },
   ref
@@ -88,14 +93,25 @@ const Input = forwardRef(function Input(
         {rightAdornment ? <div className="shrink-0">{rightAdornment}</div> : null}
       </div>
 
-      {error ? (
-        <p id={errorId} className="mt-1.5 text-xs font-medium text-tint-rose">
-          {error}
-        </p>
-      ) : helperText ? (
-        <p id={helpId} className="mt-1.5 text-xs text-text-muted">
-          {helperText}
-        </p>
+      {(error || helperText || (contador && rest.maxLength)) ? (
+        <div className="mt-1.5 flex items-start justify-between gap-3">
+          {error ? (
+            <p id={errorId} className="text-xs font-medium text-tint-rose">
+              {error}
+            </p>
+          ) : helperText ? (
+            <p id={helpId} className="text-xs text-text-muted">
+              {helperText}
+            </p>
+          ) : <span />}
+          {contador && rest.maxLength ? (
+            // Sem `aria-live`: anunciar a contagem a cada tecla seria ruído para
+            // o leitor de tela. O `maxLength` já impede passar do limite.
+            <span className="numerico shrink-0 text-xs text-text-muted">
+              {String(rest.value ?? '').length}/{rest.maxLength}
+            </span>
+          ) : null}
+        </div>
       ) : null}
     </div>
   )

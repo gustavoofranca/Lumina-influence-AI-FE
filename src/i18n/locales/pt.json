@@ -10,6 +10,20 @@
     "themeLight": "Mudar para o tema claro",
     "themeDark": "Mudar para o tema escuro",
     "noRecords": "Nenhum registro",
+    "validation": {
+      "required": "Campo obrigatório.",
+      "blank": "Não pode ficar em branco.",
+      "tooLong": "Use no máximo {{max}} caracteres.",
+      "noMarkup": "Não use os sinais < ou >.",
+      "handle": "Use só letras, números, ponto, hífen e sublinhado, sem espaços.",
+      "email": "E-mail inválido.",
+      "dateRange": "A data precisa estar entre {{min}} e {{max}}.",
+      "money": "Informe um valor positivo.",
+      "moneyMax": "O valor máximo é {{max}}.",
+      "cnpjLength": "O CNPJ tem 14 dígitos.",
+      "cnpj": "CNPJ inválido: o dígito verificador não confere.",
+      "fixFields": "Corrija os campos indicados."
+    },
     "invalidDate": "Data inválida — confira o dia e o mês.",
     "openCalendar": "Abrir calendário",
     "a11y": {

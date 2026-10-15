@@ -10,6 +10,20 @@
     "themeLight": "Switch to light theme",
     "themeDark": "Switch to dark theme",
     "noRecords": "No records",
+    "validation": {
+      "required": "Required field.",
+      "blank": "Can't be blank.",
+      "tooLong": "Use at most {{max}} characters.",
+      "noMarkup": "Don't use the < or > signs.",
+      "handle": "Use only letters, numbers, dot, hyphen and underscore, no spaces.",
+      "email": "Invalid email.",
+      "dateRange": "The date must be between {{min}} and {{max}}.",
+      "money": "Enter a positive amount.",
+      "moneyMax": "The maximum is {{max}}.",
+      "cnpjLength": "A CNPJ has 14 digits.",
+      "cnpj": "Invalid CNPJ: the check digit doesn't match.",
+      "fixFields": "Fix the highlighted fields."
+    },
     "invalidDate": "Invalid date — check the day and month.",
     "openCalendar": "Open calendar",
     "a11y": {

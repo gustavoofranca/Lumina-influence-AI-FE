@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CalendarDays } from 'lucide-react'
 
+import { DATA_MAXIMA, DATA_MINIMA } from '../../lib/limites.js'
 import Input from './Input.jsx'
 
 /** "2026-09-16" → "16/09/2026". */
@@ -91,6 +92,9 @@ const DateInput = forwardRef(function DateInput({ value, onChange, error, ...res
           <input
             ref={nativo}
             type="date"
+            // A mesma faixa que a API aceita: o calendário nem oferece o ano 1.
+            min={DATA_MINIMA}
+            max={DATA_MAXIMA}
             tabIndex={-1}
             aria-hidden="true"
             value={value || ''}
