@@ -13,6 +13,14 @@ import Card, { CardLabel } from '../components/ui/Card.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import WizardStepper from '../components/campanha/WizardStepper.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
+import {
+  LIMITES,
+  ORCAMENTO_MAXIMO_REAIS,
+  errosDaApi,
+  validarData,
+  validarDinheiro,
+  validarTexto,
+} from '../lib/limites.js'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import Skeleton from '../components/ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../components/icons/PlatformIcons.jsx'
@@ -41,6 +49,7 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           leftIcon={Sparkles}
           value={data.name}
           onChange={(e) => onChange('name', e.target.value)}
+          maxLength={LIMITES.tituloCampanha}
           error={errors.name}
           containerClassName="lg:col-span-2"
         />
@@ -50,6 +59,7 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           leftIcon={Building2}
           value={data.brand}
           onChange={(e) => onChange('brand', e.target.value)}
+          maxLength={LIMITES.marca}
           error={errors.brand}
         />
         <DateInput
@@ -73,6 +83,8 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           leftIcon={Wallet}
           value={data.budget}
           onChange={(e) => onChange('budget', e.target.value)}
+          min={0}
+          max={ORCAMENTO_MAXIMO_REAIS}
           error={errors.budget}
           containerClassName="lg:col-span-2"
         />
@@ -311,16 +323,24 @@ export default function NovaCampanha() {
     setErrors((p) => ({ ...p, selection: undefined }))
   }
 
+  // As mesmas regras da API (ver lib/limites.js): o passo 1 não deixa avançar
+  // com o que a API vai recusar no passo 3, onde a pessoa já saiu do campo.
   const validateStep1 = () => {
     const errs = {}
-    if (!data.name.trim())     errs.name = t('campanhas.wizard.errors.required')
-    if (!data.brand.trim())    errs.brand = t('campanhas.wizard.errors.required')
-    if (!data.startDate)       errs.startDate = t('campanhas.wizard.errors.required')
-    if (!data.endDate)         errs.endDate = t('campanhas.wizard.errors.required')
-    if (data.startDate && data.endDate && data.startDate >= data.endDate) {
+    const nome = validarTexto(t, data.name, { max: LIMITES.tituloCampanha, obrigatorio: true })
+    const marca = validarTexto(t, data.brand, { max: LIMITES.marca, obrigatorio: true, semMarcacao: true })
+    if (nome) errs.name = nome
+    if (marca) errs.brand = marca
+    if (!data.startDate) errs.startDate = t('campanhas.wizard.errors.required')
+    else if (validarData(t, data.startDate)) errs.startDate = validarData(t, data.startDate)
+    if (!data.endDate) errs.endDate = t('campanhas.wizard.errors.required')
+    else if (validarData(t, data.endDate)) errs.endDate = validarData(t, data.endDate)
+    if (!errs.startDate && !errs.endDate && data.startDate >= data.endDate) {
       errs.period = t('campanhas.wizard.errors.invalidPeriod')
     }
-    if (!data.budget || Number(data.budget) <= 0) {
+    const dinheiro = validarDinheiro(t, data.budget)
+    if (dinheiro) errs.budget = dinheiro
+    else if (!data.budget || Number(data.budget) <= 0) {
       errs.budget = t('campanhas.wizard.errors.invalidBudget')
     }
     setErrors(errs)
@@ -360,7 +380,23 @@ export default function NovaCampanha() {
       setCreated(campanha)
       setTimeout(() => navigate(`/app/campanhas/${campanha.id}`), 1200)
     } catch (err) {
-      setSubmitError(err)
+      // Recusa com campo: o erro vai para o campo, e a tela volta ao passo onde
+      // ele está. Antes a pessoa via só "Erro de validação" no passo 3, sem
+      // saber qual campo nem por quê.
+      const doPasso1 = errosDaApi(err, {
+        brand_name: 'brand', title: 'name', period_start: 'startDate',
+        period_end: 'endDate', budget_brl_cents: 'budget',
+      })
+      const doPasso2 = errosDaApi(err, { participants: 'selection', influencer_id: 'selection', fee_brl_cents: 'selection' })
+      if (Object.keys(doPasso1).length) {
+        setErrors(doPasso1)
+        setStep(1)
+      } else if (Object.keys(doPasso2).length) {
+        setErrors(doPasso2)
+        setStep(2)
+      } else {
+        setSubmitError(err)
+      }
     } finally {
       setSubmitting(false)
     }

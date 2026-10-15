@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link2, User, AtSign, Check } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
+import { LIMITES, errosDaApi, validarTexto, validarUsuario } from '../../lib/limites.js'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
@@ -58,6 +59,8 @@ export default function AdicionarInfluenciadorModal({
   const [handle, setHandle]     = useState('')
   const [platforms, setPlatforms] = useState(new Set())
   const [error, setError]       = useState('')
+  const [erros, setErros]       = useState({})
+  const errosDaApiNoCampo = errosDaApi(erroApi, { display_name: 'name', handle: 'handle' })
 
   const togglePlatform = (p) => {
     const next = new Set(platforms)
@@ -68,10 +71,20 @@ export default function AdicionarInfluenciadorModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!name.trim()) {
-      setError(t('influenciadores.addModal.nameRequired'))
-      return
+    // As mesmas regras da API (lib/limites.js). O usuário é conferido aqui
+    // porque a API cria o criador antes das contas: um usuário recusado lá
+    // deixaria o criador salvo sem conta nenhuma.
+    const encontrados = {}
+    const nome = name.trim()
+      ? validarTexto(t, name, { max: LIMITES.nomeCriador, semMarcacao: true })
+      : t('influenciadores.addModal.nameRequired')
+    if (nome) encontrados.name = nome
+    if (handle.trim()) {
+      const usuario = validarUsuario(t, handle)
+      if (usuario) encontrados.handle = usuario
     }
+    setErros(encontrados)
+    if (Object.keys(encontrados).length) return
     if (platforms.size === 0) {
       setError(t('influenciadores.addModal.selectAtLeastOne'))
       return
@@ -101,14 +114,18 @@ export default function AdicionarInfluenciadorModal({
             placeholder={t('influenciadores.addModal.namePlaceholder')}
             leftIcon={User}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => { setName(e.target.value); setErros((p) => ({ ...p, name: undefined })) }}
+            maxLength={LIMITES.nomeCriador}
+            error={erros.name || errosDaApiNoCampo.name}
           />
           <Input
             label={t('influenciadores.addModal.handle')}
             placeholder={t('influenciadores.addModal.handlePlaceholder')}
             leftIcon={AtSign}
             value={handle}
-            onChange={(e) => setHandle(e.target.value)}
+            onChange={(e) => { setHandle(e.target.value); setErros((p) => ({ ...p, handle: undefined })) }}
+            maxLength={LIMITES.usuarioPlataforma}
+            error={erros.handle || errosDaApiNoCampo.handle}
           />
         </div>
 
@@ -127,7 +144,8 @@ export default function AdicionarInfluenciadorModal({
           {error && <p className="mt-2 text-xs font-medium text-tint-rose">{error}</p>}
         </div>
 
-        <ApiErrorBanner error={erroApi} />
+        {/* Recusa da API com campo vai para o campo; o aviso fica para o resto. */}
+        {Object.keys(errosDaApiNoCampo).length ? null : <ApiErrorBanner error={erroApi} />}
 
         <div className="flex justify-end gap-2 pt-2">
           <Button type="button" variant="secondary" onClick={onClose} disabled={submitting}>

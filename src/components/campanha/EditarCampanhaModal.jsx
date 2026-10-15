@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
+import {
+  LIMITES, ORCAMENTO_MAXIMO_REAIS, validarData, validarDinheiro, validarTexto,
+} from '../../lib/limites.js'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
 import DateInput from '../ui/DateInput.jsx'
@@ -21,7 +24,9 @@ export default function EditarCampanhaModal({
 }) {
   const { t } = useTranslation()
   const [campos, setCampos] = useState({})
-  const [erro, setErro] = useState('')
+  // Erro em cada campo, e não uma frase solta no rodapé: com vários campos, a
+  // pessoa precisa ver qual está errado sem reler o formulário inteiro.
+  const [erros, setErros] = useState({})
 
   // Reabrir o modal precisa mostrar o estado atual, não o rascunho anterior.
   useEffect(() => {
@@ -34,21 +39,42 @@ export default function EditarCampanhaModal({
       budget: campanha.budget ?? 0,
       status: campanha.status || 'planning',
     })
-    setErro('')
+    setErros({})
   }, [open, campanha])
 
   const set = (chave) => (e) => {
     setCampos((p) => ({ ...p, [chave]: e.target.value }))
-    setErro('')
+    setErros((p) => ({ ...p, [chave]: undefined }))
+  }
+
+  // As mesmas regras da API (lib/limites.js).
+  const validar = () => {
+    const e = {}
+    const marca = campos.brand?.trim()
+      ? validarTexto(t, campos.brand, { max: LIMITES.marca, semMarcacao: true })
+      : t('campanhas.editModal.brandRequired')
+    if (marca) e.brand = marca
+    const nome = validarTexto(t, campos.name, { max: LIMITES.tituloCampanha })
+    if (nome) e.name = nome
+    for (const chave of ['startDate', 'endDate']) {
+      if (!campos[chave]) e[chave] = t('campanhas.editModal.periodRequired')
+      else if (validarData(t, campos[chave])) e[chave] = validarData(t, campos[chave])
+    }
+    if (!e.startDate && !e.endDate && campos.endDate < campos.startDate) {
+      e.endDate = t('campanhas.editModal.periodInverted')
+    }
+    const orcamento = Number(campos.budget)
+    if (Number.isNaN(orcamento) || orcamento < 0) e.budget = t('campanhas.editModal.budgetInvalid')
+    else if (validarDinheiro(t, campos.budget)) e.budget = validarDinheiro(t, campos.budget)
+    return e
   }
 
   const submeter = async (e) => {
     e.preventDefault()
-    if (!campos.brand?.trim()) return setErro(t('campanhas.editModal.brandRequired'))
-    if (!campos.startDate || !campos.endDate) return setErro(t('campanhas.editModal.periodRequired'))
-    if (campos.endDate < campos.startDate) return setErro(t('campanhas.editModal.periodInverted'))
+    const encontrados = validar()
+    setErros(encontrados)
+    if (Object.keys(encontrados).length) return
     const orcamento = Number(campos.budget)
-    if (Number.isNaN(orcamento) || orcamento < 0) return setErro(t('campanhas.editModal.budgetInvalid'))
 
     // Só o que mudou — comparar aqui é o que mantém o PATCH sendo um PATCH.
     const alterados = {}
@@ -71,11 +97,15 @@ export default function EditarCampanhaModal({
           label={t('campanhas.editModal.brand')}
           value={campos.brand ?? ''}
           onChange={set('brand')}
+          maxLength={LIMITES.marca}
+          error={erros.brand}
         />
         <Input
           label={t('campanhas.editModal.name')}
           value={campos.name ?? ''}
           onChange={set('name')}
+          maxLength={LIMITES.tituloCampanha}
+          error={erros.name}
         />
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -83,11 +113,13 @@ export default function EditarCampanhaModal({
             label={t('campanhas.editModal.start')}
             value={campos.startDate ?? ''}
             onChange={set('startDate')}
+            error={erros.startDate}
           />
           <DateInput
             label={t('campanhas.editModal.end')}
             value={campos.endDate ?? ''}
             onChange={set('endDate')}
+            error={erros.endDate}
           />
         </div>
 
@@ -95,9 +127,11 @@ export default function EditarCampanhaModal({
           label={t('campanhas.editModal.budget')}
           type="number"
           min="0"
+          max={ORCAMENTO_MAXIMO_REAIS}
           step="1"
           value={campos.budget ?? 0}
           onChange={set('budget')}
+          error={erros.budget}
           helperText={t('campanhas.editModal.budgetHint')}
         />
 
@@ -122,9 +156,12 @@ export default function EditarCampanhaModal({
           </div>
         </div>
 
-        {(erro || erroApi) && (
+        {/* A recusa da API já diz o campo e o motivo ("Marca: deve ter no
+            máximo 160 caracteres"); fica aqui para o que a validação da tela
+            não pegar. */}
+        {erroApi && (
           <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tint-rose">
-            {erro || erroApi}
+            {erroApi}
           </p>
         )}
 

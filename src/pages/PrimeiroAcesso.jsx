@@ -8,6 +8,7 @@ import Button from '../components/ui/Button.jsx'
 import Input from '../components/ui/Input.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
+import { LIMITES, errosDaApi, validarTexto } from '../lib/limites.js'
 import { updateAgency } from '../services/agency.js'
 
 /**
@@ -34,6 +35,12 @@ export default function PrimeiroAcesso() {
       setErroCampo(t('primeiroAcesso.nameRequired'))
       return
     }
+    // A mesma regra da API (lib/limites.js).
+    const invalido = validarTexto(t, limpo, { max: LIMITES.nomeAgencia, semMarcacao: true })
+    if (invalido) {
+      setErroCampo(invalido)
+      return
+    }
     setErroCampo('')
     setErroApi(null)
     setSalvando(true)
@@ -42,7 +49,9 @@ export default function PrimeiroAcesso() {
       await refreshUser()
       seguir()
     } catch (err) {
-      setErroApi(err)
+      const porCampo = errosDaApi(err, { name: 'name' })
+      if (porCampo.name) setErroCampo(porCampo.name)
+      else setErroApi(err)
     } finally {
       setSalvando(false)
     }
@@ -65,6 +74,7 @@ export default function PrimeiroAcesso() {
             leftIcon={Building2}
             value={nome}
             onChange={(e) => { setNome(e.target.value); setErroCampo('') }}
+            maxLength={LIMITES.nomeAgencia}
             error={erroCampo}
             autoFocus
           />

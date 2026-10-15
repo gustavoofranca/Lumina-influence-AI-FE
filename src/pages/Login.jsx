@@ -9,6 +9,7 @@ import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { googleLoginUrl } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
+import { LIMITES } from '../lib/limites.js'
 
 export default function Login() {
   const { t } = useTranslation()
@@ -77,6 +78,7 @@ export default function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
+          maxLength={LIMITES.email}
         />
 
         {apiError && (

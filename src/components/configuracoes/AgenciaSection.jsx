@@ -8,6 +8,7 @@ import Button from '../ui/Button.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { useApi } from '../../hooks/useApi.js'
+import { LIMITES, errosDaApi, mascararCnpj, validarCnpj, validarTexto } from '../../lib/limites.js'
 import { getAgency, updateAgency } from '../../services/agency.js'
 
 /**
@@ -24,16 +25,31 @@ export default function AgenciaSection({ onSave }) {
   const [fields, setFields] = useState({ name: '', cnpj: '' })
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState(null)
+  const [erros, setErros] = useState({})
 
   useEffect(() => {
     if (agencia) setFields({ name: agencia.name, cnpj: agencia.cnpj })
   }, [agencia])
 
-  const set = (key) => (e) => setFields((p) => ({ ...p, [key]: e.target.value }))
+  const set = (key) => (e) => {
+    // O CNPJ ganha a máscara enquanto se digita; a API grava sempre mascarado.
+    const valor = key === 'cnpj' ? mascararCnpj(e.target.value) : e.target.value
+    setFields((p) => ({ ...p, [key]: valor }))
+    setErros((p) => ({ ...p, [key]: undefined }))
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault()
     if (!agencia) return
+    // O dígito do CNPJ só é conferido se ele mudou — a mesma regra da API, que
+    // não trava a edição do nome por um CNPJ antigo gravado com dígito errado.
+    const encontrados = {}
+    const nome = validarTexto(t, fields.name, { max: LIMITES.nomeAgencia, obrigatorio: true, semMarcacao: true })
+    const cnpj = validarCnpj(t, fields.cnpj, agencia.cnpj)
+    if (nome) encontrados.name = nome
+    if (cnpj) encontrados.cnpj = cnpj
+    setErros(encontrados)
+    if (Object.keys(encontrados).length) return
     setSaving(true)
     setSaveError(null)
     try {
@@ -41,7 +57,9 @@ export default function AgenciaSection({ onSave }) {
       await refetch()
       onSave?.()
     } catch (err) {
-      setSaveError(err)
+      const porCampo = errosDaApi(err, { name: 'name', cnpj: 'cnpj' })
+      if (Object.keys(porCampo).length) setErros(porCampo)
+      else setSaveError(err)
     } finally {
       setSaving(false)
     }
@@ -81,12 +99,18 @@ export default function AgenciaSection({ onSave }) {
             value={fields.name}
             onChange={set('name')}
             required
+            maxLength={LIMITES.nomeAgencia}
+            error={erros.name}
           />
           <Input
             label={t('configuracoes.agencia.cnpj')}
             leftIcon={Hash}
             value={fields.cnpj}
             onChange={set('cnpj')}
+            inputMode="numeric"
+            placeholder="00.000.000/0000-00"
+            maxLength={18}
+            error={erros.cnpj}
           />
         </div>
       </Card>

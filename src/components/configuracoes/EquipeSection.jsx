@@ -16,6 +16,7 @@ import { ROLE_KEYS } from '../../lib/constants.js'
 import { useApi } from '../../hooks/useApi.js'
 import { useAuth } from '../../context/AuthContext.jsx'
 import PapelDoMembro from './PapelDoMembro.jsx'
+import { LIMITES, errosDaApi, validarEmail, validarTexto } from '../../lib/limites.js'
 import { listMembers, inviteMember, removeMember, updateMemberRole } from '../../services/team.js'
 
 const DEFAULT_ROLE = 'member'
@@ -34,15 +35,24 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
   const [role, setRole]   = useState(DEFAULT_ROLE)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
+  const [erros, setErros] = useState({})
 
   const reset = () => {
-    setName(''); setEmail(''); setRole(DEFAULT_ROLE); setError(null)
+    setName(''); setEmail(''); setRole(DEFAULT_ROLE); setError(null); setErros({})
   }
 
   const close = () => { reset(); onClose?.() }
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    // As mesmas regras da API (lib/limites.js).
+    const encontrados = {}
+    const nome = validarTexto(t, name, { max: LIMITES.nomePessoa, obrigatorio: true, semMarcacao: true })
+    const mail = validarEmail(t, email)
+    if (nome) encontrados.name = nome
+    if (mail) encontrados.email = mail
+    setErros(encontrados)
+    if (Object.keys(encontrados).length) return
     setSaving(true)
     setError(null)
     try {
@@ -50,7 +60,9 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
       await onInvited?.()
       close()
     } catch (err) {
-      setError(err)
+      const porCampo = errosDaApi(err, { name: 'name', email: 'email' })
+      if (Object.keys(porCampo).length) setErros(porCampo)
+      else setError(err)
     } finally {
       setSaving(false)
     }
@@ -72,8 +84,10 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
           label={t('configuracoes.equipe.inviteModal.name')}
           leftIcon={UserIcon}
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => { setName(e.target.value); setErros((p) => ({ ...p, name: undefined })) }}
           required
+          maxLength={LIMITES.nomePessoa}
+          error={erros.name}
         />
 
         <Input
@@ -82,8 +96,10 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
           leftIcon={Mail}
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => { setEmail(e.target.value); setErros((p) => ({ ...p, email: undefined })) }}
           required
+          maxLength={LIMITES.email}
+          error={erros.email}
         />
 
         <div>

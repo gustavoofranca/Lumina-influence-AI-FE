@@ -8,6 +8,7 @@ import Input from '../ui/Input.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import { useApi } from '../../hooks/useApi.js'
+import { ORCAMENTO_MAXIMO_REAIS, errosDaApi, validarDinheiro } from '../../lib/limites.js'
 import { listInfluencers } from '../../services/influencers.js'
 import { adicionarParticipante } from '../../services/campaigns.js'
 
@@ -26,6 +27,7 @@ export default function AdicionarParticipanteModal({
   const { t } = useTranslation()
   const [escolhido, setEscolhido] = useState('')
   const [cache, setCache] = useState('')
+  const [erroCache, setErroCache] = useState(null)
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState(null)
 
@@ -42,10 +44,15 @@ export default function AdicionarParticipanteModal({
     setEscolhido('')
     setCache('')
     setErro(null)
+    setErroCache(null)
   }, [open])
 
   const adicionar = async () => {
     if (!escolhido) return
+    // A mesma regra da API (lib/limites.js): cachê de zero a R$ 1 bilhão.
+    const invalido = validarDinheiro(t, cache)
+    setErroCache(invalido)
+    if (invalido) return
     setSalvando(true)
     setErro(null)
     try {
@@ -53,7 +60,9 @@ export default function AdicionarParticipanteModal({
       await adicionarParticipante(campanhaId, { influencerId: escolhido, feeReais: cache })
       await onAdicionado?.(criador?.name)
     } catch (err) {
-      setErro(err)
+      const porCampo = errosDaApi(err, { fee_brl_cents: 'fee' })
+      if (porCampo.fee) setErroCache(porCampo.fee)
+      else setErro(err)
       setSalvando(false)
     }
   }
@@ -121,10 +130,12 @@ export default function AdicionarParticipanteModal({
               label={t('campanha.participantes.fee')}
               type="number"
               min="0"
+              max={ORCAMENTO_MAXIMO_REAIS}
               step="0.01"
               value={cache}
-              onChange={(e) => setCache(e.target.value)}
+              onChange={(e) => { setCache(e.target.value); setErroCache(null) }}
               disabled={salvando}
+              error={erroCache}
             />
           </>
         )}

@@ -10,6 +10,7 @@ import Badge from '../ui/Badge.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import ExcluirContaCard from './ExcluirContaCard.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
+import { LIMITES, errosDaApi, validarTexto } from '../../lib/limites.js'
 import { updateOwnProfile } from '../../services/team.js'
 
 const ROLE_VARIANT = {
@@ -33,6 +34,7 @@ export default function PerfilSection({ onSave }) {
   const [name, setName] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
+  const [erroNome, setErroNome] = useState(null)
 
   useEffect(() => {
     if (user) setName(user.name)
@@ -41,6 +43,10 @@ export default function PerfilSection({ onSave }) {
   const onSubmit = async (e) => {
     e.preventDefault()
     if (!user) return
+    // A mesma regra da API (lib/limites.js).
+    const invalido = validarTexto(t, name, { max: LIMITES.nomePessoa, obrigatorio: true, semMarcacao: true })
+    setErroNome(invalido)
+    if (invalido) return
     setSaving(true)
     setError(null)
     try {
@@ -48,7 +54,9 @@ export default function PerfilSection({ onSave }) {
       await refreshUser()
       onSave?.()
     } catch (err) {
-      setError(err)
+      const porCampo = errosDaApi(err, { name: 'name' })
+      if (porCampo.name) setErroNome(porCampo.name)
+      else setError(err)
     } finally {
       setSaving(false)
     }
@@ -86,8 +94,10 @@ export default function PerfilSection({ onSave }) {
             label={t('configuracoes.perfil.name')}
             leftIcon={User}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => { setName(e.target.value); setErroNome(null) }}
             required
+            maxLength={LIMITES.nomePessoa}
+            error={erroNome}
           />
           <Input
             label={t('configuracoes.perfil.email')}

@@ -5,6 +5,7 @@ import { Clapperboard, Upload, FileVideo, X } from 'lucide-react'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Button from '../ui/Button.jsx'
 import Input from '../ui/Input.jsx'
+import { LIMITES } from '../../lib/limites.js'
 import { analisarVideoEnviado } from '../../services/influencers.js'
 
 // Espelha `MAX_BYTES` de `src/integrations/media.py`. O back-end recusa acima
@@ -136,6 +137,8 @@ export default function AnalisarVideoCard({ influenciador, campanhas = [], onAna
         onChange={(e) => setLegenda(e.target.value)}
         placeholder={t('influenciador.video.captionPlaceholder')}
         disabled={enviando}
+        maxLength={LIMITES.legendaVideo}
+        contador
       />
 
       {campanhas.length > 0 && (
