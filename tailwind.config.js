@@ -207,13 +207,6 @@ export default {
           '0%':   { transform: 'translate(-50%, -50%) rotate(0deg)' },
           '100%': { transform: 'translate(-50%, -50%) rotate(360deg)' },
         },
-        // Desfile contínuo: a trilha anda metade da própria largura, e a
-        // segunda metade é cópia da primeira — no instante do salto o que
-        // está na tela é idêntico, então a emenda não aparece.
-        desfilar: {
-          '0%':   { transform: 'translate3d(0, 0, 0)' },
-          '100%': { transform: 'translate3d(-50%, 0, 0)' },
-        },
         'pulse-dot': {
           '0%, 100%': { opacity: '1', transform: 'scale(1)' },
           '50%':      { opacity: '0.5', transform: 'scale(1.15)' },
@@ -231,7 +224,6 @@ export default {
         'aura-lenta':   'aura-lenta 34s ease-in-out infinite',
         'aura-lenta-2': 'aura-lenta-2 46s ease-in-out infinite',
         'girar-brilho': 'girar-brilho 4s linear infinite',
-        desfilar: 'desfilar 32s linear infinite',
         'pulse-dot': 'pulse-dot 1.6s ease-in-out infinite',
         'fade-in':   'fade-in 0.3s ease-out',
         'shimmer':   'shimmer 1.4s linear infinite',

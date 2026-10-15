@@ -14,19 +14,30 @@ const API = process.env.LUMINA_API || 'http://localhost:5000/api/v1'
  * casos**. O back-end responde 200 mesmo quando uma conta falha, e um "pronto"
  * único transformaria token revogado em sucesso.
  */
-async function primeiroCriador(page) {
+/**
+ * Um criador com conta **de demonstração** — nunca o primeiro da lista.
+ *
+ * Sincronizar fala com a plataforma de verdade quando a conta é real. Este
+ * teste pegava o primeiro criador, que em 15/10/2026 era uma conta real de
+ * Instagram: o servidor estava sem a credencial da Meta, o sync caiu num
+ * defeito do back-end e a conexão verdadeira dela foi apagada. O defeito foi
+ * corrigido, mas teste não sincroniza conta de gente de verdade.
+ */
+async function criadorDeDemonstracao(page) {
   const r = await page.request.post(`${API}/auth/dev-login`, { data: {} })
   const token = (await r.json()).data.tokens.access_token
-  const lista = await page.request.get(`${API}/influencers?per_page=1`, {
+  const contas = await page.request.get(`${API}/social-accounts?per_page=200`, {
     headers: { Authorization: `Bearer ${token}` },
   })
-  return (await lista.json()).data?.[0]?.id
+  const dados = (await contas.json()).data
+  const lista = Array.isArray(dados) ? dados : dados?.items || []
+  return lista.find((c) => c.connection_mode === 'demo')?.influencer_id
 }
 
 test('sincronizar relata o resultado de cada conta', async ({ page }) => {
   await entrarComoAdmin(page)
-  const id = await primeiroCriador(page)
-  test.skip(!id, 'o seed não tem criador nesta base')
+  const id = await criadorDeDemonstracao(page)
+  test.skip(!id, 'nenhuma conta de demonstração nesta base')
 
   await page.goto(`/app/influenciadores/${id}`)
   await page.getByRole('tab', { name: /visão geral|overview/i }).click()
@@ -56,8 +67,8 @@ test('sincronizar relata o resultado de cada conta', async ({ page }) => {
 
 test('o resultado da sincronização é anunciado, não só desenhado', async ({ page }) => {
   await entrarComoAdmin(page)
-  const id = await primeiroCriador(page)
-  test.skip(!id, 'o seed não tem criador nesta base')
+  const id = await criadorDeDemonstracao(page)
+  test.skip(!id, 'nenhuma conta de demonstração nesta base')
 
   await page.goto(`/app/influenciadores/${id}`)
   // A região viva existe antes de haver mensagem — é a condição para o leitor

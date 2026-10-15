@@ -56,7 +56,7 @@ export default function LuzDoPonteiro() {
         style={{
           mixBlendMode: 'screen',
           background:
-            'radial-gradient(250px circle at var(--luz-x, 50%) var(--luz-y, 38%), rgba(150,110,255,0.26) 0%, rgba(133,102,255,0.13) 34%, rgba(124,58,237,0.045) 62%, rgba(124,58,237,0) 100%)',
+            'radial-gradient(180px circle at var(--luz-x, 50%) var(--luz-y, 38%), rgba(150,110,255,0.26) 0%, rgba(133,102,255,0.13) 34%, rgba(124,58,237,0.045) 62%, rgba(124,58,237,0) 100%)',
         }}
       />
       <div
@@ -64,7 +64,7 @@ export default function LuzDoPonteiro() {
         style={{
           mixBlendMode: 'screen',
           background:
-            'radial-gradient(80px circle at var(--luz-x, 50%) var(--luz-y, 38%), rgba(196,181,253,0.17) 0%, rgba(167,139,250,0.07) 45%, rgba(167,139,250,0) 100%)',
+            'radial-gradient(60px circle at var(--luz-x, 50%) var(--luz-y, 38%), rgba(196,181,253,0.17) 0%, rgba(167,139,250,0.07) 45%, rgba(167,139,250,0) 100%)',
         }}
       />
     </div>
