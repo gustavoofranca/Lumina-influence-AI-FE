@@ -26,7 +26,8 @@ function politica(origemDaApi) {
     // Foto de perfil e miniatura vêm das CDNs das plataformas, que mudam de host.
     "img-src 'self' data: blob: https:",
     "media-src 'self' blob: https:",
-    `connect-src 'self' ${origemDaApi}`,
+    // Sem origem extra quando a API é relativa: 'self' já cobre a chamada.
+    ['connect-src', "'self'", origemDaApi].filter(Boolean).join(' '),
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -44,9 +45,35 @@ function cspNoBuild(origemDaApi) {
   }
 }
 
+/**
+ * Origem que a CSP precisa liberar para `connect-src`, a partir de
+ * VITE_API_BASE_URL. Retorna null quando a API é relativa à própria origem
+ * (ex.: `/api/v1` atrás de proxy reverso), porque 'self' já a cobre.
+ *
+ * Um `new URL(...)` direto aqui derrubaria `dev`, `build` e `preview` com um
+ * "Invalid URL" que não diz qual variável falhou, e o app aceita base relativa
+ * (src/lib/api.js). Por isso o valor é validado com mensagem própria.
+ */
+function origemDaApiDoEnv(valor) {
+  if (valor.startsWith('/') && !valor.startsWith('//')) return null
+  // `//host/...` é relativo ao esquema, mas aponta para outro host: recusa
+  // em vez de liberar uma origem que a leitura do valor não deixa clara.
+  let origem = 'null'
+  try {
+    origem = new URL(valor).origin
+  } catch {
+    // cai na recusa abaixo
+  }
+  // `localhost:5000` faz parse sem erro e dá origem "null": também é inválido.
+  if (origem === 'null' || valor.startsWith('//')) {
+    throw new Error(`VITE_API_BASE_URL inválida para a CSP: ${valor}`)
+  }
+  return origem
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const origemDaApi = new URL(env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1').origin
+  const origemDaApi = origemDaApiDoEnv(env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1')
   return {
     plugins: [react(), cspNoBuild(origemDaApi)],
     server: {
