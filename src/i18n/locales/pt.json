@@ -1235,10 +1235,22 @@
       "failed": "Não foi possível entrar."
     },
     "cadastro": {
-      "title": "Comece sua jornada",
-      "subtitle": "Sua conta nasce no primeiro acesso com o Google.",
+      "title": "Crie sua conta",
+      "subtitle": "Comece a auditar suas campanhas em minutos.",
       "google": "Continuar com Google",
-      "hint": "Não usamos senha: o acesso é pela sua conta Google. No primeiro acesso você dá o nome da sua agência, e ela já entra pronta para receber influenciadores.",
+      "orEmail": "ou cadastre com e-mail",
+      "you": "Você",
+      "agency": "Sua agência",
+      "name": "Seu nome",
+      "namePh": "Marina Costa",
+      "email": "E-mail",
+      "password": "Senha",
+      "cnpj": "CNPJ",
+      "agencyName": "Nome da agência",
+      "agencyNamePh": "Ex.: Silva & Costa Comunicação",
+      "prefilled": "Preenchido pela Receita — pode editar.",
+      "terms": "Li e aceito os <termos>Termos de Uso</termos> e a <privacidade>Política de Privacidade</privacidade>.",
+      "submit": "Criar conta",
       "hasAccount": "Já tem uma conta?",
       "login": "Entrar"
     },
@@ -1270,6 +1282,26 @@
       "active": "Empresa {{situacao}} na Receita.",
       "blocked": "Este CNPJ está {{situacao}} na Receita Federal.",
       "unavailable": "Não foi possível confirmar na Receita agora; o CNPJ será aceito pelos dígitos."
+    },
+    "verifique": {
+      "title": "Confirme seu e-mail",
+      "body": "Enviamos um link para <b>{{email}}</b>. Ele vale por 24 horas.",
+      "bodyNoEmail": "Enviamos um link para o e-mail informado. Ele vale por 24 horas.",
+      "spam": "Não chegou? Confira a caixa de spam.",
+      "resend": "Reenviar e-mail",
+      "resendIn": "Reenviar em {{s}} s",
+      "resent": "Enviamos de novo.",
+      "wrongEmail": "E-mail errado?",
+      "back": "Voltar ao cadastro"
+    },
+    "verificar": {
+      "checking": "Confirmando seu e-mail…",
+      "expired": "Este link venceu.",
+      "invalid": "Este link é inválido ou já foi usado.",
+      "resendTitle": "Peça um novo link",
+      "resendSubmit": "Enviar novo link",
+      "sent": "Se houver um cadastro pendente com este e-mail, enviamos um novo link.",
+      "toLogin": "Ir para o login"
     }
   },
   "primeiroAcesso": {
@@ -1474,6 +1506,8 @@
     "primeiroAcesso": "Primeiro acesso",
     "landing": "Auditoria neural de campanhas de influência",
     "welcome": "Boas-vindas",
-    "designSystem": "Design system"
+    "designSystem": "Design system",
+    "verifiqueEmail": "Confirme seu e-mail",
+    "verificarEmail": "Confirmando e-mail"
   }
 }

@@ -20,6 +20,8 @@ import Login       from './pages/Login.jsx'
  */
 const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
 const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
+const VerifiqueSeuEmail = lazy(() => import('./pages/VerifiqueSeuEmail.jsx'))
+const VerificarEmail    = lazy(() => import('./pages/VerificarEmail.jsx'))
 const PrimeiroAcesso   = lazy(() => import('./pages/PrimeiroAcesso.jsx'))
 const Dashboard        = lazy(() => import('./pages/Dashboard.jsx'))
 const Influenciadores  = lazy(() => import('./pages/Influenciadores.jsx'))
@@ -73,6 +75,8 @@ function AnimatedRoutes() {
             element={<ProtectedRoute><PrimeiroAcesso /></ProtectedRoute>}
           />
           <Route path="/cadastro"        element={<Cadastro />} />
+          <Route path="/verifique-seu-email" element={<VerifiqueSeuEmail />} />
+          <Route path="/verificar-email"     element={<VerificarEmail />} />
           <Route path="/privacidade"     element={<Privacidade />} />
           <Route path="/termos"          element={<Termos />} />
           <Route path="/exclusao-de-dados" element={<ExclusaoDeDados />} />

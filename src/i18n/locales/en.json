@@ -1235,10 +1235,22 @@
       "failed": "Couldn't sign in."
     },
     "cadastro": {
-      "title": "Start your journey",
-      "subtitle": "Your account is created on first sign-in with Google.",
+      "title": "Create your account",
+      "subtitle": "Start auditing your campaigns in minutes.",
       "google": "Continue with Google",
-      "hint": "We do not use passwords: access is through your Google account. On first sign-in you name your agency, and it is ready to receive influencers right away.",
+      "orEmail": "or sign up with email",
+      "you": "You",
+      "agency": "Your agency",
+      "name": "Your name",
+      "namePh": "Marina Costa",
+      "email": "Email",
+      "password": "Password",
+      "cnpj": "CNPJ",
+      "agencyName": "Agency name",
+      "agencyNamePh": "E.g. Silva & Costa Communications",
+      "prefilled": "Filled from the Federal Revenue registry — you can edit it.",
+      "terms": "I have read and accept the <termos>Terms of Use</termos> and the <privacidade>Privacy Policy</privacidade>.",
+      "submit": "Create account",
       "hasAccount": "Already have an account?",
       "login": "Sign in"
     },
@@ -1270,6 +1282,26 @@
       "active": "Company {{situacao}} at the Federal Revenue.",
       "blocked": "This CNPJ is {{situacao}} at the Federal Revenue.",
       "unavailable": "Couldn't confirm with the Federal Revenue now; the CNPJ will be accepted by its check digits."
+    },
+    "verifique": {
+      "title": "Confirm your email",
+      "body": "We sent a link to <b>{{email}}</b>. It's valid for 24 hours.",
+      "bodyNoEmail": "We sent a link to the email you entered. It's valid for 24 hours.",
+      "spam": "Didn't get it? Check your spam folder.",
+      "resend": "Resend email",
+      "resendIn": "Resend in {{s}} s",
+      "resent": "Sent again.",
+      "wrongEmail": "Wrong email?",
+      "back": "Back to sign up"
+    },
+    "verificar": {
+      "checking": "Confirming your email…",
+      "expired": "This link has expired.",
+      "invalid": "This link is invalid or was already used.",
+      "resendTitle": "Request a new link",
+      "resendSubmit": "Send new link",
+      "sent": "If there's a pending sign-up for this email, we sent a new link.",
+      "toLogin": "Go to sign in"
     }
   },
   "primeiroAcesso": {
@@ -1474,6 +1506,8 @@
     "primeiroAcesso": "First access",
     "landing": "Neural auditing for influence campaigns",
     "welcome": "Welcome",
-    "designSystem": "Design system"
+    "designSystem": "Design system",
+    "verifiqueEmail": "Confirm your email",
+    "verificarEmail": "Confirming email"
   }
 }
