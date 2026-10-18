@@ -20,9 +20,25 @@
       "dateRange": "The date must be between {{min}} and {{max}}.",
       "money": "Enter a positive amount.",
       "moneyMax": "The maximum is {{max}}.",
-      "cnpjLength": "A CNPJ has 14 digits.",
-      "cnpj": "Invalid CNPJ: the check digit doesn't match.",
-      "fixFields": "Fix the highlighted fields."
+      "cnpjLength": "A CNPJ has 14 characters.",
+      "cnpj": "Invalid CNPJ — check the digits.",
+      "fixFields": "Fix the highlighted fields.",
+      "noLink": "Don't use links in this field.",
+      "nameNoDigits": "Names can't contain numbers.",
+      "nameChars": "Use only letters, spaces, apostrophes, hyphens and periods.",
+      "nameMin": "At least 2 letters.",
+      "companyNoAt": "Don't use @ in this field.",
+      "companyNeedsAlnum": "Include at least one letter or number.",
+      "companyChars": "Use only letters, numbers, spaces and & . , ' - / ( ) +",
+      "passwordMin": "At least {{min}} characters.",
+      "passwordMax": "At most {{max}} characters.",
+      "passwordRepeated": "Password is too predictable.",
+      "passwordHasEmail": "Don't use your email in the password.",
+      "passwordHasName": "Don't use your name in the password.",
+      "emailSpaces": "Email can't contain spaces.",
+      "emailSuggestion": "Did you mean {{sugestao}}?",
+      "emailUseSuggestion": "Use",
+      "termsRequired": "Accept the Terms of Use and the Privacy Policy to continue."
     },
     "invalidDate": "Invalid date — check the day and month.",
     "openCalendar": "Open calendar",
@@ -1224,6 +1240,10 @@
       "back": "Back to sign-in",
       "authenticating": "Signing you in…",
       "error": "Could not authenticate."
+    },
+    "erros": {
+      "tooMany": "Too many attempts. Try again in {{min}} min.",
+      "generic": "Couldn't finish right now. Try again."
     }
   },
   "primeiroAcesso": {

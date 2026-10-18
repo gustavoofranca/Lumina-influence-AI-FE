@@ -20,9 +20,25 @@
       "dateRange": "A data precisa estar entre {{min}} e {{max}}.",
       "money": "Informe um valor positivo.",
       "moneyMax": "O valor máximo é {{max}}.",
-      "cnpjLength": "O CNPJ tem 14 dígitos.",
-      "cnpj": "CNPJ inválido: o dígito verificador não confere.",
-      "fixFields": "Corrija os campos indicados."
+      "cnpjLength": "O CNPJ tem 14 caracteres.",
+      "cnpj": "CNPJ inválido — confira os dígitos.",
+      "fixFields": "Corrija os campos indicados.",
+      "noLink": "Não use links neste campo.",
+      "nameNoDigits": "Nome não pode ter números.",
+      "nameChars": "Use só letras, espaço, apóstrofo, hífen e ponto.",
+      "nameMin": "Mínimo de 2 letras.",
+      "companyNoAt": "Não use @ neste campo.",
+      "companyNeedsAlnum": "Inclua ao menos uma letra ou número.",
+      "companyChars": "Use só letras, números, espaço e & . , ' - / ( ) +",
+      "passwordMin": "Mínimo de {{min}} caracteres.",
+      "passwordMax": "Máximo de {{max}} caracteres.",
+      "passwordRepeated": "Senha previsível demais.",
+      "passwordHasEmail": "Não use seu e-mail na senha.",
+      "passwordHasName": "Não use seu nome na senha.",
+      "emailSpaces": "E-mail não pode ter espaço.",
+      "emailSuggestion": "Você quis dizer {{sugestao}}?",
+      "emailUseSuggestion": "Usar",
+      "termsRequired": "Aceite os Termos de Uso e a Política de Privacidade para continuar."
     },
     "invalidDate": "Data inválida — confira o dia e o mês.",
     "openCalendar": "Abrir calendário",
@@ -1224,6 +1240,10 @@
       "back": "Voltar ao login",
       "authenticating": "Autenticando…",
       "error": "Falha ao autenticar."
+    },
+    "erros": {
+      "tooMany": "Muitas tentativas. Tente de novo em {{min}} min.",
+      "generic": "Não foi possível concluir agora. Tente de novo."
     }
   },
   "primeiroAcesso": {
