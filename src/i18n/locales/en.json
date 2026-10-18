@@ -1244,6 +1244,25 @@
     "erros": {
       "tooMany": "Too many attempts. Try again in {{min}} min.",
       "generic": "Couldn't finish right now. Try again."
+    },
+    "senha": {
+      "show": "Show password",
+      "hide": "Hide password",
+      "strengthLabel": "Password strength",
+      "strengthHint": "min. {{min}} characters",
+      "strength": {
+        "0": "Very weak",
+        "1": "Weak",
+        "2": "Fair",
+        "3": "Strong",
+        "4": "Very strong"
+      }
+    },
+    "cnpj": {
+      "checking": "Checking the Federal Revenue registry…",
+      "active": "Company {{situacao}} at the Federal Revenue.",
+      "blocked": "This CNPJ is {{situacao}} at the Federal Revenue.",
+      "unavailable": "Couldn't confirm with the Federal Revenue now; the CNPJ will be accepted by its check digits."
     }
   },
   "primeiroAcesso": {

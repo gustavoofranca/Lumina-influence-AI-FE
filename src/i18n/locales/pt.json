@@ -1244,6 +1244,25 @@
     "erros": {
       "tooMany": "Muitas tentativas. Tente de novo em {{min}} min.",
       "generic": "Não foi possível concluir agora. Tente de novo."
+    },
+    "senha": {
+      "show": "Mostrar senha",
+      "hide": "Ocultar senha",
+      "strengthLabel": "Força da senha",
+      "strengthHint": "mín. {{min}} caracteres",
+      "strength": {
+        "0": "Muito fraca",
+        "1": "Fraca",
+        "2": "Razoável",
+        "3": "Forte",
+        "4": "Muito forte"
+      }
+    },
+    "cnpj": {
+      "checking": "Consultando a Receita…",
+      "active": "Empresa {{situacao}} na Receita.",
+      "blocked": "Este CNPJ está {{situacao}} na Receita Federal.",
+      "unavailable": "Não foi possível confirmar na Receita agora; o CNPJ será aceito pelos dígitos."
     }
   },
   "primeiroAcesso": {

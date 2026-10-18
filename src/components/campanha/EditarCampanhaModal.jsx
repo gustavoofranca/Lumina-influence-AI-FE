@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
 import {
-  LIMITES, ORCAMENTO_MAXIMO_REAIS, validarData, validarDinheiro, validarTexto,
+  LIMITES, validarData, validarDinheiro, validarTexto,
 } from '../../lib/limites.js'
 import Modal from '../ui/Modal.jsx'
 import Input from '../ui/Input.jsx'
+import MoneyInput from '../ui/MoneyInput.jsx'
 import DateInput from '../ui/DateInput.jsx'
 import Button from '../ui/Button.jsx'
 
@@ -123,13 +124,9 @@ export default function EditarCampanhaModal({
           />
         </div>
 
-        <Input
+        <MoneyInput
           label={t('campanhas.editModal.budget')}
-          type="number"
-          min="0"
-          max={ORCAMENTO_MAXIMO_REAIS}
-          step="1"
-          value={campos.budget ?? 0}
+          value={campos.budget ?? ''}
           onChange={set('budget')}
           error={erros.budget}
           helperText={t('campanhas.editModal.budgetHint')}
