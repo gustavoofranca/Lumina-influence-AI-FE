@@ -1,8 +1,10 @@
-import { Navigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { Navigate, useLocation } from 'react-router-dom'
+
+import { precisaCompletarCadastro, useAuth } from '../../context/AuthContext.jsx'
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, user, agency } = useAuth()
+  const { pathname } = useLocation()
 
   // Enquanto a sessao da aba esta sendo restaurada (ADR-001 revisada), ainda
   // nao se sabe se ha usuario: redirecionar aqui mandaria para o login todo
@@ -15,5 +17,14 @@ export default function ProtectedRoute({ children }) {
     )
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />
+  if (!isAuthenticated) return <Navigate to="/login" replace />
+
+  // Todo cadastro tem CNPJ: o admin de uma agência sem ele (conta vinda do
+  // Google, ou anterior a esta regra) completa no primeiro acesso, e não há
+  // como pular. Membro e leitor não decidem isso e não são bloqueados.
+  if (precisaCompletarCadastro(user, agency) && pathname !== '/primeiro-acesso') {
+    return <Navigate to="/primeiro-acesso" replace />
+  }
+
+  return children
 }

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 import { api, getAccessToken, setTokens, limparTokens, setOnUnauthorized } from '../lib/api.js'
-import { devLogin as devLoginApi, getMe } from '../services/auth.js'
+import { devLogin as devLoginApi, getMe, loginComSenha } from '../services/auth.js'
 
 const AuthContext = createContext(null)
 
@@ -30,14 +30,21 @@ export function AuthProvider({ children }) {
     return me
   }, [])
 
-  // Login de dev (sem OAuth)
-  const devLogin = useCallback(async (email) => {
-    const data = await devLoginApi(email)
-    setTokens(data.tokens)
-    setUser(data.user)
-    setAgency(data.agency)
-    return data
+  // Aplica o pacote que a API devolve num login ({ user, agency, tokens }).
+  const aplicarSessao = useCallback((dados) => {
+    setTokens(dados.tokens)
+    setUser(dados.user)
+    setAgency(dados.agency)
+    return dados
   }, [])
+
+  // Login de dev (sem OAuth)
+  const devLogin = useCallback(async (email) => aplicarSessao(await devLoginApi(email)), [aplicarSessao])
+
+  const entrarComSenha = useCallback(
+    async (email, senha) => aplicarSessao(await loginComSenha(email, senha)),
+    [aplicarSessao]
+  )
 
   // Captura tokens vindos do callback OAuth (#access_token=...&refresh_token=...)
   const loginWithTokens = useCallback(async (accessToken, refreshToken) => {
@@ -82,10 +89,20 @@ export function AuthProvider({ children }) {
     user, agency, loading,
     isAuthenticated: !!user,
     devLogin, loginWithTokens, logout, refreshUser,
+    aplicarSessao, entrarComSenha,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
   return useContext(AuthContext)
+}
+
+/** Admin de agência sem CNPJ completa o cadastro antes de qualquer outra tela (spec, seção 5). */
+export function precisaCompletarCadastro(user, agency) {
+  return user?.role === 'admin' && !!agency && !agency.cnpj
+}
+
+export function destinoAposLogin(user, agency) {
+  return precisaCompletarCadastro(user, agency) ? '/primeiro-acesso' : '/app/dashboard'
 }

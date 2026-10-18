@@ -1216,16 +1216,23 @@
   "auth": {
     "login": {
       "title": "Welcome back",
-      "subtitle": "Sign in to your account to continue.",
+      "subtitle": "Sign in to continue.",
       "email": "Email",
+      "emailPlaceholder": "you@agency.com",
+      "password": "Password",
+      "forgot": "Forgot my password",
       "submit": "Sign in",
+      "or": "or",
+      "google": "Sign in with Google",
+      "demo": "Sign in to the demo account",
+      "invalid": "Incorrect email or password.",
+      "notVerified": "Confirm your email before signing in.",
+      "resend": "Resend link",
+      "resent": "We sent a new link to your email.",
+      "passwordChanged": "Password changed. Sign in with your new password.",
       "noAccount": "Don't have an account?",
       "createAccount": "Create account",
-      "emailPlaceholder": "you@agency.com",
-      "google": "Sign in with Google",
-      "devHint": "Tip: leave the field empty and click <1>{{acao}}</1> to sign in with the demo account (seeded data).",
-      "devDisabled": "Demo access is disabled in this environment. Sign in with Google.",
-      "failed": "Could not sign in."
+      "failed": "Couldn't sign in."
     },
     "cadastro": {
       "title": "Start your journey",

@@ -1,64 +1,91 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Trans, useTranslation } from 'react-i18next'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Mail } from 'lucide-react'
 
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Input from '../components/ui/Input.jsx'
+import PasswordInput from '../components/ui/PasswordInput.jsx'
 import Button from '../components/ui/Button.jsx'
-import { useAuth } from '../context/AuthContext.jsx'
-import { googleLoginUrl } from '../services/auth.js'
+import Divisor from '../components/auth/Divisor.jsx'
+import AvisoDeEntrada from '../components/auth/AvisoDeEntrada.jsx'
+import { destinoAposLogin, useAuth } from '../context/AuthContext.jsx'
+import { idDoCampo, useCampos } from '../hooks/useCampos.js'
+import { useOpcoesDeLogin } from '../hooks/useOpcoesDeLogin.js'
+import { googleLoginUrl, reenviarVerificacao } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
-import { LIMITES } from '../lib/limites.js'
+import { mensagemDeAuth } from '../lib/errosDeAuth.js'
+import { LIMITES, validarEmail } from '../lib/limites.js'
 
+const VALIDADORES = {
+  email: (t, c) => validarEmail(t, c.email),
+  // No login não se aplica a política: a pessoa digita a senha que já tem.
+  senha: (t, c) => (c.senha ? null : t('common.validation.required')),
+}
+
+/**
+ * Entrada por e-mail e senha, Google, e — só em desenvolvimento — a conta de
+ * demonstração.
+ *
+ * Senha errada e e-mail inexistente recebem a mesma frase (OWASP): a tela não
+ * pode ser usada para descobrir quem tem conta.
+ */
 export default function Login() {
   const { t } = useTranslation()
-  const { devLogin } = useAuth()
   const navigate = useNavigate()
+  const { state } = useLocation()
+  const { entrarComSenha, devLogin } = useAuth()
+  const opcoes = useOpcoesDeLogin()
+  const { campos, erros, set, sair, validarTudo } = useCampos({ email: '', senha: '' }, VALIDADORES)
 
-  const [email, setEmail]       = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [apiError, setApiError] = useState(null)
+  const [aviso, setAviso] = useState(() => (
+    state?.senhaAlterada ? { tipo: 'ok', texto: t('auth.login.passwordChanged') } : null
+  ))
+  const [naoVerificado, setNaoVerificado] = useState(false)
+  const [carregando, setCarregando] = useState(null) // 'senha' | 'demo' | null
 
-  /**
-   * Entra pela conta de demonstração (dev-login), com o e-mail digitado ou o
-   * admin seedado se vazio.
-   *
-   * Não há campo de senha porque não há senha: a autenticação do produto é
-   * OAuth 2.0 e nenhum modelo guarda credencial. O campo existia e não era
-   * enviado a lugar nenhum — afirmava uma verificação que não acontecia.
-   *
-   * `dev_login_disabled` é 403 e não é falha: em staging e produção o atalho
-   * é desligado por configuração, e o caminho passa a ser só o Google. Sem
-   * este ramo, o usuário lia "Forbidden" e não sabia o que fazer.
-   */
-  const handleSubmit = async (e) => {
+  const seguir = (sessao) => navigate(destinoAposLogin(sessao.user, sessao.agency), { replace: true })
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    setApiError(null)
-    setLoading(true)
+    setAviso(null)
+    setNaoVerificado(false)
+    if (!validarTudo()) return
+    setCarregando('senha')
     try {
-      await devLogin(email || undefined)
-      navigate('/app/dashboard')
+      seguir(await entrarComSenha(campos.email.trim(), campos.senha))
     } catch (err) {
-      setApiError(
-        err.code === 'dev_login_disabled'
-          ? t('auth.login.devDisabled')
-          : err.message || t('auth.login.failed')
-      )
-      setLoading(false)
+      if (err.code === 'email_not_verified') setNaoVerificado(true)
+      else if (err.code === 'invalid_credentials') setAviso({ tipo: 'erro', texto: t('auth.login.invalid') })
+      else setAviso({ tipo: 'erro', texto: mensagemDeAuth(t, err) })
+      setCarregando(null)
     }
   }
 
-  const handleGoogle = () => {
-    window.location.href = googleLoginUrl()
+  const reenviar = async () => {
+    try {
+      await reenviarVerificacao(campos.email.trim())
+      setNaoVerificado(false)
+      setAviso({ tipo: 'ok', texto: t('auth.login.resent') })
+    } catch (err) {
+      setAviso({ tipo: 'erro', texto: mensagemDeAuth(t, err) })
+    }
+  }
+
+  const entrarNaDemonstracao = async () => {
+    setAviso(null)
+    setCarregando('demo')
+    try {
+      seguir(await devLogin())
+    } catch (err) {
+      setAviso({ tipo: 'erro', texto: mensagemDeAuth(t, err) })
+      setCarregando(null)
+    }
   }
 
   return (
     <AuthLayout>
       <div className="mb-8 text-center">
-        {/* O mesmo degradê descendente das manchetes da landing: branco em cima,
-            apagando para baixo. É o que liga a tela ao lugar de onde o visitante
-            veio. */}
         <h1 className={cn(
           'font-display text-3xl font-semibold tracking-[-0.02em]',
           'bg-gradient-to-b from-white from-[22.5%] to-white/70 bg-clip-text text-transparent'
@@ -68,54 +95,79 @@ export default function Login() {
         <p className="mt-2 text-sm text-landing-muted">{t('auth.login.subtitle')}</p>
       </div>
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <form onSubmit={onSubmit} noValidate className="space-y-5">
         <Input
           variant="vidro"
+          id={idDoCampo('email')}
           label={t('auth.login.email')}
           type="email"
+          inputMode="email"
           placeholder={t('auth.login.emailPlaceholder')}
           leftIcon={Mail}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={campos.email}
+          onChange={(e) => set('email', e.target.value)}
+          onBlur={() => sair('email')}
           autoComplete="email"
+          autoCapitalize="none"
+          spellCheck={false}
           maxLength={LIMITES.email}
+          error={erros.email}
         />
+        <div>
+          <PasswordInput
+            variant="vidro"
+            id={idDoCampo('senha')}
+            label={t('auth.login.password')}
+            value={campos.senha}
+            onChange={(e) => set('senha', e.target.value)}
+            onBlur={() => sair('senha')}
+            autoComplete="current-password"
+            error={erros.senha}
+          />
+          <div className="mt-2 flex justify-end">
+            <Link to="/recuperar-senha" className="text-xs font-semibold text-landing-violet transition-opacity hover:opacity-80">
+              {t('auth.login.forgot')}
+            </Link>
+          </div>
+        </div>
 
-        {apiError && (
-          <p className="rounded-lg bg-tertiary-500/10 px-3 py-2 text-xs text-tint-rose">
-            {apiError}
-          </p>
+        {aviso && <AvisoDeEntrada tipo={aviso.tipo}>{aviso.texto}</AvisoDeEntrada>}
+        {naoVerificado && (
+          <AvisoDeEntrada tipo="erro" className="flex items-center justify-between gap-3">
+            <span>{t('auth.login.notVerified')}</span>
+            <button type="button" onClick={reenviar} className="shrink-0 font-semibold underline">
+              {t('auth.login.resend')}
+            </button>
+          </AvisoDeEntrada>
         )}
 
-        <Button
-          type="submit"
-          variant="vidro-primaria"
-          fullWidth
-          size="lg"
-          loading={loading}
-        >
+        <Button type="submit" variant="vidro-primaria" fullWidth size="lg" loading={carregando === 'senha'}>
           {t('auth.login.submit')}
         </Button>
-
-        <Button
-          type="button"
-          variant="vidro"
-          fullWidth
-          size="lg"
-          onClick={handleGoogle}
-        >
-          {t('auth.login.google')}
-        </Button>
-        <p className="text-center text-[11px] text-landing-muted">
-          <Trans
-            i18nKey="auth.login.devHint"
-            values={{ acao: t('auth.login.submit') }}
-            components={{ 1: <b /> }}
-          />
-        </p>
       </form>
 
-      <p className={cn('mt-6 text-center text-sm text-landing-muted')}>
+      {opcoes.google && (
+        <>
+          <Divisor>{t('auth.login.or')}</Divisor>
+          <Button type="button" variant="vidro" fullWidth size="lg"
+                  onClick={() => { window.location.href = googleLoginUrl() }}>
+            {t('auth.login.google')}
+          </Button>
+        </>
+      )}
+
+      {opcoes.dev_login && (
+        <button
+          type="button"
+          onClick={entrarNaDemonstracao}
+          disabled={carregando !== null}
+          className="mt-4 w-full text-center text-xs text-landing-muted underline-offset-4 hover:underline disabled:opacity-50"
+        >
+          {t('auth.login.demo')}
+        </button>
+      )}
+
+      <p className="mt-6 text-center text-sm text-landing-muted">
         {t('auth.login.noAccount')}{' '}
         <Link to="/cadastro" className="font-semibold text-landing-violet transition-opacity hover:opacity-80">
           {t('auth.login.createAccount')}
