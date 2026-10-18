@@ -1234,6 +1234,23 @@
       "createAccount": "Create account",
       "failed": "Couldn't sign in."
     },
+    "recuperar": {
+      "title": "Recover password",
+      "subtitle": "Enter your account email and we'll send you a link to create a new password.",
+      "submit": "Send link",
+      "sent": "If there's an account with this email, we sent a link. It's valid for 30 minutes.",
+      "back": "Back to sign in"
+    },
+    "redefinir": {
+      "title": "New password",
+      "subtitle": "Pick a password you don't use anywhere else.",
+      "password": "New password",
+      "submit": "Save new password",
+      "expired": "This link has expired. Request a new one.",
+      "invalid": "This link is invalid or was already used.",
+      "missing": "Incomplete link. Request a new one.",
+      "again": "Request a new link"
+    },
     "cadastro": {
       "title": "Create your account",
       "subtitle": "Start auditing your campaigns in minutes.",
@@ -1508,6 +1525,8 @@
     "welcome": "Welcome",
     "designSystem": "Design system",
     "verifiqueEmail": "Confirm your email",
-    "verificarEmail": "Confirming email"
+    "verificarEmail": "Confirming email",
+    "recuperarSenha": "Recover password",
+    "redefinirSenha": "New password"
   }
 }

@@ -43,6 +43,8 @@ const NotFound         = lazy(() => import('./pages/NotFound.jsx'))
 const Privacidade      = lazy(() => import('./pages/Privacidade.jsx'))
 const Termos           = lazy(() => import('./pages/Termos.jsx'))
 const ExclusaoDeDados  = lazy(() => import('./pages/ExclusaoDeDados.jsx'))
+const RecuperarSenha    = lazy(() => import('./pages/RecuperarSenha.jsx'))
+const RedefinirSenha    = lazy(() => import('./pages/RedefinirSenha.jsx'))
 
 /** Exibido enquanto o chunk da rota carrega. */
 function RouteFallback() {
@@ -77,6 +79,8 @@ function AnimatedRoutes() {
           <Route path="/cadastro"        element={<Cadastro />} />
           <Route path="/verifique-seu-email" element={<VerifiqueSeuEmail />} />
           <Route path="/verificar-email"     element={<VerificarEmail />} />
+          <Route path="/recuperar-senha"     element={<RecuperarSenha />} />
+          <Route path="/redefinir-senha"     element={<RedefinirSenha />} />
           <Route path="/privacidade"     element={<Privacidade />} />
           <Route path="/termos"          element={<Termos />} />
           <Route path="/exclusao-de-dados" element={<ExclusaoDeDados />} />

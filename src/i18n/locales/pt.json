@@ -1234,6 +1234,23 @@
       "createAccount": "Criar conta",
       "failed": "Não foi possível entrar."
     },
+    "recuperar": {
+      "title": "Recuperar senha",
+      "subtitle": "Informe o e-mail da sua conta e enviaremos um link para criar uma nova senha.",
+      "submit": "Enviar link",
+      "sent": "Se houver uma conta com este e-mail, enviamos um link. Ele vale por 30 minutos.",
+      "back": "Voltar ao login"
+    },
+    "redefinir": {
+      "title": "Nova senha",
+      "subtitle": "Escolha uma senha que você não usa em outro lugar.",
+      "password": "Nova senha",
+      "submit": "Salvar nova senha",
+      "expired": "Este link venceu. Peça um novo.",
+      "invalid": "Este link é inválido ou já foi usado.",
+      "missing": "Link incompleto. Peça um novo.",
+      "again": "Pedir novo link"
+    },
     "cadastro": {
       "title": "Crie sua conta",
       "subtitle": "Comece a auditar suas campanhas em minutos.",
@@ -1508,6 +1525,8 @@
     "welcome": "Boas-vindas",
     "designSystem": "Design system",
     "verifiqueEmail": "Confirme seu e-mail",
-    "verificarEmail": "Confirmando e-mail"
+    "verificarEmail": "Confirmando e-mail",
+    "recuperarSenha": "Recuperar senha",
+    "redefinirSenha": "Nova senha"
   }
 }
