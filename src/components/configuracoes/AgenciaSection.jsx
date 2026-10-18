@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Building2, Hash, Sparkles } from 'lucide-react'
+import { Building2, Sparkles } from 'lucide-react'
 
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import Input from '../ui/Input.jsx'
+import CnpjInput from '../ui/CnpjInput.jsx'
 import Button from '../ui/Button.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { useApi } from '../../hooks/useApi.js'
-import { LIMITES, errosDaApi, mascararCnpj, validarCnpj, validarTexto } from '../../lib/limites.js'
+import { LIMITES, errosDaApi, validarCnpj, validarNomeEmpresa } from '../../lib/limites.js'
 import { getAgency, updateAgency } from '../../services/agency.js'
 
 /**
@@ -26,16 +27,21 @@ export default function AgenciaSection({ onSave }) {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState(null)
   const [erros, setErros] = useState({})
+  const [cnpjBloqueado, setCnpjBloqueado] = useState(false)
 
   useEffect(() => {
     if (agencia) setFields({ name: agencia.name, cnpj: agencia.cnpj })
   }, [agencia])
 
   const set = (key) => (e) => {
-    // O CNPJ ganha a máscara enquanto se digita; a API grava sempre mascarado.
-    const valor = key === 'cnpj' ? mascararCnpj(e.target.value) : e.target.value
-    setFields((p) => ({ ...p, [key]: valor }))
+    setFields((p) => ({ ...p, [key]: e.target.value }))
     setErros((p) => ({ ...p, [key]: undefined }))
+  }
+
+  const setCnpj = (valor) => {
+    setFields((p) => ({ ...p, cnpj: valor }))
+    setErros((p) => ({ ...p, cnpj: undefined }))
+    setCnpjBloqueado(false)
   }
 
   const onSubmit = async (e) => {
@@ -44,12 +50,13 @@ export default function AgenciaSection({ onSave }) {
     // O dígito do CNPJ só é conferido se ele mudou — a mesma regra da API, que
     // não trava a edição do nome por um CNPJ antigo gravado com dígito errado.
     const encontrados = {}
-    const nome = validarTexto(t, fields.name, { max: LIMITES.nomeAgencia, obrigatorio: true, semMarcacao: true })
+    const nome = validarNomeEmpresa(t, fields.name)
     const cnpj = validarCnpj(t, fields.cnpj, agencia.cnpj)
     if (nome) encontrados.name = nome
     if (cnpj) encontrados.cnpj = cnpj
     setErros(encontrados)
     if (Object.keys(encontrados).length) return
+    if (cnpjBloqueado) return
     setSaving(true)
     setSaveError(null)
     try {
@@ -102,14 +109,12 @@ export default function AgenciaSection({ onSave }) {
             maxLength={LIMITES.nomeAgencia}
             error={erros.name}
           />
-          <Input
+          <CnpjInput
             label={t('configuracoes.agencia.cnpj')}
-            leftIcon={Hash}
-            value={fields.cnpj}
-            onChange={set('cnpj')}
-            inputMode="numeric"
-            placeholder="00.000.000/0000-00"
-            maxLength={18}
+            value={fields.cnpj ?? ''}
+            original={agencia?.cnpj}
+            onChange={setCnpj}
+            onConsulta={(r) => setCnpjBloqueado(Boolean(r.impeditiva))}
             error={erros.cnpj}
           />
         </div>
