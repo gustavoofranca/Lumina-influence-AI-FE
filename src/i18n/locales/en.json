@@ -387,7 +387,18 @@
       "subtitle": "Update your profile information.",
       "name": "Full name",
       "email": "Email",
-      "emailFromOauth": "Comes from the login provider and cannot be changed here."
+      "emailFixed": "Your email identifies your account and can't be changed here.",
+      "seguranca": {
+        "title": "Security",
+        "subtitle": "Your account password.",
+        "current": "Current password",
+        "new": "New password",
+        "change": "Change password",
+        "changed": "Password changed. Your other open sessions were signed out.",
+        "noPassword": "You sign in with Google. To also sign in with email and password, set a password through the link we'll email you.",
+        "define": "Set password by email",
+        "sent": "We sent a link to {{email}}. It's valid for 30 minutes."
+      }
     },
     "agencia": {
       "title": "Agency data",

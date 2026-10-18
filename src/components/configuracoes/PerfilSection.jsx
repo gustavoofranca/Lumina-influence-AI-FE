@@ -9,8 +9,9 @@ import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import ExcluirContaCard from './ExcluirContaCard.jsx'
+import SegurancaCard from './SegurancaCard.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
-import { LIMITES, errosDaApi, validarTexto } from '../../lib/limites.js'
+import { LIMITES, errosDaApi, validarNomePessoa } from '../../lib/limites.js'
 import { updateOwnProfile } from '../../services/team.js'
 
 const ROLE_VARIANT = {
@@ -44,7 +45,7 @@ export default function PerfilSection({ onSave }) {
     e.preventDefault()
     if (!user) return
     // A mesma regra da API (lib/limites.js).
-    const invalido = validarTexto(t, name, { max: LIMITES.nomePessoa, obrigatorio: true, semMarcacao: true })
+    const invalido = validarNomePessoa(t, name)
     setErroNome(invalido)
     if (invalido) return
     setSaving(true)
@@ -63,63 +64,67 @@ export default function PerfilSection({ onSave }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-6">
-      <Card className="flex flex-col gap-5">
-        <div>
-          <CardLabel>{t('configuracoes.perfil.title')}</CardLabel>
-          <CardTitle className="mt-1.5">{t('configuracoes.perfil.title')}</CardTitle>
-          <p className="mt-1 text-sm text-text-secondary">
-            {t('configuracoes.perfil.subtitle')}
-          </p>
-        </div>
-
-        <ApiErrorBanner error={error} />
-
-        <div className="flex items-center gap-4">
-          <Avatar name={name || user?.name || '?'} size="xl" />
+    <div className="flex flex-col gap-6">
+      <form onSubmit={onSubmit} className="flex flex-col gap-6">
+        <Card className="flex flex-col gap-5">
           <div>
-            <p className="font-display text-lg font-bold text-text-primary">
-              {user?.name}
+            <CardLabel>{t('configuracoes.perfil.title')}</CardLabel>
+            <CardTitle className="mt-1.5">{t('configuracoes.perfil.title')}</CardTitle>
+            <p className="mt-1 text-sm text-text-secondary">
+              {t('configuracoes.perfil.subtitle')}
             </p>
-            {user?.role && (
-              <Badge variant={ROLE_VARIANT[user.role]} uppercase={false} className="mt-1">
-                {t(`configuracoes.equipe.roles.${user.role}`, user.role)}
-              </Badge>
-            )}
           </div>
-        </div>
 
-        <div className="grid gap-4 lg:grid-cols-2">
-          <Input
-            label={t('configuracoes.perfil.name')}
-            leftIcon={User}
-            value={name}
-            onChange={(e) => { setName(e.target.value); setErroNome(null) }}
-            required
-            maxLength={LIMITES.nomePessoa}
-            error={erroNome}
-          />
-          <Input
-            label={t('configuracoes.perfil.email')}
-            leftIcon={Mail}
-            type="email"
-            value={user?.email || ''}
-            readOnly
-            disabled
-            helperText={t('configuracoes.perfil.emailFromOauth')}
-          />
-        </div>
-      </Card>
+          <ApiErrorBanner error={error} />
 
-      <div className="flex justify-end">
-        <Button type="submit" variant="primary" disabled={saving || !user}>
-          {saving ? t('configuracoes.saving') : t('configuracoes.save')}
-        </Button>
-      </div>
+          <div className="flex items-center gap-4">
+            <Avatar name={name || user?.name || '?'} size="xl" />
+            <div>
+              <p className="font-display text-lg font-bold text-text-primary">
+                {user?.name}
+              </p>
+              {user?.role && (
+                <Badge variant={ROLE_VARIANT[user.role]} uppercase={false} className="mt-1">
+                  {t(`configuracoes.equipe.roles.${user.role}`, user.role)}
+                </Badge>
+              )}
+            </div>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Input
+              label={t('configuracoes.perfil.name')}
+              leftIcon={User}
+              value={name}
+              onChange={(e) => { setName(e.target.value); setErroNome(null) }}
+              required
+              maxLength={LIMITES.nomePessoa}
+              error={erroNome}
+            />
+            <Input
+              label={t('configuracoes.perfil.email')}
+              leftIcon={Mail}
+              type="email"
+              value={user?.email || ''}
+              readOnly
+              disabled
+              helperText={t('configuracoes.perfil.emailFixed')}
+            />
+          </div>
+        </Card>
+
+        <div className="flex justify-end">
+          <Button type="submit" variant="primary" disabled={saving || !user}>
+            {saving ? t('configuracoes.saving') : t('configuracoes.save')}
+          </Button>
+        </div>
+      </form>
+
+      <SegurancaCard />
 
       {/* Zona de perigo por último e visualmente separada: é o direito de
           eliminação do titular, não uma preferência de perfil. */}
       <ExcluirContaCard />
-    </form>
+    </div>
   )
 }

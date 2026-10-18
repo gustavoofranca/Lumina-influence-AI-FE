@@ -387,7 +387,18 @@
       "subtitle": "Atualize suas informações de perfil.",
       "name": "Nome completo",
       "email": "E-mail",
-      "emailFromOauth": "Vem do provedor de login e não pode ser alterado aqui."
+      "emailFixed": "O e-mail identifica sua conta e não pode ser alterado aqui.",
+      "seguranca": {
+        "title": "Segurança",
+        "subtitle": "Senha de acesso à sua conta.",
+        "current": "Senha atual",
+        "new": "Nova senha",
+        "change": "Alterar senha",
+        "changed": "Senha alterada. As outras sessões abertas foram encerradas.",
+        "noPassword": "Você entra pelo Google. Para entrar também com e-mail e senha, defina uma senha pelo link que enviaremos ao seu e-mail.",
+        "define": "Definir senha por e-mail",
+        "sent": "Enviamos um link para {{email}}. Ele vale por 30 minutos."
+      }
     },
     "agencia": {
       "title": "Dados da agência",

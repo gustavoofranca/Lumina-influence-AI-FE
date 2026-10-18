@@ -16,7 +16,7 @@ import { ROLE_KEYS } from '../../lib/constants.js'
 import { useApi } from '../../hooks/useApi.js'
 import { useAuth } from '../../context/AuthContext.jsx'
 import PapelDoMembro from './PapelDoMembro.jsx'
-import { LIMITES, errosDaApi, validarEmail, validarTexto } from '../../lib/limites.js'
+import { LIMITES, errosDaApi, validarEmail, validarNomePessoa } from '../../lib/limites.js'
 import { listMembers, inviteMember, removeMember, updateMemberRole } from '../../services/team.js'
 
 const DEFAULT_ROLE = 'member'
@@ -47,7 +47,7 @@ function ConvidarMembroModal({ open, onClose, onInvited, t }) {
     e.preventDefault()
     // As mesmas regras da API (lib/limites.js).
     const encontrados = {}
-    const nome = validarTexto(t, name, { max: LIMITES.nomePessoa, obrigatorio: true, semMarcacao: true })
+    const nome = validarNomePessoa(t, name)
     const mail = validarEmail(t, email)
     if (nome) encontrados.name = nome
     if (mail) encontrados.email = mail
