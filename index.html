@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Nenhuma página manda o endereço completo para outro site. As que
+         recebem token de e-mail na URL são as que importam, mas a folha do
+         Google Fonts é pedida antes de qualquer script rodar, e só a regra
+         global cobre esse pedido. A API não depende do Referer (CORS usa Origin). -->
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

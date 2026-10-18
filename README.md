@@ -51,6 +51,9 @@ npm run build
 
 # Preview local do build
 npm run preview
+
+# Testes das regras de campo, com o test runner do Node
+npm run test:unit
 ```
 
 Para a banca: rode `npm run dev` e abra `http://localhost:5173` no Chrome em janela maximizada (a UI é desktop-first).
@@ -60,7 +63,7 @@ Para a banca: rode `npm run dev` e abra `http://localhost:5173` no Chrome em jan
 ## Fluxo de demonstração sugerido
 
 1. **`/`** — Landing pública: rolar pelas 7 seções (Hero com card flutuante "IA Detectou", Comparativo Caos vs Inteligência, 3 Pilares, Planos)
-2. Clicar em **Começar agora** → **`/cadastro`** → preencher qualquer dado → entrar
+2. Clicar em **Começar agora** → **`/cadastro`** (e-mail e senha, com CNPJ) — ou, em `/login`, **Entrar na conta de demonstração**
 3. **`/app/dashboard`** — Visão geral com KPIs, Growth Trajectory, Diagnóstico em destaque, Top Networks, Network Density
 4. Sidebar → **Influenciadores** — filtrar por plataforma/status/faixa, abrir Marina Costa (a tela mais densa do produto)
 5. Tab **Diagnóstico IA** — Sentiment Heatmap (24H/7D), Audience Integrity, Video Audit, Neural Confidence, Transcript com timestamps, Recomendações (aceitar/ignorar)
@@ -111,7 +114,9 @@ src/
 | Rota                              | Descrição                                  |
 |-----------------------------------|--------------------------------------------|
 | `/`                               | Landing pública                            |
-| `/login` `/cadastro` `/recuperar-senha` | Autenticação                          |
+| `/login` `/cadastro` | Entrada por e-mail e senha ou Google            |
+| `/verifique-seu-email` `/verificar-email` | Confirmação de e-mail (link recebido por e-mail) |
+| `/recuperar-senha` `/redefinir-senha` | Recuperação e troca de senha               |
 | `/app/dashboard`                  | Visão geral                                |
 | `/app/influenciadores`            | Listagem com filtros                       |
 | `/app/influenciadores/:id`        | Análise individual (4 tabs)                |
@@ -175,6 +180,16 @@ de erro (que nunca deve aparecer como estado vazio), conta social, relatório,
 tema, idioma, foco e navegação por teclado, as páginas legais, os três caminhos
 de exclusão de dados, contraste WCAG AA nos dois temas — incluindo os rótulos
 em SVG — e a semântica que o leitor de tela recebe.
+
+## Segurança do build
+
+O `npm run build` grava uma Content-Security-Policy no `index.html` (ver
+`vite.config.js`). Duas proteções dependem do servidor que hospedar o `dist/`
+e não podem ir no HTML:
+
+- `Content-Security-Policy: frame-ancestors 'none'` como **cabeçalho** (em
+  `<meta>` o navegador ignora essa diretiva);
+- HTTPS com HSTS.
 
 ## Limites conhecidos
 
