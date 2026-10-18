@@ -20,7 +20,7 @@ import { errosDaApi, validarSenha } from '../../lib/limites.js'
 export default function SegurancaCard() {
   const { t } = useTranslation()
   const { user, aplicarSessao } = useAuth()
-  const { campos, erros, set, sair, validarTudo, mostrarErros } = useCampos(
+  const { campos, erros, set, sair, validarTudo, mostrarErros, limpar } = useCampos(
     { atual: '', nova: '' },
     {
       atual: (tt, c) => (c.atual ? null : tt('common.validation.required')),
@@ -35,8 +35,7 @@ export default function SegurancaCard() {
     setEstado({ enviando: true, aviso: null })
     try {
       aplicarSessao(await trocarSenha(campos.atual, campos.nova))
-      set('atual', '')
-      set('nova', '')
+      limpar()
       setEstado({ enviando: false, aviso: { tipo: 'ok', texto: t('configuracoes.perfil.seguranca.changed') } })
     } catch (err) {
       const porCampo = errosDaApi(err, { current_password: 'atual', new_password: 'nova' })

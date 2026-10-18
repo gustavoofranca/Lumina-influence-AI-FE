@@ -61,5 +61,16 @@ export function useCampos(inicial, validadores) {
     if (primeiro) document.getElementById(idDoCampo(primeiro))?.focus()
   }
 
-  return { campos, erros, set, sair, validarTudo, mostrarErros }
+  /**
+   * Volta ao estado inicial, sem erros. Limpar por `set` revalidaria os campos
+   * já tocados e mostraria "obrigatório" logo após um envio bem-sucedido.
+   */
+  const limpar = () => {
+    atuais.current = inicial
+    setCampos(inicial)
+    setErros({})
+    tocados.current = new Set()
+  }
+
+  return { campos, erros, set, sair, validarTudo, mostrarErros, limpar }
 }
