@@ -51,7 +51,7 @@ export default function AgenciaSection({ onSave }) {
     // não trava a edição do nome por um CNPJ antigo gravado com dígito errado.
     const encontrados = {}
     const nome = validarNomeEmpresa(t, fields.name)
-    const cnpj = validarCnpj(t, fields.cnpj, agencia.cnpj)
+    const cnpj = validarCnpj(t, fields.cnpj, agencia.cnpj, { obrigatorio: !!agencia?.cnpj })
     if (nome) encontrados.name = nome
     if (cnpj) encontrados.cnpj = cnpj
     setErros(encontrados)

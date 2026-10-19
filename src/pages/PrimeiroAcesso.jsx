@@ -8,9 +8,10 @@ import Button from '../components/ui/Button.jsx'
 import Input from '../components/ui/Input.jsx'
 import CnpjInput from '../components/ui/CnpjInput.jsx'
 import AvisoDeEntrada from '../components/auth/AvisoDeEntrada.jsx'
+import ConfirmacaoDigitada from '../components/ui/ConfirmacaoDigitada.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { idDoCampo, useCampos } from '../hooks/useCampos.js'
-import { aceitarTermos } from '../services/auth.js'
+import { aceitarTermos, deleteOwnAccount, previewAccountDeletion } from '../services/auth.js'
 import { updateAgency } from '../services/agency.js'
 import { mensagemDeAuth } from '../lib/errosDeAuth.js'
 import { LIMITES, errosDaApi, juntarEspacos, validarCnpj, validarNomeEmpresa } from '../lib/limites.js'
@@ -19,6 +20,9 @@ import { LIMITES, errosDaApi, juntarEspacos, validarCnpj, validarNomeEmpresa } f
 // (`DEFAULT_AGENCY_NAME` em auth_service). Não é um nome de verdade: o campo
 // começa vazio.
 const NOME_PROVISORIO = 'Minha Agência'
+
+// Palavra que o usuário digita para confirmar a exclusão (a mesma da tela de Configurações).
+const PALAVRA_EXCLUIR = 'EXCLUIR'
 
 const LINK = 'font-semibold text-landing-violet underline-offset-2 hover:underline'
 
@@ -54,6 +58,9 @@ export default function PrimeiroAcesso() {
   const [cnpjBloqueado, setCnpjBloqueado] = useState(false)
   const [salvando, setSalvando] = useState(false)
   const [aviso, setAviso] = useState(null)
+  const [dicaConvite, setDicaConvite] = useState(false)
+  const [previa, setPrevia] = useState(null)
+  const [carregandoPrevia, setCarregandoPrevia] = useState(false)
 
   const aoConsultarCnpj = (resultado) => {
     setCnpjBloqueado(Boolean(resultado.impeditiva))
@@ -70,9 +77,36 @@ export default function PrimeiroAcesso() {
     navigate('/login', { replace: true })
   }
 
+  // Quem entrou pelo Google vira admin de uma agência vazia e não tem outra
+  // saída além de Sair: se o CNPJ da empresa já tem conta, ou a pessoa não tem
+  // CNPJ, a exclusão (LGPD) precisa estar ao alcance desta tela. A prévia é
+  // consultada antes de abrir a confirmação, como em Configurações, porque o que
+  // a exclusão leva depende de a pessoa ser a única admin.
+  const abrirExclusao = async () => {
+    setAviso(null)
+    setCarregandoPrevia(true)
+    try {
+      setPrevia(await previewAccountDeletion())
+    } catch (err) {
+      setAviso(mensagemDeAuth(t, err))
+    } finally {
+      setCarregandoPrevia(false)
+    }
+  }
+
+  const excluirConta = async () => {
+    await deleteOwnAccount()
+    // A sessão morreu junto com a conta; limpa e volta para a página inicial.
+    logout()
+    navigate('/', { replace: true })
+  }
+
+  const levaAgencia = previa?.scope === 'agency'
+
   const onSubmit = async (e) => {
     e.preventDefault()
     setAviso(null)
+    setDicaConvite(false)
     if (!validarTudo()) return
     if (cnpjBloqueado) {
       document.getElementById(idDoCampo('cnpj'))?.focus()
@@ -86,6 +120,10 @@ export default function PrimeiroAcesso() {
       navigate('/app/dashboard', { replace: true })
     } catch (err) {
       const porCampo = errosDaApi(err, { name: 'agencia', cnpj: 'cnpj' })
+      // CNPJ já tem conta: quem é da agência deve pedir convite, não recadastrar.
+      setDicaConvite(Boolean(
+        err?.details?.fields?.some((f) => f.field === 'cnpj' && f.type === 'cnpj_unavailable')
+      ))
       if (Object.keys(porCampo).length) mostrarErros(porCampo)
       else setAviso(mensagemDeAuth(t, err))
       setSalvando(false)
@@ -104,12 +142,15 @@ export default function PrimeiroAcesso() {
             id={idDoCampo('cnpj')}
             label={t('auth.cadastro.cnpj')}
             value={campos.cnpj}
-            onChange={(valor) => { set('cnpj', valor); setCnpjBloqueado(false) }}
+            onChange={(valor) => { set('cnpj', valor); setCnpjBloqueado(false); setDicaConvite(false) }}
             onBlur={() => sair('cnpj')}
             onConsulta={aoConsultarCnpj}
             error={erros.cnpj}
             autoFocus
           />
+          {dicaConvite && (
+            <p className="-mt-3 text-xs leading-relaxed text-landing-muted">{t('primeiroAcesso.inviteHint')}</p>
+          )}
           <Input
             variant="vidro"
             id={idDoCampo('agencia')}
@@ -168,6 +209,27 @@ export default function PrimeiroAcesso() {
         >
           {t('primeiroAcesso.logout')}
         </button>
+
+        <button
+          type="button"
+          onClick={abrirExclusao}
+          disabled={carregandoPrevia}
+          className="mt-3 block text-sm font-medium text-tint-rose transition-colors hover:text-white disabled:opacity-60"
+        >
+          {t('primeiroAcesso.deleteAccount')}
+        </button>
+
+        <ConfirmacaoDigitada
+          open={Boolean(previa)}
+          onClose={() => setPrevia(null)}
+          titulo={t('configuracoes.excluirConta.title')}
+          aviso={t(levaAgencia
+            ? 'configuracoes.excluirConta.warningAgency'
+            : 'configuracoes.excluirConta.warningAccount')}
+          palavra={PALAVRA_EXCLUIR}
+          rotuloConfirmar={t('configuracoes.excluirConta.confirm')}
+          onConfirmar={excluirConta}
+        />
       </div>
     </AuthLayout>
   )

@@ -189,7 +189,8 @@ async function request(method, path, { body, params, auth = true, raw = false, j
       }
       limparTokens()
     }
-    if (resp.status === 401 && _onUnauthorized) _onUnauthorized()
+    // Só chamada autenticada derruba a sessão: um 401 de /auth/login é senha errada.
+    if (resp.status === 401 && auth && _onUnauthorized) _onUnauthorized()
     const err = payload?.error || {}
     throw new ApiError(err.message || `Erro ${resp.status}`, {
       status: resp.status,

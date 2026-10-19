@@ -397,7 +397,7 @@
         "changed": "Senha alterada. As outras sessões abertas foram encerradas.",
         "noPassword": "Você entra pelo Google. Para entrar também com e-mail e senha, defina uma senha pelo link que enviaremos ao seu e-mail.",
         "define": "Definir senha por e-mail",
-        "sent": "Enviamos um link para {{email}}. Ele vale por 30 minutos."
+        "sent": "Enviamos um link para {{email}}. Ele vale por 30 minutos; ao criar a senha, as sessões abertas serão encerradas."
       }
     },
     "agencia": {
@@ -1339,7 +1339,9 @@
     "agencyNamePlaceholder": "Ex.: Lumina Influence Agency",
     "confirm": "Continuar",
     "saving": "Salvando…",
-    "logout": "Sair"
+    "logout": "Sair",
+    "inviteHint": "Se a sua agência já usa a Lumina, peça um convite ao administrador dela.",
+    "deleteAccount": "Excluir esta conta"
   },
   "campanha": {
     "participantes": {

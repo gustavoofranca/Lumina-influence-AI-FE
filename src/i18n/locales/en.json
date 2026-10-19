@@ -397,7 +397,7 @@
         "changed": "Password changed. Your other open sessions were signed out.",
         "noPassword": "You sign in with Google. To also sign in with email and password, set a password through the link we'll email you.",
         "define": "Set password by email",
-        "sent": "We sent a link to {{email}}. It's valid for 30 minutes."
+        "sent": "We sent a link to {{email}}. It's valid for 30 minutes; creating the password will sign out your open sessions."
       }
     },
     "agencia": {
@@ -1339,7 +1339,9 @@
     "agencyNamePlaceholder": "e.g. Lumina Influence Agency",
     "confirm": "Continue",
     "saving": "Saving…",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "inviteHint": "If your agency already uses Lumina, ask its administrator for an invite.",
+    "deleteAccount": "Delete this account"
   },
   "campanha": {
     "participantes": {
