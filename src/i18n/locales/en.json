@@ -1329,7 +1329,13 @@
       "resendTitle": "Request a new link",
       "resendSubmit": "Send new link",
       "sent": "If there's a pending sign-up for this email, we sent a new link.",
-      "toLogin": "Go to sign in"
+      "toLogin": "Go to sign in",
+      "passwordTitle": "Confirm it's you",
+      "passwordSubtitle": "To activate the account, enter the password you chose when signing up.",
+      "password": "Sign-up password",
+      "passwordSubmit": "Confirm and sign in",
+      "wrongPassword": "This password doesn't match the sign-up for this link. If you signed up more than once, the password from the latest sign-up applies. Don't recognize this sign-up? Sign up again: the pending one is replaced.",
+      "signupAgain": "Sign up again"
     }
   },
   "primeiroAcesso": {

@@ -105,6 +105,28 @@ test('o link de confirmação chama a API uma vez só e sai da URL', async ({ pa
   expect(page.url()).not.toContain('abc123')
 })
 
+test('conta com senha: o link pede a senha do cadastro e explica quando não confere', async ({ page }) => {
+  const corpos = []
+  await page.route('**/auth/verify-email', (rota) => {
+    const corpo = rota.request().postDataJSON()
+    corpos.push(corpo)
+    const code = corpo.password === undefined ? 'verification_password_required' : 'verification_password_invalid'
+    return rota.fulfill(json(400, { error: { code, message: 'x', details: {} } }))
+  })
+  await page.goto('/verificar-email?token=abc123')
+  await expect(page.getByRole('heading', { name: 'Confirme que é você' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Confirmar e entrar' }).click()
+  await expect(page.getByText('Campo obrigatório.')).toBeVisible()
+  expect(corpos).toHaveLength(1)
+
+  await page.getByLabel('Senha do cadastro').fill('senha de outra pessoa')
+  await page.getByRole('button', { name: 'Confirmar e entrar' }).click()
+  await expect(page.getByText(/Esta senha não confere com a do cadastro deste link/)).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Cadastrar de novo' })).toHaveAttribute('href', '/cadastro')
+  expect(corpos[1]).toEqual({ token: 'abc123', password: 'senha de outra pessoa' })
+})
+
 test('recuperar senha responde do mesmo jeito para qualquer e-mail', async ({ page }) => {
   await page.route('**/auth/forgot-password', (rota) => rota.fulfill(json(202, { data: {} })))
   await page.goto('/login')

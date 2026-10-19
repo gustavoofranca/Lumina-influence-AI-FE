@@ -1329,7 +1329,13 @@
       "resendTitle": "Peça um novo link",
       "resendSubmit": "Enviar novo link",
       "sent": "Se houver um cadastro pendente com este e-mail, enviamos um novo link.",
-      "toLogin": "Ir para o login"
+      "toLogin": "Ir para o login",
+      "passwordTitle": "Confirme que é você",
+      "passwordSubtitle": "Para ativar a conta, digite a senha que você escolheu no cadastro.",
+      "password": "Senha do cadastro",
+      "passwordSubmit": "Confirmar e entrar",
+      "wrongPassword": "Esta senha não confere com a do cadastro deste link. Se você se cadastrou mais de uma vez, vale a senha do último cadastro. Não reconhece este cadastro? Cadastre-se de novo: o cadastro pendente é substituído.",
+      "signupAgain": "Cadastrar de novo"
     }
   },
   "primeiroAcesso": {

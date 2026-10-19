@@ -56,8 +56,10 @@ export async function cadastrar(dados) {
   return res.data
 }
 
-export async function verificarEmail(token) {
-  const res = await api.post('/auth/verify-email', { token }, { auth: false })
+/** Conta criada com senha só é ativada junto com ela; convite confirma só com o token. */
+export async function verificarEmail(token, senha) {
+  const corpo = senha === undefined ? { token } : { token, password: senha }
+  const res = await api.post('/auth/verify-email', corpo, { auth: false })
   return res.data
 }
 
