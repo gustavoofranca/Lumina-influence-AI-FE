@@ -10,6 +10,7 @@ import Badge from '../ui/Badge.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import ExcluirContaCard from './ExcluirContaCard.jsx'
 import SegurancaCard from './SegurancaCard.jsx'
+import DoisFatoresCard from './DoisFatoresCard.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { LIMITES, errosDaApi, validarNomePessoa } from '../../lib/limites.js'
 import { updateOwnProfile } from '../../services/team.js'
@@ -121,6 +122,7 @@ export default function PerfilSection({ onSave }) {
       </form>
 
       <SegurancaCard />
+      <DoisFatoresCard />
 
       {/* Zona de perigo por último e visualmente separada: é o direito de
           eliminação do titular, não uma preferência de perfil. */}
