@@ -398,6 +398,25 @@
         "noPassword": "You sign in with Google. To also sign in with email and password, set a password through the link we'll email you.",
         "define": "Set password by email",
         "sent": "We sent a link to {{email}}. It's valid for 30 minutes; creating the password will sign out your open sessions."
+      },
+      "doisFatores": {
+        "label": "2FA",
+        "title": "Two-step verification",
+        "subtitle": "Besides your password, a code from the authenticator app on your phone.",
+        "on": "On.",
+        "codesLeft": "{{count}} recovery code left.",
+        "codesLeft_other": "{{count}} recovery codes left.",
+        "required": "Required for administrators.",
+        "off": "Off. With it on, someone who finds out your password still can't sign in.",
+        "enable": "Turn on",
+        "enabled": "Two-step verification is on. Your other open sessions were signed out.",
+        "newCodes": "Generate new recovery codes",
+        "newCodesExplain": "Your current codes will stop working. Enter a code from the app to confirm.",
+        "generate": "Generate",
+        "done": "Done",
+        "disable": "Turn off two-step verification",
+        "disableExplain": "Your account will rely on your password alone.",
+        "disabled": "Two-step verification is off."
       }
     },
     "agencia": {
@@ -1336,6 +1355,44 @@
       "passwordSubmit": "Confirm and sign in",
       "wrongPassword": "This password doesn't match the sign-up for this link. If you signed up more than once, the password from the latest sign-up applies. Don't recognize this sign-up? Sign up again: the pending one is replaced.",
       "signupAgain": "Sign up again"
+    },
+    "mfa": {
+      "codeLabel": "Authenticator app code",
+      "recoveryLabel": "Recovery code",
+      "codeFormat": "Enter the 6 digits shown in the app.",
+      "recoveryFormat": "The code has 8 letters and numbers, like abcd-2345.",
+      "ticketExpired": "The time to finish signing in ran out. Sign in again.",
+      "backToLogin": "Back to sign in",
+      "challenge": {
+        "title": "Two-step verification",
+        "subtitle": "Open your authenticator app and enter the 6-digit code for Lumina.",
+        "subtitleRecovery": "Enter one of the recovery codes you saved. Each one works once.",
+        "submit": "Verify",
+        "useRecovery": "Lost your phone? Use a recovery code",
+        "useApp": "Use the app code"
+      },
+      "setup": {
+        "title": "Turn on two-step verification",
+        "subtitleRequired": "Administrator accounts need a second factor to sign in. It takes a minute.",
+        "loading": "Preparing setup…",
+        "step1": "Install an authenticator app on your phone: Google Authenticator, Microsoft Authenticator or Authy.",
+        "step2": "In the app, add an account and scan the QR code below.",
+        "step3": "Enter the 6-digit code the app shows.",
+        "qrAlt": "QR code to add Lumina to your authenticator app",
+        "cantScan": "Can't scan it? Enter the key",
+        "copyKey": "Copy key",
+        "confirm": "Turn on"
+      },
+      "recovery": {
+        "explain": "Keep these codes somewhere safe, away from your phone. If you lose your phone, each one lets you sign in once. They won't be shown again.",
+        "listLabel": "Recovery codes",
+        "copy": "Copy",
+        "copied": "Copied",
+        "download": "Download .txt",
+        "saved": "I saved the codes somewhere safe",
+        "continue": "Continue",
+        "fileHeader": "Lumina — two-step verification recovery codes. Each code works once."
+      }
     }
   },
   "primeiroAcesso": {
@@ -1545,6 +1602,8 @@
     "verifiqueEmail": "Confirm your email",
     "verificarEmail": "Confirming email",
     "recuperarSenha": "Recover password",
-    "redefinirSenha": "New password"
+    "redefinirSenha": "New password",
+    "desafio2fa": "Two-step verification",
+    "ativar2fa": "Turn on two-step verification"
   }
 }

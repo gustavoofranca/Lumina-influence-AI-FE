@@ -35,6 +35,8 @@ const CHAVE_POR_ROTA = [
   ['/verifique-seu-email',  'titulos.verifiqueEmail'],
   ['/verificar-email',      'titulos.verificarEmail'],
   ['/recuperar-senha',      'titulos.recuperarSenha'],
+  ['/entrar/verificacao',   'titulos.desafio2fa'],
+  ['/entrar/ativar-2fa',    'titulos.ativar2fa'],
   ['/redefinir-senha',      'titulos.redefinirSenha'],
   ['/privacidade',          'legal.privacy.title'],
   ['/termos',               'legal.terms.title'],

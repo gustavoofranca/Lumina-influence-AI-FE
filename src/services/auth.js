@@ -77,10 +77,53 @@ export async function redefinirSenha(token, password) {
   await api.post('/auth/reset-password', { token, password }, { auth: false })
 }
 
-/** Troca a senha. Devolve um par novo: as outras sessões deixam de valer. */
-export async function trocarSenha(atual, nova) {
-  const res = await api.post('/auth/change-password', { current_password: atual, new_password: nova })
+/**
+ * Troca a senha. Devolve um par novo: as outras sessões deixam de valer.
+ * Com 2FA ativo, a API exige o código do app (`codigo`).
+ */
+export async function trocarSenha(atual, nova, codigo) {
+  const corpo = { current_password: atual, new_password: nova }
+  if (codigo) corpo.totp_code = codigo
+  const res = await api.post('/auth/change-password', corpo)
   return res.data
+}
+
+// ---------------------------------------------------------------- 2FA
+// Quando falta o segundo fator, o login devolve `{ mfa, mfa_ticket }` no lugar
+// da sessão. As chamadas com ticket vão sem o Bearer: ainda não há sessão.
+
+/** Troca o ticket de desafio pela sessão, com o código do app ou de recuperação. */
+export async function verificarDoisFatores(ticket, codigo) {
+  const res = await api.post('/auth/2fa/verify', { mfa_ticket: ticket, code: codigo }, { auth: false })
+  return res.data
+}
+
+/** Começa a ativação: `{ secret, otpauth_uri, qr_svg }`. Sem ticket, vale a sessão. */
+export async function iniciarDoisFatores(ticket) {
+  const res = ticket
+    ? await api.post('/auth/2fa/setup', { mfa_ticket: ticket }, { auth: false })
+    : await api.post('/auth/2fa/setup', {})
+  return res.data
+}
+
+/** Confirma com o primeiro código: devolve `recovery_codes` e uma sessão nova. */
+export async function confirmarDoisFatores(codigo, ticket) {
+  const res = ticket
+    ? await api.post('/auth/2fa/setup/confirm', { code: codigo, mfa_ticket: ticket }, { auth: false })
+    : await api.post('/auth/2fa/setup/confirm', { code: codigo })
+  return res.data
+}
+
+export async function novosCodigosDeRecuperacao(codigo) {
+  const res = await api.post('/auth/2fa/recovery-codes', { code: codigo })
+  return res.data
+}
+
+/** Desliga o 2FA (membro e visualizador). Conta com senha manda a senha junto. */
+export async function desligarDoisFatores(codigo, senha) {
+  const corpo = { code: codigo }
+  if (senha) corpo.password = senha
+  await api.post('/auth/2fa/disable', corpo)
 }
 
 export async function aceitarTermos() {

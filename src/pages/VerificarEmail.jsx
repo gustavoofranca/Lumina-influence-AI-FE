@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import AuthLayout from '../layouts/AuthLayout.jsx'
@@ -7,8 +7,8 @@ import Button from '../components/ui/Button.jsx'
 import PasswordInput from '../components/ui/PasswordInput.jsx'
 import AvisoDeEntrada from '../components/auth/AvisoDeEntrada.jsx'
 import PedirLink from '../components/auth/PedirLink.jsx'
-import { destinoAposLogin, useAuth } from '../context/AuthContext.jsx'
 import { idDoCampo, useCampos } from '../hooks/useCampos.js'
+import { useSeguirEntrada } from '../hooks/useSeguirEntrada.js'
 import { reenviarVerificacao, verificarEmail } from '../services/auth.js'
 import { mensagemDeAuth } from '../lib/errosDeAuth.js'
 
@@ -37,8 +37,8 @@ function falhaDoLink(t, err) {
  */
 export default function VerificarEmail() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { aplicarSessao } = useAuth()
+  // Quem se cadastra é admin da agência nova: o passo seguinte é ativar o 2FA.
+  const seguirEntrada = useSeguirEntrada()
   const [token] = useState(() => new URLSearchParams(window.location.search).get('token'))
   const [falha, setFalha] = useState(() => (token ? null : { tipo: 'invalid' }))
   const [pedeSenha, setPedeSenha] = useState(false)
@@ -47,22 +47,18 @@ export default function VerificarEmail() {
   const { campos, erros, set, sair, validarTudo } = useCampos({ senha: '' }, VALIDADORES)
   const jaChamou = useRef(false)
 
-  const entrar = useCallback((sessao) => {
-    aplicarSessao(sessao)
-    navigate(destinoAposLogin(sessao.user, sessao.agency), { replace: true })
-  }, [aplicarSessao, navigate])
 
   useEffect(() => {
     window.history.replaceState(null, '', '/verificar-email')
     if (!token || jaChamou.current) return
     jaChamou.current = true
     verificarEmail(token)
-      .then(entrar)
+      .then(seguirEntrada)
       .catch((err) => {
         if (err.code === 'verification_password_required') setPedeSenha(true)
         else setFalha(falhaDoLink(t, err))
       })
-  }, [token, entrar, t])
+  }, [token, seguirEntrada, t])
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -70,7 +66,7 @@ export default function VerificarEmail() {
     if (!validarTudo()) return
     setEnviando(true)
     try {
-      entrar(await verificarEmail(token, campos.senha))
+      seguirEntrada(await verificarEmail(token, campos.senha))
     } catch (err) {
       if (err.code === 'verification_password_invalid') setAviso({ texto: t('auth.verificar.wrongPassword'), recadastro: true })
       else if (err.code?.startsWith('verification_token_')) setFalha(falhaDoLink(t, err))

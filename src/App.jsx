@@ -22,6 +22,8 @@ const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
 const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
 const VerifiqueSeuEmail = lazy(() => import('./pages/VerifiqueSeuEmail.jsx'))
 const VerificarEmail    = lazy(() => import('./pages/VerificarEmail.jsx'))
+const DesafioDoisFatores = lazy(() => import('./pages/DesafioDoisFatores.jsx'))
+const AtivarDoisFatores  = lazy(() => import('./pages/AtivarDoisFatores.jsx'))
 const PrimeiroAcesso   = lazy(() => import('./pages/PrimeiroAcesso.jsx'))
 const Dashboard        = lazy(() => import('./pages/Dashboard.jsx'))
 const Influenciadores  = lazy(() => import('./pages/Influenciadores.jsx'))
@@ -79,6 +81,8 @@ function AnimatedRoutes() {
           <Route path="/cadastro"        element={<Cadastro />} />
           <Route path="/verifique-seu-email" element={<VerifiqueSeuEmail />} />
           <Route path="/verificar-email"     element={<VerificarEmail />} />
+          <Route path="/entrar/verificacao"  element={<DesafioDoisFatores />} />
+          <Route path="/entrar/ativar-2fa"   element={<AtivarDoisFatores />} />
           <Route path="/recuperar-senha"     element={<RecuperarSenha />} />
           <Route path="/redefinir-senha"     element={<RedefinirSenha />} />
           <Route path="/privacidade"     element={<Privacidade />} />

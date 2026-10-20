@@ -179,6 +179,25 @@ export function validarDinheiro(t, reais) {
   return null
 }
 
+// ---------------------------------------------------------------- 2FA
+/** Código do app autenticador: 6 dígitos. Espaços (de quem cola) são ignorados. */
+export function codigoDoApp(valor) {
+  return String(valor ?? '').replace(/\s/g, '')
+}
+
+export function validarCodigoDoApp(t, valor) {
+  const codigo = codigoDoApp(valor)
+  if (!codigo) return t('common.validation.required')
+  return /^\d{6}$/.test(codigo) ? null : t('auth.mfa.codeFormat')
+}
+
+/** Código de recuperação: 8 letras e números, com ou sem o hífen do meio. */
+export function validarCodigoDeRecuperacao(t, valor) {
+  const codigo = String(valor ?? '').replace(/[\s-]/g, '')
+  if (!codigo) return t('common.validation.required')
+  return /^[a-z2-9]{8}$/i.test(codigo) ? null : t('auth.mfa.recoveryFormat')
+}
+
 // ---------------------------------------------------------------- CNPJ
 // IN RFB 2.229/2024: desde julho de 2026 as 12 primeiras posições aceitam A–Z;
 // as duas últimas (dígito verificador) continuam numéricas. O DV usa o código

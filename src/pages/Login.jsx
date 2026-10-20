@@ -12,7 +12,8 @@ import AvisoDeEntrada from '../components/auth/AvisoDeEntrada.jsx'
 import { destinoAposLogin, useAuth } from '../context/AuthContext.jsx'
 import { idDoCampo, useCampos } from '../hooks/useCampos.js'
 import { useOpcoesDeLogin } from '../hooks/useOpcoesDeLogin.js'
-import { googleLoginUrl, reenviarVerificacao } from '../services/auth.js'
+import { useSeguirEntrada } from '../hooks/useSeguirEntrada.js'
+import { googleLoginUrl, loginComSenha, reenviarVerificacao } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
 import { mensagemDeAuth } from '../lib/errosDeAuth.js'
 import { LIMITES, validarEmail } from '../lib/limites.js'
@@ -34,7 +35,8 @@ export default function Login() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { state } = useLocation()
-  const { entrarComSenha, devLogin } = useAuth()
+  const { devLogin } = useAuth()
+  const seguirEntrada = useSeguirEntrada()
   const opcoes = useOpcoesDeLogin()
   const { campos, erros, set, sair, validarTudo } = useCampos({ email: '', senha: '' }, VALIDADORES)
 
@@ -53,7 +55,8 @@ export default function Login() {
     if (!validarTudo()) return
     setCarregando('senha')
     try {
-      seguir(await entrarComSenha(campos.email.trim(), campos.senha))
+      // Com 2FA (ou admin que precisa ativar), vai para a tela do código.
+      seguirEntrada(await loginComSenha(campos.email.trim(), campos.senha))
     } catch (err) {
       if (err.code === 'email_not_verified') setNaoVerificado(true)
       else if (err.code === 'invalid_credentials') setAviso({ tipo: 'erro', texto: t('auth.login.invalid') })

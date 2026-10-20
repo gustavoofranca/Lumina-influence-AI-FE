@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuth } from '../context/AuthContext.jsx'
+import { rotaDoSegundoFator, useAuth } from '../context/AuthContext.jsx'
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +9,9 @@ import { useTranslation } from 'react-i18next'
  * Recebe o redirect do back-end após o OAuth Google:
  *   /auth/callback#access_token=...&refresh_token=...
  * Extrai o token do fragmento, carrega o usuário e entra no app.
+ *
+ * Com segundo fator a cumprir, o fragmento traz `mfa` e `mfa_ticket` no lugar
+ * dos tokens, e a tela segue para o 2FA.
  */
 export default function AuthCallback() {
   const { t } = useTranslation()
@@ -18,6 +21,13 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const frag = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+    const rotaDo2fa = rotaDoSegundoFator({ mfa: frag.get('mfa') })
+    if (rotaDo2fa && frag.get('mfa_ticket')) {
+      const ticket = frag.get('mfa_ticket')
+      window.history.replaceState(null, '', '/auth/callback')
+      navigate(rotaDo2fa, { replace: true, state: { ticket } })
+      return
+    }
     const accessToken = frag.get('access_token')
     // O back-end manda o par completo no fragmento. Ignorar o refresh fazia a
     // sessao do login por Google expirar em 1 hora sem chance de renovar.

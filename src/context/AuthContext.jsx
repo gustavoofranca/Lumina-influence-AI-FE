@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 import { api, getAccessToken, setTokens, limparTokens, setOnUnauthorized } from '../lib/api.js'
-import { devLogin as devLoginApi, getMe, loginComSenha } from '../services/auth.js'
+import { devLogin as devLoginApi, getMe } from '../services/auth.js'
 
 const AuthContext = createContext(null)
 
@@ -38,13 +38,8 @@ export function AuthProvider({ children }) {
     return dados
   }, [])
 
-  // Login de dev (sem OAuth)
+  // Login de dev (sem OAuth). Nunca pede 2FA: o atalho só existe em desenvolvimento.
   const devLogin = useCallback(async (email) => aplicarSessao(await devLoginApi(email)), [aplicarSessao])
-
-  const entrarComSenha = useCallback(
-    async (email, senha) => aplicarSessao(await loginComSenha(email, senha)),
-    [aplicarSessao]
-  )
 
   // Captura tokens vindos do callback OAuth (#access_token=...&refresh_token=...)
   const loginWithTokens = useCallback(async (accessToken, refreshToken) => {
@@ -89,7 +84,7 @@ export function AuthProvider({ children }) {
     user, agency, loading,
     isAuthenticated: !!user,
     devLogin, loginWithTokens, logout, refreshUser,
-    aplicarSessao, entrarComSenha,
+    aplicarSessao,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
@@ -105,4 +100,15 @@ export function precisaCompletarCadastro(user, agency) {
 
 export function destinoAposLogin(user, agency) {
   return precisaCompletarCadastro(user, agency) ? '/primeiro-acesso' : '/app/dashboard'
+}
+
+/**
+ * Tela do segundo fator que falta para uma resposta de login, ou `null` se ela
+ * já traz a sessão. `challenge`: a conta tem 2FA; `setup`: administrador sem
+ * 2FA, que precisa ativar antes de entrar.
+ */
+export function rotaDoSegundoFator(dados) {
+  if (dados?.mfa === 'challenge') return '/entrar/verificacao'
+  if (dados?.mfa === 'setup') return '/entrar/ativar-2fa'
+  return null
 }

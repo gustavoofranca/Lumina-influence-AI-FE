@@ -398,6 +398,25 @@
         "noPassword": "Você entra pelo Google. Para entrar também com e-mail e senha, defina uma senha pelo link que enviaremos ao seu e-mail.",
         "define": "Definir senha por e-mail",
         "sent": "Enviamos um link para {{email}}. Ele vale por 30 minutos; ao criar a senha, as sessões abertas serão encerradas."
+      },
+      "doisFatores": {
+        "label": "2FA",
+        "title": "Verificação em duas etapas",
+        "subtitle": "Além da senha, um código do app autenticador no seu celular.",
+        "on": "Ativa.",
+        "codesLeft": "{{count}} código de recuperação disponível.",
+        "codesLeft_other": "{{count}} códigos de recuperação disponíveis.",
+        "required": "Obrigatória para administradores.",
+        "off": "Desativada. Com ela ativa, quem descobrir sua senha ainda não consegue entrar.",
+        "enable": "Ativar",
+        "enabled": "Verificação em duas etapas ativada. As outras sessões abertas foram encerradas.",
+        "newCodes": "Gerar novos códigos de recuperação",
+        "newCodesExplain": "Os códigos atuais deixam de valer. Digite um código do app para confirmar.",
+        "generate": "Gerar",
+        "done": "Concluir",
+        "disable": "Desligar verificação em duas etapas",
+        "disableExplain": "Sua conta volta a depender só da senha.",
+        "disabled": "Verificação em duas etapas desligada."
       }
     },
     "agencia": {
@@ -1336,6 +1355,44 @@
       "passwordSubmit": "Confirmar e entrar",
       "wrongPassword": "Esta senha não confere com a do cadastro deste link. Se você se cadastrou mais de uma vez, vale a senha do último cadastro. Não reconhece este cadastro? Cadastre-se de novo: o cadastro pendente é substituído.",
       "signupAgain": "Cadastrar de novo"
+    },
+    "mfa": {
+      "codeLabel": "Código do app autenticador",
+      "recoveryLabel": "Código de recuperação",
+      "codeFormat": "Digite os 6 números que o app mostra.",
+      "recoveryFormat": "O código tem 8 letras e números, como abcd-2345.",
+      "ticketExpired": "O tempo para concluir a entrada acabou. Entre de novo.",
+      "backToLogin": "Voltar para o login",
+      "challenge": {
+        "title": "Verificação em duas etapas",
+        "subtitle": "Abra o app autenticador e digite o código de 6 dígitos da Lumina.",
+        "subtitleRecovery": "Digite um dos códigos de recuperação que você guardou. Cada um vale uma vez.",
+        "submit": "Verificar",
+        "useRecovery": "Perdeu o celular? Use um código de recuperação",
+        "useApp": "Usar o código do app"
+      },
+      "setup": {
+        "title": "Ative a verificação em duas etapas",
+        "subtitleRequired": "Contas de administrador precisam de um segundo fator para entrar. Leva um minuto.",
+        "loading": "Preparando a ativação…",
+        "step1": "Instale um app autenticador no celular: Google Authenticator, Microsoft Authenticator ou Authy.",
+        "step2": "No app, adicione uma conta e escaneie o QR code abaixo.",
+        "step3": "Digite o código de 6 dígitos que o app mostrar.",
+        "qrAlt": "QR code para cadastrar a Lumina no app autenticador",
+        "cantScan": "Não consegue escanear? Digite a chave",
+        "copyKey": "Copiar chave",
+        "confirm": "Ativar"
+      },
+      "recovery": {
+        "explain": "Guarde estes códigos num lugar seguro, fora do celular. Se você perder o celular, cada um deles permite entrar uma vez. Eles não serão mostrados de novo.",
+        "listLabel": "Códigos de recuperação",
+        "copy": "Copiar",
+        "copied": "Copiado",
+        "download": "Baixar .txt",
+        "saved": "Guardei os códigos num lugar seguro",
+        "continue": "Continuar",
+        "fileHeader": "Lumina — códigos de recuperação da verificação em duas etapas. Cada código vale uma vez."
+      }
     }
   },
   "primeiroAcesso": {
@@ -1545,6 +1602,8 @@
     "verifiqueEmail": "Confirme seu e-mail",
     "verificarEmail": "Confirmando e-mail",
     "recuperarSenha": "Recuperar senha",
-    "redefinirSenha": "Nova senha"
+    "redefinirSenha": "Nova senha",
+    "desafio2fa": "Verificação em duas etapas",
+    "ativar2fa": "Ativar verificação em duas etapas"
   }
 }
