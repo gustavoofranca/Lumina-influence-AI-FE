@@ -1,7 +1,7 @@
 # Repaginação da área autenticada — plano de execução
 
 **Aberto em:** 09/09/2026 · **Alvo:** entrega entre 11 e 17/09/2026
-**Protótipo aprovado:** https://claude.ai/code/artifact/b88ffbcd-030a-47fa-883e-807444e63eb0
+**Protótipo aprovado:** protótipo interativo validado em 09/09/2026, mantido fora do repositório
 
 Este documento existe para sobreviver a limpeza de contexto. Quem retomar o
 trabalho lê daqui, não da conversa. **Mantenha a seção "Estado" atualizada a
