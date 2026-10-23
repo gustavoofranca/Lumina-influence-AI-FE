@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { modoLeve } from '../lib/modoLeve.js'
+
 /**
  * Luz que segue o ponteiro na página pública.
  *
@@ -219,6 +221,9 @@ function desligar() {
 export function luzPermitida() {
   if (typeof window === 'undefined' || !window.matchMedia) return false
   return (
+    // Sem aceleração de hardware, repintar a tela inteira a cada movimento do
+    // mouse sai do processador (ver `lib/modoLeve.js`).
+    !modoLeve() &&
     window.matchMedia('(pointer: fine)').matches &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   )
