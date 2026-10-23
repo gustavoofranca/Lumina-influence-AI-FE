@@ -5,7 +5,7 @@ import { cn } from '../../lib/cn.js'
 import CartaoDeVidro from './CartaoDeVidro.jsx'
 import { PILULA, PILULA_PRIMARIA, TEXTO_PILULA, TITULO_SECAO, WASH_SECAO_SUAVE } from './estilos.js'
 
-const EMAIL_CONTATO = import.meta.env.VITE_CONTACT_EMAIL || 'contato@k13.com.br'
+import { EMAIL_CONTATO } from '../../lib/contato.js'
 
 /**
  * Planos.
