@@ -13,7 +13,7 @@ import ForcaDaSenha from '../components/auth/ForcaDaSenha.jsx'
 import AvisoDeEntrada from '../components/auth/AvisoDeEntrada.jsx'
 import { idDoCampo, useCampos } from '../hooks/useCampos.js'
 import { useOpcoesDeLogin } from '../hooks/useOpcoesDeLogin.js'
-import { cadastrar, googleLoginUrl } from '../services/auth.js'
+import { cadastrar, googleLoginUrl, microsoftLoginUrl } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
 import { sugerirEmail } from '../lib/email.js'
 import { mensagemDeAuth } from '../lib/errosDeAuth.js'
@@ -41,7 +41,7 @@ const CAMPOS_DA_API = {
 const LINK = 'font-semibold text-landing-violet underline-offset-2 hover:underline'
 
 /**
- * Cadastro por e-mail e senha (ou Google). Uma página, dois blocos: a pessoa e
+ * Cadastro por e-mail e senha (ou Google/Microsoft). Uma página, dois blocos: a pessoa e
  * a agência. O CNPJ vem antes do nome da agência para que a consulta à Receita
  * possa sugerir a razão social.
  *
@@ -110,12 +110,21 @@ export default function Cadastro() {
         <p className="mt-2 text-sm text-landing-muted">{t('auth.cadastro.subtitle')}</p>
       </div>
 
-      {opcoes.google && (
+      {(opcoes.google || opcoes.microsoft) && (
         <>
-          <Button type="button" variant="vidro" fullWidth size="lg"
-                  onClick={() => { window.location.href = googleLoginUrl() }}>
-            {t('auth.cadastro.google')}
-          </Button>
+          {opcoes.google && (
+            <Button type="button" variant="vidro" fullWidth size="lg"
+                    onClick={() => { window.location.href = googleLoginUrl() }}>
+              {t('auth.cadastro.google')}
+            </Button>
+          )}
+          {opcoes.microsoft && (
+            <Button type="button" variant="vidro" fullWidth size="lg"
+                    className={cn(opcoes.google && 'mt-3')}
+                    onClick={() => { window.location.href = microsoftLoginUrl() }}>
+              {t('auth.cadastro.microsoft')}
+            </Button>
+          )}
           <Divisor>{t('auth.cadastro.orEmail')}</Divisor>
         </>
       )}
