@@ -701,7 +701,13 @@
         "shares": "Shares",
         "saves": "Saves"
       },
-      "summaryTextNoSplit": "This audit covers {{creators}} creators from the {{brand}} campaign. The sentiment index was {{sentiment}}. Total audited reach: {{reach}} across {{posts}} posts. The split between organic and paid reach is not provided by the platform API and was not measured."
+      "summaryTextNoSplit": "This audit covers {{creators}} creators from the {{brand}} campaign. The sentiment index was {{sentiment}}. Total audited reach: {{reach}} across {{posts}} posts. The split between organic and paid reach is not provided by the platform API and was not measured.",
+      "botCoherence": "Bot {{bot}}% · Coherence {{coerencia}}",
+      "sentimentLabels": {
+        "positive": "Positive sentiment",
+        "neutral": "Neutral sentiment",
+        "negative": "Negative sentiment"
+      }
     }
   },
   "campanhas": {

@@ -42,3 +42,9 @@ export const MOSTRAR_INTEGRIDADE_RESUMIDA = false
 // poucos comentários analisados a todos os seguidores: com 6 comentários, o
 // card afirmava 8 mil pessoas verificadas. Volta quando a amostra justificar.
 export const MOSTRAR_INTEGRIDADE_DO_PUBLICO = false
+
+// O mapa de nós da "Densidade da rede" é um SVG com posições fixas, igual para
+// toda agência — o próprio componente se diz decorativo. Ao lado de cartões de
+// dado medido, ele passava por grafo calculado. Sem ele o painel também deixa
+// de buscar `/network-density`.
+export const MOSTRAR_DENSIDADE_DA_REDE_DECORATIVA = false

@@ -297,7 +297,10 @@ function DiagnosticSection({ doc, t }) {
                   {d.display_name} <span className="text-xs text-neutral-500">— {d.niche}</span>
                 </span>
                 <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-violet-600">
-                  Bot {d.bot_probability}% · Coh. {d.brand_coherence}
+                  {t('relatorios.preview.botCoherence', {
+                    bot: d.bot_probability,
+                    coerencia: d.brand_coherence,
+                  })}
                 </span>
               </div>
               <p className="mt-2 text-xs leading-relaxed text-neutral-600">{d.note}</p>
@@ -365,7 +368,12 @@ function VideoSection({ doc, t }) {
               )}
 
               <p className="mt-1 text-[10px] text-neutral-400">
-                {v.sentiment_label} · {v.analyzed_at} · {v.model_version}
+                {/* O back-end manda o rótulo do enum (`positive`, `neutral`,
+                    `negative`). Valor fora dos três sai cru: um rótulo sem
+                    tradução ainda informa; um campo vazio, não. */}
+                {t(`relatorios.preview.sentimentLabels.${v.sentiment_label}`, {
+                  defaultValue: v.sentiment_label,
+                })} · {v.analyzed_at} · {v.model_version}
               </p>
             </div>
           ))}
