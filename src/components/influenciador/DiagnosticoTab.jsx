@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Sparkles, Heart, ShieldCheck, Bot } from 'lucide-react'
-import { MOSTRAR_AUDITORIA_DE_VIDEO_DECORATIVA, MOSTRAR_INTEGRIDADE_DO_PUBLICO } from '../../lib/apresentacao.js'
+import {
+  MOSTRAR_AUDITORIA_DE_VIDEO_DECORATIVA,
+  MOSTRAR_INTEGRIDADE_DO_PUBLICO,
+  MOSTRAR_TRANSCRICAO,
+} from '../../lib/apresentacao.js'
 
 import KpiCard from '../ui/KpiCard.jsx'
 import SentimentHeatmap        from './diagnostic/SentimentHeatmap.jsx'
@@ -92,11 +96,13 @@ export default function DiagnosticoTab({
       </section>
 
       {/* Transcrição do áudio, quando a análise foi multimodal */}
-      <TranscriptHighlight
-        transcript={analysis?.transcript}
-        nomeDoCriador={analysis?.influencer?.display_name}
-        loading={loading}
-      />
+      {MOSTRAR_TRANSCRICAO && (
+        <TranscriptHighlight
+          transcript={analysis?.transcript}
+          nomeDoCriador={analysis?.influencer?.display_name}
+          loading={loading}
+        />
+      )}
 
       {/* Recomendacoes */}
       <RecommendationsCard

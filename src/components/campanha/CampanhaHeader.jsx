@@ -7,6 +7,7 @@ import Badge from '../ui/Badge.jsx'
 import Button from '../ui/Button.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
 import { formatBudget, formatDateRange, formatFollowers } from '../../lib/format.js'
+import { MOSTRAR_EDITAR_E_EXCLUIR } from '../../lib/apresentacao.js'
 
 // Marcador de ausência de dado — melhor que zero, que seria uma afirmação.
 const EMPTY = '—'
@@ -80,12 +81,16 @@ export default function CampanhaHeader({ campanha, metrics, onEdit, onExcluir })
           </Button>
           {/* Exclusão em `secondary`: é definitiva e não deve competir com a
               ação principal da tela. O aviso mora no modal. */}
-          <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
-            {t('campanha.excluir.trigger')}
-          </Button>
-          <Button variant="secondary" leftIcon={Edit3} onClick={onEdit}>
-            {t('campanhas.detail.actions.edit')}
-          </Button>
+          {MOSTRAR_EDITAR_E_EXCLUIR && (
+            <>
+              <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
+                {t('campanha.excluir.trigger')}
+              </Button>
+              <Button variant="secondary" leftIcon={Edit3} onClick={onEdit}>
+                {t('campanhas.detail.actions.edit')}
+              </Button>
+            </>
+          )}
         </div>
       </div>
 

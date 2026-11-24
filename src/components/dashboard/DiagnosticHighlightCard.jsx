@@ -10,6 +10,7 @@ import Badge from '../ui/Badge.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
+import { MOSTRAR_IDS_INTERNOS, MOSTRAR_TRANSCRICAO } from '../../lib/apresentacao.js'
 
 /**
  * A miniatura do post que foi analisado.
@@ -115,9 +116,11 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
           <Avatar name={name} size="md" />
           <div className="min-w-0">
             <p className="tipo-bloco truncate text-text-primary">{name}</p>
-            <p className="numerico truncate tipo-apoio text-text-muted">
-              {t('dashboard.diagnostic.analysisId')}: #{data.analysisId}
-            </p>
+            {MOSTRAR_IDS_INTERNOS && (
+              <p className="numerico truncate tipo-apoio text-text-muted">
+                {t('dashboard.diagnostic.analysisId')}: #{data.analysisId}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -128,7 +131,9 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
         alt={t('dashboard.diagnostic.thumbnailAlt', { nome: name })}
       />
 
-      {/* IA Transcription */}
+      {/* IA Transcription. O bloco sai inteiro: o rótulo sem o texto
+          embaixo pareceria transcrição que não carregou. */}
+      {MOSTRAR_TRANSCRICAO && (
       <div>
         <CardLabel>{t('dashboard.diagnostic.transcriptLabel')}</CardLabel>
         {data.transcript ? (
@@ -144,6 +149,7 @@ export default function DiagnosticHighlightCard({ data, loading = false }) {
           </p>
         )}
       </div>
+      )}
 
       {/* Pills. A API manda `success` ou `danger`. Só o alerta de bot é risco
           e fica rosa; o resto é valor medido e sai na cor de medido, sem o

@@ -10,6 +10,7 @@ import NetworkDensityCard     from '../components/dashboard/NetworkDensityCard.j
 import ProcedenciaCard        from '../components/dashboard/ProcedenciaCard.jsx'
 import ApiErrorBanner         from '../components/ui/ApiErrorBanner.jsx'
 import { useApi } from '../hooks/useApi.js'
+import { MOSTRAR_DENSIDADE_DA_REDE_DECORATIVA } from '../lib/apresentacao.js'
 import { getOverview, getNetworkDensity, getCampaignOptions, getProcedencia } from '../services/dashboard.js'
 
 export default function Dashboard() {
@@ -22,7 +23,10 @@ export default function Dashboard() {
     () => getOverview({ period, campaignId: campaign }), [period, campaign],
     { cacheKey: 'dashboard/overview' })
   const { data: density, loading: loadingDensity, error: erroDensity,
-          refetch: recarregarDensity } = useApi(getNetworkDensity, [], { cacheKey: 'dashboard/network-density' })
+          refetch: recarregarDensity } = useApi(getNetworkDensity, [], {
+    cacheKey: 'dashboard/network-density',
+    enabled: MOSTRAR_DENSIDADE_DA_REDE_DECORATIVA,
+  })
   // Procedencia: fica ao lado dos KPIs de propósito. É o cartão que diz o que
   // os outros números não dizem — quanto do que está na tela foi medido.
   const { data: procedencia, loading: loadingProcedencia,
@@ -76,11 +80,11 @@ export default function Dashboard() {
             <ProcedenciaCard data={procedencia} loading={loadingProcedencia} />
           )}
           <DiagnosticHighlightCard data={overview?.featured} loading={loading} />
-          {erroDensity ? (
+          {MOSTRAR_DENSIDADE_DA_REDE_DECORATIVA && (erroDensity ? (
             <ApiErrorBanner error={erroDensity} onRetry={recarregarDensity} />
           ) : (
             <NetworkDensityCard data={density} loading={loadingDensity} />
-          )}
+          ))}
         </div>
       </section>
     </div>

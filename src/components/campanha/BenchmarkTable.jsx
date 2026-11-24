@@ -9,6 +9,10 @@ import Table from '../ui/Table.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { formatFollowers, formatBudget, formatPct } from '../../lib/format.js'
+import { MOSTRAR_COLUNAS_COMERCIAIS_DO_BENCHMARK, MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
+
+// Colunas que o modo apresentação tira (ver `apresentacao.js`).
+const COLUNAS_COMERCIAIS = new Set(['organicReach', 'paidReach', 'cost'])
 
 function PercentBar({ value, color }) {
   const medido = value != null
@@ -39,7 +43,7 @@ export default function BenchmarkTable({ rows, loading = false }) {
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
             <div className="truncate font-semibold text-text-primary">{row.name}</div>
-            <div className="truncate text-xs text-text-muted">{row.handle}</div>
+            {MOSTRAR_HANDLE && <div className="truncate text-xs text-text-muted">{row.handle}</div>}
           </div>
         </div>
       ),
@@ -114,7 +118,7 @@ export default function BenchmarkTable({ rows, loading = false }) {
         <span className="font-semibold tabular-nums text-accent-strong">{formatBudget(row.cost)}</span>
       ),
     },
-  ]
+  ].filter((col) => MOSTRAR_COLUNAS_COMERCIAIS_DO_BENCHMARK || !COLUNAS_COMERCIAIS.has(col.key))
 
   return (
     <Card padding="md" className="flex flex-col gap-5">

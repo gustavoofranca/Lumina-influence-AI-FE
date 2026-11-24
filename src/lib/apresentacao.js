@@ -42,3 +42,66 @@ export const MOSTRAR_INTEGRIDADE_RESUMIDA = false
 // poucos comentários analisados a todos os seguidores: com 6 comentários, o
 // card afirmava 8 mil pessoas verificadas. Volta quando a amostra justificar.
 export const MOSTRAR_INTEGRIDADE_DO_PUBLICO = false
+
+// O mapa de nós da "Densidade da rede" é um SVG com posições fixas, igual para
+// toda agência — o próprio componente se diz decorativo. Ao lado de cartões de
+// dado medido, ele passava por grafo calculado. Sem ele o painel também deixa
+// de buscar `/network-density`.
+export const MOSTRAR_DENSIDADE_DA_REDE_DECORATIVA = false
+
+/* -------------------------------------------------------------------------- */
+/* Modo apresentação                                                          */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Cortes que valem só na gravação da apresentação do TCC.
+ *
+ * Diferente das chaves acima, nada disto é defeito: são elementos verdadeiros
+ * que, num vídeo que circula fora da banca, expõem dado pessoal (o @ da conta
+ * real, a fala transcrita) ou desviam o olhar para operação de rotina (editar,
+ * excluir, conectar conta). Ligam com `VITE_MODO_APRESENTACAO=true` no
+ * `.env.local` da máquina que grava; sem a variável o site publicado fica
+ * exatamente como era. Complementa a máscara de `mascara.js`, que troca nomes
+ * nas respostas da API mas não tem como tirar um elemento da tela.
+ */
+
+// Só a string exata liga o modo. "1", "yes" ou um erro de digitação deixam o
+// site como é: o modo existe para tirar coisas da tela, e ligar por engano no
+// site publicado seria pior do que esquecer de ligar na gravação.
+export function lerModoApresentacao(valor) {
+  return valor === 'true'
+}
+
+// O `?.` existe porque os testes rodam no Node, onde `import.meta.env` não
+// existe.
+export const MODO_APRESENTACAO = lerModoApresentacao(import.meta.env?.VITE_MODO_APRESENTACAO)
+
+// "ID da sessão #…", "ID da análise: #…" e o #id do histórico são chaves do
+// banco: não dizem nada a quem assiste e parecem dado técnico vazado.
+export const MOSTRAR_IDS_INTERNOS = !MODO_APRESENTACAO
+
+// O @ é o identificador público da pessoa real dona da conta conectada. A
+// máscara troca o texto, mas um @ inventado ao lado de métricas reais confunde
+// mais do que esclarece; o nome de exibição basta para a demonstração.
+export const MOSTRAR_HANDLE = !MODO_APRESENTACAO
+
+// A transcrição é a fala da pessoa, palavra por palavra — o dado mais pessoal
+// da tela. As notas que a IA tira dela continuam visíveis.
+export const MOSTRAR_TRANSCRICAO = !MODO_APRESENTACAO
+
+// "Contas conectadas" e "Analisar vídeo" são operação (vincular conta, subir
+// arquivo), não resultado. Na gravação a aba Visão Geral fica nos números.
+export const MOSTRAR_CARTOES_OPERACIONAIS_DO_CRIADOR = !MODO_APRESENTACAO
+
+// % orgânico, % pago e custo no benchmarking: a divisão orgânico × pago não é
+// medida na coleta real (sai travessão), e o custo é valor negociado com a
+// pessoa. Na gravação ficam criador, alcance, engajamento, sentimento e Score.
+export const MOSTRAR_COLUNAS_COMERCIAIS_DO_BENCHMARK = !MODO_APRESENTACAO
+
+// A tabela "Posts auditados" da prévia repete legenda e data de cada post da
+// conta real; o resumo e o benchmarking já contam a história do relatório.
+export const MOSTRAR_POSTS_AUDITADOS_NA_PREVIA = !MODO_APRESENTACAO
+
+// Editar e Excluir nos cabeçalhos de criador e campanha: são manutenção de
+// cadastro e, ao lado da ação principal, disputam o olhar com ela no vídeo.
+export const MOSTRAR_EDITAR_E_EXCLUIR = !MODO_APRESENTACAO

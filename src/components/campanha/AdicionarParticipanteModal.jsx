@@ -9,6 +9,7 @@ import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import { useApi } from '../../hooks/useApi.js'
 import { errosDaApi, validarDinheiro } from '../../lib/limites.js'
+import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
 import { listInfluencers } from '../../services/influencers.js'
 import { adicionarParticipante } from '../../services/campaigns.js'
 
@@ -120,7 +121,7 @@ export default function AdicionarParticipanteModal({
                 <option value="">—</option>
                 {disponiveis.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.name}{c.handle ? ` · ${c.handle}` : ''}
+                    {c.name}{MOSTRAR_HANDLE && c.handle ? ` · ${c.handle}` : ''}
                   </option>
                 ))}
               </select>

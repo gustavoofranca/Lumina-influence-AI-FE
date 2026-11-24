@@ -701,7 +701,13 @@
         "shares": "Compart.",
         "saves": "Salvos"
       },
-      "summaryTextNoSplit": "Esta auditoria cobre {{creators}} criadores da campanha {{brand}}. O índice de sentimento ficou em {{sentiment}}. Alcance total auditado: {{reach}} em {{posts}} posts. A divisão entre alcance orgânico e pago não é informada pela API da plataforma e não foi medida."
+      "summaryTextNoSplit": "Esta auditoria cobre {{creators}} criadores da campanha {{brand}}. O índice de sentimento ficou em {{sentiment}}. Alcance total auditado: {{reach}} em {{posts}} posts. A divisão entre alcance orgânico e pago não é informada pela API da plataforma e não foi medida.",
+      "botCoherence": "Bot {{bot}}% · Coerência {{coerencia}}",
+      "sentimentLabels": {
+        "positive": "Sentimento positivo",
+        "neutral": "Sentimento neutro",
+        "negative": "Sentimento negativo"
+      }
     }
   },
   "campanhas": {

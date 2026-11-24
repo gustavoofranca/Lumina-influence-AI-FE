@@ -19,6 +19,7 @@ import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import Skeleton from '../components/ui/Skeleton.jsx'
 import { formatBudget, formatDateRange, formatFollowers } from '../lib/format.js'
+import { MOSTRAR_HANDLE } from '../lib/apresentacao.js'
 import { SECTION_KEYS } from '../lib/constants.js'
 import { useApi } from '../hooks/useApi.js'
 import { listCampaigns, getCampaignBenchmarking } from '../services/campaigns.js'
@@ -187,7 +188,7 @@ function Step2PeriodoInfluenciadores({
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-semibold text-text-primary">{inf.name}</p>
                   <p className="truncate text-xs text-text-muted">
-                    {inf.handle} · {formatFollowers(inf.followers)}
+                    {MOSTRAR_HANDLE ? `${inf.handle} · ` : ''}{formatFollowers(inf.followers)}
                   </p>
                 </div>
                 <span className={cn(

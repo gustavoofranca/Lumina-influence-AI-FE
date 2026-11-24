@@ -14,7 +14,7 @@ import MelhorHorarioCard from './MelhorHorarioCard.jsx'
 import { ehSoma, detalharSoma } from '../../lib/seguidores.js'
 import { formatFollowers, formatPct } from '../../lib/format.js'
 
-import { MOSTRAR_INTEGRIDADE_RESUMIDA } from '../../lib/apresentacao.js'
+import { MOSTRAR_CARTOES_OPERACIONAIS_DO_CRIADOR, MOSTRAR_INTEGRIDADE_RESUMIDA } from '../../lib/apresentacao.js'
 
 export default function VisaoGeralTab({ influenciador: inf, growth, campanhas = [], posts = [], onContasChange }) {
   const { t } = useTranslation()
@@ -63,16 +63,20 @@ export default function VisaoGeralTab({ influenciador: inf, growth, campanhas = 
         />
       </div>
 
-      <ContasConectadasCard influenciador={inf} onChange={onContasChange} />
+      {MOSTRAR_CARTOES_OPERACIONAIS_DO_CRIADOR && (
+        <>
+          <ContasConectadasCard influenciador={inf} onChange={onContasChange} />
 
-      <AnalisarVideoCard
-        influenciador={inf}
-        campanhas={campanhas}
-        // Sem repassar a resposta: `onContasChange` recebe o texto do aviso, e
-        // a resposta da API como aviso era um objeto renderizado como texto —
-        // o React caía e a tela ficava só no fundo.
-        onAnalise={() => onContasChange()}
-      />
+          <AnalisarVideoCard
+            influenciador={inf}
+            campanhas={campanhas}
+            // Sem repassar a resposta: `onContasChange` recebe o texto do aviso, e
+            // a resposta da API como aviso era um objeto renderizado como texto —
+            // o React caía e a tela ficava só no fundo.
+            onAnalise={() => onContasChange()}
+          />
+        </>
+      )}
 
       {/* Crescimento + integridade resumida */}
       <section
