@@ -154,9 +154,9 @@ export default function Welcome() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {/* Display: Plus Jakarta Sans */}
+            {/* Display: Bricolage Grotesque (ver fontFamily no tailwind.config.js) */}
             <div className="superficie rounded-superficie p-8">
-              <span className="text-label">Display · Plus Jakarta Sans</span>
+              <span className="text-label">Display · Bricolage Grotesque</span>
               <div className="mt-4 flex items-baseline gap-4">
                 <span className="font-display text-8xl font-extrabold leading-none tracking-display-tight text-gradient-brand">
                   Aa
