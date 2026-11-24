@@ -13,6 +13,11 @@ export function googleLoginUrl() {
   return `${api.baseUrl}/auth/google/login`
 }
 
+/** URL pra iniciar o fluxo OAuth Microsoft (redireciona o browser pra cá). */
+export function microsoftLoginUrl() {
+  return `${api.baseUrl}/auth/microsoft/login`
+}
+
 /** Retorna o usuário logado a partir do token atual. */
 export async function getMe() {
   const res = await api.get('/auth/me')
@@ -136,7 +141,7 @@ export async function consultarCnpj(cnpj) {
   return res.data
 }
 
-/** Formas de login deste ambiente: `{ dev_login, google }`. */
+/** Formas de login deste ambiente: `{ dev_login, google, microsoft }`. */
 export async function opcoesDeLogin() {
   const res = await api.get('/auth/options', { auth: false })
   return res.data

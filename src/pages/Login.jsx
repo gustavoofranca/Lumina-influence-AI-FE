@@ -13,7 +13,7 @@ import { destinoAposLogin, useAuth } from '../context/AuthContext.jsx'
 import { idDoCampo, useCampos } from '../hooks/useCampos.js'
 import { useOpcoesDeLogin } from '../hooks/useOpcoesDeLogin.js'
 import { useSeguirEntrada } from '../hooks/useSeguirEntrada.js'
-import { googleLoginUrl, loginComSenha, reenviarVerificacao } from '../services/auth.js'
+import { googleLoginUrl, loginComSenha, microsoftLoginUrl, reenviarVerificacao } from '../services/auth.js'
 import { cn } from '../lib/cn.js'
 import { mensagemDeAuth } from '../lib/errosDeAuth.js'
 import { LIMITES, validarEmail } from '../lib/limites.js'
@@ -25,7 +25,7 @@ const VALIDADORES = {
 }
 
 /**
- * Entrada por e-mail e senha, Google, e — só em desenvolvimento — a conta de
+ * Entrada por e-mail e senha, Google, Microsoft, e — só em desenvolvimento — a conta de
  * demonstração.
  *
  * Senha errada e e-mail inexistente recebem a mesma frase (OWASP): a tela não
@@ -149,13 +149,22 @@ export default function Login() {
         </Button>
       </form>
 
-      {opcoes.google && (
+      {(opcoes.google || opcoes.microsoft) && (
         <>
           <Divisor>{t('auth.login.or')}</Divisor>
-          <Button type="button" variant="vidro" fullWidth size="lg"
-                  onClick={() => { window.location.href = googleLoginUrl() }}>
-            {t('auth.login.google')}
-          </Button>
+          {opcoes.google && (
+            <Button type="button" variant="vidro" fullWidth size="lg"
+                    onClick={() => { window.location.href = googleLoginUrl() }}>
+              {t('auth.login.google')}
+            </Button>
+          )}
+          {opcoes.microsoft && (
+            <Button type="button" variant="vidro" fullWidth size="lg"
+                    className={cn(opcoes.google && 'mt-3')}
+                    onClick={() => { window.location.href = microsoftLoginUrl() }}>
+              {t('auth.login.microsoft')}
+            </Button>
+          )}
         </>
       )}
 

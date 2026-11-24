@@ -84,6 +84,20 @@ test('sem o atalho de demonstração, o botão não aparece', async ({ page }) =
   await expect(page.getByRole('button', { name: DEMO })).toHaveCount(0)
 })
 
+test('o botão da Microsoft só aparece quando a API oferece', async ({ page }) => {
+  let microsoft = true
+  await page.route('**/auth/options', (rota) =>
+    rota.fulfill(json(200, { data: { dev_login: false, google: true, microsoft } })))
+  await page.goto('/login')
+  await expect(page.getByRole('button', { name: 'Entrar com Microsoft' })).toBeVisible()
+
+  // As opções ficam guardadas na memória do módulo: só um carregamento novo consulta de novo.
+  microsoft = false
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Entrar com Google' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Entrar com Microsoft' })).toHaveCount(0)
+})
+
 test('entra com e-mail e senha de verdade', async ({ page }) => {
   test.skip(!process.env.LUMINA_ADMIN_EMAIL || !process.env.LUMINA_ADMIN_SENHA,
     'defina LUMINA_ADMIN_EMAIL e LUMINA_ADMIN_SENHA para rodar')

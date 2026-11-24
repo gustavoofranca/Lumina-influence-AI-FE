@@ -6,7 +6,11 @@ import { opcoesDeLogin } from '../services/auth.js'
 let guardadas = null
 // Até a resposta chegar, o botão de demonstração fica escondido: ele não pode
 // piscar na tela de produção, onde o atalho não existe.
-const PADRAO = { dev_login: false, google: true }
+// A Microsoft também espera a confirmação da API: a credencial dela é opcional
+// no servidor, e um botão mostrado antes da hora levaria a pessoa a uma rota que
+// responde com erro. Uma resposta sem o campo (API antiga) deixa o botão
+// escondido do mesmo jeito, porque `undefined` é falso.
+const PADRAO = { dev_login: false, google: true, microsoft: false }
 
 export function useOpcoesDeLogin() {
   const [opcoes, setOpcoes] = useState(guardadas ?? PADRAO)
