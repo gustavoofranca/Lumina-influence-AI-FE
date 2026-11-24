@@ -12,6 +12,7 @@ import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers, formatBudget, formatPct } from '../../lib/format.js'
+import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -56,7 +57,7 @@ function ParticipantCard({ participant, t, onRemover }) {
           <Avatar name={p.name} size="md" />
           <div className="min-w-0">
             <p className="truncate font-semibold text-text-primary">{p.name}</p>
-            <p className="truncate text-xs text-text-muted">{p.handle}</p>
+            {MOSTRAR_HANDLE && <p className="truncate text-xs text-text-muted">{p.handle}</p>}
           </div>
         </div>
         <ArrowUpRight

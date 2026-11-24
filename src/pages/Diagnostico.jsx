@@ -13,6 +13,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import { PlatformBadgeList } from '../components/icons/PlatformIcons.jsx'
 import { formatPct, parseApiDate } from '../lib/format.js'
+import { MOSTRAR_HANDLE } from '../lib/apresentacao.js'
 import { useApi } from '../hooks/useApi.js'
 import { listInfluencers } from '../services/influencers.js'
 
@@ -70,7 +71,7 @@ export default function Diagnostico() {
             <span className="block truncate text-sm font-semibold text-text-primary">
               {row.name}
             </span>
-            <span className="block truncate text-xs text-text-muted">{row.handle}</span>
+            {MOSTRAR_HANDLE && <span className="block truncate text-xs text-text-muted">{row.handle}</span>}
           </div>
         </div>
       ),

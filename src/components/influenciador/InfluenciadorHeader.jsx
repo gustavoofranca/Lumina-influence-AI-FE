@@ -10,6 +10,7 @@ import StatusDoCriador from './StatusDoCriador.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { ehSoma, detalharSoma } from '../../lib/seguidores.js'
 import { formatFollowers } from '../../lib/format.js'
+import { MOSTRAR_EDITAR_E_EXCLUIR, MOSTRAR_HANDLE, MOSTRAR_IDS_INTERNOS } from '../../lib/apresentacao.js'
 
 function formatDate(iso, locale) {
   // Sem data, `new Date(null)` cairia na epoch e exibiria 31/12/1969.
@@ -67,7 +68,7 @@ export default function InfluenciadorHeader({
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <span className="text-label">{t('influenciador.header.deepAnalysis')}</span>
-              {inf.lastAnalysisId && (
+              {MOSTRAR_IDS_INTERNOS && inf.lastAnalysisId && (
                 <span className="text-[10px] font-mono text-text-muted">
                   · {t('influenciador.header.sessionId')} #{inf.lastAnalysisId}
                 </span>
@@ -79,8 +80,12 @@ export default function InfluenciadorHeader({
             </h1>
 
             <div className="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
-              <span className="font-medium text-text-secondary">{inf.handle}</span>
-              <span className="text-text-muted">·</span>
+              {MOSTRAR_HANDLE && (
+                <>
+                  <span className="font-medium text-text-secondary">{inf.handle}</span>
+                  <span className="text-text-muted">·</span>
+                </>
+              )}
               <PlatformBadgeList platforms={inf.platforms} size={14} />
               <span className="text-text-muted">·</span>
               {/* "seguidores" sugere pessoas alcançáveis; com mais de uma
@@ -128,12 +133,16 @@ export default function InfluenciadorHeader({
           {/* Exclusão fica em `secondary`: é ação destrutiva e definitiva, não
               deve competir visualmente com a ação principal da tela. O aviso e
               a confirmação digitada moram no modal. */}
-          <Button variant="secondary" leftIcon={Pencil} onClick={onEditar}>
-            {t('influenciador.editar.trigger')}
-          </Button>
-          <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
-            {t('influenciador.excluir.trigger')}
-          </Button>
+          {MOSTRAR_EDITAR_E_EXCLUIR && (
+            <>
+              <Button variant="secondary" leftIcon={Pencil} onClick={onEditar}>
+                {t('influenciador.editar.trigger')}
+              </Button>
+              <Button variant="secondary" leftIcon={Trash2} onClick={onExcluir}>
+                {t('influenciador.excluir.trigger')}
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </header>

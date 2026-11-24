@@ -9,6 +9,7 @@ import Table from '../ui/Table.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers, formatPct } from '../../lib/format.js'
+import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -144,7 +145,7 @@ export default function InfluenciadoresTable({
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
             <div className="truncate font-semibold text-text-primary">{row.name}</div>
-            <div className="truncate text-xs text-text-muted">{row.handle}</div>
+            {MOSTRAR_HANDLE && <div className="truncate text-xs text-text-muted">{row.handle}</div>}
           </div>
         </div>
       ),

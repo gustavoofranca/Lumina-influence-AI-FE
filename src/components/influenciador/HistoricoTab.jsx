@@ -5,6 +5,7 @@ import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
+import { MOSTRAR_IDS_INTERNOS } from '../../lib/apresentacao.js'
 
 function formatDate(iso, locale) {
   try {
@@ -82,7 +83,9 @@ export default function HistoricoTab({ data, loading = false }) {
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-semibold text-accent">#{item.id}</span>
+                  {MOSTRAR_IDS_INTERNOS && (
+                    <span className="font-mono text-xs font-semibold text-accent">#{item.id}</span>
+                  )}
                   {i === 0 && (
                     <span className="inline-flex items-center rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-positive ring-1 ring-inset ring-emerald-500/30">
                       {t('influenciador.history.latest')}

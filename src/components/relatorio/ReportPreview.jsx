@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { cn } from '../../lib/cn.js'
 import LuminaMark from '../ui/LuminaMark.jsx'
+import { MOSTRAR_POSTS_AUDITADOS_NA_PREVIA } from '../../lib/apresentacao.js'
 
 /**
  * Pré-visualização do relatório.
@@ -243,7 +244,7 @@ function BenchmarkSection({ doc, t }) {
           </tbody>
         </table>
       )}
-      {(doc.posts_tabela || []).length > 0 && (
+      {MOSTRAR_POSTS_AUDITADOS_NA_PREVIA && (doc.posts_tabela || []).length > 0 && (
         <>
           <h3 className="mt-5 text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-600">
             {t('relatorios.preview.postsTitle')}

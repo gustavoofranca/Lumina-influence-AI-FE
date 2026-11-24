@@ -9,6 +9,7 @@ import Badge from '../ui/Badge.jsx'
 import DesconectarModal from './DesconectarModal.jsx'
 import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
+import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
 import { getConnectUrl, disconnectAccount, sincronizarContas } from '../../services/integrations.js'
 
 const PLATFORMS = Object.keys(PLATFORM_META)
@@ -202,7 +203,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                 <span className="block truncate text-xs text-text-secondary">
                   {conta ? (
                     <>
-                      @{conta.handle} · {formatFollowers(conta.followers)}
+                      {MOSTRAR_HANDLE ? `@${conta.handle} · ` : ''}{formatFollowers(conta.followers)}
                       {sync ? ` · ${t('influenciador.conexoes.lastSync', { data: sync })}` : ''}
                       {conta.connected ? '' : ` · ${t('influenciador.conexoes.notCollecting')}`}
                     </>
