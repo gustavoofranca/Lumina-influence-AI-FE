@@ -20,9 +20,25 @@
       "dateRange": "A data precisa estar entre {{min}} e {{max}}.",
       "money": "Informe um valor positivo.",
       "moneyMax": "O valor máximo é {{max}}.",
-      "cnpjLength": "O CNPJ tem 14 dígitos.",
-      "cnpj": "CNPJ inválido: o dígito verificador não confere.",
-      "fixFields": "Corrija os campos indicados."
+      "cnpjLength": "O CNPJ tem 14 caracteres.",
+      "cnpj": "CNPJ inválido — confira os dígitos.",
+      "fixFields": "Corrija os campos indicados.",
+      "noLink": "Não use links neste campo.",
+      "nameNoDigits": "Nome não pode ter números.",
+      "nameChars": "Use só letras, espaço, apóstrofo, hífen e ponto.",
+      "nameMin": "Mínimo de 2 letras.",
+      "companyNoAt": "Não use @ neste campo.",
+      "companyNeedsAlnum": "Inclua ao menos uma letra ou número.",
+      "companyChars": "Use só letras, números, espaço e & . , ' - / ( ) +",
+      "passwordMin": "Mínimo de {{min}} caracteres.",
+      "passwordMax": "Máximo de {{max}} caracteres.",
+      "passwordRepeated": "Senha previsível demais.",
+      "passwordHasEmail": "Não use seu e-mail na senha.",
+      "passwordHasName": "Não use seu nome na senha.",
+      "emailSpaces": "E-mail não pode ter espaço.",
+      "emailSuggestion": "Você quis dizer {{sugestao}}?",
+      "emailUseSuggestion": "Usar",
+      "termsRequired": "Aceite os Termos de Uso e a Política de Privacidade para continuar."
     },
     "invalidDate": "Data inválida — confira o dia e o mês.",
     "openCalendar": "Abrir calendário",
@@ -371,7 +387,37 @@
       "subtitle": "Atualize suas informações de perfil.",
       "name": "Nome completo",
       "email": "E-mail",
-      "emailFromOauth": "Vem do provedor de login e não pode ser alterado aqui."
+      "emailFixed": "O e-mail identifica sua conta e não pode ser alterado aqui.",
+      "seguranca": {
+        "title": "Segurança",
+        "subtitle": "Senha de acesso à sua conta.",
+        "current": "Senha atual",
+        "new": "Nova senha",
+        "change": "Alterar senha",
+        "changed": "Senha alterada. As outras sessões abertas foram encerradas.",
+        "noPassword": "Você entra pelo Google. Para entrar também com e-mail e senha, defina uma senha pelo link que enviaremos ao seu e-mail.",
+        "define": "Definir senha por e-mail",
+        "sent": "Enviamos um link para {{email}}. Ele vale por 30 minutos; ao criar a senha, as sessões abertas serão encerradas."
+      },
+      "doisFatores": {
+        "label": "2FA",
+        "title": "Verificação em duas etapas",
+        "subtitle": "Além da senha, um código do app autenticador no seu celular.",
+        "on": "Ativa.",
+        "codesLeft": "{{count}} código de recuperação disponível.",
+        "codesLeft_other": "{{count}} códigos de recuperação disponíveis.",
+        "required": "Obrigatória para administradores.",
+        "off": "Desativada. Com ela ativa, quem descobrir sua senha ainda não consegue entrar.",
+        "enable": "Ativar",
+        "enabled": "Verificação em duas etapas ativada. As outras sessões abertas foram encerradas.",
+        "newCodes": "Gerar novos códigos de recuperação",
+        "newCodesExplain": "Os códigos atuais deixam de valer. Digite um código do app para confirmar.",
+        "generate": "Gerar",
+        "done": "Concluir",
+        "disable": "Desligar verificação em duas etapas",
+        "disableExplain": "Sua conta volta a depender só da senha.",
+        "disabled": "Verificação em duas etapas desligada."
+      }
     },
     "agencia": {
       "title": "Dados da agência",
@@ -1202,20 +1248,56 @@
       "title": "Bem-vindo de volta",
       "subtitle": "Acesse sua conta para continuar.",
       "email": "E-mail",
-      "submit": "Autenticar",
+      "emailPlaceholder": "voce@agencia.com.br",
+      "password": "Senha",
+      "forgot": "Esqueci minha senha",
+      "submit": "Entrar",
+      "or": "ou",
+      "google": "Entrar com Google",
+      "demo": "Entrar na conta de demonstração",
+      "invalid": "E-mail ou senha incorretos.",
+      "notVerified": "Confirme seu e-mail antes de entrar.",
+      "resend": "Reenviar link",
+      "resent": "Enviamos um novo link para o seu e-mail.",
+      "passwordChanged": "Senha alterada. Entre com a nova senha.",
       "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta",
-      "emailPlaceholder": "voce@agencia.com",
-      "google": "Entrar com Google",
-      "devHint": "Dica: deixe o campo vazio e clique em <1>{{acao}}</1> para entrar com a conta de demonstração (dados seedados).",
-      "devDisabled": "O acesso de demonstração está desativado neste ambiente. Entre com o Google.",
       "failed": "Não foi possível entrar."
     },
+    "recuperar": {
+      "title": "Recuperar senha",
+      "subtitle": "Informe o e-mail da sua conta e enviaremos um link para criar uma nova senha.",
+      "submit": "Enviar link",
+      "sent": "Se houver uma conta com este e-mail, enviamos um link. Ele vale por 30 minutos.",
+      "back": "Voltar ao login"
+    },
+    "redefinir": {
+      "title": "Nova senha",
+      "subtitle": "Escolha uma senha que você não usa em outro lugar.",
+      "password": "Nova senha",
+      "submit": "Salvar nova senha",
+      "expired": "Este link venceu. Peça um novo.",
+      "invalid": "Este link é inválido ou já foi usado.",
+      "missing": "Link incompleto. Peça um novo.",
+      "again": "Pedir novo link"
+    },
     "cadastro": {
-      "title": "Comece sua jornada",
-      "subtitle": "Sua conta nasce no primeiro acesso com o Google.",
+      "title": "Crie sua conta",
+      "subtitle": "Comece a auditar suas campanhas em minutos.",
       "google": "Continuar com Google",
-      "hint": "Não usamos senha: o acesso é pela sua conta Google. No primeiro acesso você dá o nome da sua agência, e ela já entra pronta para receber influenciadores.",
+      "orEmail": "ou cadastre com e-mail",
+      "you": "Você",
+      "agency": "Sua agência",
+      "name": "Seu nome",
+      "namePh": "Marina Costa",
+      "email": "E-mail",
+      "password": "Senha",
+      "cnpj": "CNPJ",
+      "agencyName": "Nome da agência",
+      "agencyNamePh": "Ex.: Silva & Costa Comunicação",
+      "prefilled": "Preenchido pela Receita — pode editar.",
+      "terms": "Li e aceito os <termos>Termos de Uso</termos> e a <privacidade>Política de Privacidade</privacidade>.",
+      "submit": "Criar conta",
       "hasAccount": "Já tem uma conta?",
       "login": "Entrar"
     },
@@ -1224,17 +1306,105 @@
       "back": "Voltar ao login",
       "authenticating": "Autenticando…",
       "error": "Falha ao autenticar."
+    },
+    "erros": {
+      "tooMany": "Muitas tentativas. Tente de novo em {{min}} min.",
+      "generic": "Não foi possível concluir agora. Tente de novo."
+    },
+    "senha": {
+      "show": "Mostrar senha",
+      "hide": "Ocultar senha",
+      "strengthLabel": "Força da senha",
+      "strengthHint": "mín. {{min}} caracteres",
+      "strength": {
+        "0": "Muito fraca",
+        "1": "Fraca",
+        "2": "Razoável",
+        "3": "Forte",
+        "4": "Muito forte"
+      }
+    },
+    "cnpj": {
+      "checking": "Consultando a Receita…",
+      "active": "Empresa {{situacao}} na Receita.",
+      "blocked": "Este CNPJ está {{situacao}} na Receita Federal.",
+      "unavailable": "Não foi possível confirmar na Receita agora; o CNPJ será aceito pelos dígitos."
+    },
+    "verifique": {
+      "title": "Confirme seu e-mail",
+      "body": "Enviamos um link para <b>{{email}}</b>. Ele vale por 24 horas.",
+      "bodyNoEmail": "Enviamos um link para o e-mail informado. Ele vale por 24 horas.",
+      "spam": "Não chegou? Confira a caixa de spam.",
+      "resend": "Reenviar e-mail",
+      "resendIn": "Reenviar em {{s}} s",
+      "resent": "Enviamos de novo.",
+      "wrongEmail": "E-mail errado?",
+      "back": "Voltar ao cadastro"
+    },
+    "verificar": {
+      "checking": "Confirmando seu e-mail…",
+      "expired": "Este link venceu.",
+      "invalid": "Este link é inválido ou já foi usado.",
+      "resendTitle": "Peça um novo link",
+      "resendSubmit": "Enviar novo link",
+      "sent": "Se houver um cadastro pendente com este e-mail, enviamos um novo link.",
+      "toLogin": "Ir para o login",
+      "passwordTitle": "Confirme que é você",
+      "passwordSubtitle": "Para ativar a conta, digite a senha que você escolheu no cadastro.",
+      "password": "Senha do cadastro",
+      "passwordSubmit": "Confirmar e entrar",
+      "wrongPassword": "Esta senha não confere com a do cadastro deste link. Se você se cadastrou mais de uma vez, vale a senha do último cadastro. Não reconhece este cadastro? Cadastre-se de novo: o cadastro pendente é substituído.",
+      "signupAgain": "Cadastrar de novo"
+    },
+    "mfa": {
+      "codeLabel": "Código do app autenticador",
+      "recoveryLabel": "Código de recuperação",
+      "codeFormat": "Digite os 6 números que o app mostra.",
+      "recoveryFormat": "O código tem 8 letras e números, como abcd-2345.",
+      "ticketExpired": "O tempo para concluir a entrada acabou. Entre de novo.",
+      "backToLogin": "Voltar para o login",
+      "challenge": {
+        "title": "Verificação em duas etapas",
+        "subtitle": "Abra o app autenticador e digite o código de 6 dígitos da Lumina.",
+        "subtitleRecovery": "Digite um dos códigos de recuperação que você guardou. Cada um vale uma vez.",
+        "submit": "Verificar",
+        "useRecovery": "Perdeu o celular? Use um código de recuperação",
+        "useApp": "Usar o código do app"
+      },
+      "setup": {
+        "title": "Ative a verificação em duas etapas",
+        "subtitleRequired": "Contas de administrador precisam de um segundo fator para entrar. Leva um minuto.",
+        "loading": "Preparando a ativação…",
+        "step1": "Instale um app autenticador no celular: Google Authenticator, Microsoft Authenticator ou Authy.",
+        "step2": "No app, adicione uma conta e escaneie o QR code abaixo.",
+        "step3": "Digite o código de 6 dígitos que o app mostrar.",
+        "qrAlt": "QR code para cadastrar a Lumina no app autenticador",
+        "cantScan": "Não consegue escanear? Digite a chave",
+        "copyKey": "Copiar chave",
+        "confirm": "Ativar"
+      },
+      "recovery": {
+        "explain": "Guarde estes códigos num lugar seguro, fora do celular. Se você perder o celular, cada um deles permite entrar uma vez. Eles não serão mostrados de novo.",
+        "listLabel": "Códigos de recuperação",
+        "copy": "Copiar",
+        "copied": "Copiado",
+        "download": "Baixar .txt",
+        "saved": "Guardei os códigos num lugar seguro",
+        "continue": "Continuar",
+        "fileHeader": "Lumina — códigos de recuperação da verificação em duas etapas. Cada código vale uma vez."
+      }
     }
   },
   "primeiroAcesso": {
     "title": "Bem-vindo ao Lumina",
-    "subtitle": "Sua conta foi criada. Dê um nome à sua agência — ele aparece nos relatórios que você entrega às marcas.",
+    "subtitle": "Para começar, informe o CNPJ e o nome da sua agência — eles aparecem nos relatórios que você entrega às marcas.",
     "agencyName": "NOME DA AGÊNCIA",
     "agencyNamePlaceholder": "Ex.: Lumina Influence Agency",
-    "nameRequired": "Informe o nome da agência.",
     "confirm": "Continuar",
     "saving": "Salvando…",
-    "skip": "Definir depois"
+    "logout": "Sair",
+    "inviteHint": "Se a sua agência já usa a Lumina, peça um convite ao administrador dela.",
+    "deleteAccount": "Excluir esta conta"
   },
   "campanha": {
     "participantes": {
@@ -1283,7 +1453,7 @@
       "sections": [
         {
           "h": "1. Quem trata os seus dados",
-          "p": "A Lumina Influence AI é operada pela K13 WEB, responsável pelas decisões sobre o tratamento descrito aqui. Para exercer qualquer direito previsto nesta política, escreva para {{email}}."
+          "p": "A Lumina Influence AI é a responsável pelas decisões sobre o tratamento descrito aqui. Para exercer qualquer direito previsto nesta política, escreva para {{email}}."
         },
         {
           "h": "2. Dados que coletamos",
@@ -1358,7 +1528,7 @@
         },
         {
           "h": "6. Propriedade intelectual",
-          "p": "O software, a marca e o design da Lumina Influence AI pertencem à K13 WEB. O conteúdo que você insere e os dados coletados das suas contas continuam seus; você nos concede apenas a licença necessária para operar o serviço."
+          "p": "O software, a marca e o design da Lumina Influence AI pertencem aos seus criadores. O conteúdo que você insere e os dados coletados das suas contas continuam seus; você nos concede apenas a licença necessária para operar o serviço."
         },
         {
           "h": "7. Planos e pagamento",
@@ -1428,6 +1598,12 @@
     "primeiroAcesso": "Primeiro acesso",
     "landing": "Auditoria neural de campanhas de influência",
     "welcome": "Boas-vindas",
-    "designSystem": "Design system"
+    "designSystem": "Design system",
+    "verifiqueEmail": "Confirme seu e-mail",
+    "verificarEmail": "Confirmando e-mail",
+    "recuperarSenha": "Recuperar senha",
+    "redefinirSenha": "Nova senha",
+    "desafio2fa": "Verificação em duas etapas",
+    "ativar2fa": "Ativar verificação em duas etapas"
   }
 }

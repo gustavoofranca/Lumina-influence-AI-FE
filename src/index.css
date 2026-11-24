@@ -653,3 +653,43 @@ main[data-secoes-diferidas] > section:not(:first-of-type):not([data-sem-diferir]
 [data-sem-distorcao] .glass-ui-distortion-layer {
   filter: none !important;
 }
+
+/* Modo leve: navegador sem aceleração de hardware (ver `src/lib/modoLeve.js`).
+   Sem a placa de vídeo, cada desfoque é recalculado no processador a cada
+   quadro, e as telas públicas caíam para 3 ou 4 quadros por segundo. Aqui sai só
+   o que é caro, e a aparência fica: */
+
+/* O vidro mantém a tinta (#0E0524 a 42%) e a borda; perde o desfoque de 4px
+   atrás dele, que sobre um fundo escuro e quase liso pouco se via. */
+html[data-render='leve'] * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* `backdrop-filter` também cria contexto de empilhamento, e é por isso que um
+   cartão sem `position` era pintado por cima de um brilho absoluto que vem
+   antes dele no documento. Tirado o filtro, a ordem se invertia e o brilho
+   aparecia por cima do cartão, com borda reta. `isolation` recria o contexto
+   sem pintar nada. */
+html[data-render='leve'] [class*='backdrop-blur'],
+html[data-render='leve'] [style*='backdrop-filter'] {
+  isolation: isolate;
+}
+
+/* As auras já são gradientes radiais; o `blur(100px)` só as amaciava, e era o
+   efeito mais caro da página — sozinho, levava o login de 4 para 28 quadros.
+   Paradas e sem desfoque, ampliadas para a borda do gradiente cair tão suave
+   quanto caía desfocada. */
+html[data-render='leve'] .animate-aura-lenta,
+html[data-render='leve'] .animate-aura-lenta-2 {
+  animation: none !important;
+  filter: none !important;
+  transform: scale(1.35);
+}
+
+/* Superfície que só ficava limpa porque o desfoque apagava o que vazava por
+   trás: no cartão do topo da landing, os 10% de transparência deixavam passar
+   as bordas retas do brilho decorativo atrás dele. Sem o desfoque, opaca. */
+html[data-render='leve'] .bg-landing-surface\/90.backdrop-blur-xl {
+  background-color: #0e0524;
+}

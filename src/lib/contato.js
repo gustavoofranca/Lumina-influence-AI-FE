@@ -5,7 +5,7 @@
  * compara a política de privacidade com as configurações do app, e divergência
  * entre os dois é motivo documentado de rejeição.
  */
-const PADRAO = 'contato@k13.com.br'
+const PADRAO = 'contato@gustavofranca.tech'
 
 export const EMAIL_CONTATO = import.meta.env.VITE_CONTACT_EMAIL || PADRAO
 

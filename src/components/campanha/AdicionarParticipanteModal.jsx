@@ -4,11 +4,11 @@ import { UserPlus } from 'lucide-react'
 
 import Modal from '../ui/Modal.jsx'
 import Button from '../ui/Button.jsx'
-import Input from '../ui/Input.jsx'
+import MoneyInput from '../ui/MoneyInput.jsx'
 import ApiErrorBanner from '../ui/ApiErrorBanner.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import { useApi } from '../../hooks/useApi.js'
-import { ORCAMENTO_MAXIMO_REAIS, errosDaApi, validarDinheiro } from '../../lib/limites.js'
+import { errosDaApi, validarDinheiro } from '../../lib/limites.js'
 import { listInfluencers } from '../../services/influencers.js'
 import { adicionarParticipante } from '../../services/campaigns.js'
 
@@ -126,12 +126,8 @@ export default function AdicionarParticipanteModal({
               </select>
             </div>
 
-            <Input
+            <MoneyInput
               label={t('campanha.participantes.fee')}
-              type="number"
-              min="0"
-              max={ORCAMENTO_MAXIMO_REAIS}
-              step="0.01"
               value={cache}
               onChange={(e) => { setCache(e.target.value); setErroCache(null) }}
               disabled={salvando}

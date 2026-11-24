@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+import { modoLeve } from '../../lib/modoLeve.js'
+
 /**
  * Fundo animado da página pública: campo de estrelas em perspectiva.
  *
@@ -46,7 +48,10 @@ export default function FundoEstrelado() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Sem aceleração de hardware o campo é desenhado uma vez e fica parado: a
+    // cada quadro ele custava, no processador, mais do que o quadro inteiro.
+    const semMovimento =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches || modoLeve()
     let estrelas = []
     let largura = 0
     let altura = 0

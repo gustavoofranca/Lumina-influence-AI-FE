@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { cn } from '../../lib/cn.js'
+import { modoLeve } from '../../lib/modoLeve.js'
 import WebThreads from './WebThreads.jsx'
 
 /**
@@ -34,6 +35,9 @@ export default function FundoDeThreads({ className }) {
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    // Renderização por software ainda oferece WebGL 2 (SwiftShader), mas o
+    // shader em tela cheia passa a ser calculado no processador.
+    if (modoLeve()) return
     try {
       const teste = document.createElement('canvas')
       if (teste.getContext('webgl2')) setPodeRenderizar(true)

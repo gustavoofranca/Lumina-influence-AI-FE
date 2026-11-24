@@ -42,8 +42,9 @@ test('o assistente de campanha limita a digitação e recusa o que a API recusar
   await expect(page.getByLabel('Nome da campanha')).toHaveValue('a'.repeat(200))
   await expect(page.getByLabel('Marca cliente')).toHaveValue('b'.repeat(160))
 
-  // Conteúdo que a API recusa é recusado antes de sair do passo 1.
-  await preencherPasso1(page, { marca: '<b>Marca</b>', inicio: '01011990', orcamento: '2000000000' })
+  // Conteúdo que a API recusa é recusado antes de sair do passo 1. O orçamento
+  // é digitado em centavos (máscara de reais): 200000000000 = R$ 2.000.000.000,00.
+  await preencherPasso1(page, { marca: '<b>Marca</b>', inicio: '01011990', orcamento: '200000000000' })
   await page.getByRole('button', { name: 'Continuar' }).click()
 
   await expect(page.getByText('Não use os sinais < ou >.')).toBeVisible()
@@ -99,7 +100,7 @@ test('CNPJ ganha máscara, recusa dígito errado e não trava quando não muda',
   await cnpj.fill('11222333000180')
   await expect(cnpj).toHaveValue('11.222.333/0001-80')
   await salvar.click()
-  await expect(page.getByText('CNPJ inválido: o dígito verificador não confere.')).toBeVisible()
+  await expect(page.getByText('CNPJ inválido — confira os dígitos.')).toBeVisible()
   expect(enviados).toHaveLength(0)
 
   // CNPJ que não muda não é conferido — a mesma regra da API, que não trava a
@@ -107,5 +108,5 @@ test('CNPJ ganha máscara, recusa dígito errado e não trava quando não muda',
   await cnpj.fill(original)
   await salvar.click()
   await expect.poll(() => enviados.length).toBe(1)
-  await expect(page.getByText('CNPJ inválido: o dígito verificador não confere.')).toHaveCount(0)
+  await expect(page.getByText('CNPJ inválido — confira os dígitos.')).toHaveCount(0)
 })

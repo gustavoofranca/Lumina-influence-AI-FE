@@ -24,6 +24,9 @@ npm run test:headed  # acompanhando no navegador
 npm run report       # abre o relatório HTML da última execução
 ```
 
+Para o login real por senha: `LUMINA_ADMIN_EMAIL=… LUMINA_ADMIN_SENHA=… npm test` — sem as duas
+variáveis, o teste é pulado.
+
 Apontar para outro ambiente: `LUMINA_URL=http://outro:5173 npm test`
 (e `LUMINA_API` para a API).
 
@@ -32,7 +35,9 @@ Apontar para outro ambiente: `LUMINA_URL=http://outro:5173 npm test`
 | Arquivo | O que trava |
 |---|---|
 | `rotas.spec.js` | toda rota renderiza com texto e console limpo — pega tela em branco por import faltante, que build e teste unitário não pegam |
-| `login.spec.js` | entrada pelo atalho de desenvolvimento, rota protegida sem sessão, e a ADR-001: sessão sobrevive ao F5, não à aba nova |
+| `login.spec.js` | entrada pelo atalho de desenvolvimento e por e-mail e senha (erros simulados), rota protegida sem sessão, e a ADR-001: sessão sobrevive ao F5, não à aba nova |
+| `cadastro-e-senha.spec.js` | cadastro, máscara e consulta de CNPJ, confirmação de e-mail e recuperação de senha, sem gravar no banco |
+| `mascaras.spec.js` | campo de valor em reais |
 | `estado-de-erro.spec.js` | falha de carregamento aparece como erro com "tentar de novo", **nunca** como "nenhuma análise" ou campanha sem participante |
 | `conta-social.spec.js` | o estado "conectada" vem do campo `connected`, não da existência do registro |
 | `relatorio.spec.js` | assistente do zero à pré-visualização, e a validação que barra o avanço sem campanha |

@@ -20,6 +20,10 @@ import Login       from './pages/Login.jsx'
  */
 const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
 const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
+const VerifiqueSeuEmail = lazy(() => import('./pages/VerifiqueSeuEmail.jsx'))
+const VerificarEmail    = lazy(() => import('./pages/VerificarEmail.jsx'))
+const DesafioDoisFatores = lazy(() => import('./pages/DesafioDoisFatores.jsx'))
+const AtivarDoisFatores  = lazy(() => import('./pages/AtivarDoisFatores.jsx'))
 const PrimeiroAcesso   = lazy(() => import('./pages/PrimeiroAcesso.jsx'))
 const Dashboard        = lazy(() => import('./pages/Dashboard.jsx'))
 const Influenciadores  = lazy(() => import('./pages/Influenciadores.jsx'))
@@ -41,6 +45,8 @@ const NotFound         = lazy(() => import('./pages/NotFound.jsx'))
 const Privacidade      = lazy(() => import('./pages/Privacidade.jsx'))
 const Termos           = lazy(() => import('./pages/Termos.jsx'))
 const ExclusaoDeDados  = lazy(() => import('./pages/ExclusaoDeDados.jsx'))
+const RecuperarSenha    = lazy(() => import('./pages/RecuperarSenha.jsx'))
+const RedefinirSenha    = lazy(() => import('./pages/RedefinirSenha.jsx'))
 
 /** Exibido enquanto o chunk da rota carrega. */
 function RouteFallback() {
@@ -73,6 +79,12 @@ function AnimatedRoutes() {
             element={<ProtectedRoute><PrimeiroAcesso /></ProtectedRoute>}
           />
           <Route path="/cadastro"        element={<Cadastro />} />
+          <Route path="/verifique-seu-email" element={<VerifiqueSeuEmail />} />
+          <Route path="/verificar-email"     element={<VerificarEmail />} />
+          <Route path="/entrar/verificacao"  element={<DesafioDoisFatores />} />
+          <Route path="/entrar/ativar-2fa"   element={<AtivarDoisFatores />} />
+          <Route path="/recuperar-senha"     element={<RecuperarSenha />} />
+          <Route path="/redefinir-senha"     element={<RedefinirSenha />} />
           <Route path="/privacidade"     element={<Privacidade />} />
           <Route path="/termos"          element={<Termos />} />
           <Route path="/exclusao-de-dados" element={<ExclusaoDeDados />} />

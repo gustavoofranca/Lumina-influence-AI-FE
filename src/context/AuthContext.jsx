@@ -30,14 +30,16 @@ export function AuthProvider({ children }) {
     return me
   }, [])
 
-  // Login de dev (sem OAuth)
-  const devLogin = useCallback(async (email) => {
-    const data = await devLoginApi(email)
-    setTokens(data.tokens)
-    setUser(data.user)
-    setAgency(data.agency)
-    return data
+  // Aplica o pacote que a API devolve num login ({ user, agency, tokens }).
+  const aplicarSessao = useCallback((dados) => {
+    setTokens(dados.tokens)
+    setUser(dados.user)
+    setAgency(dados.agency)
+    return dados
   }, [])
+
+  // Login de dev (sem OAuth). Nunca pede 2FA: o atalho só existe em desenvolvimento.
+  const devLogin = useCallback(async (email) => aplicarSessao(await devLoginApi(email)), [aplicarSessao])
 
   // Captura tokens vindos do callback OAuth (#access_token=...&refresh_token=...)
   const loginWithTokens = useCallback(async (accessToken, refreshToken) => {
@@ -82,10 +84,31 @@ export function AuthProvider({ children }) {
     user, agency, loading,
     isAuthenticated: !!user,
     devLogin, loginWithTokens, logout, refreshUser,
+    aplicarSessao,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
   return useContext(AuthContext)
+}
+
+/** Admin de agência sem CNPJ completa o cadastro antes de qualquer outra tela (spec, seção 5). */
+export function precisaCompletarCadastro(user, agency) {
+  return user?.role === 'admin' && !!agency && !agency.cnpj
+}
+
+export function destinoAposLogin(user, agency) {
+  return precisaCompletarCadastro(user, agency) ? '/primeiro-acesso' : '/app/dashboard'
+}
+
+/**
+ * Tela do segundo fator que falta para uma resposta de login, ou `null` se ela
+ * já traz a sessão. `challenge`: a conta tem 2FA; `setup`: administrador sem
+ * 2FA, que precisa ativar antes de entrar.
+ */
+export function rotaDoSegundoFator(dados) {
+  if (dados?.mfa === 'challenge') return '/entrar/verificacao'
+  if (dados?.mfa === 'setup') return '/entrar/ativar-2fa'
+  return null
 }

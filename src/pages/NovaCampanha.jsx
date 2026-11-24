@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Building2, Calendar, Wallet, Check, Sparkles, Me
 import { cn } from '../lib/cn.js'
 import Button from '../components/ui/Button.jsx'
 import Input from '../components/ui/Input.jsx'
+import MoneyInput from '../components/ui/MoneyInput.jsx'
 import DateInput from '../components/ui/DateInput.jsx'
 import Search from '../components/ui/Search.jsx'
 import Avatar from '../components/ui/Avatar.jsx'
@@ -15,7 +16,6 @@ import WizardStepper from '../components/campanha/WizardStepper.jsx'
 import ApiErrorBanner from '../components/ui/ApiErrorBanner.jsx'
 import {
   LIMITES,
-  ORCAMENTO_MAXIMO_REAIS,
   errosDaApi,
   validarData,
   validarDinheiro,
@@ -76,15 +76,12 @@ function Step1Detalhes({ data, errors, onChange, t }) {
           onChange={(e) => onChange('endDate', e.target.value)}
           error={errors.endDate || errors.period}
         />
-        <Input
+        <MoneyInput
           label={t('campanhas.wizard.step1.budget')}
-          type="number"
-          placeholder={t('campanhas.wizard.step1.budgetPh')}
+          placeholder="R$ 0,00"
           leftIcon={Wallet}
           value={data.budget}
           onChange={(e) => onChange('budget', e.target.value)}
-          min={0}
-          max={ORCAMENTO_MAXIMO_REAIS}
           error={errors.budget}
           containerClassName="lg:col-span-2"
         />
