@@ -1028,13 +1028,13 @@
     },
     "desconectar": {
       "title": "Desconectar conta",
-      "explain": "Desconectar apaga o token de acesso e interrompe imediatamente qualquer nova coleta desta conta.",
+      "explain": "Desconectar apaga o token de acesso e para a coleta. A conta sai do perfil junto com seguidores, publicações e recomendações de IA que vieram dela. O histórico fica guardado e volta se você conectar a mesma conta de novo.",
       "purgeLabel": "Apagar também o histórico já coletado",
-      "purgeHint": "Remove as publicações coletadas desta conta e os comentários vinculados a elas. O vínculo com a rede permanece, sem dados.",
+      "purgeHint": "Apaga de vez as publicações coletadas desta conta e os comentários e análises ligados a elas. Ao reconectar, nada disso volta.",
       "irreversible": "Não há lixeira: as publicações e os comentários apagados não podem ser recuperados.",
       "confirm": "Desconectar",
       "confirmPurge": "Desconectar e apagar",
-      "done": "Conta desconectada. O histórico coletado foi preservado.",
+      "done": "Conta desconectada. O histórico foi guardado e volta se você reconectar.",
       "donePurged": "Conta desconectada e {{count}} publicação apagada.",
       "donePurged_other": "Conta desconectada e {{count}} publicações apagadas."
     },
