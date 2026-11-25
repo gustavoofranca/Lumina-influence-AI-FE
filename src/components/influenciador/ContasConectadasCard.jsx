@@ -12,6 +12,7 @@ import { formatFollowers } from '../../lib/format.js'
 import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
 import { getConnectUrl, disconnectAccount, sincronizarContas } from '../../services/integrations.js'
 import { abrirJanelaDeConexao, escutarConexoes } from '../../lib/conexaoPopup.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 const PLATFORMS = Object.keys(PLATFORM_META)
 
@@ -258,7 +259,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                 <span className="block truncate text-xs text-text-secondary">
                   {conta ? (
                     <>
-                      {MOSTRAR_HANDLE ? `@${conta.handle} · ` : ''}{formatFollowers(conta.followers)}
+                      {MOSTRAR_HANDLE && conta.handle ? <><ArrobaOculta handle={conta.handle} /> · </> : ''}{formatFollowers(conta.followers)}
                       {sync ? ` · ${t('influenciador.conexoes.lastSync', { data: sync })}` : ''}
                       {conta.connected ? '' : ` · ${t('influenciador.conexoes.notCollecting')}`}
                     </>

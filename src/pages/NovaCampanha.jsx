@@ -28,7 +28,7 @@ import { useApi } from '../hooks/useApi.js'
 import { listInfluencers } from '../services/influencers.js'
 import { createCampaign } from '../services/campaigns.js'
 import { formatFollowers, formatBudget, formatDateRange, formatPct } from '../lib/format.js'
-import { MOSTRAR_HANDLE } from '../lib/apresentacao.js'
+import ArrobaOculta from '../components/ui/ArrobaOculta.jsx'
 
 // =============================================================================
 // Step 1: Detalhes
@@ -112,7 +112,7 @@ function InfluenciadorRow({ inf, checked, onToggle }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate font-semibold text-text-primary">{inf.name}</span>
-          {MOSTRAR_HANDLE && <span className="truncate text-xs text-text-muted">{inf.handle}</span>}
+          <ArrobaOculta handle={inf.handle} semBotao className="text-xs text-text-muted" />
         </div>
         <div className="mt-1 flex items-center gap-3 text-xs text-text-muted">
           <PlatformBadgeList platforms={inf.platforms} size={12} />

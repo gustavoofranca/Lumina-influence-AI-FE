@@ -9,7 +9,8 @@ import Table from '../ui/Table.jsx'
 import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { formatFollowers, formatBudget, formatPct } from '../../lib/format.js'
-import { MOSTRAR_COLUNAS_COMERCIAIS_DO_BENCHMARK, MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
+import { MOSTRAR_COLUNAS_COMERCIAIS_DO_BENCHMARK } from '../../lib/apresentacao.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 // Colunas que o modo apresentação tira (ver `apresentacao.js`).
 const COLUNAS_COMERCIAIS = new Set(['organicReach', 'paidReach', 'cost'])
@@ -43,7 +44,7 @@ export default function BenchmarkTable({ rows, loading = false }) {
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
             <div className="truncate font-semibold text-text-primary">{row.name}</div>
-            {MOSTRAR_HANDLE && <div className="truncate text-xs text-text-muted">{row.handle}</div>}
+            <ArrobaOculta handle={row.handle} className="max-w-full text-xs text-text-muted" />
           </div>
         </div>
       ),

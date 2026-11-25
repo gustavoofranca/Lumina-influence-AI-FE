@@ -11,6 +11,7 @@ import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { ehSoma, detalharSoma } from '../../lib/seguidores.js'
 import { formatFollowers } from '../../lib/format.js'
 import { MOSTRAR_EDITAR_E_EXCLUIR, MOSTRAR_HANDLE, MOSTRAR_IDS_INTERNOS } from '../../lib/apresentacao.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 function formatDate(iso, locale) {
   // Sem data, `new Date(null)` cairia na epoch e exibiria 31/12/1969.
@@ -82,7 +83,7 @@ export default function InfluenciadorHeader({
             <div className="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
               {MOSTRAR_HANDLE && (
                 <>
-                  <span className="font-medium text-text-secondary">{inf.handle}</span>
+                  <ArrobaOculta handle={inf.handle} className="font-medium text-text-secondary" />
                   <span className="text-text-muted">·</span>
                 </>
               )}

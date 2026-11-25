@@ -74,6 +74,10 @@
       "kept": "What stays:",
       "irreversible": "The action is permanent. There is no recycle bin and the data cannot be recovered.",
       "prompt": "Type {{palavra}} to confirm"
+    },
+    "arroba": {
+      "alternar": "Show @",
+      "oculto": "@ hidden"
     }
   },
   "welcome": {

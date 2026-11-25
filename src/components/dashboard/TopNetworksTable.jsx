@@ -8,6 +8,7 @@ import Badge from '../ui/Badge.jsx'
 import Table from '../ui/Table.jsx'
 import { formatFollowers } from '../../lib/format.js'
 import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 // Potencial viral em forma, não em matiz: quantos pontos acendem. Quem não
 // distingue cor continua lendo, e o rótulo vai ao lado.
@@ -80,7 +81,7 @@ export default function TopNetworksTable({ data, loading = false }) {
           <div className="min-w-0">
             <div className="truncate font-semibold text-text-primary">{row.name}</div>
             <div className="numerico truncate tipo-apoio text-text-muted">
-              {MOSTRAR_HANDLE ? `${row.handle} · ` : ''}{formatFollowers(row.followers)}
+              {MOSTRAR_HANDLE && row.handle ? <><ArrobaOculta handle={row.handle} /> · </> : ''}{formatFollowers(row.followers)}
             </div>
           </div>
         </div>

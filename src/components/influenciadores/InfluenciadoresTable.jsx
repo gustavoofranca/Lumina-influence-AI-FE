@@ -9,7 +9,7 @@ import Table from '../ui/Table.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers, formatPct } from '../../lib/format.js'
-import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -145,7 +145,7 @@ export default function InfluenciadoresTable({
           <Avatar name={row.name} size="sm" />
           <div className="min-w-0">
             <div className="truncate font-semibold text-text-primary">{row.name}</div>
-            {MOSTRAR_HANDLE && <div className="truncate text-xs text-text-muted">{row.handle}</div>}
+            <ArrobaOculta handle={row.handle} className="max-w-full text-xs text-text-muted" />
           </div>
         </div>
       ),
