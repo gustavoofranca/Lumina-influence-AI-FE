@@ -1028,13 +1028,13 @@
     },
     "desconectar": {
       "title": "Disconnect account",
-      "explain": "Disconnecting erases the access token and immediately stops any further collection from this account.",
+      "explain": "Disconnecting erases the access token and stops collection. The account leaves the profile along with the followers, posts and AI recommendations that came from it. The history is kept and comes back if you connect the same account again.",
       "purgeLabel": "Also erase the history already collected",
-      "purgeHint": "Removes the posts collected from this account and the comments attached to them. The link to the network remains, with no data.",
+      "purgeHint": "Permanently erases the posts collected from this account and the comments and analyses attached to them. Reconnecting does not bring them back.",
       "irreversible": "There is no recycle bin: erased posts and comments cannot be recovered.",
       "confirm": "Disconnect",
       "confirmPurge": "Disconnect and erase",
-      "done": "Account disconnected. The collected history was preserved.",
+      "done": "Account disconnected. The history was kept and comes back if you reconnect.",
       "donePurged": "Account disconnected and {{count}} post erased.",
       "donePurged_other": "Account disconnected and {{count}} posts erased."
     },
