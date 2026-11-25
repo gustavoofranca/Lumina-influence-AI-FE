@@ -64,7 +64,8 @@ async function pedirRenovacao(headers) {
       credentials: 'include',
       headers,
     })
-    if (!resp.ok) return false
+    // 204: a API não achou cookie nem Bearer — visita sem sessão.
+    if (!resp.ok || resp.status === 204) return false
     const payload = await resp.json()
     const tokens = payload?.data?.tokens
     if (!tokens?.access_token) return false

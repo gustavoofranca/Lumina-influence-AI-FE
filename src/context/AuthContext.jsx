@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react'
 
 import { api, renovarSessao, setTokens, limparTokens, setOnUnauthorized } from '../lib/api.js'
 import { devLogin as devLoginApi, getMe } from '../services/auth.js'
@@ -32,7 +32,12 @@ export function AuthProvider({ children }) {
   // resolver aqui: quem aplica a sessão do fragmento é o AuthCallback.
   const [loading, setLoading] = useState(!vemDoRetornoOAuth)
 
+  // Sobe a cada fim de sessão. Restauração que começou antes de um logout (o
+  // desta aba ou o avisado por outra) não pode terminar devolvendo o usuário.
+  const geracaoRef = useRef(0)
+
   const clearSession = useCallback(() => {
+    geracaoRef.current += 1
     limparTokens()
     setUser(null)
     setAgency(null)
@@ -115,10 +120,16 @@ export function AuthProvider({ children }) {
     // aplica é o AuthCallback. Renovar pelo cookie aqui correria com ele, e o
     // cookie pode ser o de quem usou o navegador antes.
     if (vemDoRetornoOAuth) return () => { cancelado = true }
+    const geracao = geracaoRef.current
+    const encerrada = () => geracaoRef.current !== geracao
     renovarSessao()
-      .then((renovou) => (renovou ? getMe() : null))
+      .then((renovou) => {
+        // A renovação pode ter gravado um access depois do logout: sai de novo.
+        if (encerrada()) { limparTokens(); return null }
+        return renovou ? getMe() : null
+      })
       .then((me) => {
-        if (cancelado || !me) return
+        if (cancelado || !me || encerrada()) return
         setUser(me.user)
         setAgency(me.agency)
       })
