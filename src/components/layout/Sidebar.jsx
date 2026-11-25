@@ -4,7 +4,6 @@ import { Add, Category, CloseCircle, Cpu, DocumentText, Profile2User, Radar, Set
 
 import { cn } from '../../lib/cn.js'
 import Button from '../ui/Button.jsx'
-import { useAuth } from '../../context/AuthContext.jsx'
 import LuminaWordmark from '../ui/LuminaWordmark.jsx'
 
 const NAV_ITEMS = [
@@ -50,7 +49,6 @@ function NavItem({ item, t, onClick }) {
 
 export default function Sidebar({ open, onClose }) {
   const { t } = useTranslation()
-  const { agency } = useAuth()
 
   return (
     <>
@@ -80,7 +78,7 @@ export default function Sidebar({ open, onClose }) {
         {/* Header da sidebar. A marca fica sozinha na linha: dividir os 216px
             com o nome da agência truncava os dois. */}
         <div className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[color:var(--casca-borda)] px-5">
-          <LuminaWordmark className="shrink-0" tamanho="text-[1.2rem]" />
+          <LuminaWordmark className="shrink-0" tamanho="text-[1.2rem]" corDoNome="text-text-primary" />
           {/* Botão fechar (mobile) */}
           <button
             type="button"
@@ -91,18 +89,6 @@ export default function Sidebar({ open, onClose }) {
             <CloseCircle size={16} />
           </button>
         </div>
-
-        {/* Em qual conta você está. Era "ENTERPRISE V2.4", versão inventada. */}
-        {agency?.name && (
-          <div className="shrink-0 border-b border-[color:var(--casca-borda)] px-5 py-2.5">
-            <span
-              className="block truncate text-label"
-              title={agency.name}
-            >
-              {agency.name}
-            </span>
-          </div>
-        )}
 
         {/* Navegação principal */}
         <nav className="flex-1 overflow-y-auto px-3 py-4">

@@ -57,6 +57,12 @@ export default function LuminaWordmark({
   className = '',
   /** Corpo do nome. Em `em`, tudo o mais acompanha. */
   tamanho = 'text-[1.35rem]',
+  /**
+   * Cor de "Lumina" no tom `brand`. Branco serve a landing e o login, que são
+   * só escuros; a barra lateral segue o tema e passa `text-text-primary`, senão
+   * o nome some no modo claro.
+   */
+  corDoNome = 'text-white',
 }) {
   const gradiente = tone === 'brand'
 
@@ -80,7 +86,7 @@ export default function LuminaWordmark({
           árvore de acessibilidade e este texto entra no lugar delas. */}
       <span className="sr-only">Lumina AI</span>
 
-      <span aria-hidden className={gradiente ? 'text-white' : 'text-current'}>
+      <span aria-hidden className={gradiente ? corDoNome : 'text-current'}>
         Lum
         {/* A letra e o brilho andam juntos: `relative` aqui é o que dá ao
             pingo um sistema de coordenadas do tamanho da própria letra. */}
