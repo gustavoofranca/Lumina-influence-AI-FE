@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link2, Unlink, Plug, RefreshCw } from 'lucide-react'
+import { Link2, Unlink, Plug, RefreshCw, X } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
@@ -11,6 +11,8 @@ import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
 import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
 import { getConnectUrl, disconnectAccount, sincronizarContas } from '../../services/integrations.js'
+import { abrirJanelaDeConexao, escutarConexoes } from '../../lib/conexaoPopup.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 const PLATFORMS = Object.keys(PLATFORM_META)
 
@@ -45,17 +47,71 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
     (influenciador?.socialAccounts || []).map((sa) => [sa.platform, sa])
   )
 
+  // Conexão em andamento numa janela pequena (`lib/conexaoPopup.js`). A janela e
+  // o tempo-limite ficam em ref: não desenham nada, só precisam ser alcançados
+  // pelo cancelar e pelo aviso de volta.
+  const [aguardando, setAguardando] = useState(null)
+  const janelaRef = useRef(null)
+  const limiteRef = useRef(null)
+
+  const encerrarEspera = useCallback(() => {
+    clearTimeout(limiteRef.current)
+    limiteRef.current = null
+    janelaRef.current = null
+    setAguardando(null)
+    setOcupada(null)
+  }, [])
+
+  // O `onChange` do pai muda a cada render; em ref, o canal não precisa ser
+  // fechado e reaberto a cada vez (um aviso no meio da troca se perderia).
+  const onChangeRef = useRef(onChange)
+  useEffect(() => { onChangeRef.current = onChange }, [onChange])
+
+  // A janela pequena avisa por canal quando o provedor devolve. Aviso de outro
+  // criador (outra aba aberta em outro perfil) não é com este cartão.
+  useEffect(() => escutarConexoes((aviso) => {
+    if (aviso.influenciador && aviso.influenciador !== influenciador?.id) return
+    encerrarEspera()
+    const rede = PLATFORM_META[aviso.plataforma]?.name || aviso.plataforma
+    if (aviso.erro) {
+      setErro(t(aviso.erro === 'access_denied'
+        ? 'influenciador.conexoes.popup.denied'
+        : 'influenciador.conexoes.popup.failed', { rede }))
+      return
+    }
+    onChangeRef.current?.(t('influenciador.conexoes.connected', { plataforma: rede }))
+  }), [influenciador?.id, encerrarEspera, t])
+
+  useEffect(() => () => clearTimeout(limiteRef.current), [])
+
+  const cancelarEspera = () => {
+    try { janelaRef.current?.close() } catch { /* janela já fechada */ }
+    encerrarEspera()
+  }
+
   const conectar = async (platform) => {
     setErro(null)
     setOcupada(platform)
+    // A janela abre já, antes do `await`: depois dele o clique não conta mais,
+    // e o bloqueador de popup barra a janela.
+    const janela = abrirJanelaDeConexao()
     try {
-      const url = await getConnectUrl(influenciador.id, platform)
-      // Saida deliberada da aplicacao: o consentimento de OAuth acontece no
-      // dominio do provedor, entao a navegacao tem que ser do documento e nao
-      // do roteador. Dentro de manipulador de evento, como manda o React.
+      const url = await getConnectUrl(influenciador.id, platform, { popup: Boolean(janela) })
+      if (janela) {
+        janela.location.href = url
+        janelaRef.current = janela
+        setAguardando(platform)
+        // Ninguém fica preso em "carregando" se a janela for esquecida aberta
+        // ou fechada sem concluir: em 5 minutos o state do OAuth já venceu.
+        limiteRef.current = setTimeout(encerrarEspera, 5 * 60 * 1000)
+        return
+      }
+      // Popup bloqueada: segue na própria aba, como antes. Com a sessão no
+      // cookie httpOnly, a volta não pede login de novo.
       // eslint-disable-next-line react-hooks/immutability
       window.location.href = url
     } catch (err) {
+      try { janela?.close() } catch { /* janela já fechada */ }
       if (err.code === 'platform_not_configured') {
         setIndisponiveis((atual) => [...atual, platform])
       } else {
@@ -203,7 +259,7 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                 <span className="block truncate text-xs text-text-secondary">
                   {conta ? (
                     <>
-                      {MOSTRAR_HANDLE ? `@${conta.handle} · ` : ''}{formatFollowers(conta.followers)}
+                      {MOSTRAR_HANDLE && conta.handle ? <><ArrobaOculta handle={conta.handle} /> · </> : ''}{formatFollowers(conta.followers)}
                       {sync ? ` · ${t('influenciador.conexoes.lastSync', { data: sync })}` : ''}
                       {conta.connected ? '' : ` · ${t('influenciador.conexoes.notCollecting')}`}
                     </>
@@ -231,12 +287,26 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                 <span className="shrink-0 text-text-muted">
                   <Plug size={16} />
                 </span>
+              ) : aguardando === platform ? (
+                // Enquanto a janela pequena está aberta, o botão vira a saída:
+                // o usuário pode ter fechado a janela sem concluir.
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  leftIcon={X}
+                  onClick={cancelarEspera}
+                  className="shrink-0"
+                  title={t('influenciador.conexoes.popup.waiting')}
+                >
+                  {t('influenciador.conexoes.popup.cancel')}
+                </Button>
               ) : (
                 <Button
                   variant="outlined"
                   size="sm"
                   leftIcon={Link2}
                   loading={ocupada === platform}
+                  disabled={Boolean(aguardando)}
                   onClick={() => conectar(platform)}
                   className="shrink-0"
                 >

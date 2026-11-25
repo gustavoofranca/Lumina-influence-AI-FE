@@ -19,6 +19,7 @@ import Login       from './pages/Login.jsx'
  * nada disso.
  */
 const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
+const ConexaoConcluida = lazy(() => import('./pages/ConexaoConcluida.jsx'))
 const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
 const VerifiqueSeuEmail = lazy(() => import('./pages/VerifiqueSeuEmail.jsx'))
 const VerificarEmail    = lazy(() => import('./pages/VerificarEmail.jsx'))
@@ -74,6 +75,7 @@ function AnimatedRoutes() {
           <Route path="/"                element={<LandingPage />} />
           <Route path="/login"           element={<Login />} />
           <Route path="/auth/callback"   element={<AuthCallback />} />
+          <Route path="/conexao/concluida" element={<ConexaoConcluida />} />
           <Route
             path="/primeiro-acesso"
             element={<ProtectedRoute><PrimeiroAcesso /></ProtectedRoute>}

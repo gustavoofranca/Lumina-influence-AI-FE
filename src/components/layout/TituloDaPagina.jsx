@@ -38,6 +38,7 @@ const CHAVE_POR_ROTA = [
   ['/entrar/verificacao',   'titulos.desafio2fa'],
   ['/entrar/ativar-2fa',    'titulos.ativar2fa'],
   ['/redefinir-senha',      'titulos.redefinirSenha'],
+  ['/conexao/concluida',    'conexaoConcluida.okTitulo'],
   ['/privacidade',          'legal.privacy.title'],
   ['/termos',               'legal.terms.title'],
   ['/exclusao-de-dados',    'legal.deletion.title'],

@@ -74,6 +74,10 @@
       "kept": "O que permanece:",
       "irreversible": "A ação é definitiva. Não há lixeira e os dados não podem ser recuperados.",
       "prompt": "Digite {{palavra}} para confirmar"
+    },
+    "arroba": {
+      "alternar": "Mostrar @",
+      "oculto": "@ oculto"
     }
   },
   "welcome": {
@@ -925,7 +929,13 @@
         "nothing": "Nenhuma conta vinculada para sincronizar."
       },
       "demoBadge": "demonstração",
-      "demoHint": "conectada a um provedor local — os números não vieram da plataforma"
+      "demoHint": "conectada a um provedor local — os números não vieram da plataforma",
+      "popup": {
+        "waiting": "Conclua a autorização na janela que abriu.",
+        "cancel": "Cancelar",
+        "denied": "{{rede}}: a autorização foi recusada. Nenhuma conta foi vinculada.",
+        "failed": "{{rede}}: não foi possível concluir a conexão. Tente de novo."
+      }
     },
     "neuralConfidence": {
       "empty": "Confiança neural indisponível — rode uma análise.",
@@ -1613,5 +1623,11 @@
     "redefinirSenha": "Nova senha",
     "desafio2fa": "Verificação em duas etapas",
     "ativar2fa": "Ativar verificação em duas etapas"
+  },
+  "conexaoConcluida": {
+    "okTitulo": "Conta conectada",
+    "erroTitulo": "A conexão não foi concluída",
+    "podeFechar": "Pode fechar esta janela e voltar ao painel.",
+    "irAoPainel": "Ir para o painel"
   }
 }

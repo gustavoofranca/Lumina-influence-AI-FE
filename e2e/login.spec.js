@@ -28,7 +28,7 @@ test('rota protegida sem sessão volta para o login', async ({ page }) => {
   await expect(page).toHaveURL(/\/login/)
 })
 
-test('sessão sobrevive ao F5 mas não à aba nova', async ({ page, context }) => {
+test('sessão sobrevive ao F5, à aba nova e ao fechar a aba', async ({ page, context }) => {
   await page.goto('/login')
   await page.getByRole('button', { name: DEMO }).click()
   await expect(page).toHaveURL(/\/app\/dashboard/)
@@ -36,10 +36,32 @@ test('sessão sobrevive ao F5 mas não à aba nova', async ({ page, context }) =
   await page.reload()
   await expect(page).toHaveURL(/\/app\/dashboard/)
 
-  // ADR-001: o token vive em sessionStorage, então fechar a aba encerra a
-  // sessão. Aba nova no mesmo contexto não herda sessionStorage.
+  // ADR-001, terceira revisão: o refresh vive num cookie httpOnly do contexto,
+  // então aba nova e aba reaberta entram sem pedir login.
   const outraAba = await context.newPage()
   await outraAba.goto('/app/dashboard')
+  await expect(outraAba).toHaveURL(/\/app\/dashboard/)
+  await page.close()
+  const reaberta = await context.newPage()
+  await reaberta.goto('/app/dashboard')
+  await expect(reaberta).toHaveURL(/\/app\/dashboard/)
+
+  // E nenhum token fica em armazenamento legível por script.
+  const guardado = await reaberta.evaluate(() => JSON.stringify({ ...sessionStorage, ...localStorage }))
+  expect(guardado).not.toMatch(/eyJ/)
+  await outraAba.close()
+  await reaberta.close()
+})
+
+test('sair numa aba tira a sessão das outras', async ({ page, context }) => {
+  await page.goto('/login')
+  await page.getByRole('button', { name: DEMO }).click()
+  await expect(page).toHaveURL(/\/app\/dashboard/)
+  const outraAba = await context.newPage()
+  await outraAba.goto('/app/dashboard')
+  await expect(outraAba).toHaveURL(/\/app\/dashboard/)
+
+  await page.evaluate(() => new BroadcastChannel('lumina.sessao').postMessage({ tipo: 'logout' }))
   await expect(outraAba).toHaveURL(/\/login/)
   await outraAba.close()
 })

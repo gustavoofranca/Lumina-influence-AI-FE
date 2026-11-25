@@ -30,10 +30,10 @@ test('o 401 depois da hora renova a sessão em vez de derrubar o usuário', asyn
   await entrarComoAdmin(page)
 
   let renovacoes = 0
-  let cabecalhoDaRenovacao = null
+  let cabecalhosDaRenovacao = null
   await page.route('**/api/v1/auth/refresh', async (rota) => {
     renovacoes += 1
-    cabecalhoDaRenovacao = rota.request().headers()['authorization'] || ''
+    cabecalhosDaRenovacao = rota.request().headers()
     // Segue para o back-end real: o valor do token é conferido de verdade.
     await rota.continue()
   })
@@ -62,10 +62,13 @@ test('o 401 depois da hora renova a sessão em vez de derrubar o usuário', asyn
   // renovação acontecendo **depois** do corpo do teste. Conferir contador de
   // efeito assíncrono com `expect` simples é apostar na velocidade da máquina.
   await expect.poll(() => jaNegou, { timeout: 15_000 }).toBe(true)
-  await expect.poll(() => renovacoes, { timeout: 15_000 }).toBe(1)
-  // O cabeçalho leva o refresh token, não o access token — é o que o
-  // `require_refresh` exige, e era o erro da implementação anterior.
-  expect(cabecalhoDaRenovacao).toMatch(/^Bearer .+/)
+  // Duas: a da carga (o access token vive só em memória e nasce do cookie) e a
+  // provocada pelo 401 (ADR-001, terceira revisão).
+  await expect.poll(() => renovacoes, { timeout: 15_000 }).toBe(2)
+  // A renovação vai pelo cookie httpOnly, com o cabeçalho anti-CSRF, e não
+  // por um token legível pelo script.
+  expect(cabecalhosDaRenovacao['x-lumina-csrf']).toBe('1')
+  expect(cabecalhosDaRenovacao['authorization']).toBeUndefined()
   // O 401 é provocado por este teste: o navegador registra o recurso recusado
   // no console e isso não é defeito. O que não pode aparecer é o resto — uma
   // exceção do React ao reprocessar a requisição repetida, por exemplo.

@@ -12,7 +12,7 @@ import EmptyState from '../ui/EmptyState.jsx'
 import Skeleton from '../ui/Skeleton.jsx'
 import { PlatformBadgeList } from '../icons/PlatformIcons.jsx'
 import { formatFollowers, formatBudget, formatPct } from '../../lib/format.js'
-import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
+import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
 const STATUS_VARIANT = {
   active:     'success',
@@ -57,7 +57,7 @@ function ParticipantCard({ participant, t, onRemover }) {
           <Avatar name={p.name} size="md" />
           <div className="min-w-0">
             <p className="truncate font-semibold text-text-primary">{p.name}</p>
-            {MOSTRAR_HANDLE && <p className="truncate text-xs text-text-muted">{p.handle}</p>}
+            <ArrobaOculta handle={p.handle} semBotao className="max-w-full text-xs text-text-muted" />
           </div>
         </div>
         <ArrowUpRight

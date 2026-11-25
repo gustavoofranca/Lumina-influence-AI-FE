@@ -10,9 +10,11 @@ import { api } from '../lib/api.js'
  * no ambiente — caso comum em desenvolvimento, e que a tela trata como estado,
  * não como falha.
  */
-export async function getConnectUrl(influencerId, platform) {
+export async function getConnectUrl(influencerId, platform, { popup = false } = {}) {
+  // `modo=popup` faz o callback devolver a janela a /conexao/concluida, que
+  // avisa o painel e fecha; sem ele, o callback volta à tela do criador.
   const res = await api.get(`/integrations/${platform}/connect`, {
-    params: { influencer_id: influencerId },
+    params: { influencer_id: influencerId, modo: popup ? 'popup' : undefined },
   })
   return res.data.auth_url
 }

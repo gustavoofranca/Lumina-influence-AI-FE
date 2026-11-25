@@ -74,6 +74,10 @@
       "kept": "What stays:",
       "irreversible": "The action is permanent. There is no recycle bin and the data cannot be recovered.",
       "prompt": "Type {{palavra}} to confirm"
+    },
+    "arroba": {
+      "alternar": "Show @",
+      "oculto": "@ hidden"
     }
   },
   "welcome": {
@@ -925,7 +929,13 @@
         "nothing": "No linked account to sync."
       },
       "demoBadge": "demo",
-      "demoHint": "connected to a local provider — these numbers did not come from the platform"
+      "demoHint": "connected to a local provider — these numbers did not come from the platform",
+      "popup": {
+        "waiting": "Finish the authorization in the window that opened.",
+        "cancel": "Cancel",
+        "denied": "{{rede}}: authorization was declined. No account was linked.",
+        "failed": "{{rede}}: the connection could not be completed. Try again."
+      }
     },
     "neuralConfidence": {
       "empty": "Neural confidence unavailable — run an analysis.",
@@ -1613,5 +1623,11 @@
     "redefinirSenha": "New password",
     "desafio2fa": "Two-step verification",
     "ativar2fa": "Turn on two-step verification"
+  },
+  "conexaoConcluida": {
+    "okTitulo": "Account connected",
+    "erroTitulo": "The connection was not completed",
+    "podeFechar": "You can close this window and return to the dashboard.",
+    "irAoPainel": "Go to the dashboard"
   }
 }
