@@ -935,6 +935,17 @@
         "cancel": "Cancelar",
         "denied": "{{rede}}: a autorização foi recusada. Nenhuma conta foi vinculada.",
         "failed": "{{rede}}: não foi possível concluir a conexão. Tente de novo."
+      },
+      "link": {
+        "button": "Link",
+        "hint": "Gerar um link para o próprio criador conectar a conta",
+        "title": "Link de conexão do {{rede}}",
+        "explain": "Mande para {{nome}}. Ela abre no celular ou no computador, entra na própria conta e autoriza — sem precisar de login no Lumina. Vale até {{data}} e para de funcionar quando a conta estiver conectada.",
+        "field": "Endereço do link de conexão",
+        "copy": "Copiar link",
+        "copied": "Copiado",
+        "close": "Fechar",
+        "whatsappText": "Oi! Para conectarmos seu {{rede}} ao Lumina, abra este link e autorize com a sua conta: {{url}}"
       }
     },
     "neuralConfidence": {
@@ -1629,5 +1640,34 @@
     "erroTitulo": "A conexão não foi concluída",
     "podeFechar": "Pode fechar esta janela e voltar ao painel.",
     "irAoPainel": "Ir para o painel"
+  },
+  "conectarConta": {
+    "tituloAba": "Conectar conta",
+    "titulo": "Conectar seu {{rede}}",
+    "pedido": "{{agencia}} pediu para conectar o {{rede}} do perfil \"{{criador}}\" ao Lumina, a plataforma que ela usa para acompanhar as métricas das campanhas.",
+    "umaAgencia": "Uma agência",
+    "seraLido": "O que será lido",
+    "itens": {
+      "perfil": "Perfil público e número de seguidores",
+      "publicacoes": "Publicações recentes e as métricas delas",
+      "comentarios": "Uma amostra dos comentários das publicações"
+    },
+    "semSenha": "Você entra direto no {{rede}}: o Lumina nunca vê a sua senha. A agência pode desconectar a conta, e você pode remover o acesso nas configurações do {{rede}} quando quiser.",
+    "botao": "Continuar no {{rede}}",
+    "validade": "Este link vale até {{data}}.",
+    "jaConectada": "Seu {{rede}} já está conectado",
+    "podeFechar": "Pode fechar esta página.",
+    "pecaOutro": "Peça um novo link a quem te enviou.",
+    "erros": {
+      "convite_invalido": "Este link não é válido",
+      "convite_expirado": "Este link venceu",
+      "rate_limited": "Muitas tentativas. Tente de novo em alguns minutos"
+    },
+    "concluido": {
+      "ok": "Pronto! Seu {{rede}} foi conectado",
+      "recusado": "Você não autorizou o acesso",
+      "falhou": "Não foi possível concluir a conexão",
+      "tenteDeNovo": "Abra o link de novo para tentar outra vez, ou peça um novo a quem te enviou."
+    }
   }
 }

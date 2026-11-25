@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link2, Unlink, Plug, RefreshCw, X } from 'lucide-react'
+import { Check, Copy, Link2, MessageCircle, Unlink, Plug, RefreshCw, Share2, X } from 'lucide-react'
 
 import { cn } from '../../lib/cn.js'
 import Card, { CardLabel, CardTitle } from '../ui/Card.jsx'
@@ -10,7 +10,7 @@ import DesconectarModal from './DesconectarModal.jsx'
 import { PLATFORM_META } from '../icons/PlatformIcons.jsx'
 import { formatFollowers } from '../../lib/format.js'
 import { MOSTRAR_HANDLE } from '../../lib/apresentacao.js'
-import { getConnectUrl, disconnectAccount, sincronizarContas } from '../../services/integrations.js'
+import { getConnectUrl, disconnectAccount, gerarLinkDeConexao, sincronizarContas } from '../../services/integrations.js'
 import { abrirJanelaDeConexao, escutarConexoes } from '../../lib/conexaoPopup.js'
 import ArrobaOculta from '../../components/ui/ArrobaOculta.jsx'
 
@@ -84,6 +84,39 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
 
   useEffect(() => () => clearTimeout(limiteRef.current), [])
 
+  // Link para o próprio criador autorizar, no aparelho dele (WhatsApp, e-mail).
+  const [link, setLink] = useState(null)        // { platform, url, expiresAt }
+  const [gerandoLink, setGerandoLink] = useState(null)
+  const [copiado, setCopiado] = useState(false)
+
+  const gerarLink = async (platform) => {
+    setErro(null)
+    setCopiado(false)
+    setGerandoLink(platform)
+    try {
+      const dados = await gerarLinkDeConexao(influenciador.id, platform)
+      setLink({ platform, url: dados.url, expiresAt: dados.expires_at })
+    } catch (err) {
+      if (err.code === 'platform_not_configured') {
+        setIndisponiveis((atual) => [...atual, platform])
+      } else {
+        setErro(err.message)
+      }
+    } finally {
+      setGerandoLink(null)
+    }
+  }
+
+  const copiarLink = async () => {
+    try {
+      await navigator.clipboard.writeText(link.url)
+      setCopiado(true)
+    } catch {
+      // Sem permissão de área de transferência: o campo fica selecionável.
+      setCopiado(false)
+    }
+  }
+
   const cancelarEspera = () => {
     try { janelaRef.current?.close() } catch { /* janela já fechada */ }
     encerrarEspera()
@@ -108,7 +141,6 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
       }
       // Popup bloqueada: segue na própria aba, como antes. Com a sessão no
       // cookie httpOnly, a volta não pede login de novo.
-      // eslint-disable-next-line react-hooks/immutability
       window.location.href = url
     } catch (err) {
       try { janela?.close() } catch { /* janela já fechada */ }
@@ -301,22 +333,77 @@ export default function ContasConectadasCard({ influenciador, onChange }) {
                   {t('influenciador.conexoes.popup.cancel')}
                 </Button>
               ) : (
-                <Button
-                  variant="outlined"
-                  size="sm"
-                  leftIcon={Link2}
-                  loading={ocupada === platform}
-                  disabled={Boolean(aguardando)}
-                  onClick={() => conectar(platform)}
-                  className="shrink-0"
-                >
-                  {t('influenciador.conexoes.connect')}
-                </Button>
+                <div className="flex shrink-0 items-center gap-2">
+                  {/* Para a dona da conta autorizar no aparelho dela. */}
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    leftIcon={Share2}
+                    loading={gerandoLink === platform}
+                    disabled={Boolean(aguardando)}
+                    onClick={() => gerarLink(platform)}
+                    title={t('influenciador.conexoes.link.hint')}
+                  >
+                    {t('influenciador.conexoes.link.button')}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    leftIcon={Link2}
+                    loading={ocupada === platform}
+                    disabled={Boolean(aguardando)}
+                    onClick={() => conectar(platform)}
+                  >
+                    {t('influenciador.conexoes.connect')}
+                  </Button>
+                </div>
               )}
             </li>
           )
         })}
       </ul>
+
+      {link && (
+        <div className="rounded-xl border border-hairline bg-bg-base/40 p-4" role="region"
+             aria-label={t('influenciador.conexoes.link.title', { rede: PLATFORM_META[link.platform]?.name })}>
+          <p className="text-sm font-semibold text-text-primary">
+            {t('influenciador.conexoes.link.title', { rede: PLATFORM_META[link.platform]?.name })}
+          </p>
+          <p className="mt-1 text-xs text-text-secondary">
+            {t('influenciador.conexoes.link.explain', {
+              nome: influenciador.name,
+              data: new Date(link.expiresAt).toLocaleDateString(),
+            })}
+          </p>
+          <input
+            readOnly
+            value={link.url}
+            onFocus={(e) => e.target.select()}
+            aria-label={t('influenciador.conexoes.link.field')}
+            className="mt-3 w-full rounded-lg border border-hairline bg-bg-surface px-3 py-2 font-mono text-xs text-text-primary"
+          />
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Button size="sm" leftIcon={copiado ? Check : Copy} onClick={copiarLink}>
+              {t(copiado ? 'influenciador.conexoes.link.copied' : 'influenciador.conexoes.link.copy')}
+            </Button>
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(
+                t('influenciador.conexoes.link.whatsappText', {
+                  rede: PLATFORM_META[link.platform]?.name, url: link.url,
+                })
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-hairline px-3 py-1.5 text-xs font-semibold text-text-primary hover:bg-bg-surface"
+            >
+              <MessageCircle size={14} aria-hidden /> WhatsApp
+            </a>
+            <Button size="sm" variant="secondary" onClick={() => setLink(null)}>
+              {t('influenciador.conexoes.link.close')}
+            </Button>
+          </div>
+        </div>
+      )}
     </Card>
     </>
   )
