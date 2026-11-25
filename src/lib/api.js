@@ -11,109 +11,91 @@ import { mascarar } from './mascara.js'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1'
 
-// ADR-001 (revisada em 26/08/2026): o access token vive em sessionStorage, nunca
-// em localStorage. sessionStorage morre junto com a aba, que e a propriedade que
-// a decisao precisa — so em memoria, qualquer F5 derrubava a sessao.
-const CHAVE_TOKEN = 'lumina.access_token'
-// O refresh token acompanha o access token na mesma gaveta, pela mesma razao:
-// o que a ADR-001 comprou foi a sessao morrer junto com a aba. Guarda-lo em
-// localStorage o faria sobreviver 30 dias no disco, que e exatamente o que a
-// decisao recusou. Em memoria so, qualquer F5 derrubava a sessao de novo.
-const CHAVE_REFRESH = 'lumina.refresh_token'
+// ADR-001 (terceira revisao, 25/11/2026): o refresh token vive num cookie
+// httpOnly que o JavaScript nao le, gravado pela propria API. O access token
+// fica so em memoria — F5, aba nova ou navegador reaberto pedem outro ao
+// `/auth/refresh`, que le o cookie. E o que deixa a sessao sobreviver a aba sem
+// pôr credencial de 30 dias onde um XSS alcançaria.
+const CABECALHO_CSRF = { 'X-Lumina-Csrf': '1' }
 
-function lerGuardado(chave) {
-  try {
-    return sessionStorage.getItem(chave)
-  } catch {
-    // Navegador com armazenamento bloqueado: a sessao passa a valer so em memoria.
-    return null
-  }
+// Versoes anteriores guardavam o par no sessionStorage. Sai na carga, para nao
+// sobrar refresh token legivel de uma sessao antiga.
+try {
+  sessionStorage.removeItem('lumina.access_token')
+  sessionStorage.removeItem('lumina.refresh_token')
+} catch {
+  // Armazenamento bloqueado: nada a apagar.
 }
 
-function guardar(chave, valor) {
-  try {
-    if (valor) sessionStorage.setItem(chave, valor)
-    else sessionStorage.removeItem(chave)
-  } catch {
-    // Sem armazenamento, segue valendo o valor em memoria.
-  }
-}
-
-let _accessToken = lerGuardado(CHAVE_TOKEN)
-let _refreshToken = lerGuardado(CHAVE_REFRESH)
+let _accessToken = null
 let _onUnauthorized = null
 let _renovacaoEmCurso = null
 
 export function setAccessToken(token) {
   _accessToken = token || null
-  guardar(CHAVE_TOKEN, _accessToken)
 }
 
-export function setRefreshToken(token) {
-  _refreshToken = token || null
-  guardar(CHAVE_REFRESH, _refreshToken)
-}
-
-/** Guarda o par que a API devolve no login e na renovacao. */
+/** Guarda o access token que a API devolve no login e na renovacao. */
 export function setTokens(tokens) {
   setAccessToken(tokens?.access_token || null)
-  // A renovacao pode nao devolver refresh novo; nesse caso o atual continua.
-  if (tokens?.refresh_token) setRefreshToken(tokens.refresh_token)
 }
 
 export function getAccessToken() {
   return _accessToken
 }
 
-export function getRefreshToken() {
-  return _refreshToken
-}
-
 /**
- * Troca o refresh token por um par novo.
+ * Pede um access token novo ao `/auth/refresh`.
+ *
+ * Sem argumento, vale o cookie httpOnly (com o cabecalho anti-CSRF que a API
+ * exige). Com `refreshBearer`, manda aquele refresh no `Authorization`: e o caso
+ * do retorno do Google e da Microsoft, que trazem o par no fragmento da URL —
+ * a resposta grava o cookie, e dali em diante e ele que vale.
  *
  * Chamada com `fetch` direto, e nao pelo `request`: passar por ele criaria a
- * chance de um 401 na renovacao disparar outra renovacao. E o cabecalho aqui
- * leva o refresh token, nao o access token — `require_refresh`, no back-end,
- * le o token do `Authorization` e exige que o tipo seja `refresh`.
- *
- * Uma renovacao por vez: quatro requisicoes que expiram juntas — o que a tela
- * do criador faz — pediriam quatro renovacoes, e as tres ultimas usariam um
- * refresh token ja trocado.
+ * chance de um 401 na renovacao disparar outra renovacao. Uma renovacao por
+ * vez: quatro requisicoes que expiram juntas — o que a tela do criador faz —
+ * pediriam quatro.
  */
-async function renovarSessao() {
-  if (!_refreshToken) return false
+async function pedirRenovacao(headers) {
+  try {
+    const resp = await fetch(`${BASE_URL}/auth/refresh`, {
+      method: 'POST',
+      credentials: 'include',
+      headers,
+    })
+    if (!resp.ok) return false
+    const payload = await resp.json()
+    const tokens = payload?.data?.tokens
+    if (!tokens?.access_token) return false
+    setTokens(tokens)
+    return true
+  } catch {
+    // Rede fora no meio da renovacao nao e sessao invalida: nao derruba.
+    return false
+  }
+}
+
+export async function renovarSessao({ refreshBearer } = {}) {
+  // O refresh do fragmento e uma sessao nova: nao pega carona numa renovacao
+  // pelo cookie que estiver em curso, que pode ser de outra pessoa.
+  if (refreshBearer) return pedirRenovacao({ Authorization: `Bearer ${refreshBearer}` })
   if (!_renovacaoEmCurso) {
-    _renovacaoEmCurso = (async () => {
-      try {
-        const resp = await fetch(`${BASE_URL}/auth/refresh`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${_refreshToken}` },
-        })
-        if (!resp.ok) return false
-        const payload = await resp.json()
-        if (!payload?.data?.access_token) return false
-        setTokens(payload.data)
-        return true
-      } catch {
-        // Rede fora no meio da renovacao nao e sessao invalida: nao derruba.
-        return false
-      }
-    })()
+    _renovacaoEmCurso = pedirRenovacao(CABECALHO_CSRF)
     _renovacaoEmCurso.finally(() => { _renovacaoEmCurso = null })
   }
   return _renovacaoEmCurso
 }
 
 /**
- * Descarta o par inteiro — usado no logout e quando a renovacao falha.
+ * Descarta o access token — usado no logout e quando a renovacao falha. O
+ * cookie quem apaga e a API, no `POST /auth/logout`.
  *
  * Leva junto a memoria de respostas: e o ponto por onde toda sessao termina, e
  * a proxima pode ser de outra pessoa, de outra agencia.
  */
 export function limparTokens() {
   setAccessToken(null)
-  setRefreshToken(null)
   limparCacheDaApi()
 }
 
@@ -155,6 +137,10 @@ async function request(method, path, { body, params, auth = true, raw = false, j
     resp = await fetch(url.toString(), {
       method,
       headers,
+      // Sem isto o navegador descarta o Set-Cookie das respostas de login (a
+      // API e outra origem). O cookie tem Path=/api/v1/auth: as demais rotas
+      // nao o recebem.
+      credentials: 'include',
       body: body === undefined ? undefined : ehFormData ? body : JSON.stringify(body),
     })
   } catch (networkErr) {
