@@ -20,6 +20,8 @@ import Login       from './pages/Login.jsx'
  */
 const AuthCallback     = lazy(() => import('./pages/AuthCallback.jsx'))
 const ConexaoConcluida = lazy(() => import('./pages/ConexaoConcluida.jsx'))
+const ConectarConta    = lazy(() => import('./pages/ConectarConta.jsx'))
+const ConectarConcluido = lazy(() => import('./pages/ConectarConta.jsx').then((m) => ({ default: m.ConectarConcluido })))
 const Cadastro         = lazy(() => import('./pages/Cadastro.jsx'))
 const VerifiqueSeuEmail = lazy(() => import('./pages/VerifiqueSeuEmail.jsx'))
 const VerificarEmail    = lazy(() => import('./pages/VerificarEmail.jsx'))
@@ -76,6 +78,9 @@ function AnimatedRoutes() {
           <Route path="/login"           element={<Login />} />
           <Route path="/auth/callback"   element={<AuthCallback />} />
           <Route path="/conexao/concluida" element={<ConexaoConcluida />} />
+          {/* Link que a agência manda ao criador: público, sem sessão. */}
+          <Route path="/conectar/concluido" element={<ConectarConcluido />} />
+          <Route path="/conectar/:token"   element={<ConectarConta />} />
           <Route
             path="/primeiro-acesso"
             element={<ProtectedRoute><PrimeiroAcesso /></ProtectedRoute>}

@@ -20,6 +20,27 @@ export async function getConnectUrl(influencerId, platform, { popup = false } = 
 }
 
 /**
+ * Link que a agência manda ao criador (WhatsApp, e-mail) para ele mesmo
+ * autorizar a conta, sem conta no Lumina. Vale 7 dias e só para aquele
+ * criador e aquela rede. Devolve `{ url, expires_at, platform }`.
+ */
+export async function gerarLinkDeConexao(influencerId, platform) {
+  const res = await api.post(`/integrations/${platform}/connect-link`, { influencer_id: influencerId })
+  return res.data
+}
+
+/** Dados públicos do link, para a página que o criador abre. Sem sessão. */
+export async function lerConvite(token) {
+  const res = await api.get(`/integrations/convite/${encodeURIComponent(token)}`, { auth: false })
+  return res.data
+}
+
+/** Endereço que leva o navegador do criador ao consentimento da rede. */
+export function urlDeAutorizacaoDoConvite(token) {
+  return `${api.baseUrl}/integrations/convite/${encodeURIComponent(token)}/autorizar`
+}
+
+/**
  * Desliga a coleta de uma conta conectada.
  *
  * `purgarColetado` também apaga as publicações já coletadas daquela conta e os

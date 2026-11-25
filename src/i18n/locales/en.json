@@ -935,6 +935,17 @@
         "cancel": "Cancel",
         "denied": "{{rede}}: authorization was declined. No account was linked.",
         "failed": "{{rede}}: the connection could not be completed. Try again."
+      },
+      "link": {
+        "button": "Link",
+        "hint": "Generate a link for the creator to connect the account themselves",
+        "title": "{{rede}} connection link",
+        "explain": "Send it to {{nome}}. They open it on their phone or computer, sign in to their own account and authorize — no Lumina login needed. Valid until {{data}}, and it stops working once the account is connected.",
+        "field": "Connection link address",
+        "copy": "Copy link",
+        "copied": "Copied",
+        "close": "Close",
+        "whatsappText": "Hi! To connect your {{rede}} to Lumina, open this link and authorize with your account: {{url}}"
       }
     },
     "neuralConfidence": {
@@ -1629,5 +1640,34 @@
     "erroTitulo": "The connection was not completed",
     "podeFechar": "You can close this window and return to the dashboard.",
     "irAoPainel": "Go to the dashboard"
+  },
+  "conectarConta": {
+    "tituloAba": "Connect account",
+    "titulo": "Connect your {{rede}}",
+    "pedido": "{{agencia}} asked to connect the {{rede}} of the profile \"{{criador}}\" to Lumina, the platform it uses to track campaign metrics.",
+    "umaAgencia": "An agency",
+    "seraLido": "What will be read",
+    "itens": {
+      "perfil": "Public profile and follower count",
+      "publicacoes": "Recent posts and their metrics",
+      "comentarios": "A sample of the comments on the posts"
+    },
+    "semSenha": "You sign in directly on {{rede}}: Lumina never sees your password. The agency can disconnect the account, and you can remove access in your {{rede}} settings at any time.",
+    "botao": "Continue on {{rede}}",
+    "validade": "This link is valid until {{data}}.",
+    "jaConectada": "Your {{rede}} is already connected",
+    "podeFechar": "You can close this page.",
+    "pecaOutro": "Ask whoever sent it for a new link.",
+    "erros": {
+      "convite_invalido": "This link is not valid",
+      "convite_expirado": "This link has expired",
+      "rate_limited": "Too many attempts. Try again in a few minutes"
+    },
+    "concluido": {
+      "ok": "Done! Your {{rede}} is connected",
+      "recusado": "You did not authorize access",
+      "falhou": "The connection could not be completed",
+      "tenteDeNovo": "Open the link again to retry, or ask whoever sent it for a new one."
+    }
   }
 }
